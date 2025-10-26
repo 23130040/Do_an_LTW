@@ -13,7 +13,6 @@ p{
 }
 
 main{
-
     width: 100%;
     margin:  auto;
     min-height: 100vh;
@@ -38,7 +37,13 @@ nav .menu {
     justify-content: center;
     transition: background 0.3s ease;
 }
-
+nav .menu a{
+    text-decoration: none;
+    color: white;
+}
+nav .menu a:hover{
+    color: #3caf4b;
+}
 nav .menu.fixed {
     position: fixed;
     top: 0;
