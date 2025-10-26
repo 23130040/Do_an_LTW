@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5ac4aef-7c7c-4ccb-a537-bd9713259320" name="Changes" comment="" />
+    <list default="true" id="a21bbdbe-b751-45ef-b00e-8ee529d67cfe" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,25 +10,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
-  <component name="ProjectId" id="34VtwQi3RmzEedqscYxmvTCSc7O" />
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="34bWkmKr2KRCYocZgvPDiEsyDdY" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "trang__chu",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "git-widget-placeholder": "trang-chu",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -44,12 +38,13 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b5ac4aef-7c7c-4ccb-a537-bd9713259320" name="Changes" comment="" />
-      <created>1761310811287</created>
+      <changelist id="a21bbdbe-b751-45ef-b00e-8ee529d67cfe" name="Changes" comment="" />
+      <created>1761482898635</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1761310811287</updated>
-      <workItem from="1761310812412" duration="1482000" />
+      <updated>1761482898635</updated>
+      <workItem from="1761482900007" duration="109000" />
+      <workItem from="1761483023937" duration="11000" />
     </task>
     <servers />
   </component>

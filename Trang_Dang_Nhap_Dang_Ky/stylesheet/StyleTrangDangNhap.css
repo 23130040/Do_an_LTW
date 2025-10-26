@@ -50,6 +50,13 @@ body{
 #wrapper form .forgot_password a{
     color: white;
 }
+a {
+    text-decoration: none;
+    color: white;
+    font-family: inherit;
+    font-size: 20px;
+}
+
 #wrapper form .block a{
     text-decoration: none;
 }
@@ -79,4 +86,24 @@ body{
 }
 #wrapper form .block a:active{
     color: rgb(11, 170, 74);
+}
+
+.form_submit {
+    display: inline-block;
+    width: 490px;
+    height: 70px;
+    line-height: 70px;
+    background: white;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    border: none;
+}
+.form_submit:hover {
+    background-color: rgb(11, 170, 74);
+    color: white;
+    text-decoration: none !important;
 }
