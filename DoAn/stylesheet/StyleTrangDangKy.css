@@ -1,36 +1,31 @@
-
 body{
     font-family: Arial, Helvetica, sans-serif;
     background-image: url("../image/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
-#wrapper{
+main{
+
+}
+main #signup_container{
     width: 629px;
     height: 859px;
     margin: 45px 655px 45px 655px;
     border-radius: 20px;
     background-color: rgba(0, 0, 0, 0.5) ;
-}
-#wrapper form{
     text-align: center;
 }
-#wrapper form IMG{
-    margin-top: 100px;
+main #signup_container .signup_title{
+    padding-top: 65px;
+}
+main #signup_container .signup_title IMG{
     border-radius: 50%;
 }
-#wrapper form h1{
+main #signup_container .signup_title h1{
+    color: white;
     font-size: 50px;
-    color: white;
 }
-#wrapper form .user_name, .password{
-
-}
-#wrapper form i{
-    font-size: 25px;
-    color: white;
-}
-#wrapper form input[type=text], input[type=password]{
+main #signup_container .form_input .input_field{
     width: 490px;
     height: 53px;
     font-size: 25px;
@@ -41,19 +36,7 @@ body{
     color: white;
     border-bottom: 2px solid white;
 }
-#wrapper form .forgot_password{
-    text-align: right;
-    margin-right: 50px;
-    font-size: 23px;
-    margin-bottom: 40px;
-}
-#wrapper form .forgot_password a{
-    color: white;
-}
-#wrapper form .block a{
-    text-decoration: none;
-}
-#wrapper form .submit input[type=submit]{
+main #signup_container .form_input #submit{
     width: 490px;
     height: 70px;
     border-radius: 20px;
@@ -61,22 +44,22 @@ body{
     font-weight: bold;
     border: none;
 }
-#wrapper form .submit input[type=submit]:hover{
+main #signup_container .form_input #submit:hover{
     background-color: rgb(11, 170, 74);
 }
-#wrapper form .sign_up{
+main #signup_container .login_link{
     font-size: 25px;
     margin-top: 40px;
 }
-#wrapper form .sign_up .txt{
+main #signup_container .login_link .txt{
     color: white;
 }
-#wrapper form .sign_up a{
+main #signup_container .login_link a{
+    text-decoration: none;
     color: #db1a26;
 }
-#wrapper form .block a:hover{
+main #signup_container .login_link a:hover{
     text-decoration: underline;
-}
-#wrapper form .block a:active{
     color: rgb(11, 170, 74);
 }
+
