@@ -7,4 +7,5 @@ document.addEventListener("scroll", () => {
     } else {
         menu.classList.remove("fixed");
     }
+
 });
