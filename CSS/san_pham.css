@@ -1,7 +1,6 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    height: 3000px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -11,15 +10,9 @@ a {
     font-size: 20px;
 }
 
-
-p{
-
-}
-
 main{
-
     width: 100%;
-    margin:  auto;
+    margin: auto;
     min-height: 100vh;
 }
 
@@ -89,21 +82,35 @@ main{
 /* Search + Cart nằm góc phải */
 .cart-icon {
     position: absolute;
-    right: 40px;
-    top: 22px;
+    right: 90px;
+    top: 26px;
     display: flex;
     align-items: center;
     gap: 20px;
     font-size: 18px;
+    transition: opacity 0.3s ease;
 }
 .search-icon {
     position: absolute;
-    left: 40px;
+    right: 10px;
     top: 22px;
     display: flex;
     align-items: center;
     gap: 20px;
     font-size: 18px;
+    transition: opacity 0.3s ease;
+}
+
+.login{
+    position: absolute;
+    right: 150px;
+    top: 23px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    transition: opacity 0.3s ease;
+
 }
 
 /* Search Box */
@@ -170,6 +177,7 @@ main{
     width: 100%;
     background: #343A40;
     height: 50px;
+
 }
 .menu.fixed a {
     padding-top: 22px;
@@ -197,22 +205,37 @@ main{
     z-index: 3000;
 }*/
 
-.search-icon.fixed,
+/*.search-icon.fixed,
 .cart-icon.fixed {
     position: fixed;
-    top: 5px;     /* chỉnh để thẳng hàng chữ menu */
+    top: 5px;
     z-index: 3000;
+}*/
+
+.search-box.active ~ .cart-icon {
+    display: none;
 }
 
 .search-icon.fixed {
+    position: fixed;
+    z-index: 3000;
     top: 16px;
-    left: 40px;   /* bên trái */
+    right: 10px;   /* bên trái */
 }
 
 .cart-icon.fixed {
+    position: fixed;
+    z-index: 3000;
     top: 19px;
-    right: 40px;  /* bên phải */
+    right: 90px;  /* bên phải */
 }
+.login.fixed {
+    position: fixed;
+    z-index: 3000;
+    top: 17px;
+    right: 150px;  /* bên phải */
+}
+
 /*flash sale*/
 .flash-sale {
     background-color: #5a0000;

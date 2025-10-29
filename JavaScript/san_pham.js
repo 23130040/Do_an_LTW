@@ -11,21 +11,23 @@ function includeHTML(selector, filePath, callback) {
 // Gắn sự kiện tìm kiếm
 function setupSearchBox() {
     const searchBox = document.getElementById("searchBox");
-    const label = document.getElementById("search-label");
-    const input = document.getElementById("search-input");
-    const closeBtn = document.getElementById("search-close");
+    const searchInput = document.getElementById("search-input");
+    const searchClose = document.getElementById("search-close");
+    const cartIcon = document.querySelector(".cart-icon");
+    const searchLabel = document.getElementById("search-label");
 
-    if (!searchBox || !label || !input || !closeBtn) return;
-
-    label.addEventListener("click", () => {
+// Khi click vào Ô tìm kiếm hoặc icon
+    searchLabel.addEventListener("click", () => {
         searchBox.classList.add("active");
-        input.focus();
+        searchInput.focus();
+        cartIcon.style.display = "none";
     });
 
-    closeBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
+// Khi bấm dấu X để đóng search
+    searchClose.addEventListener("click", () => {
         searchBox.classList.remove("active");
-        input.value = "";
+        searchInput.blur();
+        cartIcon.style.display = "flex";
     });
 }
 
@@ -34,16 +36,19 @@ function setupStickyMenu() {
     const menu = document.getElementById("menu");
     const searchIcon = document.querySelector(".search-icon");
     const cartIcon = document.querySelector(".cart-icon");
+    const login = document.querySelector(".login");
 
     window.addEventListener("scroll", () => {
         if (window.scrollY > 100) {
             menu.classList.add("fixed");
             searchIcon.classList.add("fixed");
             cartIcon.classList.add("fixed");
+            login.classList.add("fixed");
         } else {
             menu.classList.remove("fixed");
             searchIcon.classList.remove("fixed");
             cartIcon.classList.remove("fixed");
+            login.classList.remove("fixed");
         }
     });
 }
