@@ -107,7 +107,7 @@ nav .menu .item:hover{
     left: 0;
     width: 100%;
     height: 100%;
-    
+
     background-color: rgba(0, 0, 0, 0.5);
 
     z-index: -1;
@@ -165,8 +165,7 @@ nav .menu .item:hover{
     padding: 10px 5px 20px;
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: #ff0000 transparent;
-    position: relative;
+    scrollbar-color: #ff0000 transparent;position: relative;
     white-space: nowrap;
     max-width: 100%;
     width: 100vw;
@@ -283,66 +282,71 @@ nav .menu .item:hover{
 .flash-item button:active {
     background-color: #179e5d;
 }
-/* --- PHẦN DANH MỤC SẢN PHẨM  --- */
+
+/* --- PHẦN DANH MỤC SẢN PHẨM --- */
 .product-section {
     text-align: center;
-    padding: 60px 40px;
+    padding: 50px 40px;
     margin-top: 60px;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100vw; /* 🔹 chiếm toàn màn hình như flash-sale */
+    margin-left: calc(-50vw + 50%); /* 🔹 kéo ra 2 bên để cân giữa */
 }
+
+/* Tiêu đề phần danh mục */
 .section-title {
-    font-size: 30px;
+    font-size: 28px;
     color: #333;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
     font-weight: bold;
 }
 
+/* Lưới sản phẩm */
 .product-list {
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    justify-content: center; /* canh giữa */
     gap: 25px;
-}
+    padding: 0 30px;
+}/* Thẻ sản phẩm */
 .product-item {
-    background: #ffffff;
+    width: 260px;
+    height: 350px;
+    flex: 0 0 260px;
+    background: #fff;
     border-radius: 12px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    width: 230px;
-    padding: 15px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     text-align: center;
+    padding: 18px 15px 20px;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+/* Hiệu ứng hover */
 .product-item:hover {
     transform: translateY(-6px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
 }
 
-/* ẢNH SẢN PHẨM */
+/* Ảnh sản phẩm */
 .product-item img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 12px;
 }
-
-/* TÊN SẢN PHẨM */
+/* Tên sản phẩm */
 .product-item h3 {
     font-size: 17px;
     color: #222;
-    margin: 10px 0 5px;
+    margin: 8px 0 6px;
     height: 40px;
+    overflow: hidden;
 }
 
-/* GIÁ */
+/* Giá */
 .product-item .price {
     color: #e00000;
     font-weight: bold;
@@ -350,7 +354,7 @@ nav .menu .item:hover{
     margin-bottom: 10px;
 }
 
-/* NÚT THÊM VÀO GIỎ */
+/* Nút thêm vào giỏ hàng */
 .product-item button {
     background-color: white;
     color: #e00000;
@@ -361,6 +365,8 @@ nav .menu .item:hover{
     font-weight: 600;
     font-size: 14px;
     transition: all 0.3s ease;
+    margin-top: 8px;  /* 🔹 đẩy nút lên */
+    margin-bottom: 10px; /* 🔹 tránh chạm mép khung */
 }
 
 .product-item button:hover {
@@ -382,20 +388,24 @@ nav .menu .item:hover{
     border-radius: 5px;
     font-weight: bold;
 }
+
+
 .product-category {
-    max-width: 1200px;
+    max-width: none; /* 🔹 bỏ giới hạn 1200px */
     margin: 40px auto;
 }
+
 /*Phần danh mục sản phẩm*/
 .category-header {
-    max-width: 1200px;        /* Giống với chiều rộng khung sản phẩm */
-    margin: 0 auto 30px auto; /* Căn giữa và thêm khoảng cách dưới */
+    max-width: 1400px;
+    margin: 0 auto 30px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    padding: 0 20px;          /* Cho đều hai bên một chút */
+    padding: 0 30px;
 }
+
 
 /* Tiêu đề bên trái */
 .section-title {
@@ -444,8 +454,7 @@ nav .menu .item:hover{
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    outline: none;
+    transition: all 0.3s ease;outline: none;
 }
 
 .filter-sort:hover,
@@ -457,8 +466,11 @@ nav .menu .item:hover{
 }
 /*PHẦN XEM TẤT CẢ*/
 .xem-tat-ca {
-    text-align: center;
-    margin-top: 30px;
+    display: flex;
+    justify-content: center; /* 🔹 canh giữa ngang */
+    margin-top: 35px;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .xem-tat-ca button {
@@ -466,19 +478,20 @@ nav .menu .item:hover{
     border: 2px solid #e00000;
     color: #e00000;
     font-weight: 600;
-    padding: 10px 40px;
-    border-radius: 6px; /* bo nhẹ 6px, có thể 0 nếu muốn vuông hẳn */
+    padding: 12px 45px; /* 🔹 tăng padding cho cân với các nút sản phẩm */
+    border-radius: 8px;
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* 🔹 thêm bóng nhẹ */
 }
 
 .xem-tat-ca button:hover {
     background-color: #28a745;
     color: white;
     border-color: #28a745;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 /* --- FOOTER --- */
 .footer {
@@ -567,14 +580,14 @@ nav .menu .item:hover{
     width: 100%;
     position: relative;
     bottom: 0;
-    margin-top: 40px; /* tạo khoảng cách giữa "XEM TẤT CẢ" và footer */
+    margin-top: 40px;
 }
 
 .footer-content {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    max-width: 1600px; /* nới rộng tối đa layout */
+    max-width: 1600px;
     width: 100%;
 }
 
@@ -614,8 +627,7 @@ nav .menu .item:hover{
 
 /* Giúp footer luôn ở cuối khi trang ngắn */
 html, body {
-    height: 100%;
-    margin: 0;
+    height: 100%;margin: 0;
     display: flex;
     flex-direction: column;
 }
@@ -623,4 +635,34 @@ html, body {
 main {
     flex: 1;
 }
+/* --- PHÂN 1 2 3 --- */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0;
+}
 
+.pagination a {
+    color: #e00000;
+    border: 1px solid #e00000;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+    transform: translateY(-2px);
+}
+
+.pagination a.active {
+    background-color: #e00000;
+    color: white;
+    border-color: #e00000;
+}
