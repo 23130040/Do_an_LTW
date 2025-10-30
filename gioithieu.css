@@ -85,7 +85,7 @@ body {
     color: #ff4b4b;
 }
 
-/* ======= PHẦN NỘI DUNG MỚI ======= */
+/* ======= PHẦN NỘI DUNG  ======= */
 .hero {
     display: flex;
     align-items: center;
@@ -147,7 +147,7 @@ body {
     border-radius: 12px;
 }
 
-/* ======= PHẦN GIỚI THIỆU SẢN PHẨM VIỆT ======= */
+/* ======= PHẦN NỘI DUNG 2 ======= */
 .product-intro {
     background-color: #fff6f0;
     padding: 30px 10% 50px;
@@ -159,7 +159,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 80px; /* Khoảng giữa 2 khối vừa phải */
+    gap: 80px;
     max-width: 1200px;
     width: 100%;
 }
@@ -167,7 +167,7 @@ body {
 .product-image {
     flex: 1;
     display: flex;
-    justify-content: flex-start; /* Căn trái để so le với phần trên */
+    justify-content: flex-start;
 }
 
 .product-image img {
@@ -254,14 +254,14 @@ body {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hiệu ứng hover: sáng nhẹ và nổi hơn */
+
 .step:hover {
     transform: translateY(-6px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     background-color: #e45c5c;
 }
 
-/* Icon đồng màu với nền để đồng nhất thương hiệu */
+
 .icon {
     font-size: 50px;
     color: #fff;
