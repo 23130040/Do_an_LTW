@@ -1,7 +1,6 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    height: 3000px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -11,90 +10,22 @@ a {
     font-size: 20px;
 }
 
-
-p{
-
-}
-
 main{
-
     width: 100%;
-    margin:  auto;
+    margin: auto;
     min-height: 100vh;
 }
 
-nav{
-    height: auto;
-    position: relative;
-    z-index: 99999999 !important;
-    /**border-bottom: 3px solid #3caf4b;**/
-    /**border-left: 6px solid #3caf4b;**/
-    /**background: #eeeeee;**/
-}
-nav .menu {
-    display: flex;
-    align-items: center;
-    top: 0;
-    position: absolute;
-    width: 100%;
-    height: 70px;
-    background: transparent;
-    z-index: 999999 !important;
-
-    justify-content: center;
-    transition: background 0.3s ease;
-}
-
-nav .menu.fixed {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: #ffffff;
-    /**box-shadow: 0 2px 5px rgba(0,0,0,0.15);**/
-    border-bottom: 2px solid  #3caf4b;
-    border-left: 2px solid  #3caf4b;
-    border-right: 2px solid  #3caf4b;
-    border-radius: 0 0 50px 50px;
-    z-index: 9999;
-}
-
-nav .menu.fixed .item {
-    color: black ;
-}
-
-nav .menu .item{
-    float: left;
-    width: fit-content;
-    padding: 16px;
-    font-size: 20px;
-    font-weight: 500;
-    cursor: pointer;
-    height: 50px;
-    text-align: center;
-    line-height: 43px;
-    color: #eeeeee;
-}
-
-nav .menu .item:hover{
-    /**background: #3caf4b**/;
-    color: #3caf4b;
-}
-
 .banner {
-
-    /**ảnh nên**/
-    background-image: url('../images/banner.png');
+    background-image: url('../images/banner_home.png');
     background-size: cover;
     background-position: center;
-    height: 500px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     color: white;
-
-
     position: relative;
     z-index: 1;
 }
@@ -107,17 +38,204 @@ nav .menu .item:hover{
     left: 0;
     width: 100%;
     height: 100%;
-    
-    background-color: rgba(0, 0, 0, 0.5);
+
+    /* độ mờ lớp phủ*/
+    background-color: rgba(0,0,0, 0.5);
 
     z-index: -1;
 }
 
-
-.banner h1, .banner p {
-    position: relative;
-    z-index: 2;
+.banner .gretting {
+    margin-top: 10px;
+    text-align: center;
 }
+
+
+/* KHỐI HEADER */
+.header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 2000;
+    color: white;
+}
+
+/* HÀNG TRÊN CÙNG */
+.top-bar {
+    width: 100%;
+    height: 80px;
+    position: relative;
+}
+
+/* Logo căn giữa cực chuẩn */
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.logo img {
+    width: 100px;
+    height: 90px;
+    transition: opacity 0.2s ease;
+}
+
+/* Search + Cart nằm góc phải */
+.cart-icon {
+    position: absolute;
+    right: 90px;
+    top: 26px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    transition: opacity 0.3s ease;
+}
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    transition: opacity 0.3s ease;
+}
+
+.login{
+    position: absolute;
+    right: 150px;
+    top: 23px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    transition: opacity 0.3s ease;
+
+}
+
+/* Search Box */
+
+
+#search-label i {
+    font-size: 18px;
+    color: white;
+
+}
+
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+#search-input {
+    width: 0;
+    opacity: 0;
+    padding: 6px 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    transition: 0.3s ease;
+}
+#search-close { display: none; }
+
+.search-box.active #search-label { display: inline-block; }
+.search-box.active #search-input {
+    width: 200px;
+    opacity: 1;
+    background: #fff;
+}
+.search-box.active #search-close { display: inline; }
+
+/* ICON GIỎ */
+.cart-icon { cursor: pointer; }
+
+/* MENU */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    padding: 14px 0;
+    font-size: 20px;
+    transition: background 0.3s ease;
+    margin-top: -20px;
+}
+.menu a {
+    text-decoration: none;
+    color: white;
+}
+.menu a:hover {
+    color: #04aa6d;
+}
+
+/* KHI CUỘN */
+.menu.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #343A40;
+    height: 50px;
+
+}
+.menu.fixed a {
+    padding-top: 22px;
+}
+.menu.fixed a {
+    color: white;
+}
+
+.menu.fixed a:hover {
+    color: black;
+}
+
+
+/* ẨN LOGO KHI CUỘN */
+.header.hide-logo .logo img {
+    opacity: 0;
+    pointer-events: none;
+}
+/* Khi cuộn → search-cart đi theo menu */
+/*.menu.fixed ~ .search-cart,
+.search-cart.fixed {
+    position: fixed;
+    top: 12px;
+    right: 40px;
+    z-index: 3000;
+}*/
+
+/*.search-icon.fixed,
+.cart-icon.fixed {
+    position: fixed;
+    top: 5px;
+    z-index: 3000;
+}*/
+
+.search-box.active ~ .cart-icon {
+    display: none;
+}
+
+.search-icon.fixed {
+    position: fixed;
+    z-index: 3000;
+    top: 16px;
+    right: 10px;   /* bên trái */
+}
+
+.cart-icon.fixed {
+    position: fixed;
+    z-index: 3000;
+    top: 19px;
+    right: 90px;  /* bên phải */
+}
+.login.fixed {
+    position: fixed;
+    z-index: 3000;
+    top: 17px;
+    right: 150px;  /* bên phải */
+}
+
 /*flash sale*/
 .flash-sale {
     background-color: #5a0000;
