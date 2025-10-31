@@ -41,6 +41,7 @@ function setupStickyMenu() {
     const searchIcon = document.querySelector(".search-icon");
     const cartIcon = document.querySelector(".cart-icon");
     const login = document.querySelector(".login");
+    const logo = document.querySelector(".logo");
 
     window.addEventListener("scroll", () => {
         if (window.scrollY > 100) {
@@ -48,11 +49,13 @@ function setupStickyMenu() {
             searchIcon.classList.add("fixed");
             cartIcon.classList.add("fixed");
             login.classList.add("fixed");
+            logo.classList.add("fixed");
         } else {
             menu.classList.remove("fixed");
             searchIcon.classList.remove("fixed");
             cartIcon.classList.remove("fixed");
             login.classList.remove("fixed");
+            logo.classList.remove("fixed");
         }
     });
 }
@@ -89,4 +92,17 @@ function updateBannerFromAttributes() {
 includeHTML("#banner-container", "banner.html", () => {
     updateBannerFromAttributes();
 });
+
+// Cuộn ngang trang khi ấn mũi tên trái phải
+function scrollToLeft(button) {
+    const carousel = button.closest('.product-carousel');
+    const list = carousel.querySelector('.product-list');
+    list.scrollBy({ left: -300, behavior: 'smooth' });
+}
+
+function scrollToRight(button) {
+    const carousel = button.closest('.product-carousel');
+    const list = carousel.querySelector('.product-list');
+    list.scrollBy({ left: 300, behavior: 'smooth' });
+}
 

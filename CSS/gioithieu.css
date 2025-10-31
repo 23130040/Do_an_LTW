@@ -1,7 +1,19 @@
-body {
+body{
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #fff8f4;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 20px;
+}
+
+main{
+    width: 100%;
+    margin: auto;
+    min-height: 100vh;
 }
 
 /********************** HEADER **********************/
@@ -24,13 +36,11 @@ body {
     height: 80px;
 }
 
-/* Logo bên trái */
 .logo img {
     width: 110px;
     height: auto;
 }
 
-/* Menu giữa */
 .menu {
     display: flex;
     justify-content: center;
@@ -49,7 +59,6 @@ body {
     color: #ff4b4b;
 }
 
-/* Icon + Đăng nhập bên phải */
 .right-section {
     display: flex;
     align-items: center;
@@ -137,7 +146,7 @@ body {
 .hero-image {
     flex: 1;
     display: flex;
-    justify-content: flex-end; /* Căn phải để cân với chữ bên trái */
+    justify-content: flex-end;
 }
 .hero-image img {
     width: 100%;

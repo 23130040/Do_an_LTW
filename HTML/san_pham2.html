@@ -3,37 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Fresh Meat</title>
-    <link rel="stylesheet" href="styles.css">
-    <title>Fire Icon Example</title>
+    <link rel="stylesheet" href="../CSS/san_pham.css">
     <!-- Link Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
 <main>
-    <nav>
-        <div id="home" class="section active" style="overflow-x:hidden;">
-            <div class="banner">
-                <div class="menu">
-                    <div class="item">
-                        <a href="../Trang_chu/trang_chu.html" class="home link">Trang chủ</a>
+    <nav class="header">
+        <!-- Hàng trên: Logo + Search & Cart -->
+        <div class="top-bar">
+            <div class="logo">
+                <img src="../images/logoCleanmeat.png">
+            </div>
+
+            <div class="search-cart ">
+                <div class="search-icon">
+                    <div class="search-box" id="searchBox">
+                <span id="search-label">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </span>
+                        <input type="text" id="search-input" placeholder="Nhập từ khóa..." />
+                        <span id="search-close">✖</span>
                     </div>
-                    <div class="item">
-                        <a href="../San_Pham/san_pham.html" class="product link">Sản Phẩm</a>
-                    </div>
-                    <div class="item">
-                        <a href="../Trang_Dang_Nhap_Dang_Ky/TrangDangNhap.html" class="product link">Đăng nhập</a>
-                    </div>
-                    <div class="item">
-                        <a href="../Trang_Dang_Nhap_Dang_Ky/TrangDangKy.html" class="product link">Đăng ký</a>
-                    </div>
-                    <div class="item">Giỏ Hàng</div>
                 </div>
 
-                <div id="greeting" class="section active">
-                    <h1>Sự tin tưởng của bạn là động lực của chúng tôi </h1>
-                    <p>--</p>
+                <div class="cart-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
                 </div>
             </div>
+            <div class="login">
+                <a href="TrangDangNhap.html">Đăng nhập</a>
+            </div>
+
+        </div>
+
+        <!-- Menu -->
+        <div class="menu" id="menu">
+
+            <a href="trang_chu_chua_login.html">Trang chủ</a>
+            <a href="san_pham.html">Sản phẩm</a>
+            <a href="#">Giới Thiệu</a>
+            <a href="#">Tin Tức</a>
+            <a href="#">Chính Sách Đổi Trả</a>
+        </div>
+    </nav>
+
+    <div class="banner">
+        <div class="gretting">
+            <h1 id="greet-title">Chào Mừng Đến Với CleanMeat</h1>
+            <p id="greet-desc">Vì sức khỏe, vì gia đình, và vì chính bạn. Chúng tôi mong mỗi bữa ăn đều là một niềm hạnh phúc</p>
+        </div>
+    </div>
 
             <!-- FLASH SALE  -->
             <section class="flash-sale">
@@ -129,43 +150,43 @@
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/DMSPHEO2.png" alt="Thịt nạc thăn heo">
+                    <img src="../images/DMSPHEO1.png" alt="Thịt nạc thăn heo">
                     <h3>Thịt nạc thăn heo</h3>
                     <p class="price">185.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/DMSPHEO3.png" alt="Nạc đùi heo">
+                    <img src="../images/DMSPHEO1.png" alt="Nạc đùi heo">
                     <h3>Nạc đùi heo</h3>
                     <p class="price">110.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/DMSPHEO4.png" alt="Nạc vai heo">
+                    <img src="../images/DMSPHEO1.png" alt="Nạc vai heo">
                     <h3>Nạc vai heo</h3>
                     <p class="price"> 126.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/DMSPHEO5.png" alt="Nạc dăm hữu cơ">
+                    <img src="../images/DMSPHEO1.png" alt="Nạc dăm hữu cơ">
                     <h3>Nạc dăm hữu cơ</h3>
                     <p class="price">135.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/DMSPHEO6.png" alt="Tai heo">
+                    <img src="../images/DMSPHEO1.png" alt="Tai heo">
                     <h3>Tai heo</h3>
                     <p class="price">75.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/DMSPHEO7.png" alt="Chân giò">
+                    <img src="../images/DMSPHEO1.png" alt="Chân giò">
                     <h3>Chân giò</h3>
                     <p class="price">118.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/DMSPHEO8.png" alt="Xương cổ heo">
+                    <img src="../images/DMSPHEO1.png" alt="Xương cổ heo">
                     <h3>Xương cổ heo</h3>
                     <p class="price">109.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
@@ -179,69 +200,68 @@
                 <a href="san_pham3.html">3</a>
                 <a href="san_pham3.html" class="next">&raquo;</a>
             </div>
+
+
             <!-- FOOTER -->
-            <footer class="footer">
-                <div class="footer-content">
-                    <div class="footer-left">
-                        <img src="/images/logo.png" class="footer-logo" />
-                        <p><b>CÔNG TY TNHH THƯƠNG MẠI CLEAMEAT</b></p>
-                        <p>GPKD số 054168761 cấp ngày 01/12/2020 tại Sở KH & ĐT TP Hồ Chí Minh</p>
-                        <p>📍 268/06A Hoàng Văn Thụ, Phường Tân Sơn Hòa, TP Hồ Chí Minh</p>
+            <footer class="main-footer">
+                <div class="footer-container">
+                    <div class="footer-col about-us">
+                        <div class="footer-logo">
+                            <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
+                        </div>
+                        <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
                     </div>
 
-                    <div class="footer-column">
-                        <h3>Thông tin chung</h3>
-                        <p>Câu chuyện của CleaMeat</p>
-                        <p>Tin tức - Hồ sơ pháp lý</p>
-                        <p>Góc ẩm thực</p>
+                    <div class="footer-col quick-links">
+                        <h4>Liên Kết Nhanh</h4>
+                        <ul>
+                            <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
+                            <li><a href="san_pham.html">Sản Phẩm</a></li>
+                            <li><a href="#">Giới Thiệu</a></li>
+                            <li><a href="#">Tin Tức</a></li>
+                            <li><a href="#">Chính Sách Đổi Trả</a></li>
+                        </ul>
                     </div>
 
-                    <div class="footer-column">
-                        <h3>Hỗ trợ khách hàng</h3>
-                        <p>Chính sách giao hàng</p>
-                        <p>Chính sách đổi trả</p>
-                        <p>Đánh giá góp ý</p>
-                        <p>Chính sách kiểm hàng</p>
-                        <p>Chính sách bảo mật thông tin</p>
-                        <p>Chính sách thanh toán</p>
+                    <div class="footer-col contact-info">
+                        <h4>Liên Hệ Chúng Tôi</h4>
+                        <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
+                        <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
+                        <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
+                        <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
                     </div>
-
-                    <div class="footer-column">
-                        <h3>Chăm sóc khách hàng</h3>
-                        <p>📞 18006828</p>
-                        <p>✉ cleameat@gmail.com</p>
-                        <h3>Kết nối với chúng tôi</h3>
-                    </div>
-
                 </div>
             </footer>
 
-            <script>
-                const categories = document.querySelectorAll('.category');
-                categories.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // Điều hướng sang trang
-                        const page = btn.getAttribute('data-page');
-                        if (page) {
-                            window.location.href = page;
-                        }
-                    });
-                });
 
-                // Hiệu ứng chọn nút phân trang
-                const pages = document.querySelectorAll('.pagination a');
-                pages.forEach(p => {
-                    p.addEventListener('click', e => {
-                        e.preventDefault();
-                        pages.forEach(btn => btn.classList.remove('active'));
-                        p.classList.add('active');
-                    });
-                });
-            </script>
 
-        </div>
-    </nav>
 </main>
-<script src="func.js"></script>
+<script src="../JavaScript/san_pham.js"></script>
+<script>
+    const categories = document.querySelectorAll('.category');
+    categories.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Điều hướng sang trang
+            const page = btn.getAttribute('data-page');
+            if (page) {
+                window.location.href = page;
+            }
+        });
+    });
+
+    // Hiệu ứng chọn nút phân trang
+    const pages = document.querySelectorAll('.pagination a');
+    pages.forEach(p => {
+        p.addEventListener('click', e => {
+            e.preventDefault();
+            pages.forEach(btn => btn.classList.remove('active'));
+            p.classList.add('active');
+        });
+    });
+</script>
 </body>
 </html>

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Fresh Meat</title>
-    <link rel="stylesheet" href="styles.css">
-
+    <link rel="stylesheet" href="../CSS/san_pham.css">
+    <title>Fire Icon Example</title>
+    <!-- Link Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
 <main>
@@ -63,8 +65,7 @@
                     </div>
 
                     <div class="flash-item">
-                        <div class="discount">-11%</div>
-                        <img src="../images/sale3.png" alt="Sản phẩm 3">
+                        <div class="discount">-11%</div><img src="../images/sale3.png" alt="Sản phẩm 3">
                         <p class="title">Ba rọi rút sườn MEATDeli 450gr</p>
                         <p class="price">170,000đ <span class="old">190,000đ</span></p>
                         <button>THÊM VÀO GIỎ</button>
@@ -117,8 +118,7 @@
                         <option>Giá tăng dần</option>
                         <option>Giá giảm dần</option>
                         <option>Tên A-Z</option>
-                    </select>
-                </div>
+                    </select></div>
             </div>
 
             <div class="product-list">
@@ -170,9 +170,14 @@
                     <p class="price">109.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
-                <div class="xem-tat-ca">
-                    <button>XEM TẤT CẢ</button>
-                </div>
+            </div>
+            <!--            nút 1 2 3-->
+            <div class="pagination">
+                <a href="san_pham.html" class="prev">&laquo;</a>
+                <a href="san_pham.html" class="active">1</a>
+                <a href="san_pham2.html">2</a>
+                <a href="san_pham3.html">3</a>
+                <a href="san_pham3.html" class="next">&raquo;</a>
             </div>
             <!-- FOOTER -->
             <footer class="footer">
@@ -215,20 +220,25 @@
                 const categories = document.querySelectorAll('.category');
                 categories.forEach(btn => {
                     btn.addEventListener('click', () => {
-                        // Điều hướng sang trang tương ứng
+                        // Điều hướng sang trang
                         const page = btn.getAttribute('data-page');
                         if (page) {
                             window.location.href = page;
                         }
                     });
                 });
-            </script>
-            <script>
-                document.querySelector(".xem-tat-ca button").addEventListener("click", () => {
-                    window.location.href = "../San_Pham/Tatcasanpham.html";
+
+                // Hiệu ứng chọn nút phân trang
+                const pages = document.querySelectorAll('.pagination a');
+                pages.forEach(p => {
+                    p.addEventListener('click', e => {
+                        e.preventDefault();
+                        pages.forEach(btn => btn.classList.remove('active'));
+                        p.classList.add('active');
+                    });
                 });
             </script>
-            </section>
+
         </div>
     </nav>
 </main>
