@@ -1,6 +1,6 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background-image: url("../image/background.jpg");
+    background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -45,7 +45,7 @@ main #signup_container .form_input #submit{
     border: none;
 }
 main #signup_container .form_input #submit:hover{
-    background-color: rgb(11, 170, 74);
+    background-color: #8d2a3a;
 }
 main #signup_container .login_link{
     font-size: 25px;

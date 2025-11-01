@@ -1,7 +1,7 @@
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background-image: url("../image/background.jpg");
+    background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -85,7 +85,7 @@ a {
     text-decoration: underline;
 }
 #wrapper form .block a:active{
-    color: rgb(11, 170, 74);
+    color: black;
 }
 
 .form_submit {
@@ -103,7 +103,7 @@ a {
     border: none;
 }
 .form_submit:hover {
-    background-color: rgb(11, 170, 74);
+    background-color: #8d2a3a;
     color: white;
     text-decoration: none !important;
 }
