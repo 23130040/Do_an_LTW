@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin</title>
     <link rel="stylesheet" href="../CSS/admin_quan_ly_sp-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -18,7 +17,18 @@
 
             <div class="header-icons">
                 <i class="fa-solid fa-bell"></i>
-                <i class="fas fa-user-circle user-logo"></i>
+
+                <div class="user-dropdown">
+                    <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
+
+                    <div id="userMenuContent" class="dropdown-content">
+                        <a href="#"> Thông tin tài khoản</a>
+                        <a href="#"> Cài đặt cá nhân</a>
+                        <a href="#"> Quản lý vai trò</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="logout-link"> Đăng xuất</a>
+                    </div>
+                </div>
             </div>
         </header>
         <!---------------- Side Bar ------------------->
@@ -27,7 +37,7 @@
                 <nav class="sidebar-nav">
                     <ul>
                         <li><a href="#"> Quản lý sản phẩm</a></li>
-                        <li><a href="#"> Quản lý người dùng</a></li>
+                        <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
                         <li><a href="#"> Quản lý đơn hàng</a></li>
                         <li><a href="#"> Quản lý thanh toán và doanh thu</a></li>
                         <li><a href="#"> Quản lý đánh giá và phản hồi</a></li>
@@ -134,7 +144,7 @@
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeProductModal()">&times;</span>
-            <h3>Thêm Sản Phẩm</h3>
+            <h3><span id="modal-title-product">Thêm</span> Sản Phẩm</h3>
             <form class="product-form">
                 <div class="form-section left-col">
                     <label>Tên sản phẩm:</label>
