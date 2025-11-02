@@ -106,3 +106,22 @@ function scrollToRight(button) {
     list.scrollBy({ left: 300, behavior: 'smooth' });
 }
 
+// PHẦN XỬ LÍ DANH MỤC
+const categories = document.querySelectorAll('.category');
+categories.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const page = btn.getAttribute('data-page');
+        if (page) {
+            window.location.href = page;
+        }
+    });
+});
+
+// PHẦN XỬ LÍ 1 2 3
+const pages = document.querySelectorAll('.pagination a');
+pages.forEach(p => {
+    p.addEventListener('click', e => {
+        pages.forEach(btn => btn.classList.remove('active'));
+        p.classList.add('active');
+    });
+});

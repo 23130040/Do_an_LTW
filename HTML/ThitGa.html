@@ -107,16 +107,15 @@
 
                 <div class="right-controls">
                     <div class="category-buttons">
-                        <button class="category" data-page="../San_Pham/ThitHeo.html">Thịt heo</button>
-                        <button class="category active" data-page="../San_Pham/ThitGa.html">Thịt gà</button>
-                        <button class="category" data-page="../San_Pham/ThitBo.html">Thịt bò</button>
+                        <button class="category" data-page="../HTML/ThitHeo.html">Thịt heo</button>
+                        <button class="category active" data-page="../HTML/ThitGa.html">Thịt gà</button>
+                        <button class="category" data-page="../HTML/ThitBo.html">Thịt bò</button>
                     </div>
 
                     <select class="filter-sort">
                         <option>Mặc định</option>
                         <option>Giá tăng dần</option>
                         <option>Giá giảm dần</option>
-                        <option>Tên A-Z</option>
                     </select>
                 </div>
             </div>
@@ -170,68 +169,56 @@
                     <p class="price">110.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
-                <div class="xem-tat-ca">
-                    <button>XEM TẤT CẢ</button>
-                </div>
+            </div>
+            <!--            nút 1 2 3-->
+            <div class="pagination">
+                <a href="san_pham.html" class="prev">&laquo;</a>
+                <a href="san_pham.html" class="active">1</a>
+                <a href="san_pham2.html">2</a>
+                <a href="san_pham3.html">3</a>
+                <a href="san_pham3.html" class="next">&raquo;</a>
             </div>
             <!-- FOOTER -->
-            <footer class="footer">
-                <div class="footer-content">
-                    <div class="footer-left">
-                        <img src="/images/logo.png" class="footer-logo" />
-                        <p><b>CÔNG TY TNHH THƯƠNG MẠI CLEAMEAT</b></p>
-                        <p>GPKD số 054168761 cấp ngày 01/12/2020 tại Sở KH & ĐT TP Hồ Chí Minh</p>
-                        <p>📍 268/06A Hoàng Văn Thụ, Phường Tân Sơn Hòa, TP Hồ Chí Minh</p>
+            <footer class="main-footer">
+                <div class="footer-container">
+                    <div class="footer-col about-us">
+                        <div class="footer-logo">
+                            <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
+                        </div>
+                        <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
                     </div>
 
-                    <div class="footer-column">
-                        <h3>Thông tin chung</h3>
-                        <p>Câu chuyện của CleaMeat</p>
-                        <p>Tin tức - Hồ sơ pháp lý</p>
-                        <p>Góc ẩm thực</p>
+                    <div class="footer-col quick-links">
+                        <h4>Liên Kết Nhanh</h4>
+                        <ul>
+                            <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
+                            <li><a href="san_pham.html">Sản Phẩm</a></li>
+                            <li><a href="#">Giới Thiệu</a></li>
+                            <li><a href="#">Tin Tức</a></li>
+                            <li><a href="#">Chính Sách Đổi Trả</a></li>
+                        </ul>
                     </div>
 
-                    <div class="footer-column">
-                        <h3>Hỗ trợ khách hàng</h3>
-                        <p>Chính sách giao hàng</p>
-                        <p>Chính sách đổi trả</p>
-                        <p>Đánh giá góp ý</p>
-                        <p>Chính sách kiểm hàng</p>
-                        <p>Chính sách bảo mật thông tin</p>
-                        <p>Chính sách thanh toán</p>
+                    <div class="footer-col contact-info">
+                        <h4>Liên Hệ Chúng Tôi</h4>
+                        <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
+                        <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
+                        <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
+                        <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
                     </div>
-
-                    <div class="footer-column">
-                        <h3>Chăm sóc khách hàng</h3>
-                        <p>📞 18006828</p>
-                        <p>✉ cleameat@gmail.com</p>
-                        <h3>Kết nối với chúng tôi</h3>
-                    </div>
-
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
                 </div>
             </footer>
 
-            <script>
-                const categories = document.querySelectorAll('.category');
-                categories.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // Điều hướng sang trang tương ứng
-                        const page = btn.getAttribute('data-page');
-                        if (page) {
-                            window.location.href = page;
-                        }
-                    });
-                });
-            </script>
-            <script>
-                document.querySelector(".xem-tat-ca button").addEventListener("click", () => {
-                    window.location.href = "../San_Pham/Tatcasanpham.html";
-                });
-            </script>
-            </section>
         </div>
     </nav>
 </main>
-<script src="func.js"></script>
+<script src="../JavaScript/san_pham.js"></script>
 </body>
 </html>

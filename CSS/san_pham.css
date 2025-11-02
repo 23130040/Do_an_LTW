@@ -587,36 +587,37 @@ main{
     color: white;
     transform: translateY(-2px);
 }
-/*PHẦN XEM TẤT CẢ*/
-.xem-tat-ca {
+/* --- PHÂN 1 2 3 --- */
+.pagination {
     display: flex;
-    justify-content: center; /* 🔹 canh giữa ngang */
-    margin-top: 35px;
-    margin-bottom: 20px;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0;
 }
 
-.xem-tat-ca button {
-    background-color: white;
-    border: 2px solid #e00000;
+.pagination a {
     color: #e00000;
+    border: 1px solid #e00000;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 6px;
     font-weight: 600;
-    padding: 12px 45px; /* 🔹 tăng padding cho cân với các nút sản phẩm */
-    border-radius: 8px;
-    font-size: 15px;
-    cursor: pointer;
     transition: all 0.3s ease;
-    text-transform: uppercase;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* 🔹 thêm bóng nhẹ */
 }
 
-.xem-tat-ca button:hover {
+.pagination a:hover {
     background-color: #28a745;
     color: white;
     border-color: #28a745;
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
+.pagination a.active {
+    background-color: #e00000;
+    color: white;
+    border-color: #e00000;
+}
 /************************* FOOTER *******************************/
 
 .main-footer {
@@ -723,5 +724,3 @@ main{
     background-color: #222; /* Màu tối hơn một chút */
     font-size: 14px;
 }
-
-
