@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clean Meat</title>
+    <link rel="stylesheet" href="../CSS/HoSoStyle.css">
+    <link rel="stylesheet" href="../CSS/all.min.css">
+</head>
+<body>
+    <nav id="menubar">
+        <div class="sixteen column">
+            <div class="one-fifth column left">
+                <img src="../images/logoCleanmeat.png" alt="logo">
+            </div>
+            <div class="three-fifths column center">
+                <ul class="menu-center">
+                    <li class="menuitem first"><a href="#">Trang chủ</a></li>
+                    <li class="menuitem second"><a href="#">Sản phẩm</a></li>
+                    <li class="menuitem third"><a href="#">Giới thiệu</a></li>
+                    <li class="menuitem forth"><a href="#">Tin tức</a></li>
+                </ul>
+            </div>
+            <div class="one-fifth column right">
+                <ul class="menu-right">
+                    <li class="menuitem"><i class="fa-solid fa-magnifying-glass"></i></li>
+                    <li class="menuitem"><a href="" class="link-cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <li class="menuitem user-menu-wrapper">
+                        <div class="user">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <ul class="user-menu">
+                            <li class ="user-menuitem"><a href="#">Tài khoản của tôi</a></li>
+                            <li class ="user-menuitem"><a href="#">Đơn hàng của tôi</a></li>
+                            <li class ="user-menuitem"><a href="#">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <div class="main header">
+                <h1>Tài khoản của tôi</h1>
+            </div>
+            <div id="sidebar">
+                <div class="sidebar header">
+                    <div class="sidebar header left">
+                        <img src="../images/avatar.jpg" alt="avatar">
+                    </div>
+                    <div class="sidebar header right">
+                        <h3 class="sidebar header username">Tên người dùng</h3>
+                    </div>
+                </div>
+                <div class="sidebar menu">
+                    <a href="#">Hồ sơ</a>
+                    <a href="#">Địa chỉ</a>
+                    <a href="#">Đổi mật khẩu</a>
+                    <a href="#">Những thiết lập riêng tư</a>
+                </div>
+            </div>
+            <div class="main-content">
+                <div id="profile-content" class="tab-content active">
+                    <div class="profile-content header">
+                        <h1 class="header txt">
+                            HỒ SƠ CỦA TÔI
+                        </h1>
+                    </div>
+                    <div class="profile-content profile">
+                        <form class="profile-form">
+                            <div class="profile-form group">
+                                <label class="profile-form label">Tên đăng nhập</label>
+                                <span class="profile-form static-value">Tên đăng nhập của bạn</span>
+                            </div>
+                            <div class="profile-form group">
+                                <label for="name-input" class="profile-form label">Tên</label>
+                                <input type="text" id="name-input" name="name" class="profile-form input-field profile-form input-field editable">
+                            </div>
+                            <div class="profile-form group">
+                                <label class="profile-form label">Email</label>
+                                <div class="profile-form value-wrapper">
+                                    <span class="profile-form static-value">*******@gmail.com</span>
+                                    <a href="#" class="profile-form change-btn">Thay Đổi</a>
+                                </div>
+                            </div>
+                            <div class="profile-form group">
+                                <label class="profile-form label">Số điện thoại</label>
+                                <div class="profile-form value-wrapper">
+                                    <span class="profile-form static-value">**********</span>
+                                    <a href="#" class="profile-form change-btn">Thay Đổi</a>
+                                </div>
+                            </div>
+                            <div class="profile-form group">
+                                <label class="profile-form label">Giới tính</label>
+                                <div class="profile-form value-wrapper profile-form value-wrapper-radio">
+                                    <input type="radio" id="gender-male" name="gender" value="male">
+                                    <label for="gender-male" class="profile-form radio-label">Nam</label>
+                                    <input type="radio" id="gender-female" name="gender" value="female">
+                                    <label for="gender-female" class="profile-form radio-label">Nữ</label>
+                                    <input type="radio" id="gender-other" name="gender" value="other" checked>
+                                    <label for="gender-other" class="profile-form radio-label">Khác</label>
+                                </div>
+                            </div>
+                            <div class="profile-form group">
+                                <label class="profile-form label">Ngày sinh</label>
+                                <div class="profile-form value-wrapper">
+                                    <span class="profile-form static-value">**/**/****</span>
+                                    <a href="#" class="profile-form change-btn">Thay Đổi</a>
+                                </div>
+                            </div>
+                            <div class="profile-form submit-row">
+                                <button type="submit" class="profile-form submit-btn">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="profile-content avatar">
+                        <div class="avatar image">
+                            <img src="../images/avatar.jpg" alt="avatar">
+                        </div>
+                        <div class="avatar choose">
+                            <button class="choose-button">Chọn Ảnh</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="address-content" class="tab-content hidden">
+                    <div class="address-content header">
+                        <div class="header left">
+                            <h1 class="header txt big">ĐỊA CHỈ CỦA TÔI</h1>
+                        </div>
+                        <div class="header right">
+                            <button class="add-address-button">+ Thêm địa chỉ mới</button>
+                        </div>
+                    </div>
+                    <div class="address-content address">
+                        <div class="address-content address-header">
+                            <h3 class="header txt small">Địa chỉ</h3>
+                        </div>
+                        <div class="address-content address-content">
+
+                        </div>
+                    </div>
+                </div>
+                <div id="setting-content" class="tab-content hidden">
+                    <div class="setting-content header">
+                            <h1 class="header txt big">NHỮNG THIẾT LẬP RIÊNG TƯ</h1>
+                    </div>
+                    <div class="setting-content setting">
+                        <div class="setting-content left">
+                            <h3 class="header txt small">Yêu cầu xóa tài khoản</h3>
+                        </div>
+                        <div class="setting-content right">
+                            <button class="setting-content delete-btn">Xóa bỏ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col about-us">
+                <div class="footer-logo">
+                    <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
+                </div>
+                <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col quick-links">
+                <h4>Liên Kết Nhanh</h4>
+                <ul>
+                    <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
+                    <li><a href="san_pham.html">Sản Phẩm</a></li>
+                    <li><a href="#">Giới Thiệu</a></li>
+                    <li><a href="#">Tin Tức</a></li>
+                    <li><a href="#">Chính Sách Đổi Trả</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col contact-info">
+                <h4>Liên Hệ Chúng Tôi</h4>
+                <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
+                <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
+                <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
+                <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
+        </div>
+    </footer>
+</body>
+</html>
