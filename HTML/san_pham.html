@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fresh Meat</title>
+    <link rel="stylesheet" href="../CSS/san_pham.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+<main>
+    <nav class="header">
+        <!-- Hàng trên: Logo + Search & Cart -->
+        <div class="top-bar">
+            <div class="logo">
+                <img src="../images/logoCleanmeat.png">
+            </div>
+
+            <div class="search-cart ">
+                <div class="search-icon">
+                    <div class="search-box" id="searchBox">
+                <span id="search-label">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </span>
+                        <input type="text" id="search-input" placeholder="Nhập từ khóa..." />
+                        <span id="search-close">✖</span>
+                    </div>
+                </div>
+
+                <div class="cart-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+            </div>
+            <div class="login">
+                <a href="TrangDangNhap.html">Đăng nhập</a>
+            </div>
+
+        </div>
+
+        <!-- Menu -->
+        <div class="menu" id="menu">
+
+            <a href="trang_chu_chua_login.html">Trang chủ</a>
+            <a href="san_pham.html">Sản phẩm</a>
+            <a href="gioi_thieu.html">Giới Thiệu</a>
+            <a href="#">Tin Tức</a>
+            <a href="#">Chính Sách Đổi Trả</a>
+            <a href="san_pham.html">Giới thiệu</a>
+        </div>
+    </nav>
+
+    <div class="banner">
+        <div class="gretting">
+            <h1 id="greet-title">Chào Mừng Đến Với CleanMeat</h1>
+            <p id="greet-desc">Vì sức khỏe, vì gia đình, và vì chính bạn. Chúng tôi mong mỗi bữa ăn đều là một niềm hạnh phúc</p>
+        </div>
+    </div>
+
+            <!-- FLASH SALE  -->
+            <section class="flash-sale">
+                <div class="flash-header">
+                    <h2>🔥 Flash Sale</h2>
+                    <div class="countdown">
+                        <span>00</span> Ngày
+                        <span>00</span> Giờ
+                        <span>00</span> Phút
+                        <span>00</span> Giây
+                    </div>
+                </div>
+
+                <div class="flash-products">
+                    <div class="flash-item">
+                        <div class="discount">-55%</div>
+                        <img src="../images/sale1.png" alt="Sản phẩm 1">
+                        <p class="title">[HSD đến 09/11] nạn bò Úc </p>
+                        <p class="price">59,000đ <span class="old">130,000đ</span></p>
+                        <button>THÊM VÀO GIỎ</button>
+                    </div>
+
+                    <div class="flash-item">
+                        <div class="discount">-16%</div>
+                        <img src="../images/sale2.png" alt="Sản phẩm 2">
+                        <p class="title">Mỡ heo sạch 330gr</p>
+                        <p class="price">52,000đ <span class="old">62,000đ</span></p>
+                        <button>THÊM VÀO GIỎ</button>
+                    </div>
+
+                    <div class="flash-item">
+                        <div class="discount">-11%</div>
+                        <img src="../images/sale3.png" alt="Sản phẩm 3">
+                        <p class="title">Ba rọi rút sườn MEATDeli 450gr</p>
+                        <p class="price">170,000đ <span class="old">190,000đ</span></p>
+                        <button>THÊM VÀO GIỎ</button>
+                    </div>
+
+                    <div class="flash-item">
+                        <div class="discount">-8%</div>
+                        <img src="../images/sale4.png" alt="Sản phẩm 4">
+                        <p class="title">Sườn non heo MEATDeli 470gr</p>
+                        <p class="price">159,000đ <span class="old">172,000đ</span></p>
+                        <button>THÊM VÀO GIỎ</button>
+                    </div>
+
+                    <div class="flash-item">
+                        <div class="discount">-5%</div>
+                        <img src="../images/sale5.png" alt="Sản phẩm 5">
+                        <p class="title">Sườn bẹ heo 470gr</p>
+                        <p class="price">175,000đ <span class="old">185,000đ</span></p>
+                        <button>THÊM VÀO GIỎ</button>
+                    </div>
+                    <div class="flash-item">
+                        <div class="discount">-5%</div>
+                        <img src="../images/sale6.png" alt="Sản phẩm 6">
+                        <p class="title">bò tươi nguyên miếng 470gr</p>
+                        <p class="price">330,000đ <span class="old">400,000đ</span></p>
+                        <button>THÊM VÀO GIỎ</button>
+                    </div>
+                    <div class="flash-item">
+                        <div class="discount">-5%</div>
+                        <img src="../images/sale7.png" alt="Sản phẩm 7">
+                        <p class="title">Gà nguyên con 1,1kg</p>
+                        <p class="price">179,000đ <span class="old">200,000đ</span></p>
+                        <button>THÊM VÀO GIỎ</button>
+                    </div>
+                </div>
+                <!--DANH MỤC SẢN PHẨM -->
+                <section class="product-section">
+                    <h2 class="section-title">DANH MỤC SẢN PHẨM</h2>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <img src="../images/DMSP1.png" alt="Thịt heo cốt lết">
+                            <h3>Thịt heo cốt lết</h3>
+                            <p class="price">162.000 ₫ / KG</p>
+                            <button>THÊM VÀO GIỎ</button>
+                        </div>
+                        <div class="product-item">
+                            <img src="../images/DMSP2.png" alt="Nạc dăm hữu cơ">
+                            <h3>Nạc dăm hữu cơ</h3>
+                            <p class="price">135.000 ₫ / KG</p>
+                            <button>THÊM VÀO GIỎ</button>
+                        </div>
+                        <div class="product-item">
+                            <img src="../images/DMSP3.png" alt="Chân gà có xương">
+                            <h3>Chân gà có xương</h3>
+                            <p class="price">105.000 ₫ / KG</p>
+                            <button>THÊM VÀO GIỎ</button>
+                        </div>
+                        <div class="product-item">
+                            <img src="../images/DMSP4.png" alt="Má đùi gà">
+                            <h3>Má đùi gà</h3>
+                            <p class="price">98.000 ₫ / KG</p>
+                            <button>THÊM VÀO GIỎ</button>
+                        </div>
+                        <div class="product-item">
+                            <img src="../images/DMSP5.png" alt="Thịt bắp bò">
+                            <h3>Thịt bắp bò</h3>
+                            <p class="price">275.000 ₫ / KG</p>
+                            <button>THÊM VÀO GIỎ</button>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
+        </div>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col about-us">
+                <div class="footer-logo">
+                    <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
+                </div>
+                <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col quick-links">
+                <h4>Liên Kết Nhanh</h4>
+                <ul>
+                    <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
+                    <li><a href="san_pham.html">Sản Phẩm</a></li>
+                    <li><a href="#">Giới Thiệu</a></li>
+                    <li><a href="#">Tin Tức</a></li>
+                    <li><a href="#">Chính Sách Đổi Trả</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col contact-info">
+                <h4>Liên Hệ Chúng Tôi</h4>
+                <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
+                <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
+                <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
+                <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
+        </div>
+    </footer>
+
+</main>
+<script src="../JavaScript/san_pham.js"></script>
+</body>
+</html>
