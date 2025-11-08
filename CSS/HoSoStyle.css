@@ -3,6 +3,7 @@ body{
     display: flex;
     flex-direction: column;
     margin: 0;
+    background-color: #f8f8f8;
 }
 /***************Menu*******************/
 #menubar{
@@ -130,6 +131,175 @@ body{
 }
 #menubar .right .user-menu-wrapper:hover .user-menu{
     display: block;
+}
+/***********************Main******************************/
+.container{
+    width: 1400px;
+    min-height: 800px;
+    margin: 70px auto;
+    display: flex;
+}
+/************sidebar********************/
+.container #sidebar{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin-right: 20px;
+}
+.container #sidebar .header{
+    display: flex;
+    border-bottom: 1px solid #e9e9e9;
+    padding: 15px 0;
+}
+.container #sidebar .header IMG{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.container #sidebar .header h3{
+    color: black;
+    font-size: 21px;
+}
+.container #sidebar .menu{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.container #sidebar .menu a{
+    color: #565656;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 19px;
+}
+.container #sidebar .menu a:hover{
+    color: #04aa6d;
+}
+/************************content*************************/
+.container .main-content{
+    background-color: white;
+    width: 100%;
+}
+.container .main-content #profile-content{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #profile-content .header{
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 15px;
+}
+.container .main-content #profile-content .body{
+    display: flex;
+    font-size: 20px;
+}
+.container .main-content #profile-content .body .profile{
+    width: 700px;
+    margin-top: 40px;
+    margin-left: 20px;
+    border-right: 1px solid #e9e9e9;
+}
+.container .main-content #profile-content .body .profile .profile-form{
+
+}
+.container .main-content #profile-content .body .profile .group{
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+.container .main-content #profile-content .body .profile .group .label{
+    width: 170px;
+    font-weight: normal;
+    color: #555;
+    margin-right: 15px;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.static-value, .profile-form.input-field, .profile-form.value-wrapper {
+    flex-grow: 1;
+    margin-right: 50px;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.input-field {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.static-value {
+
+}
+.container .main-content #profile-content .body .profile .group a{
+    margin-left: 5px;
+    color: #007bff;
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio input[type="radio"]{
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio input[type="radio"]:checked{
+    color: #04aa6d;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio label{
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .submit-row{
+    text-align: center;
+}
+.container .main-content #profile-content .body .profile .submit-btn{
+    margin-top: 20px;
+    text-align: center;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+.container .main-content #profile-content .body .profile .submit-btn:hover{
+    background-color: #04aa6d;
+}
+.container .main-content #profile-content .body .avatar{
+
+}
+.container .main-content #profile-content .body .avatar .avatar-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 180px 100px;
+}
+.container .main-content #profile-content .body .avatar IMG{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.container .main-content #profile-content .body .avatar IMG:hover{
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .avatar BUTTON{
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background: white;
+    border: 1px solid #e9e9e9;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.container .main-content #profile-content .body .avatar BUTTON:hover{
+    background-color: #04aa6d;
+    cursor: pointer;
+}
+.container .main-content #address-content{
+    display: none;
+}
+.container .main-content #setting-content{
+    display: none;
 }
 /*********************Footer**************************/
 .main-footer {
