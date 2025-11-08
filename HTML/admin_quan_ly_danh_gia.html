@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý đánh giá và phản hồi</title>
+    <link rel="stylesheet" href="../CSS/admin_quan_ly_danh_gia-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+<div class="admin-container">
+    <!---------------- Thanh menu ------------------->
+    <header class="header">
+        <div class="logo-placeholder">
+            <img src="../images/logoCleanmeat.png">
+        </div>
+
+        <div class="header-icons">
+            <i class="fa-solid fa-bell"></i>
+
+            <div class="user-dropdown">
+                <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
+
+                <div id="userMenuContent" class="dropdown-content">
+                    <a href="#"> Thông tin tài khoản</a>
+                    <a href="#"> Cài đặt cá nhân</a>
+                    <a href="#"> Quản lý vai trò</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="logout-link"> Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!---------------- Side Bar ------------------->
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
+                    <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
+                    <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
+                    <li><a href="admin_quan_ly_thanh_toan.html"> Quản lý thanh toán và doanh thu</a></li>
+                    <li class="active"><a href="#"> Quản lý đánh giá và phản hồi</a></li>
+                    <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
+                    <li><a href="admin_cau_hinh_he_thong.html"> Cấu hình hệ thống</a></li>
+                    <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!---------------- QUẢN LÝ ĐÁNH GIÁ VÀ PHẢN HỒI ------------------->
+        <main class="content">
+            <h2 class="page-title">Quản Lý Đánh Giá và Phản Hồi</h2>
+
+            <div class="control-panel">
+                <div class="filters">
+                    <input type="text" placeholder="Tìm kiếm theo Tên SP, Nội dung..." class="search-input">
+
+                    <select name="rating" class="filter-select">
+                        <option value="">-- Xếp hạng --</option>
+                        <option value="5">5 Sao</option>
+                        <option value="4">4 Sao</option>
+                        <option value="3">3 Sao</option>
+                        <option value="2">2 Sao</option>
+                        <option value="1">1 Sao</option>
+                    </select>
+
+                    <select name="status" class="filter-select">
+                        <option value="">-- Trạng thái --</option>
+                        <option value="pending">Chờ duyệt</option>
+                        <option value="approved">Đã duyệt</option>
+                        <option value="hidden">Đã ẩn/Xóa</option>
+                    </select>
+
+                    <select name="type" class="filter-select">
+                        <option value="">-- Loại --</option>
+                        <option value="no-reply">Chưa trả lời</option>
+                        <option value="spam">Có báo cáo Spam</option>
+                    </select>
+                </div>
+
+                <div class="summary-info">
+                    <div class="total-reviews">Tổng: 10 đánh giá</div>
+                    <div class="avg-rating">TB: <i class="fas fa-star text-warning"></i> 4/5</div>
+                </div>
+            </div>
+
+            <div class="review-table-container">
+                <table class="review-table">
+                    <thead>
+                    <tr>
+                        <th>Ngày giờ</th>
+                        <th>Sản phẩm</th>
+                        <th>Khách hàng</th>
+                        <th>Sao</th>
+                        <th>Nội dung Đánh giá</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="highlight-row">
+                        <td>10:30 <br>22/11/2023</td>
+                        <td>Thịt Bò Thăn Nội Cao Cấp (Mỹ)</td>
+                        <td>Nguyễn Văn A</td>
+                        <td class="rating-stars">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>Sản phẩm tươi ngon, đóng gói cẩn thận. Giao hàng hơi lâu.</td>
+                        <td><span class="status-badge status-pending">Chưa trả lời</span></td>
+                        <td>
+                            <button class="btn-sm btn-info reply-btn" title="Phản hồi lại"><i class="fas fa-reply"></i> Trả lời</button>
+                            <button class="btn-sm btn-danger delete-btn" title="Xóa"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>20:00<br>19/11/2023</td>
+                        <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
+                        <td>Lê Thị B</td>
+                        <td class="rating-stars">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>Thịt không tươi như quảng cáo, có mùi lạ. Yêu cầu xem xét. <span class="report-alert"></span></td>
+                        <td><span class="status-badge status-pending">Chưa trả lời</span></td>
+                        <td>
+                            <button class="btn-sm btn-info reply-btn" title="Phản hồi lại"><i class="fas fa-reply"></i> Trả lời</button>
+                            <button class="btn-sm btn-danger delete-btn" title="Xóa"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>08:00<br>15/11/2023</td>
+                        <td>Thịt Gà Ta Đùi</td>
+                        <td>Phạm Văn C</td>
+                        <td class="rating-stars">
+                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
+                        </td>
+                        <td>Chất lượng tuyệt vời! Sẽ mua lại.</td>
+                        <td><span class="status-badge status-replied">Đã trả lời</span></td>
+                        <td>
+                            <button class="btn-sm btn-danger delete-btn"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+    </div>
+</div>
+<script src="../JavaScript/admin_quan_ly_danh_gia.js"></script>
+</body>
+</html>
