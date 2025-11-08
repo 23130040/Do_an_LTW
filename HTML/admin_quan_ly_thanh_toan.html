@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý thanh toán</title>
+    <link rel="stylesheet" href="../CSS/admin_quan_ly_thanh_toan-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+<div class="admin-container">
+    <!---------------- Thanh menu ------------------->
+    <header class="header">
+        <div class="logo-placeholder">
+            <img src="../images/logoCleanmeat.png">
+        </div>
+
+        <div class="header-icons">
+            <i class="fa-solid fa-bell"></i>
+
+            <div class="user-dropdown">
+                <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
+
+                <div id="userMenuContent" class="dropdown-content">
+                    <a href="#"> Thông tin tài khoản</a>
+                    <a href="#"> Cài đặt cá nhân</a>
+                    <a href="#"> Quản lý vai trò</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="logout-link"> Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!---------------- Side Bar ------------------->
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
+                    <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
+                    <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
+                    <li class="active"><a href="#"> Quản lý thanh toán và doanh thu</a></li>
+                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
+                    <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
+                    <li><a href="admin_cau_hinh_he_thong.html"> Cấu hình hệ thống</a></li>
+                    <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!---------------- QUẢN LÝ THANH TOÁN ------------------->
+        <main class="content">
+            <h2 class="page-title">Quản Lý Thanh Toán & Doanh Thu</h2>
+
+            <div class="summary-cards">
+                <div class="card revenue-card bg-red">
+                    <div class="card-body">
+                        <h3><i class="fas fa-chart-line"></i> Doanh Thu Tháng này</h3>
+                        <p class="data-number">125.000.000đ</p>
+                        <p class="data-caption"><i class="fas fa-arrow-up"></i> Tăng 15% so với tháng trước</p>
+                    </div>
+                </div>
+                <div class="card order-card bg-blue">
+                    <div class="card-body">
+                        <h3><i class="fas fa-shopping-cart"></i> Đơn Hàng Thành Công</h3>
+                        <p class="data-number">1.250</p>
+                        <p class="data-caption"><i class="fas fa-arrow-up"></i> Tăng 8% so với tuần trước</p>
+                    </div>
+                </div>
+                <div class="card paid-card bg-green">
+                    <div class="card-body">
+                        <h3><i class="fas fa-money-check-alt"></i> Đã Thanh Toán Online</h3>
+                        <p class="data-number">95.000.000đ</p>
+                        <p class="data-caption">76% tổng doanh thu</p>
+                    </div>
+                </div>
+                <div class="card customer-card bg-purple">
+                    <div class="card-body">
+                        <h3><i class="fas fa-user-friends"></i> Khách Hàng Mới</h3>
+                        <p class="data-number">210</p>
+                        <p class="data-caption">Trong 30 ngày qua</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <div class="report-header">
+                    <h3>Biểu đồ Doanh thu (6 tháng gần nhất)</h3>
+                    <div class="date-controls">
+                        <button class="btn btn-sm btn-report active">Ngày</button>
+                        <button class="btn btn-sm btn-report">Tuần</button>
+                        <button class="btn btn-sm btn-report">Tháng</button>
+                        <button class="btn btn-sm btn-report">Năm</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+
+                    <p class="chart-label">Biểu đồ giả lập: Doanh thu theo thời gian</p>
+                </div>
+            </div>
+
+            <div class="stats-detail-section">
+                <div class="best-sellers-panel">
+                    <h3><i class="fas fa-fire"></i> Sản phẩm Bán chạy nhất (Tháng 11)</h3>
+                    <ul class="stats-list">
+                        <li>Thịt Bò Thăn Nội Cao Cấp <span>(150 kg)</span></li>
+                        <li>Thịt Heo Ba Chỉ Thảo Mộc <span>(220 kg)</span></li>
+                        <li>Thịt Gà Ta Đùi <span>(105 kg)</span></li>
+                    </ul>
+                </div>
+                <div class="top-customers-panel">
+                    <h3><i class="fas fa-star"></i> Khách hàng Thân thiết (Top 3)</h3>
+                    <ul class="stats-list">
+                        <li>Lê Văn A - <span class="text-red">25.000.000đ</span></li>
+                        <li>Nguyễn Thị B - <span class="text-red">18.500.000đ</span></li>
+                        <li>Phạm Cường - <span class="text-red">15.200.000đ</span></li>
+                    </ul>
+                </div>
+                <div class="payment-methods-panel">
+                    <h3><i class="fas fa-wallet"></i> Theo dõi Phương thức thanh toán</h3>
+                    <table class="payment-table">
+                        <tr>
+                            <td><i class="fas fa-cash-register"></i> Tiền mặt (COD)</td>
+                            <td>30.000.000đ</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-credit-card"></i> Thẻ/VNPay</td>
+                            <td>55.000.000đ</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-qrcode"></i> Momo/ZaloPay</td>
+                            <td>40.000.000đ</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+<script src="../JavaScript/admin_quan_ly_thanh_toan.js"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+// xử lý khi ấn nút user
 function toggleUserMenu() {
     document.getElementById("userMenuContent").classList.toggle("show");
 }
@@ -22,10 +23,8 @@ function openUserModal(isEdit = false) {
 
     if (isEdit) {
         modalTitle.textContent = 'Sửa';
-        // Logic để load dữ liệu người dùng vào form (sẽ cần backend)
     } else {
         modalTitle.textContent = 'Thêm';
-        // Reset form khi thêm mới
         modal.querySelector('.user-form').reset();
         document.getElementById('userStatusText').textContent = 'Hoạt động';
     }
@@ -58,51 +57,3 @@ document.querySelector('.control-panel .btn-primary').addEventListener('click', 
 document.querySelectorAll('.edit-btn').forEach(button => {
     button.addEventListener('click', () => openUserModal(true));
 });
-
-// Xử lý mở / khóa tài khoản
-const userTableBody = document.querySelector('.user-table tbody');
-
-if (userTableBody) {
-    userTableBody.addEventListener('click', function(event) {
-        let targetButton = event.target.closest('.btn-icon');
-
-        if (!targetButton) return;
-
-        // Tìm hàng (row) chứa nút được click
-        const row = targetButton.closest('tr');
-        if (!row) return;
-
-        // Các phần tử cần cập nhật trong hàng đó
-        const statusCell = row.querySelector('.status-badge');
-        const actionCell = row.querySelector('td:last-child');
-
-        // Xử lý Khóa tài khoản
-        if (targetButton.classList.contains('lock-btn') && !targetButton.disabled) {
-            // Giả lập cập nhật trạng thái
-            statusCell.textContent = 'Đã khóa';
-            statusCell.classList.remove('status-active');
-            statusCell.classList.add('status-locked');
-
-            // Thay đổi nút Khóa thành Mở khóa
-            actionCell.innerHTML = `
-                    <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                    <button class="btn-icon unlock-btn" title="Mở khóa tài khoản"><i class="fas fa-lock-open"></i></button>
-                `;
-            alert('Tài khoản đã được khóa.');
-
-            // Xử lý Mở khóa tài khoản
-        } else if (targetButton.classList.contains('unlock-btn')) {
-            // Giả lập cập nhật trạng thái
-            statusCell.textContent = 'Hoạt động';
-            statusCell.classList.remove('status-locked');
-            statusCell.classList.add('status-active');
-
-            // Thay đổi nút Mở khóa thành Khóa
-            actionCell.innerHTML = `
-                    <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                    <button class="btn-icon lock-btn" title="Khóa tài khoản"><i class="fas fa-lock"></i></button>
-                `;
-            alert('Tài khoản đã được mở khóa.');
-        }
-    });
-}
