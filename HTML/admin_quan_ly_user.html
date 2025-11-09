@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../CSS/admin_quan_ly_user-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+<div class="admin-container">
+    <!---------------- Thanh menu ------------------->
+    <header class="header">
+        <div class="logo-placeholder">
+            <img src="../images/logoCleanmeat.png">
+        </div>
+
+        <div class="header-icons">
+            <i class="fa-solid fa-bell"></i>
+
+            <div class="user-dropdown">
+                <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
+
+                <div id="userMenuContent" class="dropdown-content">
+                    <a href="#"> Thông tin tài khoản</a>
+                    <a href="#"> Cài đặt cá nhân</a>
+                    <a href="#"> Quản lý vai trò</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="logout-link"> Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!---------------- Side Bar ------------------->
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
+                    <li><a href="#"> Quản lý người dùng</a></li>
+                    <li><a href="#"> Quản lý đơn hàng</a></li>
+                    <li><a href="#"> Quản lý thanh toán và doanh thu</a></li>
+                    <li><a href="#"> Quản lý đánh giá và phản hồi</a></li>
+                    <li><a href="#"> Quản lý khuyến mãi và nội dung</a></li>
+                    <li><a href="#"> Cấu hình hệ thống</a></li>
+                    <li><a href="#"> Thống kê và Phân tích </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+
+        <main class="content">
+            <h2 class="page-title">Quản Lý Người Dùng</h2>
+
+            <div class="control-panel">
+                <div class="filters">
+                    <input type="text" placeholder="Tìm kiếm theo Tên, Email, SĐT..." class="search-input">
+
+                    <select name="role" class="filter-select">
+                        <option value="">-- Phân quyền --</option>
+                        <option value="customer">Khách hàng</option>
+                        <option value="admin">Quản trị viên (Admin)</option>
+                        <option value="sale">Nhân viên bán hàng</option>
+                        <option value="delivery">Nhân viên giao hàng</option>
+                    </select>
+
+                    <select name="status" class="filter-select">
+                        <option value="">-- Trạng thái TK --</option>
+                        <option value="active">Hoạt động</option>
+                        <option value="locked">Đã khóa</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="openUserModal()">
+                    <i class="fas fa-user-plus"></i> Thêm Người Dùng
+                </button>
+            </div>
+
+            <div class="user-table-container">
+                <table class="user-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Họ tên</th>
+                        <th>Thông tin liên hệ</th>
+                        <th>Phân quyền</th>
+                        <th>Lịch sử mua hàng</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>#001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>a@email.com<br>0123456789</td>
+                        <td>Khách hàng</td>
+                        <td><button class="btn-sm btn-info view-history"><i class="fas fa-history"></i> Xem (12)</button></td>
+                        <td><span class="status-badge status-active">Hoạt động</span></td>
+                        <td>
+                            <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon lock-btn" title="Khóa tài khoản"><i class="fas fa-lock"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#ADMIN1</td>
+                        <td>Lê Thị B</td>
+                        <td>b@admin.com<br>0123456789</td>
+                        <td>Admin</td>
+                        <td>-</td>
+                        <td><span class="status-badge status-active">Hoạt động</span></td>
+                        <td>
+                            <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon lock-btn" title="Khóa tài khoản" disabled><i class="fas fa-lock"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#003</td>
+                        <td>Phạm Văn C</td>
+                        <td>c@email.com<br>0123456789</td>
+                        <td>Khách hàng</td>
+                        <td><button class="btn-sm btn-info view-history"><i class="fas fa-history"></i> Xem (2)</button></td>
+                        <td><span class="status-badge status-locked">Đã khóa</span></td>
+                        <td>
+                            <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon unlock-btn" title="Mở khóa tài khoản"><i class="fas fa-lock-open"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div id="user-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeUserModal()">&times;</span>
+        <h3><span id="modal-title-user">Thêm</span> Người Dùng</h3>
+        <form class="user-form">
+            <div class="form-section left-col">
+                <label for="userName">Họ và tên:</label>
+                <input type="text" id="userName" placeholder="Nguyễn Văn A" required>
+
+                <label for="userEmail">Email:</label>
+                <input type="email" id="userEmail" placeholder="example@email.com" required>
+
+                <label for="userPhone">Số điện thoại:</label>
+                <input type="tel" id="userPhone" placeholder="0123456789" pattern="[0-9]{10}" title="Số điện thoại phải có 10 chữ số" required>
+
+                <label for="userAddress">Địa chỉ:</label>
+                <textarea id="userAddress" rows="3" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"></textarea>
+            </div>
+
+            <div class="form-section right-col">
+                <label for="userRole">Phân quyền:</label>
+                <select id="userRole" required>
+                    <option value="">-- Chọn vai trò --</option>
+                    <option value="customer">Khách hàng</option>
+                    <option value="admin">Quản trị viên (Admin)</option>
+                    <option value="sale">Nhân viên bán hàng</option>
+                    <option value="delivery">Nhân viên giao hàng</option>
+                </select>
+
+                <label for="userPassword">Mật khẩu:</label>
+                <input type="password" id="userPassword" placeholder="Nhập mật khẩu" autocomplete="new-password">
+
+                <label for="userConfirmPassword">Xác nhận mật khẩu:</label>
+                <input type="password" id="userConfirmPassword" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+
+                <label>Trạng thái tài khoản:</label>
+                <label class="switch small-switch">
+                    <input type="checkbox" id="userStatus" checked>
+                    <span class="slider round"></span>
+                </label>
+                <span class="status-text" id="userStatusText">Hoạt động</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary submit-btn">Lưu Người Dùng</button>
+        </form>
+    </div>
+</div>
+
+<script src="../JavaScript/admin_quan_ly_user.js"></script>
+</body>
+</html>
