@@ -1,0 +1,523 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+/***************Menu*******************/
+#menubar{
+    height: 70px;
+    background-color: #343A40;
+    font-size: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+#menubar.fixed{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+/*Thanh menu*/
+#menubar .column{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+/*logo*/
+#menubar .left{
+    width: 30%;
+}
+#menubar .left IMG{
+    width: 90px;
+    height: 57px;
+    margin: 5px 20px;
+}
+/*menu giữa*/
+#menubar .center{
+    width: 50%;
+    text-align: center;
+    margin-right: 150px;
+}
+#menubar .center ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+#menubar .center li{
+    margin-top: 25px;
+}
+#menubar .center li a{
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 30px;
+}
+#menubar .center li a:hover{
+    color: #04aa6d;
+}
+
+/*menu phải*/
+#menubar .right .menu-right{
+    list-style-type: none;
+    margin-right: 20px;
+    padding: 0;
+    display: flex;
+}
+#menubar .right .menuitem{
+    margin-top: 0;
+}
+#menubar .right .menuitem{
+    color: white;
+    padding: 0;
+    font-weight: bold;
+    margin: 5px 10px;
+    cursor: pointer;
+}
+#menubar .right .menuitem .link-cart{
+    color: white;
+    font-weight: bold;
+}
+#menubar .right .menuitem .link-cart:hover{
+    color: #04aa6d;
+}
+#menubar .right .menuitem:hover{
+    color: #04aa6d;
+}
+#menubar .right .user-menu-wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+#menubar .right .user-menu-wrapper .user-menu{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    border-radius: 15px;
+    list-style: none;
+    padding: 5px 0;
+    width: 240px;
+    height: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+#menubar .right .user-menu-wrapper .user-menu li a{
+    color: #333;
+    text-decoration: none;
+    padding: 12px 16px;
+    display: block;
+    font-size: 16px;
+    transition: background 0.25s ease, color 0.25s ease;
+    border-bottom: 2px solid #ddd;
+}
+#menubar .right .user-menu-wrapper .user-menu li:last-child a{
+    border-bottom: none ;
+}
+#menubar .right .user-menu-wrapper .user-menu a:hover{
+    background-color: #8d2a3a;
+    color: white;
+}
+.user-menu.show {
+    display: block;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateY(0);
+}
+#menubar .right .user-menu-wrapper:hover .user-menu{
+    display: block;
+}
+/***********************Main******************************/
+.container{
+    width: 1400px;
+    min-height: 800px;
+    margin: 70px auto;
+    display: flex;
+}
+/************sidebar********************/
+.container #sidebar{
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    margin-right: 20px;
+}
+.container #sidebar .header{
+    display: flex;
+    border-bottom: 1px solid #e9e9e9;
+    padding: 15px 0;
+}
+.container #sidebar .header IMG{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.container #sidebar .header h3{
+    color: black;
+    font-size: 21px;
+}
+.container #sidebar .menu{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.container #sidebar .menu a{
+    color: #565656;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 19px;
+}
+.container #sidebar .menu a:hover{
+    color: #04aa6d;
+}
+/************************content*************************/
+.container .main-content{
+    background-color: white;
+    width: 1140px;
+}
+/**************Hồ sơ*******************/
+.container .main-content #profile-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #profile-content .header{
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 15px;
+}
+.container .main-content #profile-content .body{
+    display: flex;
+    font-size: 20px;
+}
+.container .main-content #profile-content .body .profile{
+    width: 700px;
+    margin-top: 40px;
+    margin-left: 20px;
+    border-right: 1px solid #e9e9e9;
+}
+.container .main-content #profile-content .body .profile .group{
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+.container .main-content #profile-content .body .profile .group .label{
+    width: 170px;
+    font-weight: normal;
+    color: #555;
+    margin-right: 15px;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.static-value, .profile-form.input-field, .profile-form.value-wrapper {
+    flex-grow: 1;
+    margin-right: 50px;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.input-field {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.container .main-content #profile-content .body .profile .group a{
+    margin-left: 5px;
+    color: #007bff;
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio input[type="radio"]{
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio input[type="radio"]:checked{
+    color: #04aa6d;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio label{
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .submit-row{
+    text-align: center;
+}
+.container .main-content #profile-content .body .profile .submit-btn{
+    margin-top: 20px;
+    text-align: center;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+.container .main-content #profile-content .body .profile .submit-btn:hover{
+    background-color: #04aa6d;
+}
+.container .main-content #profile-content .body .avatar .avatar-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 180px 100px;
+}
+.container .main-content #profile-content .body .avatar IMG{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.container .main-content #profile-content .body .avatar IMG:hover{
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .avatar BUTTON{
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background: white;
+    border: 1px solid #e9e9e9;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.container .main-content #profile-content .body .avatar BUTTON:hover{
+    background-color: #04aa6d;
+    cursor: pointer;
+}
+.container .main-content .hidden{
+    display: none;
+}
+/******************************address**************************/
+.container .main-content #address-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #address-content .address-content.header{
+    border-bottom: 1px solid #e9e9e9;
+
+}
+.container .main-content #address-content .address-content.header .left{
+    float: left;
+    width: 50%;
+    font-size: 15px;
+}
+.container .main-content #address-content .address-content.header .right{
+    float: right;
+}
+.container .main-content #address-content .address-content.header .right BUTTON{
+    margin-top: 20px;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+.container .main-content #address-content .address-content.header .right BUTTON:hover{
+    background-color: #04aa6d;
+    cursor: pointer;
+}
+.container .main-content #address-content .address-content.body{
+    font-size: 20px;
+}
+/**************************password************************/
+.container .main-content #password-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #password-content .password-content.header{
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 15px;
+}
+.container .main-content #password-content .password-content.body{
+    display: flex;
+    font-size: 20px;
+    margin: 40px auto;
+}
+.container .main-content #password-content .password-content.body .group{
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+}
+.container .main-content #password-content .password-content.body .group .label{
+    width: 250px;
+    font-weight: normal;
+    color: #555;
+    margin-right: 15px;
+}
+.container .main-content #password-content .password-content.body .group input[type='password']{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 300px;
+    font-size: 16px;
+}
+.container .main-content #password-content .password-content.body .submit-row{
+    text-align: center;
+}
+.container .main-content #password-content .password-content.body .submit-btn{
+    margin-top: 20px;
+    text-align: center;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+.container .main-content #password-content .password-content.body .submit-btn:hover{
+    background-color: #04aa6d;
+}
+/**************************setting*****************************/
+.container .main-content #setting-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #setting-content .setting-content.header {
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 15px;
+}
+.container .main-content #setting-content .setting-content.body{
+    font-size: 20px;
+}
+.container .main-content #setting-content .setting-content.body .left{
+    width: 50%;
+    float: left;
+}
+.container .main-content #setting-content .setting-content.body .left .txt{
+    color: #555;
+    font-weight: normal;
+}
+.container .main-content #setting-content .setting-content.body .right{
+    float: right;
+}
+.container .main-content #setting-content .setting-content.body .right button{
+    margin-top: 20px;
+    text-align: center;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+.container .main-content #setting-content .setting-content.body .right button:hover{
+    background-color: #04aa6d;
+}
+/*********************Footer**************************/
+.main-footer {
+    /*background: #343A40;*/ /* Màu nền tối, sang trọng */
+    background: #5a0000;
+    color: #f8f8f8; /* Chữ màu sáng */
+    padding-top: 50px;
+    font-size: 16px;
+    bottom: 0;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    padding: 0 20px 40px 20px;
+}
+
+.footer-col {
+    width: 32%; /* Độ rộng cho mỗi cột */
+    margin-bottom: 20px;
+}
+
+.footer-col h4 {
+    /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
+    color: #FFD700;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Cột Logo */
+.footer-logo img {
+    width: 150px; /* Logo lớn hơn */
+    margin-bottom: 15px;
+}
+
+.about-us p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Liên kết Nhanh */
+.quick-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+
+.quick-links ul li a {
+    color: #ccc;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.quick-links ul li a:hover {
+    color: #8d2a3a; /* Hiệu ứng hover màu thương hiệu */
+    padding-left: 5px; /* Thêm chút dịch chuyển */
+}
+
+/* Thông tin liên hệ */
+.contact-info p {
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.contact-info i {
+    margin-right: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-top: 3px;
+}
+
+/* Mạng Xã Hội */
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #555;
+    color: white;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+    background-color: #8d2a3a;
+    transform: rotate(10deg) scale(1.1);
+}
+
+/* Phần bản quyền */
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid #444;
+    background-color: #222; /* Màu tối hơn một chút */
+    font-size: 14px;
+}
