@@ -131,77 +131,175 @@
 
         <div class="right-controls">
             <div class="category-buttons">
-                <button class="category active" data-page="../HTML/ThitHeo.html">Thịt heo</button>
-                <button class="category" data-page="../HTML/ThitGa.html">Thịt gà</button>
-                <button class="category" data-page="../HTML/ThitBo.html">Thịt bò</button>
+                <button class="category active" data-category="heo">Thịt heo</button>
+                <button class="category" data-category="ga">Thịt gà</button>
+                <button class="category" data-category="bo">Thịt bò</button>
             </div>
-
             <select class="filter-sort">
                 <option>Mặc định</option>
                 <option>Giá tăng dần</option>
                 <option>Giá giảm dần</option>
-            </select></div>
+            </select>
+        </div>
     </div>
-
+    <!-- ================== DANH MỤC HEO ================== -->
     <div class="product-list">
-        <div class="product-item">
+        <div class="product-item" data-category="heo">
             <img src="../images/DMSPHEO1.png" alt="Thịt heo cốt lết">
             <h3>Thịt heo cốt lết</h3>
             <p class="price">162.000 ₫ / KG</p>
             <button>THÊM VÀO GIỎ</button>
         </div>
-        <div class="product-item">
+        <div class="product-item" data-category="heo">
             <img src="../images/DMSPHEO2.png" alt="Thịt nạc thăn heo">
             <h3>Thịt nạc thăn heo</h3>
             <p class="price">185.000 ₫ / KG</p>
             <button>THÊM VÀO GIỎ</button>
         </div>
-        <div class="product-item">
+        <div class="product-item" data-category="heo">
             <img src="../images/DMSPHEO3.png" alt="Nạc đùi heo">
             <h3>Nạc đùi heo</h3>
             <p class="price">110.000 ₫ / KG</p>
             <button>THÊM VÀO GIỎ</button>
         </div>
-        <div class="product-item">
+        <div class="product-item" data-category="heo">
             <img src="../images/DMSPHEO4.png" alt="Nạc vai heo">
             <h3>Nạc vai heo</h3>
-            <p class="price"> 126.000 ₫ / KG</p>
+            <p class="price">126.000 ₫ / KG</p>
             <button>THÊM VÀO GIỎ</button>
         </div>
-        <div class="product-item">
+        <div class="product-item" data-category="heo">
             <img src="../images/DMSPHEO5.png" alt="Nạc dăm hữu cơ">
             <h3>Nạc dăm hữu cơ</h3>
             <p class="price">135.000 ₫ / KG</p>
             <button>THÊM VÀO GIỎ</button>
         </div>
-        <div class="product-item">
+        <div class="product-item" data-category="heo">
             <img src="../images/DMSPHEO6.png" alt="Tai heo">
             <h3>Tai heo</h3>
             <p class="price">75.000 ₫ / KG</p>
             <button>THÊM VÀO GIỎ</button>
         </div>
-        <div class="product-item">
+        <div class="product-item" data-category="heo">
             <img src="../images/DMSPHEO7.png" alt="Chân giò">
             <h3>Chân giò</h3>
             <p class="price">118.000 ₫ / KG</p>
             <button>THÊM VÀO GIỎ</button>
         </div>
-        <div class="product-item">
+        <div class="product-item" data-category="heo">
             <img src="../images/DMSPHEO8.png" alt="Xương cổ heo">
             <h3>Xương cổ heo</h3>
             <p class="price">109.000 ₫ / KG</p>
             <button>THÊM VÀO GIỎ</button>
         </div>
     </div>
-    <!--            nút 1 2 3-->
-    <div class="pagination">
-    <a href="san_pham.html" class="prev">&laquo;</a>
-    <a href="san_pham.html" class="active">1</a>
-    <a href="san_pham2.html">2</a>
-    <a href="san_pham3.html">3</a>
-    <a href="san_pham3.html" class="next">&raquo;</a>
-</div>
 
+    <!-- ================== DANH MỤC GÀ ================== -->
+    <div class="product-list">
+        <div class="product-item" data-category="ga">
+            <img src="../images/DMSPGA1.png" alt="Cổ gà">
+            <h3>Cổ gà</h3>
+            <p class="price">162.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="ga">
+            <img src="../images/DMSPGA2.png" alt="Đùi gà góc tư">
+            <h3>Đùi gà góc tư</h3>
+            <p class="price">78.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="ga">
+            <img src="../images/DMSPGA3.png" alt="Cánh gà">
+            <h3>Cánh gà</h3>
+            <p class="price">98.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="ga">
+            <img src="../images/DMSPGA4.png" alt="Phao câu gà">
+            <h3>Phao câu gà</h3>
+            <p class="price">48.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="ga">
+            <img src="../images/DMSPGA5.png" alt="Cánh gà khúc giữa">
+            <h3>Cánh gà khúc giữa</h3>
+            <p class="price">101.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="ga">
+            <img src="../images/DMSPGA6.png" alt="Chân gà có xương">
+            <h3>Chân gà có xương</h3>
+            <p class="price">105.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="ga">
+            <img src="../images/DMSPGA7.png" alt="Má đùi gà">
+            <h3>Má đùi gà</h3>
+            <p class="price">98.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="ga">
+            <img src="../images/DMSPGA8.png" alt="Đùi tỏi gà">
+            <h3>Đùi tỏi gà</h3>
+            <p class="price">110.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+    </div>
+
+    <!-- ================== DANH MỤC BÒ ================== -->
+    <div class="product-list" >
+        <div class="product-item" data-category="bo">
+            <img src="../images/DMSPBO1.png" alt="Thịt má bò">
+            <h3>Thịt má bò</h3>
+            <p class="price">175.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="bo">
+            <img src="../images/DMSPBO2.png" alt="Nạm gầu bò tơ">
+            <h3>Nạm gầu bò tơ</h3>
+            <p class="price">320.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="bo">
+            <img src="../images/DMSPBO3.png" alt="Thăn vai bò">
+            <h3>Thăn vai bò</h3>
+            <p class="price">380.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="bo">
+            <img src="../images/DMSPBO4.png" alt="Thịt nạc mông bò tươi">
+            <h3>Thịt nạc mông bò tươi</h3>
+            <p class="price"> 260.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="bo">
+            <img src="../images/DMSPBO5.png" alt="Đuôi bò ">
+            <h3>Đuôi bò </h3>
+            <p class="price">220.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="bo">
+            <img src="../images/DMSPBO6.png" alt="Ba rọi bò">
+            <h3>Ba chỉ bò</h3>
+            <p class="price">195.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="bo">
+            <img src="../images/DMSPBO7.png" alt="Phi lê cổ bò">
+            <h3>Phi lê cổ bò</h3>
+            <p class="price">150.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+        <div class="product-item" data-category="bo">
+            <img src="../images/DMSPBO8.png" alt="Thịt bắp bò">
+            <h3>Thịt bắp bò</h3>
+            <p class="price">275.000 ₫ / KG</p>
+            <button>THÊM VÀO GIỎ</button>
+        </div>
+    </div>
+    <div class="view-all">
+        <button id="viewAllBtn">Xem tất cả</button>
+    </div>
     <!-- FOOTER -->
     <footer class="main-footer">
         <div class="footer-container">

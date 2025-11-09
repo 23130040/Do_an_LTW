@@ -107,7 +107,7 @@ function scrollToRight(button) {
 }
 
 
-// PHẦN XỬ LÍ DANH MỤC
+// =================== PHẦN XỬ LÍ DANH MỤC ===================
 const categories = document.querySelectorAll('.category');
 categories.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -124,44 +124,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const viewAllBtn = document.getElementById("viewAllBtn");
     const filterSort = document.querySelector(".filter-sort");
 
-    // Mặc định hiển thị thịt heo
-    let currentCategory = "heo";
+    // ======= MẶC ĐỊNH HIỂN THỊ TẤT CẢ SẢN PHẨM =======
+    let currentCategory = "all";
     filterProducts(currentCategory);
 
-    // ==== XỬ LÍ CHỌN DANH MỤC ====
+    // ======= XỬ LÍ KHI CLICK DANH MỤC =======
     categoryButtons.forEach(btn => {
         btn.addEventListener("click", () => {
-            categoryButtons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
             currentCategory = btn.dataset.category;
             filterProducts(currentCategory);
         });
     });
 
-    // ==== HÀM LỌC SẢN PHẨM ====
+    // ======= HÀM LỌC SẢN PHẨM THEO DANH MỤC =======
     function filterProducts(category) {
         products.forEach(product => {
             const productCategory = product.getAttribute("data-category");
-            if (productCategory === category) {
+
+            // Hiển thị tất cả nếu chọn "all"
+            if (category === "all") {
                 product.style.display = "flex";
             } else {
-                product.style.display = "none";
+                product.style.display = (productCategory === category) ? "flex" : "none";
             }
         });
+
         sortProducts(filterSort ? filterSort.value : "Mặc định");
     }
 
-    // ==== HÀM TÁCH GIÁ SỐ ====
+    // ======= HÀM TÁCH SỐ GIÁ =======
     function extractPrice(priceText) {
         return parseFloat(priceText.replace(/[^\d]/g, ""));
     }
 
-    // ==== HÀM SẮP XẾP GIÁ ====
+    // ======= HÀM SẮP XẾP SẢN PHẨM =======
     function sortProducts(order) {
         const container = document.querySelector(".product-list");
         if (!container) return;
 
-        // Lấy các sản phẩm đang hiển thị
         const visibleProducts = Array.from(products).filter(p => p.style.display !== "none");
         if (visibleProducts.length === 0) return;
 
@@ -173,18 +173,17 @@ document.addEventListener("DOMContentLoaded", () => {
             return 0;
         });
 
-        // Cập nhật lại thứ tự trong DOM
         visibleProducts.forEach(p => container.appendChild(p));
     }
 
-    // ==== XỬ LÍ KHI ĐỔI "LỌC GIÁ" ====
+    // ======= XỬ LÍ KHI ĐỔI LỌC GIÁ =======
     if (filterSort) {
         filterSort.addEventListener("change", () => {
             sortProducts(filterSort.value);
         });
     }
 
-    // ==== NÚT XEM TẤT CẢ ====
+    // ======= XỬ LÍ NÚT "XEM TẤT CẢ" =======
     if (viewAllBtn) {
         viewAllBtn.addEventListener("click", () => {
             window.location.href = "../HTML/XemTatCa.html";
