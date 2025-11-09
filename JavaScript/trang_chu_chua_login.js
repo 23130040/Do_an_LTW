@@ -1,13 +1,3 @@
-// Hàm import HTML vào phần tử chỉ định
-function includeHTML(selector, filePath, callback) {
-    fetch(filePath)
-        .then(res => res.text())
-        .then(html => {
-            document.querySelector(selector).innerHTML = html;
-            if (callback) callback();
-        });
-}
-
 // Gắn sự kiện tìm kiếm
 function setupSearchBox() {
     const searchBox = document.getElementById("searchBox");
@@ -64,33 +54,6 @@ function setupStickyMenu() {
 document.addEventListener("DOMContentLoaded", () => {
     setupSearchBox();
     setupStickyMenu();
-});
-
-
-// Import header → xong rồi mới gắn sự kiện vào
-includeHTML("#header-container", "header.html", () => {
-    setupSearchBox();
-    setupStickyMenu();
-});
-
-// Footer import bình thường
-includeHTML("#footer-container", "footer.html");
-
-function updateBannerFromAttributes() {
-    const container = document.querySelector("#banner-container");
-    if (!container) return;
-
-    const title = container.dataset.bannerTitle;
-    const desc = container.dataset.bannerDesc;
-
-    if (title) document.getElementById("greet-title").textContent = title;
-    if (desc) document.getElementById("greet-desc").textContent = desc;
-}
-
-
-// Banner import nếu cần
-includeHTML("#banner-container", "banner.html", () => {
-    updateBannerFromAttributes();
 });
 
 // Cuộn ngang trang khi ấn mũi tên trái phải

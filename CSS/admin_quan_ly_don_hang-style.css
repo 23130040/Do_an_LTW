@@ -60,7 +60,7 @@ a {
 
 
 .user-logo {
-    color: #8d2a3a;
+    color: var(--main-red);
 }
 
 /* --- USER DROPDOWN MENU --- */
@@ -102,7 +102,7 @@ a {
 
 .dropdown-content a:hover {
     background-color: #f1f1f1;
-    color: #8d2a3a;
+    color: var(--main-red);
 }
 
 .dropdown-content a i {
@@ -120,12 +120,12 @@ a {
 
 /* nút Đăng xuất */
 .dropdown-content .logout-link {
-    color: #8d2a3a;
+    color: var(--main-red);
     font-weight: bold;
 }
 
 .dropdown-content .logout-link:hover {
-    background-color: #8d2a3a;
+    background-color: var(--main-red);
     color: #fff;
 }
 /* Khi bật dropdown (JS thêm class 'show') */
@@ -168,11 +168,11 @@ a {
 }
 
 .sidebar-nav li a:hover {
-    background-color: #8d2a3a;
+    background-color: var(--main-red);
 }
 
 .sidebar-nav li.active a {
-    background-color: #8d2a3a; /* Màu đỏ sẫm */
+    background-color: var(--main-red); /* Màu đỏ sẫm */
     /* border-left: 3px solid #fff; */
     font-weight: bold;
 }
@@ -181,14 +181,12 @@ a {
     margin-right: 10px;
     font-size: 1.1em;
 }
-/********************* CONTENT ********************/
-/* --- USER MANAGEMENT SPECIFIC STYLES (Dựa trên Product Management) --- */
+/* --- QUẢN LÝ ĐƠN HÀNG --- */
 
 .content {
     flex-grow: 1;
     padding: 20px;
     background-color: #fff;
-    /* Dùng màu nền trắng cho khu vực nội dung */
 }
 
 .page-title {
@@ -215,16 +213,26 @@ a {
 .filters {
     display: flex;
     gap: 10px;
+    flex-grow: 1; /* Cho phép phần filter mở rộng */
 }
 
-.search-input, .filter-select {
+.search-input {
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.search-input, .filter-select, .filter-date {
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 1em;
 }
 
-/* Nút chính */
+.export-actions {
+    display: flex;
+    gap: 10px;
+}
+
 .btn {
     padding: 10px 15px;
     border: none;
@@ -235,17 +243,17 @@ a {
     transition: background-color 0.2s;
 }
 
-.btn-primary {
-    background-color: var(--main-red); /* Màu đỏ chủ đạo */
+.btn-secondary {
+    background-color: #6c757d; /* Màu xám cho nút Export */
     color: #fff;
 }
 
-.btn-primary:hover {
-    background-color: #8d2a3a;
+.btn-secondary:hover {
+    background-color: #5a6268;
 }
 
-/* --- USER TABLE --- */
-.user-table-container {
+/* --- ORDER TABLE --- */
+.order-table-container {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -253,165 +261,68 @@ a {
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.user-table {
+.order-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.user-table thead {
-    background-color: #343A40; /* Màu xám đậm từ Header/Sidebar */
+.order-table thead {
+    background-color: #343A40;
     color: #fff;
 }
 
-.user-table th, .user-table td {
+.order-table th, .order-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #eee;
     font-size: 0.95em;
 }
 
-.user-table tbody tr:hover {
+.order-table tbody tr:hover {
     background-color: #f5f5f5;
 }
+/* Căn giữa status trong ô */
+.order-table td:nth-child(5),
+.order-table td:nth-child(6) {
+    text-align: center;
+}
 
-/* Trạng thái tài khoản */
+
+/* Trạng thái đơn hàng và TT */
 .status-badge {
-    padding: 5px 10px;
+    padding: 5px 8px;
     border-radius: 15px;
-    font-size: 0.85em;
-    font-weight: bold;
-    color: #fff;
-}
-
-.status-active {
-    background-color: #2ecc71; /* Xanh lá */
-}
-
-.status-locked {
-    background-color: var(--main-red); /* Đỏ sẫm */
-}
-
-/* Nút Lịch sử mua hàng */
-.btn-sm {
-    padding: 5px 10px;
     font-size: 0.8em;
+    font-weight: bold;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    width: 105px;
 }
 
-.btn-info {
-    background-color: #3498db;
+/* Màu trạng thái Đơn hàng */
+.status-pending { background-color: #ffc107; color: #333; }
+.status-processing { background-color: #17a2b8; }
+.status-shipping { background-color: #007bff; }
+.status-delivered { background-color: #28a745; }
+.status-cancelled { background-color: var(--main-red); }
+
+/* Màu trạng thái Thanh toán */
+.status-unpaid { background-color: var(--main-red); }
+.status-paid { background-color: #28a745; }
+/* Nút Thao tác nhỏ */
+.btn-sm {
+    padding: 5px 8px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-right: 3px;
     color: #fff;
 }
 
-/* Icon Thao tác */
-.btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-right: 5px;
-    font-size: 1.1em;
-}
-
-.edit-btn { color: #2980b9; }
-.lock-btn { color: var(--main-red); } /* đỏ cho Khóa */
-.unlock-btn { color: #2ecc71; } /* Xanh lá cho Mở khóa */
-
-/* --- MODAL (THÊM/SỬA) Chung cho cả Sản phẩm và Người dùng --- */
-.modal {
-    display: none; /* Ẩn theo mặc định */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    padding: 30px;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 700px; /* Điều chỉnh max-width cho modal người dùng */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    position: relative;
-}
-
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    cursor: pointer;
-}
-
-.modal-content h3 {
-    margin-bottom: 20px;
-    font-weight: 400;
-    color: var(--main-red);
-}
-
-.user-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.form-section label {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 0.95em;
-    color: #555;
-}
-
-.user-form input[type="text"],
-.user-form input[type="email"],
-.user-form input[type="tel"],
-.user-form input[type="password"],
-.user-form textarea,
-.user-form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    resize: vertical;
-    font-size: 1em;
-}
-
-/* Kế thừa toggle switch từ modal sản phẩm, nếu cần điều chỉnh */
-.small-switch { /* Đã định nghĩa từ trước */
-    width: 30px;
-    height: 15px;
-    margin-right: 10px;
-}
-.small-switch .slider:before { /* Đã định nghĩa từ trước */
-    height: 11px;
-    width: 11px;
-    left: 2px;
-    bottom: 2px;
-}
-input:checked + .small-switch .slider:before { /* Đã định nghĩa từ trước */
-    transform: translateX(15px);
-}
-.status-text { /* Đã định nghĩa từ trước */
-    font-size: 0.9em;
-    color: #666;
-    display: inline-block; /* Để nó nằm cạnh switch */
-    vertical-align: top;
-    margin-top: 2px; /* Căn chỉnh nhẹ */
-}
-
-.submit-btn {
-    grid-column: 1 / 3; /* Chiếm hết 2 cột */
-    padding: 12px;
-    margin-top: 20px; /* Khoảng cách với các trường trên */
-}
+.btn-action { background-color: #6c757d; }
+.btn-success { background-color: #28a745; }
+.btn-primary { background-color: #007bff; }
+.btn-danger { background-color: #dc3545; }
+.btn-info { background-color: #17a2b8; }

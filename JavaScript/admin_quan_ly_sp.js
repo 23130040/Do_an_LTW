@@ -16,7 +16,7 @@ window.onclick = function(event) {
     }
 }
 
-// Thay thế hàm openProductModal() hiện tại bằng hàm mới này
+
 function openProductModal(isEdit = false) {
     const modal = document.getElementById('product-modal');
     const modalTitleSpan = document.getElementById('modal-title-product');
@@ -27,7 +27,7 @@ function openProductModal(isEdit = false) {
 
     if (isEdit) {
         modalTitleSpan.textContent = 'Sửa';
-        // (Trong thực tế, bạn sẽ thêm code để tải dữ liệu sản phẩm vào form tại đây)
+
     } else {
         modalTitleSpan.textContent = 'Thêm';
         // Đảm bảo form được reset khi thêm mới

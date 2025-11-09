@@ -201,12 +201,13 @@ main{
 .logo.fixed {
     position: fixed;
     z-index: 3000;
-    top: 13px;
-    left: 70px;
+    top: 0;
+    left: 85px;
+    padding-left: 60px;
 }
 .logo.fixed img {
-    width: 70px;
-    height: 50px;
+    width: 110px;
+    height: auto;
 }
 .login.fixed:hover {
     color: #8d2a3a;
