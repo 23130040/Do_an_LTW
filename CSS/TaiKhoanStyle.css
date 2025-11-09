@@ -40,7 +40,7 @@ body{
 #menubar .center{
     width: 50%;
     text-align: center;
-    margin-right: 350px;
+    margin-right: 150px;
 }
 #menubar .center ul{
     list-style-type: none;
@@ -181,7 +181,8 @@ body{
     background-color: white;
     width: 100%;
 }
-.container .main-content #profile-content{
+/**************Hồ sơ*******************/
+.container .main-content #profile-content.active{
     display: flex;
     flex-direction: column;
     margin: 30px;
@@ -199,9 +200,6 @@ body{
     margin-top: 40px;
     margin-left: 20px;
     border-right: 1px solid #e9e9e9;
-}
-.container .main-content #profile-content .body .profile .profile-form{
-
 }
 .container .main-content #profile-content .body .profile .group{
     display: flex;
@@ -223,9 +221,6 @@ body{
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
-.container .main-content #profile-content .body .profile .group .profile-form.static-value {
-
 }
 .container .main-content #profile-content .body .profile .group a{
     margin-left: 5px;
@@ -265,9 +260,6 @@ body{
 .container .main-content #profile-content .body .profile .submit-btn:hover{
     background-color: #04aa6d;
 }
-.container .main-content #profile-content .body .avatar{
-
-}
 .container .main-content #profile-content .body .avatar .avatar-container{
     display: flex;
     flex-direction: column;
@@ -295,11 +287,64 @@ body{
     background-color: #04aa6d;
     cursor: pointer;
 }
-.container .main-content #address-content{
+.container .main-content .hidden{
     display: none;
 }
-.container .main-content #setting-content{
-    display: none;
+.container .main-content #address-content.active{
+    display: flex;
+}
+.container .main-content #password-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #password-content .password-content.header{
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 15px;
+}
+.container .main-content #password-content .password-content.body{
+    display: flex;
+    font-size: 20px;
+    margin: 40px auto;
+}
+.container .main-content #password-content .password-content.body .group{
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+}
+.container .main-content #password-content .password-content.body .group .label{
+    width: 250px;
+    font-weight: normal;
+    color: #555;
+    margin-right: 15px;
+}
+.container .main-content #password-content .password-content.body .group input[type='password']{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 300px;
+    font-size: 16px;
+}
+.container .main-content #password-content .password-content.body .submit-row{
+    text-align: center;
+}
+.container .main-content #password-content .password-content.body .submit-btn{
+    margin-top: 20px;
+    text-align: center;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+.container .main-content #password-content .password-content.body .submit-btn:hover{
+    background-color: #04aa6d;
+}
+.container .main-content #setting-content.active{
+
 }
 /*********************Footer**************************/
 .main-footer {
