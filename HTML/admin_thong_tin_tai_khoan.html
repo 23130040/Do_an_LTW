@@ -14,14 +14,17 @@
         </div>
 
         <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
+            <div class="notification-wrapper" onclick="toggleNotificationMenu()">
+                <i class="fa-solid fa-bell notification-icon"></i>
+                <span class="notification-badge">3</span>
+            </div>
 
             <div class="user-dropdown">
                 <i class="fas fa-user-circle user-logo active" onclick="toggleUserMenu()"></i>
 
                 <div id="userMenuContent" class="dropdown-content">
                     <a href="#" class="active-dropdown-link"> Thông tin tài khoản</a>
-                    <a href="admin_doi_mat_khau.html"> Quên mật khẩu</a>
+                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="logout-link"> Đăng xuất</a>
                 </div>
@@ -48,7 +51,7 @@
             <div class="profile-container">
 
                 <div class="profile-info-section">
-                    <img src="../images/placeholder-avatar.jpg" alt="Avatar Admin" class="profile-avatar-large">
+                    <img src="../images/banner.png" alt="Avatar Admin" class="profile-avatar-large">
                     <div class="profile-details">
                         <h4>Nguyễn Văn A (Admin)</h4>
                         <p>Email: <span style="font-weight: 500;">admin.a@cleanmeat.com</span></p>
@@ -77,7 +80,7 @@
                     <div class="form-group">
                         <label>Hình Đại Diện:</label>
                         <div class="avatar-upload-group">
-                            <img src="../images/placeholder-avatar.jpg" alt="Current Avatar" class="logo-preview">
+                            <img src="https://baotayninh.vn/image/fckeditor/upload/2018/20181108/images/25665725-1541580148-5846-1541580348.jpg" alt="Current Avatar" class="logo-preview">
                             <input type="file" id="avatar-file" accept="image/*" style="display: none;">
                             <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('avatar-file').click()">
                                 <i class="fas fa-cloud-upload-alt"></i> Thay đổi Ảnh
@@ -89,6 +92,27 @@
                 </form>
             </div>
         </main>
+    </div>
+    <!------------------- PHẦN THÔNG BÁO ----------------->
+    <div id="notification-panel" class="notification-panel">
+        <div class="panel-header">
+            <h3>Thông Báo Mới (3)</h3>
+            <span class="close-panel-btn" onclick="toggleNotificationMenu()">&times;</span>
+        </div>
+        <div class="panel-content">
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Đơn hàng mới #0012 vừa được tạo.</p>
+            </a>
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Tồn kho Thịt Bò Thăn Nội < 5kg.</p>
+            </a>
+            <a href="#" class="notification-item">
+                <i class="fas fa-comment"></i>
+                <p>Có 1 phản hồi mới cho sản phẩm Thịt Heo.</p>
+            </a>
+        </div>
     </div>
 </div>
 <script src="../JavaScript/admin_thong_tin_tai_khoan.js"></script>

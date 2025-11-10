@@ -16,14 +16,17 @@
         </div>
 
         <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
+            <div class="notification-wrapper" onclick="toggleNotificationMenu()">
+                <i class="fa-solid fa-bell notification-icon"></i>
+                <span class="notification-badge">3</span>
+            </div>
 
             <div class="user-dropdown">
                 <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
 
                 <div id="userMenuContent" class="dropdown-content">
                     <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
-                    <a href="admin_doi_mat_khau.html"> Quên mật khẩu</a>
+                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="logout-link"> Đăng xuất</a>
                 </div>
@@ -127,6 +130,27 @@
                 </table>
             </div>
         </main>
+    </div>
+</div>
+<!------------------- PHẦN THÔNG BÁO ----------------->
+<div id="notification-panel" class="notification-panel">
+    <div class="panel-header">
+        <h3>Thông Báo Mới (3)</h3>
+        <span class="close-panel-btn" onclick="toggleNotificationMenu()">&times;</span>
+    </div>
+    <div class="panel-content">
+        <a href="#" class="notification-item unread">
+            <i class="fas fa-shopping-cart"></i>
+            <p>Đơn hàng mới #0012 vừa được tạo.</p>
+        </a>
+        <a href="#" class="notification-item unread">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Tồn kho Thịt Bò Thăn Nội < 5kg.</p>
+        </a>
+        <a href="#" class="notification-item">
+            <i class="fas fa-comment"></i>
+            <p>Có 1 phản hồi mới cho sản phẩm Thịt Heo.</p>
+        </a>
     </div>
 </div>
 
