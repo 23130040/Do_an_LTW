@@ -22,9 +22,8 @@
                 <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
 
                 <div id="userMenuContent" class="dropdown-content">
-                    <a href="#"> Thông tin tài khoản</a>
-                    <a href="#"> Cài đặt cá nhân</a>
-                    <a href="#"> Quản lý vai trò</a>
+                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
+                    <a href="admin_doi_mat_khau.html"> Quên mật khẩu</a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="logout-link"> Đăng xuất</a>
                 </div>
@@ -39,16 +38,127 @@
                     <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
                     <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
                     <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
-                    <li><a href="admin_quan_ly_thanh_toan.html"> Quản lý thanh toán và doanh thu</a></li>
-                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
                     <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
-                    <li class="active"><a href="#"> Cấu hình hệ thống</a></li>
+                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
                     <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
+                    <li class="active"><a href="#"> Cấu hình hệ thống</a></li>
                 </ul>
             </nav>
         </aside>
 
+        <main class="content">
+            <h2 class="page-title">Cấu Hình Hệ Thống</h2>
 
+            <div class="tab-nav">
+                <button class="tab-link active" onclick="openTab(event, 'store-settings')">
+                    <i class="fas fa-store"></i> Cài Đặt Cửa Hàng
+                </button>
+                <button class="tab-link" onclick="openTab(event, 'security-settings')">
+                    <i class="fas fa-user-shield"></i> Bảo Mật & Phân Quyền
+                </button>
+            </div>
+            <div id="store-settings" class="tab-content active-tab">
+                <div class="setting-card">
+                    <form class="setting-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tên Cửa Hàng:</label>
+                                <input type="text" value="Clean Meat" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Liên Hệ:</label>
+                                <input type="email" value="contact@cleanmeat.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Hotline:</label>
+                                <input type="tel" value="090-123-4567">
+                            </div>
+                            <div class="form-group">
+                                <label>Mã Số Thuế/Kinh Doanh:</label>
+                                <input type="text" value="0312345678">
+                            </div>
+                        </div>
+
+                        <label>Địa Chỉ Chi Tiết (Hiển thị trên website):</label>
+                        <textarea rows="3" placeholder="Số nhà, đường, Phường/Xã, Quận/Huyện, Tỉnh/Thành phố">123 Đường Nguyễn Văn Linh, Phường 1, Quận 7, TP.HCM</textarea>
+
+                        <label>Logo Hiện Tại:</label>
+                        <div class="logo-preview-box">
+                            <img src="../images/logoCleanmeat.png" alt="Logo" class="logo-preview">
+                            <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cloud-upload-alt"></i> Thay đổi Logo</button>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary submit-btn">Lưu Cấu Hình Cửa Hàng</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="security-settings" class="tab-content">
+                <div class="setting-card">
+                    <div class="security-group">
+                        <div class="header-action">
+                            <h4>Quản lý Vai trò (Roles)</h4>
+                            <button class="btn btn-primary btn-action" onclick="openModal('role-modal')">
+                                <i class="fas fa-plus"></i> Thêm Vai trò Mới
+                            </button>
+                        </div>
+                        <p>Định nghĩa các nhóm quyền hạn khác nhau cho nhân viên Admin.</p>
+                        <table class="role-table">
+                            <thead>
+                            <tr>
+                                <th>Tên Vai trò</th>
+                                <th>Số lượng User</th>
+                                <th>Mô tả</th>
+                                <th>Thao tác</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Super Admin</td>
+                                <td>1</td>
+                                <td>Toàn quyền truy cập hệ thống.</td>
+                                <td><button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Quản lý Sản phẩm</td>
+                                <td>3</td>
+                                <td>Chỉ được quản lý sản phẩm và khuyến mãi.</td>
+                                <td><button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary submit-btn">Lưu Cài Đặt Bảo Mật</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="role-modal" class="modal">
+        <div class="modal-content small-modal">
+            <span class="close-btn" onclick="closeModal('role-modal')">&times;</span>
+            <h3><span id="modal-title-role">Thêm</span> Vai Trò Mới</h3>
+            <form class="role-form">
+                <div class="form-section full-col">
+                    <label>Tên Vai trò:</label>
+                    <input type="text" placeholder="Ví dụ: admin, user..." required><br>
+
+                    <label>Phân quyền chi tiết:</label>
+                    <div class="permission-list">
+                        <label><input type="checkbox"> Quản lý Sản phẩm (Xem/Sửa/Xóa)</label>
+                        <label><input type="checkbox"> Quản lý Đơn hàng (Xem/Sửa trạng thái)</label>
+                        <label><input type="checkbox"> Quản lý Người dùng</label>
+                        <label><input type="checkbox"> Quản lý Khuyến mãi</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary submit-btn">Lưu Vai Trò</button>
+            </form>
+        </div>
     </div>
 </div>
 <script src="../JavaScript/admin_cau_hinh_he_thong.js"></script>

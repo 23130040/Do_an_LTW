@@ -128,6 +128,7 @@ a {
     background-color: var(--main-red);
     color: #fff;
 }
+/* Khi bật dropdown (JS thêm class 'show') */
 .dropdown-content.show {
     display: block;
 }
@@ -180,8 +181,7 @@ a {
     margin-right: 10px;
     font-size: 1.1em;
 }
-
-/* --- CONTENT STYLES --- */
+/* --- CONTENT STYLES (Chung) --- */
 .content {
     flex-grow: 1;
     padding: 20px;
@@ -197,174 +197,81 @@ a {
     padding-bottom: 10px;
 }
 
-/* --- 1. SUMMARY CARDS (Dashboard) --- */
-.summary-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
-}
 
-.card {
-    border-radius: 8px;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 20px;
-}
+/* --- Styles Riêng cho Trang Đổi Mật Khẩu --- */
 
-.card-body h3 {
-    font-size: 1.1em;
-    font-weight: 500;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.card-body h3 i {
-    margin-right: 8px;
-}
-
-.data-number {
-    font-size: 2.2em;
-    font-weight: bold;
-}
-
-.data-caption {
-    font-size: 0.9em;
-    opacity: 0.8;
-    margin-top: 5px;
-}
-
-/* Background Colors */
-.bg-red { background-color: var(--main-red); }
-.bg-blue { background-color: #007bff; }
-.bg-green { background-color: #28a745; }
-.bg-purple { background-color: #6f42c1; }
-
-/* ---  REPORT SECTION (Biểu đồ) --- */
-.report-section {
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-}
-
-.report-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-
-.report-header h3 {
-    font-size: 1.5em;
-    font-weight: 300;
-    color: var(--text-color);
-}
-
-.date-controls .btn-report {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
+.password-container {
+    max-width: 600px;
+    margin: 0 auto;
     background-color: #fff;
-    color: #555;
-    cursor: pointer;
-    margin-left: 5px;
-    border-radius: 3px;
-    font-size: 0.9em;
-}
-
-.date-controls .btn-report.active,
-.date-controls .btn-report:hover {
-    background-color: var(--main-red);
-    color: #fff;
-    border-color: var(--main-red);
-}
-
-.chart-placeholder {
-    height: 350px;
-    background-color: #fff;
-    border: 1px solid #eee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #aaa;
-    font-style: italic;
-    border-radius: 5px;
-}
-.chart-label {
-    padding: 15px;
-}
-/* --- 3. STATS DETAIL SECTION --- */
-.stats-detail-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-}
-
-.best-sellers-panel, .top-customers-panel, .payment-methods-panel {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    padding: 30px;
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-.stats-detail-section h3 {
-    font-size: 1.2em;
-    font-weight: 500;
-    margin-bottom: 15px;
-    color: var(--main-red);
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px;
+/* Form Cập nhật */
+.password-change-form .form-group {
+    margin-bottom: 20px;
 }
-
-.stats-list {
-    list-style: none;
-}
-
-.stats-list li {
-    padding: 10px 0;
-    border-bottom: 1px dashed #eee;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1em;
-}
-
-.stats-list li:last-child {
-    border-bottom: none;
-}
-
-.stats-list span {
+.password-change-form label {
+    display: block;
+    margin-bottom: 8px;
     font-weight: bold;
     color: #555;
 }
-
-.text-red {
-    color: var(--main-red);
-}
-
-.payment-table {
+.password-change-form input[type="password"] {
     width: 100%;
-    border-collapse: collapse;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1em;
+    transition: border-color 0.2s;
+}
+.password-change-form input[type="password"]:focus {
+    border-color: var(--main-red);
+    outline: none;
 }
 
-.payment-table td {
-    padding: 10px 0;
-    border-bottom: 1px dashed #eee;
-    font-size: 1em;
-}
-
-.payment-table td:last-child {
-    text-align: right;
+/* Nút Đổi Mật Khẩu */
+.btn-update {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: var(--main-red);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     font-weight: bold;
+    font-size: 1.05em;
+    transition: background-color 0.2s;
+    width: 100%; /* Làm nút full width */
 }
-.payment-table tr:last-child td {
-    border-bottom: none;
+.btn-update:hover {
+    background-color: #72202c;
 }
-.payment-table i {
-    margin-right: 5px;
-    color: #6c757d;
+
+/* Vùng hiển thị thông báo */
+.message-area {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: none; /* Ban đầu ẩn */
+    text-align: center;
+}
+.message-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Cần thêm style để phân biệt link active trong dropdown nếu cần */
+.user-dropdown .active-dropdown-link {
+    background-color: #f1f1f1;
+    color: var(--main-red);
 }

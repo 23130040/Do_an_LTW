@@ -5,7 +5,7 @@ function toggleUserMenu() {
 
 // Đóng menu nếu người dùng click ra ngoài
 window.onclick = function(event) {
-    if (!event.target.matches('.user-logo')) {
+    if (!event.target.matches('.user-logo') && !event.target.closest('.user-dropdown')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         for (let i = 0; i < dropdowns.length; i++) {
             var openDropdown = dropdowns[i];
