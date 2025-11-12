@@ -1,65 +1,189 @@
-body{
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
     font-family: Arial, Helvetica, sans-serif;
-    background-image: url("../images/background.jpg");
+    background-image: url("https://png.pngtree.com/background/20250423/original/pngtree-raw-meat-and-knife-background-picture-image_16434426.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-}
-main{
+    background-position: center;
 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
-main #signup_container{
-    width: 629px;
-    height: 859px;
-    margin: 45px 655px 45px 655px;
+a {
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 20px; /* KHÔI PHỤC kích thước chữ ban đầu */
+}
+a:hover {
+    text-decoration: underline;
+    color: #04aa6d !important;
+}
+
+#wrapper {
+    width: 500px; /* Kích thước tối ưu cho desktop */
+    max-width: 95%; /* Responsive */
+    margin: 20px auto;
+    padding: 20px;
     border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.5) ;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#wrapper form {
     text-align: center;
+    width: 100%;
 }
-main #signup_container .signup_title{
-    padding-top: 65px;
+
+/* Logo */
+#wrapper form IMG {
+    width: 30%;
+    max-width: 150px;
+    height: auto;
 }
-main #signup_container .signup_title IMG{
-    border-radius: 50%;
-}
-main #signup_container .signup_title h1{
-    color: white;
-    font-size: 50px;
-}
-main #signup_container .form_input .input_field{
-    width: 490px;
-    height: 53px;
+
+#wrapper form h1.heading_title {
     font-size: 25px;
+    color: white;
+    margin-top: 10px;
+}
+
+#wrapper form i {
+    font-size: 25px;
+    color: white;
+    margin-right: 10px;
+}
+#wrapper form .block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* Input Fields */
+#wrapper form input[type=text], #wrapper form input[type=password] {
+    flex-grow: 1;
+    height: 53px;
+    font-size: 20px;
     border: none;
-    margin-bottom: 40px;
-    margin-left: 10px;
-    background: none ;
+    margin: 0;
+    background: none;
     color: white;
     border-bottom: 2px solid white;
-}
-main #signup_container .form_input #submit{
-    width: 490px;
-    height: 70px;
-    border-radius: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    border: none;
-}
-main #signup_container .form_input #submit:hover{
-    background-color: #8d2a3a;
-}
-main #signup_container .login_link{
-    font-size: 25px;
-    margin-top: 40px;
-}
-main #signup_container .login_link .txt{
-    color: white;
-}
-main #signup_container .login_link a{
-    text-decoration: none;
-    color: #db1a26;
-}
-main #signup_container .login_link a:hover{
-    text-decoration: underline;
-    color: rgb(11, 170, 74);
+
+    &::placeholder {
+        color: white;
+        opacity: 0.7;
+    }
 }
 
+.form_submit {
+    display: block;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 17px !important;
+    font-weight: bold;
+    color: black;
+    border: none;
+    margin: auto;
+}
+
+.form_submit:hover {
+    background-color: #04aa6d;
+    color: white !important;
+    text-decoration: none !important;
+}
+.separator-container{
+    color: #d3d3d3;
+    display: flex;
+}
+.separator-text{
+    padding: 0 5px;
+    font-size: 15px;
+}
+.separator-line{
+    flex-grow: 1;
+    height: 1px;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.social-login{
+    margin: 10px auto;
+    border: 1px solid white;
+    border-radius: 10px;
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+}
+.social-login:hover{
+    background-color: #04aa6d;
+}
+.social-login a{
+    color: white;
+    font-size: 15px !important;
+    margin: auto;
+}
+
+.social-login a:hover{
+    color: white !important;
+    text-decoration: none;
+}
+#wrapper form .sign_up {
+    font-size: 20px;
+    margin-top: 40px;
+    display: inline;
+}
+
+#wrapper form .sign_up .txt {
+    color: white;
+}
+
+#wrapper form .sign_up a {
+    color: #db1a26;
+}
+
+@media (max-width: 550px) {
+    #wrapper {
+        width: 95%;
+        margin: 20px auto;
+        padding: 10px 20px 20px 20px;
+    }
+
+    #wrapper form IMG {
+        margin-top: 50px;
+    }
+
+    #wrapper form h1.heading_title {
+        font-size: 35px;
+        margin-bottom: 20px;
+    }
+
+    #wrapper form input[type=text], #wrapper form input[type=password] {
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .form_submit {
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+    }
+
+    #wrapper form .sign_up {
+        font-size: 16px;
+    }
+}

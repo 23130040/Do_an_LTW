@@ -15,11 +15,6 @@ body{
     width: 100%;
     z-index: 1000;
 }
-#menubar.fixed{
-    position: fixed;
-    top: 0;
-    left: 0;
-}
     /*Thanh menu*/
 #menubar .column{
     display: flex;
@@ -39,7 +34,8 @@ body{
 #menubar .center{
     width: 50%;
     text-align: center;
-    margin-right: 350px;
+    margin-right: 150px;
+
 }
 #menubar .center ul{
     list-style-type: none;
@@ -59,7 +55,6 @@ body{
 #menubar .center li a:hover{
     color: #04aa6d;
 }
-
     /*menu phải*/
 #menubar .right .menu-right{
     list-style-type: none;
@@ -102,7 +97,7 @@ body{
     list-style: none;
     padding: 5px 0;
     width: 240px;
-    height: 250px;
+    height: auto;
     z-index: 1000;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -115,8 +110,8 @@ body{
     transition: background 0.25s ease, color 0.25s ease;
     border-bottom: 2px solid #ddd;
 }
-.user-menu a:last-child {
-    border-bottom: none;
+#menubar .right .user-menu-wrapper .user-menu li:last-child a{
+    border-bottom: none ;
 }
 #menubar .right .user-menu-wrapper .user-menu a:hover{
     background-color: #8d2a3a;
@@ -130,7 +125,6 @@ body{
 #menubar .right .user-menu-wrapper:hover .user-menu{
     display: block;
 }
-
 /********************Main******************************/
 main{
     margin-top: 70px;
@@ -142,7 +136,7 @@ main header{
 main header .title{
     color: #5a0002;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 30px;
     margin-top: 30px;
     margin-left: 50px;
 }
@@ -165,7 +159,7 @@ main .contents .details .order-table-header{
 }
 main .contents .details .order-table-header th{
     color: white;
-    font-size: 25px;
+    font-size: 20px;
     padding: 10px 0;
 }
 main .contents .summary{
@@ -192,13 +186,13 @@ main .contents .summary .container .center{
 
 }
 main .contents .summary .container .txt{
-    font-size: 25px;
+    font-size: 20px;
     font-style: italic;
     margin-top: 15px;
     margin-left: 25px;
 }
 main .contents .summary .container .number{
-    font-size: 25px;
+    font-size: 20px;
     float: right;
     margin-right: 25px;
     text-align: right;
@@ -215,7 +209,7 @@ main .contents .summary .container .footer button{
     height: 40px;
     margin-top: 15px;
     margin-bottom: 15px;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: bold;
 }
 main .contents .summary .container .footer button:hover{
