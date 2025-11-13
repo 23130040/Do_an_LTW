@@ -1,170 +1,254 @@
-//Lấy danh sách người dùng
-function getUsers(){
+// ======= Quản lý người dùng =======
+function getUsers() {
     const usersJSON = localStorage.getItem("users");
     return usersJSON ? JSON.parse(usersJSON) : [];
 }
-//Lưu người dùng
-function saveUsers(users){
+function saveUsers(users) {
     localStorage.setItem("users", JSON.stringify(users));
 }
-/*function checkEmail(email){
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function checkEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return emailRegex.test(email);
 }
-function checkPasswordStrength(password) {
-    const minLength = 8;
 
-    const passwordRegex = new RegExp(
-        `(?=.*[a-z])` +
-        `(?=.*[A-Z])` +
-        `(?=.*\\d)` +
-        `(?=.*[!@#$%^&*()])` +
-        `[A-Za-z\\d!@#$%^&*()]{${minLength},}`
-    );
+function checkPassword(password) {
+    const checkLength = password.length >= 8;
+    const checkUpper = /[A-Z]/.test(password);
+    const checkNumber = /\d/.test(password);
+    const checkLower = /[a-z]/.test(password);
+    const checkSpecial = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
 
-    if (password.length < minLength) {
-        return "Mật khẩu phải có ít nhất 8 ký tự.";
+    return checkLength && checkUpper && checkNumber && checkLower && checkSpecial;
+}
+// ======= Modal helper =======
+function openModal(id) {
+    document.getElementById(id).style.display = "block";
+}
+function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+}
+
+// ======= Hiển thị lỗi =======
+function showError(id, inputs, message) {
+    const errorDiv = document.getElementById(id);
+    errorDiv.textContent = message;
+    errorDiv.style.display = "block";
+    if (Array.isArray(inputs)) {
+        inputs.forEach(input => input.classList.add("error-border"));
+    }else{
+        inputs.classList.add("error-border");
     }
 
-    if (!passwordRegex.test(password)) {
-        let errors = [];
-        if (!/(?=.*[a-z])/.test(password)) errors.push("chữ cái thường");
-        if (!/(?=.*[A-Z])/.test(password)) errors.push("chữ cái hoa");
-        if (!/(?=.*\d)/.test(password)) errors.push("chữ số");
-        if (!/(?=.*[!@#$%^&*()])/.test(password)) errors.push("ký tự đặc biệt");
+}
 
-        return `Mật khẩu phải chứa ít nhất một: ${errors.join(", ")}.`;
-    }
-
-    return null;
-}*/
-
-//đăng ký
+// ======= Đăng ký =======
 function signup(event) {
     event.preventDefault();
-
     const form = document.getElementById('signup-form');
-    const name = form.querySelector('input[name="name"]').value.trim();
-    const email = form.querySelector('input[name="email"]').value.trim();
-    const password = form.querySelector('input[name="password"]').value;
-    const confirm = form.querySelector('input[name="confirm-password"]').value;
+    const nameInput = form.name;
+    const name = nameInput.value.trim();
+    const emailInput = form.email;
+    const email = emailInput.value.trim();
+    const passwordInput = form.password;
+    const password = passwordInput.value;
+    const confirmInput = form.confirm_password;
+    const confirm = confirmInput.value;
 
-    /*const isEmailValid = checkEmail(email);
-    if (!isEmailValid) {
-        alert('Lỗi: Email không hợp lê!');
-        return;
-    }*/
+    nameInput.classList.remove("error-border");
+    emailInput.classList.remove("error-border");
+    passwordInput.classList.remove("error-border");
+    confirmInput.classList.remove("error-border");
 
-    if (password !== confirm){
-        alert("Lỗi: Mật khẩu xác nhận không khớp!");
+    document.getElementById("signup-error").style.display = "none";
+
+    if (name === ''){
+        showError('signup-error',nameInput,'Vui lòng nhập họ và tên!');
         return;
     }
-
-    /*const isPasswordValid = checkPasswordStrength(password);
-    if (isPasswordValid){
-        alert('Lỗi mật khẩu: ' + isPasswordValid);
+    if (email === ''){
+        showError('signup-error',emailInput,'Vui lòng nhập email!');
         return;
-    }*/
-
+    }
+    if (password === ''){
+        showError('signup-error', passwordInput,'Vui lòng nhập mật khẩu!');
+        return;
+    }
+    if (confirm === ''){
+        showError('signup-error',confirmInput,'Vui lòng nhập lại mật khẩu!');
+        return;
+    }
+    if (!checkEmail(email)) {
+        showError('signup-error',emailInput,'Email không hợp lệ!');
+        return;
+    }
+    if (!checkPassword(password)) {
+        showError('signup-error',passwordInput,'Mật khẩu phải có ít nhất 8 ký tự, bao gồm ít nhất một chữ cái hoa, một chữ cái thường, một chữ số và một ký tự đặc biệt.');
+        return;
+    }
+    if (password !== confirm) {
+        showError('signup-error',confirmInput,"Mật khẩu xác nhận không khớp!");
+        return;
+    }
     let users = getUsers();
-
-    if (users.some(user => user.email === email)){
-        alert("Lỗi: Email này đã được đăng ký!");
-        return;
+    if (users.some(u => u.email === email)) {
+        showError('signup-error',emailInput,"Email này đã được đăng ký!");
+        return
     }
-
-    const newUser = {
-        name: name,
-        email: email,
-        password: password,
-        role: 'user'
-    }
-    users.push(newUser);
+    users.push({ name, email, password, role: 'user' });
     saveUsers(users);
-
     alert('Đăng ký thành công! Vui lòng đăng nhập.');
-
-    window.location.href= '../HTML/TrangDangNhap.html';
+    window.location.href = '../HTML/TrangDangNhap.html';
 }
-//đăng nhập
+
+// ======= Đăng nhập =======
 function login(event) {
     event.preventDefault();
-
     const form = document.getElementById('login-form');
-    const email = form.querySelector('input[name="email"]').value.trim();
-    const password = form.querySelector('input[name="password"]').value;
+    const emailInput = form.email;
+    const passwordInput = form.password;
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
 
-    let users = getUsers();
+    // Reset lỗi
+    emailInput.classList.remove("error-border");
+    passwordInput.classList.remove("error-border");
+    document.getElementById('login-error').style.display = "none";
 
-    const user = users.find(user => user.email === email && user.password === password);
-
-    if(user){
-        sessionStorage.setItem('users', JSON.stringify({
-            email: user.email,
-            password: user.password,
-            role: user.role
-            }
-        ));
+    // Kiểm tra email hoặc password trống
+    if (email === '' && password === '') {
+        showError('login-error', [emailInput, passwordInput], 'Vui lòng nhập email và mật khẩu!');
+        return; // Dừng hàm
+    }
+    if (email === '') {
+        showError('login-error', emailInput, 'Vui lòng nhập email!');
+        return;
+    }
+    if (!checkEmail(email)) {
+        showError('login-error',emailInput,'Email không hợp lệ!');
+        return;
+    }
+    if (password === '') {
+        showError('login-error', passwordInput, 'Vui lòng nhập mật khẩu!');
+        return;
+    }
+    const user = getUsers().find(u => u.email === email && u.password === password);
+    if (user) {
+        sessionStorage.setItem('users', JSON.stringify(user));
         alert('Đăng nhập thành công!');
-        window.location.href= '../HTML/trang_chu_da_login.html';
-    }else{
-        alert('Email hoặc mật khẩu không đúng!');
+        window.location.href = '../HTML/trang_chu_da_login.html';
+    } else {
+        showError('login-error', [emailInput, passwordInput], 'Email hoặc mật khẩu không đúng!');
     }
 }
 
+
+// ======= Quên mật khẩu =======
+let confirmTimer;
+function sendEmail(event) {
+    event.preventDefault();
+    const input = document.querySelector('#forgot-password-form input[name="reset_email"]');
+    const email = input.value.trim();
+    input.classList.remove("error-border");
+    document.getElementById("email-error").style.display = "none";
+
+    if (!email) return showError('email-error', input, "Vui lòng nhập email!");
+    if (!checkEmail(email)) return showError('email-error',input, "Email không hợp lệ!");
+
+    const user = getUsers().find(u => u.email === email);
+    if (!user) return showError('email-error', input, "Email này chưa được liên kết với bất kỳ tài khoản nào!");
+
+    // Mở modal xác nhận
+    document.getElementById("user-email").textContent = email;
+    closeModal('forgotPasswordModal');
+    openModal('confirmation-modal');
+    startConfirmTimer();
+}
+// ======= Hàm đặt lại mật khẩu =======
 function resetPassword(event) {
     event.preventDefault();
 
-    const form = document.getElementById('forgotPasswordModal');
-    const email = form.querySelector('input[name="reset_email"]').value.trim();
-    const newPassword = form.querySelector('input[name="new_password"]').value;
+    const email = document.querySelector('#forgot-password-form input[name="reset_email"]').value.trim();
+    const passwordInput = document.querySelector('#resetpassword-form input[name="new_password"]');
+    const confirmInput = document.querySelector('#resetpassword-form input[name="confirm_new_password"]');
+    const password = passwordInput.value;
+    const confirm = confirmInput.value;
 
-    let users = getUsers();
+    // Reset lỗi
+    document.getElementById("reset-password-error").style.display = "none";
+    passwordInput.classList.remove("error-border");
+    confirmInput.classList.remove("error-border");
 
-    const userIndex = users.findIndex(user => user.email === email);
+    // Kiểm tra lỗi
+    if (password === '') {
+        showError('reset-password-error', passwordInput, 'Vui lòng nhập mật khẩu!');
+        return;
+    }
+    if (confirm === '') {
+        showError('reset-password-error', confirmInput, 'Vui lòng nhập lại mật khẩu!');
+        return;
+    }
+    if (password !== confirm) {
+        showError('reset-password-error', confirmInput, 'Mật khẩu xác nhận không khớp!');
+        return;
+    }
 
-    if (userIndex !== -1) {
-        users[userIndex].password = newPassword;
+    // Cập nhật mật khẩu
+    const users = getUsers();
+    const user = users.find(u => u.email === email);
+    if (user) {
+        user.password = password;
         saveUsers(users);
-        alert('Mật khẩu của tài khoản ' + email + ' đã được đặt lại thành công!');
-        document.getElementById('forgotPasswordModal').style.display = 'none';
-    } else {
-        alert('Lỗi: Không tìm thấy tài khoản với email này.');
+        alert('Đặt lại mật khẩu thành công!');
+        closeModal('resetpasswordmodal');
     }
 }
+
+// ======= Timer xác nhận email =======
+function startConfirmTimer() {
+    clearTimeout(confirmTimer);
+    confirmTimer = setTimeout(() => {
+        closeModal('confirmation-modal');
+        alert('Xác nhận email thành công!');
+        openModal('resetpasswordmodal');
+    }, 3000);
+}
+
+// ======= DOMContentLoaded =======
 document.addEventListener('DOMContentLoaded', () => {
-    const signupBTN = document.getElementById('register-submit-btn');
-    if (signupBTN) {
-        signupBTN.addEventListener('click', signup);
-    }
-    const loginBTN = document.getElementById('login-submit-btn');
-    if (loginBTN) {
-        loginBTN.addEventListener('click', login);
-    }
+    // Nút đăng ký/đăng nhập
+    document.getElementById('register-submit-btn')?.addEventListener('click', signup);
+    document.getElementById('login-submit-btn')?.addEventListener('click', login);
 
-    const openForgotBtn = document.getElementById('open-forgot-modal-btn');
-    const forgotPasswordModal = document.getElementById('forgotPasswordModal');
-    const closeForgotBtn = document.getElementById('closeForgotModal');
-    const resetBtn = document.getElementById('reset-password-btn');
+    // Mở/đóng modal quên mật khẩu
+    const forgotModal = document.getElementById('forgotPasswordModal');
+    document.getElementById('open-forgot-modal-btn')?.addEventListener('click', e => { e.preventDefault(); openModal('forgotPasswordModal'); });
+    document.getElementById('closeForgotModal')?.addEventListener('click', () => closeModal('forgotPasswordModal'));
 
-    if (openForgotBtn) {
-        openForgotBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            forgotPasswordModal.style.display = 'block';
-        })
-    }
-    if (closeForgotBtn) {
-        closeForgotBtn.addEventListener('click', (e) => {
-            forgotPasswordModal.style.display = 'none';
-        })
-    }
-    if (resetBtn) {
-        resetBtn.addEventListener('click', resetPassword);
-    }
+    // Nút gửi yêu cầu
+    document.getElementById('send-request-btn')?.addEventListener('click', sendEmail);
 
-    window.onclick = function(event) {
-        if (event.target === forgotPasswordModal) {
-            forgotPasswordModal.style.display = 'none';
+    // Modal confirmation
+    const confirmModal = document.getElementById('confirmation-modal');
+    document.getElementById('cancel-btn')?.addEventListener('click', () => { closeModal('confirmation-modal'); clearTimeout(confirmTimer); });
+    document.getElementById('close-confirmation-modal')?.addEventListener('click', () => { closeModal('confirmation-modal'); clearTimeout(confirmTimer); });
+    document.getElementById('resend-btn')?.addEventListener('click', () => {
+        alert('Email đã được gửi lại. Vui lòng kiểm tra hộp thư đến và thư mục spam.');
+        startConfirmTimer(); // reset timer 10s
+    });
+
+    //Modal reset password
+    const resetpasswordModal = document.getElementById('resetpasswordmodal');
+    document.getElementById('close-resetpasswordmodal').addEventListener('click', () => {closeModal('resetpasswordmodal');});
+    document.getElementById('confirm-btn')?.addEventListener('click', resetPassword);
+
+
+    // Click ngoài modal để đóng quên mật khẩu
+    window.addEventListener('click', e => {
+        if (e.target === forgotModal) closeModal('forgotPasswordModal');
+        if (e.target === confirmModal) {
+            closeModal('confirmation-modal')
+            clearTimeout(confirmTimer);
         }
-    }
+        if (e.target === resetpasswordModal) closeModal('resetpasswordmodal');
+    });
 });

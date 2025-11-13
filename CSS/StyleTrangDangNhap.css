@@ -67,7 +67,7 @@ a:hover {
 #wrapper form .block {
     display: flex;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 #wrapper form input[type=text], input[type=password] {
@@ -90,7 +90,7 @@ a:hover {
     text-align: right;
     display: inline-block;
     margin-right: 0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 100%;
 }
 #wrapper form .forgot_password a{
@@ -230,25 +230,25 @@ a:hover {
     cursor: pointer;
 }
 
-#forgot-password-form {
+#forgot-password-form, #resetpassword-form {
     text-align: center;
     padding-top: 20px;
 }
 
-#forgot-password-form .heading_title {
+.modal .heading_title {
     color: #333;
     font-size: 24px;
     margin-bottom: 5px;
 }
 
-#forgot-password-form .txt {
+.modal .txt {
     color: #555;
     font-size: 15px;
     display: block;
     margin-bottom: 25px;
 }
 
-#forgot-password-form .block {
+.modal .block {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
@@ -257,15 +257,15 @@ a:hover {
     padding: 8px 10px;
 }
 
-#forgot-password-form .block i {
+.modal .block i {
     color: #333;
     font-size: 20px;
     margin-right: 10px;
 }
 
-#forgot-password-form .form_input {
+.modal .form_input {
     flex-grow: 1;
-    height: auto;
+    height: 30px;
     font-size: 17px;
     border: none;
     margin: 0;
@@ -279,20 +279,114 @@ a:hover {
     }
 }
 
-#forgot-password-form .submit {
-    margin-top: 30px;
+.modal .submit {
+    margin-top: 20px;
 }
 
-#forgot-password-form .form_submit {
+.modal .form_submit {
     background-color: #5a0002;
     color: white;
     border: none;
     width: 100%;
 }
 
-#forgot-password-form .form_submit:hover {
+.modal .form_submit:hover {
     background-color: #04aa6d;
     color: white !important;
+}
+
+.error-message{
+    color: red;
+    display: none;
+    text-align: left;
+    margin: auto;
+    font-size: 13px;
+
+}
+#login-form .error-message{
+    margin-bottom: 10px;
+}
+.error-border {
+    border: 1px solid #ff0000 !important;
+    border-radius: 5px;
+}
+
+.message p {
+    font-size: 16px;
+    color: #333;
+    margin: 15px 0;
+}
+
+.message .txt {
+    font-weight: 500;
+}
+
+.message .note {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* ===== Email hiển thị ===== */
+.message .email {
+    font-weight: bold;
+    color: #04aa6d;
+}
+
+/* ===== Button group ===== */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+/* ===== Buttons ===== */
+.button-group .btn {
+    flex: 1;
+    margin: 0 5px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Cancel button */
+.button-group .cancel-btn {
+    background-color: #ccc;
+    color: #333;
+}
+
+.button-group .cancel-btn:hover {
+    background-color: #999;
+    color: #fff;
+}
+
+/* Resend button */
+.button-group .resend-btn {
+    background-color: #04aa6d;
+    color: #fff;
+}
+
+.button-group .resend-btn:hover {
+    background-color: #038f57;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 500px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group .btn {
+        margin: 8px 0;
+    }
 }
 
 @media (max-width: 650px) {
