@@ -16,11 +16,7 @@ body{
     width: 100%;
     z-index: 1000;
 }
-#menubar.fixed{
-    position: fixed;
-    top: 0;
-    left: 0;
-}
+
 /*Thanh menu*/
 #menubar .column{
     display: flex;
@@ -32,9 +28,9 @@ body{
     width: 30%;
 }
 #menubar .left IMG{
-    width: 90px;
-    height: 57px;
-    margin: 5px 20px;
+    width: 100px;
+    height: 67px;
+    margin: 5px 30px;
 }
 /*menu giữa*/
 #menubar .center{
