@@ -1,0 +1,562 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 20px;
+}
+
+/* ======================= KHUNG NỘI DUNG CHÍNH ======================= */
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 120px 0 50px;
+    background-color: #f7f7f7;
+}
+
+/* ======================= KHUNG SẢN PHẨM ======================= */
+.product-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 1000px;
+    padding: 30px 40px;
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+/* ======================= ẢNH SẢN PHẨM ======================= */
+.product-images {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-images .main-image {
+    width: 100%;
+    max-width: 500px;
+    height: 380px;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: opacity .2s;
+}
+
+.product-images .main-image.fade {
+    opacity: .6;
+}
+
+/* Thumbnail */
+.thumbnail-list {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.thumbnail-list .thumb {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.thumbnail-list .thumb:hover,
+.thumbnail-list .thumb.active {
+    border-color: #cc0000;
+}
+
+/* ======================= THÔNG TIN SẢN PHẨM ======================= */
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-info .title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #222;
+}
+
+.product-info .rating {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Giá */
+.price-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price,
+.new-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #e60000;
+}
+
+.old-price {
+    color: #888;
+    text-decoration: line-through;
+}
+
+.discount {
+    color: #008000;
+    font-weight: bold;
+}
+
+/* Lựa chọn */
+.section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label {
+    min-width: 100px;
+    font-weight: bold;
+}
+
+.options {
+    display: flex;
+    gap: 10px;
+}
+
+.option {
+    padding: 6px 14px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.option:hover,
+.option.active {
+    border-color: #cc0000;
+    color: #cc0000;
+}
+
+/* ======================= SỐ LƯỢNG ======================= */
+.qty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.qty input {
+    width: 45px;
+    height: 32px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 16px;
+    padding: 0;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    background: #eee;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ======================= NÚT MUA ======================= */
+.btn-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.add-cart,
+.buy-now {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+}
+
+.add-cart {
+    color: #cc0000;
+    background: #fff;
+    border: 2px solid #cc0000;
+    transition: .2s;
+}
+
+.add-cart:hover {
+    background: #cc0000;
+    color: #fff;
+}
+
+.buy-now {
+    color: #fff;
+    background: #cc0000;
+    transition: .2s;
+}
+
+.buy-now:hover {
+    background: #a00000;
+}
+
+/* ======================= CHI TIẾT SẢN PHẨM ======================= */
+.product-detail {
+    width: 100%;
+    max-width: 1000px;
+    padding: 30px 40px;
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.06);
+    line-height: 1.6;
+}
+
+.product-detail h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.product-detail ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.product-detail li {
+    margin-bottom: 8px;
+}
+
+/* ======================= BÌNH LUẬN ======================= */
+.comment-section {
+    width: 100%;
+    background: #f7f7f7;
+    padding-bottom: 40px;
+}
+
+.product-comments {
+    width: 100%;
+    max-width: 1000px;
+    padding: 30px 40px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.06);
+}
+
+.product-comments h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* Nhập bình luận */
+.comment-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.comment-box textarea {
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: vertical;
+    font-size: 16px;
+}
+
+.comment-box button {
+    align-self: flex-end;
+    padding: 10px 20px;
+    background: #cc0000;
+    border-radius: 6px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.comment-box button:hover {
+    background: #a00000;
+}
+
+/* Danh sách bình luận */
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment-item {
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.comment-item .user {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.comment-item .content {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Nút xem thêm */
+.see-more {
+    text-align: right;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0,0,0,.35);
+    cursor: pointer;
+    margin-top: 10px;
+    transition: .2s;
+}
+
+.see-more:hover {
+    color: rgba(0,0,0,.55);
+}
+
+/* ======================= CAM KẾT ======================= */
+.features-section {
+    background: #fff;
+    margin-top: 40px;
+    padding: 60px 0 70px;
+    border-top: 1px solid #eee;
+}
+
+.features-container {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    text-align: center;
+}
+
+.feature-item {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: .3s;
+}
+
+.feature-item i {
+    font-size: 50px;
+    margin-bottom: 15px;
+    color: #cc0000;
+    transition: .3s;
+}
+
+.feature-item p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 8px;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-item:hover i {
+    transform: scale(1.1);
+    color: #ff4b4b;
+}
+/* ======================= HEADER ======================= */
+.header {
+    width: 100%;
+    background-color: #343A40;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    height: 80px;
+}
+.logo img {
+    width: 110px;
+    height: auto;
+}
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    flex: 1;
+}
+.menu a {
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+.menu a:hover {
+    color: #ff4b4b;
+}
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.search-cart {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.search-icon i,
+.cart-icon i {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.search-icon i:hover,
+.cart-icon i:hover {
+    color: #ff4b4b;
+}
+.login a {
+    color: white;
+    font-size: 17px;
+    transition: color 0.3s;
+}
+.login a:hover {
+    color: #ff4b4b;
+}
+
+/* ======================= FOOTER ======================= */
+.main-footer {
+    background: #5a0000;
+    color: #f8f8f8;
+    padding-top: 50px;
+    font-size: 16px;
+}
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 20px 40px 20px;
+}
+.footer-col {
+    width: 32%;
+    margin-bottom: 20px;
+}
+.footer-col h4 {
+    color: #FFD700;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+.footer-logo img {
+    width: 150px;
+    margin-bottom: 15px;
+}
+.about-us p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.quick-links ul {
+    list-style: none;
+    padding: 0;
+}
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+.quick-links ul li a {
+    color: #ccc;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+.quick-links ul li a:hover {
+    color: #8d2a3a;
+    padding-left: 5px;
+}
+.contact-info p {
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+.contact-info i {
+    margin-right: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-top: 3px;
+}
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #555;
+    color: white;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.social-icons a:hover {
+    background-color: #8d2a3a;
+    transform: rotate(10deg) scale(1.1);
+}
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid #444;
+    background-color: #222;
+    font-size: 14px;
+}
+/* ======================= RESPONSIVE ======================= */
+@media (max-width: 900px) {
+    .product-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .product-info {
+        align-items: center;
+    }
+}
