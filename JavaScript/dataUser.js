@@ -1,7 +1,24 @@
 // ======= Quản lý người dùng =======
 function getUsers() {
     const usersJSON = localStorage.getItem("users");
-    return usersJSON ? JSON.parse(usersJSON) : [];
+    let users = usersJSON ? JSON.parse(usersJSON) : [];
+
+    const adminEmail = 'admin.a@cleanmeat.com';
+    const adminPassword = 'Admin@123456';
+
+    if (!users.some(u => u.email === adminEmail)) {
+
+        users.unshift({
+            name: 'Admin',
+            email: adminEmail,
+            password: adminPassword,
+            role: 'admin'
+        });
+
+        saveUsers(users);
+    }
+
+    return users;
 }
 function saveUsers(users) {
     localStorage.setItem("users", JSON.stringify(users));
@@ -131,11 +148,16 @@ function login(event) {
         showError('login-error', passwordInput, 'Vui lòng nhập mật khẩu!');
         return;
     }
+
     const user = getUsers().find(u => u.email === email && u.password === password);
     if (user) {
         sessionStorage.setItem('users', JSON.stringify(user));
         alert('Đăng nhập thành công!');
-        window.location.href = '../HTML/trang_chu_da_login.html';
+        if (user.role === 'admin') {
+            window.location.href = '../HTML/admin_quan_ly_sp.html';
+        }else{
+            window.location.href = '../HTML/trang_chu_da_login.html';
+        }
     } else {
         showError('login-error', [emailInput, passwordInput], 'Email hoặc mật khẩu không đúng!');
     }

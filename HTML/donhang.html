@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clean Meat</title>
+    <link rel="stylesheet" href="../CSS/donhangstyle.css">
+    <script src="../JavaScript/donhang.js"></script>
+    <link rel="stylesheet" href="../CSS/all.min.css">
+</head>
+    <body>
+        <nav id="menubar">
+            <div class="sixteen column">
+                <div class="one-fifth column left">
+                    <img src="../images/logoCleanmeat.png" alt="logo">
+                </div>
+                <div class="three-fifths column center">
+                    <ul class="menu-center">
+                        <li class="menuitem"><a href="#">Trang chủ</a></li>
+                        <li class="menuitem"><a href="#">Sản phẩm</a></li>
+                        <li class="menuitem"><a href="#">Giới thiệu</a></li>
+                        <li class="menuitem"><a href="#">Tin tức</a></li>
+                    </ul>
+                </div>
+                <div class="one-fifth column right">
+                    <ul class="menu-right">
+                        <li class="menuitem"><i class="fa-solid fa-magnifying-glass"></i></li>
+                        <li class="menuitem"><a href="" class="link-cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                        <li class="menuitem user-menu-wrapper">
+                            <div class="user">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <ul class="user-menu">
+                                <li class ="user-menuitem"><a href="#">Tài khoản của tôi</a></li>
+                                <li class ="user-menuitem"><a href="#">Đơn hàng của tôi</a></li>
+                                <li class ="user-menuitem"><a href="#">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <div class="container">
+                <div class="header">
+                    <h1 class="title big">Đơn hàng của tôi</h1>
+                </div>
+
+                <div class="contents">
+                    <div class="tabs">
+                        <button class="tab active" data-target="all">Tất cả</button>
+                        <button class="tab" data-target="waiting">Chờ xác nhận</button>
+                        <button class="tab" data-target="shipping">Vận chuyển</button>
+                        <button class="tab" data-target="delivering">Chờ giao hàng</button>
+                        <button class="tab" data-target="done">Hoàn thành</button>
+                        <button class="tab" data-target="cancel">Đã hủy</button>
+                    </div>
+
+                    <div class="orders">
+                        <div class="order-group" id="all">
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <span class="order-id">DH001</span>
+                                    <span class="order-status status-waiting">Chờ xác nhận</span>
+                                </div>
+                                <div class="order-products">
+                                    <div class="product">
+                                        <img src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg" alt="Mỡ heo">
+                                        <div class="product-info">
+                                            <span class="name">Mỡ heo sạch 330gr</span>
+                                            <span class="qty">x1</span>
+                                        </div>
+                                        <span class="price">52,000đ</span>
+                                    </div>
+                                    <div class="product">
+                                        <img src="https://www.thucphamsachhd.com/uploads/files/2023/06/19/thumbs-1024-768-0/HED0002-PD01588-WEB_Ba-Roi-Rut-Suon-Heo-Duc.png" alt="ba rọi rút sườn">
+                                        <div class="product-info">
+                                            <span class="name">Ba rọi rút sườn</span>
+                                            <span class="qty">x2</span>
+                                        </div>
+                                        <span class="price">340,000đ</span>
+                                    </div>
+                                </div>
+
+                                <div class="order-footer">
+                                    <span class="total">Tổng: 392,000đ</span>
+                                    <button class="btn-detail"><a href="../HTML/Chitietdonhang.html">Chi tiết</a></button>
+                                </div>
+                            </div>
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <span class="order-id">DH002</span>
+                                    <span class="order-status status-delivering">Chờ giao hàng</span>
+                                </div>
+                                <div class="order-products">
+                                    <div class="product">
+                                        <img src="https://phamgiafood.com.vn/wp-content/uploads/2017/07/ma-dui-ga.jpg" alt="Má đùi gà">
+                                        <div class="product-info">
+                                            <span class="name">Má đùi gà</span>
+                                            <span class="qty">x1</span>
+                                        </div>
+                                        <span class="price">98,000đ</span>
+                                    </div>
+                                    <div class="product">
+                                        <img src="https://phamgiafood.com.vn/wp-content/uploads/2022/05/ucga-2.jpg" alt="Ức gà">
+                                        <div class="product-info">
+                                            <span class="name">Thịt ức gà</span>
+                                            <span class="qty">x2</span>
+                                        </div>
+                                        <span class="price">140.000đ</span>
+                                    </div>
+                                    <div class="product">
+                                        <img src="https://salt.tikicdn.com/cache/525x525/ts/product/5a/e5/45/854b408e0ac19f5356555703498e4e1a.png" alt="Phi lê cổ bò">
+                                        <div class="product-info">
+                                            <span class="name">Phi lê cổ bò</span>
+                                            <span class="qty">x1</span>
+                                        </div>
+                                        <span class="price">275,000đ</span>
+                                    </div>
+                                </div>
+                                <div class="order-footer">
+                                    <span class="total">Tổng: 523,000đ</span>
+                                    <button class="btn-detail">Chi tiết</button>
+                                </div>
+                            </div>
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <span class="order-id">DH003</span>
+                                    <span class="order-status status-done">Đã hoàn thành</span>
+                                </div>
+                                <div class="order-products">
+                                    <div class="product">
+                                        <img src="https://product.hstatic.net/200000423303/product/nam-gau-bo-to_fc79a75a1b3c463381bb22b779e8f808_1024x1024.png" alt="Nạm gầu bò tơ">
+                                        <div class="product-info">
+                                            <span class="name">Nạm gầu bò tơ</span>
+                                            <span class="qty">x1</span>
+                                        </div>
+                                        <span class="price">320.000đ</span>
+                                    </div>
+                                </div>
+                                <div class="order-footer">
+                                    <span class="total">Tổng: 320000đ</span>
+                                    <button class="btn-detail">Chi tiết</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-group hidden" id="waiting">
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <span class="order-id">DH001</span>
+                                    <span class="order-status status-waiting">Chờ xác nhận</span>
+                                </div>
+                                <div class="order-products">
+                                    <div class="product">
+                                        <img src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg" alt="Mỡ heo">
+                                        <div class="product-info">
+                                            <span class="name">Mỡ heo sạch 330gr</span>
+                                            <span class="qty">x1</span>
+                                        </div>
+                                        <span class="price">52,000đ</span>
+                                    </div>
+                                    <div class="product">
+                                        <img src="https://www.thucphamsachhd.com/uploads/files/2023/06/19/thumbs-1024-768-0/HED0002-PD01588-WEB_Ba-Roi-Rut-Suon-Heo-Duc.png" alt="ba rọi rút sườn">
+                                        <div class="product-info">
+                                            <span class="name">Ba rọi rút sườn</span>
+                                            <span class="qty">x2</span>
+                                        </div>
+                                        <span class="price">340,000đ</span>
+                                    </div>
+                                </div>
+
+                                <div class="order-footer">
+                                    <span class="total">Tổng: 392,000đ</span>
+                                    <button class="btn-detail">Chi tiết</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-group hidden" id="shipping">
+                            <div class="none">Không có đơn hàng</div>
+                        </div>
+
+                        <div class="order-group hidden" id="delivering">
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <span class="order-id">DH002</span>
+                                    <span class="order-status status-delivering">Chờ giao hàng</span>
+                                </div>
+                                <div class="order-products">
+                                    <div class="product">
+                                        <img src="https://phamgiafood.com.vn/wp-content/uploads/2017/07/ma-dui-ga.jpg" alt="Má đùi gà">
+                                        <div class="product-info">
+                                            <span class="name">Má đùi gà</span>
+                                            <span class="qty">x1</span>
+                                        </div>
+                                        <span class="price">98,000đ</span>
+                                    </div>
+                                    <div class="product">
+                                        <img src="https://phamgiafood.com.vn/wp-content/uploads/2022/05/ucga-2.jpg" alt="Ức gà">
+                                        <div class="product-info">
+                                            <span class="name">Thịt ức gà</span>
+                                            <span class="qty">x2</span>
+                                        </div>
+                                        <span class="price">140.000đ</span>
+                                    </div>
+                                    <div class="product">
+                                        <img src="https://salt.tikicdn.com/cache/525x525/ts/product/5a/e5/45/854b408e0ac19f5356555703498e4e1a.png" alt="Phi lê cổ bò">
+                                        <div class="product-info">
+                                            <span class="name">Phi lê cổ bò</span>
+                                            <span class="qty">x1</span>
+                                        </div>
+                                        <span class="price">275,000đ</span>
+                                    </div>
+                                </div>
+
+                                <div class="order-footer">
+                                    <span class="total">Tổng: 523,000đ</span>
+                                    <button class="btn-detail">Chi tiết</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-group hidden" id="done">
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <span class="order-id">DH003</span>
+                                    <span class="order-status status-done">Đã hoàn thành</span>
+                                </div>
+                                <div class="order-products">
+                                    <div class="product">
+                                        <img src="https://product.hstatic.net/200000423303/product/nam-gau-bo-to_fc79a75a1b3c463381bb22b779e8f808_1024x1024.png" alt="Nạm gầu bò tơ">
+                                        <div class="product-info">
+                                            <span class="name">Nạm gầu bò tơ</span>
+                                            <span class="qty">x1</span>
+                                        </div>
+                                        <span class="price">320.000đ</span>
+                                    </div>
+                                </div>
+
+                                <div class="order-footer">
+                                    <span class="total">Tổng: 320000đ</span>
+                                    <button class="btn-detail">Chi tiết</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-group hidden" id="cancel">
+                            <div class="none">Không có đơn hàng</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-col about-us">
+                    <div class="footer-logo">
+                        <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
+                    </div>
+                    <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col quick-links">
+                    <h4>Liên Kết Nhanh</h4>
+                    <ul>
+                        <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
+                        <li><a href="san_pham.html">Sản Phẩm</a></li>
+                        <li><a href="#">Giới Thiệu</a></li>
+                        <li><a href="#">Tin Tức</a></li>
+                        <li><a href="#">Chính Sách Đổi Trả</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col contact-info">
+                    <h4>Liên Hệ Chúng Tôi</h4>
+                    <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
+                    <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
+                    <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
+                    <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
+            </div>
+        </footer>
+    </body>
+</html>

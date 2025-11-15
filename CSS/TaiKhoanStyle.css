@@ -7,7 +7,7 @@ body{
 }
 /***************Menu*******************/
 #menubar{
-    height: 70px;
+    height: 80px;
     background-color: #343A40;
     font-size: 20px;
     position: fixed;
@@ -16,7 +16,6 @@ body{
     width: 100%;
     z-index: 1000;
 }
-
 /*Thanh menu*/
 #menubar .column{
     display: flex;
@@ -36,7 +35,7 @@ body{
 #menubar .center{
     width: 50%;
     text-align: center;
-    margin-right: 150px;
+    margin-right: 20px;
 }
 #menubar .center ul{
     list-style-type: none;
@@ -45,18 +44,16 @@ body{
     display: flex;
 }
 #menubar .center li{
-    margin-top: 25px;
+    margin-top: 30px;
 }
 #menubar .center li a{
     color: white;
-    font-weight: bold;
     text-decoration: none;
-    padding: 30px;
+    padding: 20px;
 }
 #menubar .center li a:hover{
     color: #04aa6d;
 }
-
 /*menu phải*/
 #menubar .right .menu-right{
     list-style-type: none;
@@ -103,7 +100,7 @@ body{
     z-index: 1000;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-#menubar .right .user-menu-wrapper .user-menu li a{
+#menubar .right .user-menu-wrapper .user-menu a{
     color: #333;
     text-decoration: none;
     padding: 12px 16px;
@@ -120,8 +117,7 @@ body{
     color: white;
 }
 .user-menu.show {
-    display: block;
-    flex-direction: column;
+    display: flex;
     opacity: 1;
     transform: translateY(0);
 }
@@ -130,37 +126,40 @@ body{
 }
 /***********************Main******************************/
 .container{
-    width: 1400px;
+    max-width: 1200px; /* Điều chỉnh thành max-width */
     min-height: 800px;
-    margin: 70px auto;
+    margin: 70px auto; /* Căn giữa */
     display: flex;
+    padding: 0 20px; /* Thêm padding để nội dung không dính vào cạnh */
+    box-sizing: border-box;
 }
 /************sidebar********************/
 .container #sidebar{
     display: flex;
     flex-direction: column;
-    width: 260px;
+    width: 250px;
+    min-width: 200px;
     margin-right: 20px;
 }
 .container #sidebar .header{
     display: flex;
     border-bottom: 1px solid #e9e9e9;
     padding: 15px 0;
+    align-items: center;
 }
 .container #sidebar .header IMG{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 10px;
 }
 .container #sidebar .header h3{
     color: black;
-    font-size: 21px;
+    font-size: 20px;
 }
 .container #sidebar .menu{
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
 }
 .container #sidebar .menu a{
     color: #565656;
@@ -175,7 +174,9 @@ body{
 /************************content*************************/
 .container .main-content{
     background-color: white;
-    width: 1140px;
+    /* Loại bỏ width cố định, dùng flex-grow để chiếm phần còn lại */
+    flex-grow: 1;
+    width: calc(100% - 270px); /* Dùng calc để tính toán (tổng - sidebar - margin) */
 }
 /**************Hồ sơ*******************/
 .container .main-content #profile-content.active{
@@ -185,17 +186,20 @@ body{
 }
 .container .main-content #profile-content .header{
     border-bottom: 1px solid #e9e9e9;
-    font-size: 15px;
+    font-size: 12px;
 }
 .container .main-content #profile-content .body{
     display: flex;
-    font-size: 20px;
+    font-size: 17px;
+    flex-wrap: wrap;
 }
 .container .main-content #profile-content .body .profile{
-    width: 700px;
+    width: 65%;
+    min-width: 450px;
     margin-top: 40px;
     margin-left: 20px;
     border-right: 1px solid #e9e9e9;
+    padding-right: 20px;
 }
 .container .main-content #profile-content .body .profile .group{
     display: flex;
@@ -217,6 +221,7 @@ body{
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: 18px;
 }
 .container .main-content #profile-content .body .profile .group a{
     margin-left: 5px;
@@ -252,32 +257,38 @@ body{
     color: white;
     font-weight: bold;
     font-size: 20px;
+    border: none;
 }
 .container .main-content #profile-content .body .profile .submit-btn:hover{
     background-color: #04aa6d;
+}
+.container .main-content #profile-content .body .avatar{
+    width: 30%;
+    flex-grow: 1;
 }
 .container .main-content #profile-content .body .avatar .avatar-container{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 180px 100px;
+    margin: 40px auto;
+    padding: 20px;
 }
 .container .main-content #profile-content .body .avatar IMG{
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
 }
 .container .main-content #profile-content .body .avatar IMG:hover{
     cursor: pointer;
 }
 .container .main-content #profile-content .body .avatar BUTTON{
-    width: 150px;
-    height: 40px;
+    width: 120px;
+    height: 30px;
     border-radius: 5px;
     background: white;
     border: 1px solid #e9e9e9;
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 15px;
 }
 .container .main-content #profile-content .body .avatar BUTTON:hover{
     background-color: #04aa6d;
@@ -294,33 +305,64 @@ body{
 }
 .container .main-content #address-content .address-content.header{
     border-bottom: 1px solid #e9e9e9;
-
 }
 .container .main-content #address-content .address-content.header .left{
     float: left;
     width: 50%;
-    font-size: 15px;
+    font-size: 12px;
 }
 .container .main-content #address-content .address-content.header .right{
     float: right;
 }
 .container .main-content #address-content .address-content.header .right BUTTON{
-    margin-top: 20px;
+    margin-top: 15px;
     text-align: center;
-    width: 200px;
+    width: 170px;
     height: 40px;
     border-radius: 5px;
     background: #5a0002;
     color: white;
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
+    border: none;
 }
 .container .main-content #address-content .address-content.header .right BUTTON:hover{
     background-color: #04aa6d;
     cursor: pointer;
 }
-.container .main-content #address-content .address-content.body{
-    font-size: 20px;
+.container .main-content #address-content .address-content.address-header{
+    font-size: 18px;
+}
+.container .main-content #address-content .address-content.content{
+    font-size: 16px;
+}
+.container .main-content #address-content .address-content .address{
+    display: flex;
+    border: 1px dashed #c3c3c3;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.container .main-content #address-content .address-content .address p{
+    flex-grow: 1;
+}
+.container .main-content #address-content .address-content .address BUTTON{
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+}
+.container .main-content #address-content .address-content .address.default BUTTON{
+    color: #9f9f9f;
+}
+.container .main-content #address-content .address-content .address.default BUTTON:hover{
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+}
+.container .main-content #address-content .address-content .address BUTTON:hover{
+    background: #04aa6d;
+    cursor: pointer;
 }
 /**************************password************************/
 .container .main-content #password-content.active{
@@ -330,12 +372,14 @@ body{
 }
 .container .main-content #password-content .password-content.header{
     border-bottom: 1px solid #e9e9e9;
-    font-size: 15px;
+    font-size: 12px;
 }
 .container .main-content #password-content .password-content.body{
     display: flex;
-    font-size: 20px;
+    font-size: 18px;
     margin: 40px auto;
+    justify-content: center;
+    flex-direction: column;
 }
 .container .main-content #password-content .password-content.body .group{
     display: flex;
@@ -367,8 +411,8 @@ body{
     border-radius: 5px;
     background: #5a0002;
     color: white;
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
+    border: none;
 }
 .container .main-content #password-content .password-content.body .submit-btn:hover{
     background-color: #04aa6d;
@@ -381,36 +425,124 @@ body{
 }
 .container .main-content #setting-content .setting-content.header {
     border-bottom: 1px solid #e9e9e9;
-    font-size: 15px;
+    font-size: 12px;
 }
 .container .main-content #setting-content .setting-content.body{
-    font-size: 20px;
+    font-size: 17px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
 }
 .container .main-content #setting-content .setting-content.body .left{
-    width: 50%;
-    float: left;
+    width: auto;
+    float: none;
 }
 .container .main-content #setting-content .setting-content.body .left .txt{
     color: #555;
     font-weight: normal;
 }
 .container .main-content #setting-content .setting-content.body .right{
-    float: right;
+    float: none;
 }
 .container .main-content #setting-content .setting-content.body .right button{
-    margin-top: 20px;
+    margin-top: 0;
     text-align: center;
     width: 150px;
     height: 40px;
     border-radius: 5px;
     background: #5a0002;
     color: white;
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
+    border: none;
 }
 .container .main-content #setting-content .setting-content.body .right button:hover{
     background-color: #04aa6d;
 }
+/************modal**********/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    top: 0;
+    left: 0;
+}
+.modal-content{
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 450px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+.close-btn{
+    color: #aaa;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #04aa6d;
+    text-decoration: none;
+    cursor: pointer;
+}
+#confirmSave{
+    text-align: center;
+}
+.message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.message i {
+    color: #04aa6d;
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+#messageConfirm {
+       display: inline-block;
+    vertical-align: middle;
+}
+
+.confirm-btn {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#confirmSaveBtn {
+    padding: 10px 30px;
+    background-color: #04aa6d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#confirmSaveBtn:hover {
+    background-color: #038a5b;
+}
+
 /*********************Footer**************************/
 .main-footer {
     /*background: #343A40;*/ /* Màu nền tối, sang trọng */
@@ -420,9 +552,8 @@ body{
     font-size: 16px;
     bottom: 0;
 }
-
 .footer-container {
-    max-width: 1200px;
+    max-width: 1200px; /* Điều chỉnh max-width */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -431,7 +562,8 @@ body{
 }
 
 .footer-col {
-    width: 32%; /* Độ rộng cho mỗi cột */
+    width: 30%; /* Điều chỉnh width tương đối */
+    min-width: 250px; /* Thêm min-width để tránh bị co quá nhỏ */
     margin-bottom: 20px;
 }
 
