@@ -386,7 +386,7 @@ a {
 }
 
 .status-locked {
-    background-color: var(--main-red); /* Đỏ sẫm */
+    background-color: var(--main-red);
 }
 
 /* Nút Lịch sử mua hàng */
@@ -398,6 +398,9 @@ a {
 .btn-info {
     background-color: #3498db;
     color: #fff;
+}
+.btn-info:hover {
+    cursor: pointer;
 }
 
 /* Icon Thao tác */
@@ -430,7 +433,7 @@ a {
 
 .modal-content {
     background-color: #fefefe;
-    padding: 30px;
+    padding: 50px;
     border-radius: 8px;
     width: 80%;
     max-width: 700px; /* Điều chỉnh max-width cho modal người dùng */
@@ -486,21 +489,21 @@ a {
 }
 
 /* Kế thừa toggle switch từ modal sản phẩm, nếu cần điều chỉnh */
-.small-switch { /* Đã định nghĩa từ trước */
+.small-switch {
     width: 30px;
     height: 15px;
     margin-right: 10px;
 }
-.small-switch .slider:before { /* Đã định nghĩa từ trước */
+.small-switch .slider:before {
     height: 11px;
     width: 11px;
     left: 2px;
     bottom: 2px;
 }
-input:checked + .small-switch .slider:before { /* Đã định nghĩa từ trước */
+input:checked + .small-switch .slider:before {
     transform: translateX(15px);
 }
-.status-text { /* Đã định nghĩa từ trước */
+.status-text {
     font-size: 0.9em;
     color: #666;
     display: inline-block; /* Để nó nằm cạnh switch */
@@ -512,4 +515,90 @@ input:checked + .small-switch .slider:before { /* Đã định nghĩa từ trư�
     grid-column: 1 / 3; /* Chiếm hết 2 cột */
     padding: 12px;
     margin-top: 20px; /* Khoảng cách với các trường trên */
+}
+
+/* --- MODAL LỊCH SỬ MUA HÀNG --- */
+.large-modal {
+    max-width: 900px;
+}
+
+.modal-header-history {
+    padding: 15px 20px;
+    background-color: #343A40;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header-history .modal-title {
+    color: white;
+}
+
+.modal-header-history .close-btn {
+    color: #aaa;
+    top: 10px;
+}
+
+.history-body {
+    padding: 20px;
+}
+
+.history-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.history-search-input, .history-filter-select, .history-filter-date {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+.history-search-input {
+    flex-grow: 1;
+}
+
+/* Bảng Lịch sử */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table thead {
+    background-color: #f1f1f1;
+    color: var(--text-color);
+}
+
+.history-table th, .history-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+
+.history-table th:nth-child(3),
+.history-table td:nth-child(3) {
+    text-align: right;
+    width: 120px;
+}
+
+.history-table th:nth-child(4),
+.history-table td:nth-child(4) {
+    text-align: center;
+    width: 150px;
+}
+.history-table td:nth-child(4) .status-badge {
+    width: 100px;
+}
+
+.history-pagination {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 0.9em;
+    color: #555;
 }

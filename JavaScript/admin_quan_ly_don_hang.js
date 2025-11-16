@@ -42,3 +42,41 @@ window.onclick = function(event) {
         notificationPanel.classList.remove('show-panel');
     }
 }
+const modal = document.getElementById("orderDetailModal");
+const closeBtns = document.querySelectorAll(".close-btn, .close-btn-footer");
+const viewDetailBtns = document.querySelectorAll(".view-detail");
+const orderTableBody = document.querySelector(".order-table tbody");
+
+
+// Hàm mở modal
+function openModal(row) {
+    modal.style.display = "block";
+}
+
+// Hàm đóng modal
+function closeModal() {
+    modal.style.display = "none";
+}
+
+// Xử lý click trên nút Xem chi tiết
+viewDetailBtns.forEach(button => {
+    button.onclick = function(e) {
+        e.stopPropagation(); // Ngăn sự kiện nổi bọt lên hàng (tr) cha
+        const row = this.closest('tr');
+        openModal(row);
+    }
+});
+
+// Nút đóng modal
+closeBtns.forEach(btn => {
+    btn.onclick = function() {
+        closeModal();
+    }
+});
+
+// Đóng modal khi người dùng click bên ngoài hộp thoại
+window.onclick = function(event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+}

@@ -379,10 +379,19 @@ a {
 .order-table tbody tr:hover {
     background-color: #f5f5f5;
 }
-/* Căn giữa status trong ô */
+/* 1. CĂN CHỈNH CỘT TỔNG TIỀN */
+.order-table th:nth-child(4), /* Tiêu đề Tổng tiền */
+.order-table td:nth-child(4) { /* Nội dung Tổng tiền */
+    text-align: right; /* Căn phải cho tiền tệ */
+    width: 120px;
+}
+/* 2. CĂN CHỈNH CỘT TRẠNG THÁI ĐƠN HÀNG VÀ THANH TOÁN */
+.order-table th:nth-child(5),
 .order-table td:nth-child(5),
+.order-table th:nth-child(6),
 .order-table td:nth-child(6) {
     text-align: center;
+    width: 170px;
 }
 
 
@@ -390,18 +399,18 @@ a {
 .status-badge {
     padding: 5px 8px;
     border-radius: 15px;
-    font-size: 0.8em;
+    font-size: 0.85em;
     font-weight: bold;
     color: #fff;
     display: inline-block;
     text-align: center;
-    width: 105px;
+    width: 125px;
 }
 
 /* Màu trạng thái Đơn hàng */
-.status-pending { background-color: #ffc107; color: #333; }
-.status-processing { background-color: #17a2b8; }
-.status-shipping { background-color: #007bff; }
+.status-pending { background-color: #ffc107; color: #000000; }
+.status-processing { background-color: #17a2b8; color: #000000; }
+.status-shipping { background-color: #007bff; color: #000000; }
 .status-delivered { background-color: #28a745; }
 .status-cancelled { background-color: var(--main-red); }
 
@@ -424,3 +433,190 @@ a {
 .btn-primary { background-color: #007bff; }
 .btn-danger { background-color: #dc3545; }
 .btn-info { background-color: #17a2b8; }
+
+/* --- MODAL --- */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background-color: var(--main-red);
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    margin: 0;
+    font-weight: 500;
+}
+
+.close-btn {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #ddd;
+    text-decoration: none;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 10px 20px;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+
+.close-btn-footer {
+    margin-right: 10px;
+}
+
+/* --- Nội dung chi tiết trong Modal --- */
+.summary-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+.summary-item {
+    text-align: center;
+    flex: 1;
+}
+.summary-label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+.summary-item .status-badge {
+    margin: 0 auto;
+}
+
+.section-container {
+    margin-bottom: 25px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+.section-container h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--main-red);
+    font-size: 1.1em;
+}
+.section-container h4 i {
+    margin-right: 8px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 0.95em;
+}
+.info-grid p {
+    margin: 0;
+}
+.info-grid strong {
+    color: var(--text-color);
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.product-table th, .product-table td {
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 0.95em;
+    text-align: left;
+}
+.product-table th:last-child, .product-table td:last-child {
+    text-align: right;
+}
+
+.product-table th:nth-child(2),
+.product-table td:nth-child(2),
+.product-table th:nth-child(3),
+.product-table td:nth-child(3),
+.product-table th:nth-child(4),
+.product-table td:nth-child(4)
+{
+    text-align: right;
+}
+
+
+.product-table th:nth-child(3),
+.product-table td:nth-child(3) {
+    width: 60px;
+}
+.product-table th:nth-child(2),
+.product-table td:nth-child(2),
+.product-table th:nth-child(4),
+.product-table td:nth-child(4) {
+    width: 100px;
+}
+
+.total-summary {
+    text-align: right;
+    padding-top: 10px;
+}
+.total-summary p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 1em;
+}
+.total-summary span {
+    font-weight: 500;
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+.grand-total {
+    margin-top: 10px;
+    font-size: 1.3em;
+    color: var(--main-red);
+}
+.grand-total span {
+    font-weight: bold;
+}
