@@ -5,6 +5,7 @@
     <title>Clean Meat</title>
     <link rel="stylesheet" href="../CSS/TaiKhoanStyle.css">
     <link rel="stylesheet" href="../CSS/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../JavaScript/TaiKhoanJS.js"></script>
 </head>
 <body>
@@ -44,7 +45,7 @@
             <div id="sidebar">
                 <div class="sidebar header">
                         <img src="../images/avatar.jpg" alt="avatar">
-                        <h3 class="username">Tên người dùng</h3>
+                        <h3 class="username">Nguyễn Văn A</h3>
                 </div>
                 <div class="sidebar menu">
                     <a href="#profile-content">Hồ sơ</a>
@@ -64,24 +65,20 @@
                         <div class="profile-content profile">
                             <form class="profile-form">
                                 <div class="profile-form group">
-                                    <label class="profile-form label">Tên đăng nhập</label>
-                                    <span class="profile-form static-value">Tên đăng nhập của bạn</span>
-                                </div>
-                                <div class="profile-form group">
                                     <label for="name-input" class="profile-form label">Tên</label>
-                                    <input type="text" id="name-input" name="name" class="profile-form input-field profile-form input-field editable">
+                                    <input type="text" id="name-input" name="name" value="Nguyễn Văn A" class="profile-form input-field profile-form input-field editable">
                                 </div>
                                 <div class="profile-form group">
                                     <label class="profile-form label">Email</label>
                                     <div class="profile-form value-wrapper">
-                                        <span class="profile-form static-value">*******@gmail.com</span>
+                                        <span class="profile-form static-value">a****@gmail.com</span>
                                         <a href="#" class="profile-form change-btn">Thay Đổi</a>
                                     </div>
                                 </div>
                                 <div class="profile-form group">
                                     <label class="profile-form label">Số điện thoại</label>
                                     <div class="profile-form value-wrapper">
-                                        <span class="profile-form static-value">**********</span>
+                                        <span class="profile-form static-value">(+84) 12*******9</span>
                                         <a href="#" class="profile-form change-btn">Thay Đổi</a>
                                     </div>
                                 </div>
@@ -103,10 +100,10 @@
                                         <a href="#" class="profile-form change-btn">Thay Đổi</a>
                                     </div>
                                 </div>
-                                <div class="profile-form submit-row">
-                                    <button type="submit" class="profile-form submit-btn">Lưu</button>
-                                </div>
                             </form>
+                            <div class="profile-form submit-row">
+                                <button type="submit" class="profile-form submit-btn" id="saveInfoBtn">Lưu</button>
+                            </div>
                         </div>
                         <div class="profile-content avatar">
                             <div class="avatar-container">
@@ -129,8 +126,21 @@
                         <div class="address-content address-header">
                             <h3 class="header txt small">Địa chỉ</h3>
                         </div>
-                        <div class="address-content address-content">
-
+                        <div class="address-content content">
+                            <div class="address default">
+                                <p class="address-detail">
+                                    56/12/34 Đường Võ Văn Kiệt, Phường 2, Quận 5, TP. Hồ Chí Minh, Việt Nam
+                                </p>
+                                <button id="setDefaultBtn1">Đặt mặc định</button>
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                            <div class="address">
+                                <p class="address-detail">
+                                    108 Đường Nguyễn Văn Bá, Phường Trường Thọ, Thủ Đức, TP. Hồ Chí Minh, Việt Nam
+                                </p>
+                                <button id="setDefaultBtn2">Đặt mặc định</button>
+                                <span class="trash"><i class="fa-solid fa-trash"></i></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -142,7 +152,6 @@
                     </div>
                     <div class="password-content body">
                         <form class="password-form">
-
                             <div class="profile-form group">
                                 <label for="current-password" class="profile-form label">Mật khẩu hiện tại</label>
                                 <input type="password" id="current-password" name="currentPassword" class="profile-form input-field" placeholder="Nhập mật khẩu hiện tại">
@@ -157,12 +166,10 @@
                                 <label for="confirm-password" class="profile-form label">Xác nhận mật khẩu mới</label>
                                 <input type="password" id="confirm-password" name="confirmPassword" class="profile-form input-field" placeholder="Nhập lại mật khẩu mới">
                             </div>
-
-                            <div class="profile-form submit-row">
-                                <button type="submit" class="profile-form submit-btn">Lưu Mật Khẩu</button>
-                            </div>
-
                         </form>
+                        <div class="profile-form submit-row">
+                            <button type="submit" class="profile-form submit-btn" id="savePasswordBtn">Lưu Mật Khẩu</button>
+                        </div>
                     </div>
                 </div>
                 <div id="setting-content" class="tab-content hidden">
@@ -180,6 +187,102 @@
                 </div>
             </div>
         </div>
+        <div id="confirmSave" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="closeConfirmSavemodal">&times;</span>
+
+                <div class="message">
+                    <i class="fa-regular fa-circle-check"></i>
+                    <span id="messageConfirm"></span>
+                </div>
+
+                <span class="confirm-btn">
+                    <button id="confirmSaveBtn">OK</button>
+                </span>
+            </div>
+        </div>
+
+        <div id="changeEmail" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="closeChangeEmailModal">&times;</span>
+                <div class="email-form">
+                    <label for="email" class="profile-form label"><i class="fa-solid fa-envelope"></i></label>
+                    <input type="email" id="email" name="email" class="profile-form input-field" placeholder="Nhập địa chỉ Email mới">
+                </div>
+                <span class="confirm-btn">
+                    <button id="SaveEmailBtn">Lưu</button>
+                </span>
+            </div>
+        </div>
+
+        <div id="changePhoneNumber" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="closeChangePhoneNumberModal">&times;</span>
+                <div class="email-form">
+                    <label for="phoneNumber" class="profile-form label"><i class="fa-solid fa-phone"></i></label>
+                    <input type="text" id="phoneNumber" name="phoneNumber" class="profile-form input-field" placeholder="Nhập số điện thoại mới">
+                </div>
+                <span class="confirm-btn">
+                    <button id="SavePhoneNumberBtn">Lưu</button>
+                </span>
+            </div>
+        </div>
+
+        <div id="changeBirthDay" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="closeChangeBirthDayModal">&times;</span>
+                <div class="email-form">
+                    <label for="birthDay" class="profile-form label"><i class="fa-regular fa-calendar-days"></i></label>
+                    <input type="date" id="birthDay" name="birthDay" class="profile-form input-field" placeholder="dd/mm/yyyy">
+                </div>
+                <span class="confirm-btn">
+                    <button id="SaveBirthDayBtn">Save</button>
+                </span>
+            </div>
+        </div>
+        <div id="changeAddressModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeChangeAddressModal">&times;</span>
+
+                <div class="address-form">
+                    <h2>Địa chỉ mới</h2>
+
+                    <div class="form-row">
+                        <div class="form-group half-width">
+                            <label for="province">Tỉnh/Thành phố (*)</label>
+                            <select id="province" required>
+                                <option value="">Chọn Tỉnh/Thành phố</option>
+                                <option value="hcm">TP Hồ Chí Minh</option>
+                                <option value="hn">Hà Nội</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group half-width">
+                            <label for="district">Quận/Huyện (*)</label>
+                            <select id="district" required>
+                                <option value="">Chọn Quận/Huyện</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half-width">
+                            <label for="ward">Phường/Xã (*)</label>
+                            <select id="ward" required>
+                                <option value="">Chọn Phường/Xã</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address-detail">Địa chỉ chi tiết (*)</label>
+                        <textarea id="address-detail" rows="3" placeholder="Ví dụ: 123/45 Đường Quang Trung, gần chợ ABC" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Lưu Địa Chỉ</button>
+                </div>
+            </div>
+        </div>
+
     </main>
     <footer class="main-footer">
         <div class="footer-container">
