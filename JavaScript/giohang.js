@@ -117,7 +117,7 @@ function decrease(id){
 
     if (quantity > 0.1) {
         quantity -= 0.1;
-        quantity = Number(quantity.toFixed(1));
+        quantity = Number(quantity.toFixed(2));
     }
     quantityInput.value = quantity;
 }

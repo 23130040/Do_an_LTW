@@ -283,7 +283,35 @@ main {
     font-weight: 600;
     color: #04aa6d;
 }
-
+main .footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+main .footer BUTTON{
+    font-size: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    flex-grow: 1;
+    font-weight: bold;
+}
+#cancleOrderBtn{
+    background-color: #5a0002;
+}
+#cancleOrderBtn:hover{
+    background-color: #970206;
+    cursor: pointer;
+}
+#confirmOrderBtn{
+    background-color: rgba(4, 170, 109, 0.5);
+}
+#confirmOrderBtn:hover{
+    cursor: not-allowed;
+}
 /*****footer***/
 .main-footer {
     /*background: #343A40;*/ /* Màu nền tối, sang trọng */

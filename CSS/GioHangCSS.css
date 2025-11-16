@@ -130,6 +130,7 @@ main{
 }
 main header{
     height: 50px;
+    text-align: center;
 }
 main header .title{
     color: #5a0002;
@@ -139,8 +140,10 @@ main header .title{
     margin-left: 50px;
 }
 main .contents{
+    width: 90%;
     min-height: 700px;
     overflow: hidden;
+    margin: auto;
 }
 main .contents .details{
     float: left;
@@ -158,6 +161,9 @@ main .contents .details .order-table-header th{
     color: white;
     font-size: 17px;
     padding: 10px 0;
+}
+main .contents .details tr.order-table-body:hover{
+    background-color: rgba(90, 0, 2, 0.04);
 }
 main .contents .details .product{
     width: 40%;
@@ -187,7 +193,8 @@ table{
 .order-table-body .product-wrapper{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 50px;
 }
 .order-table-body .amount-wrapper{
     display: flex;
@@ -200,13 +207,14 @@ table{
     text-align: center;
 }
 .order-table-body .amount .quantity-btn:hover{
-    background-color: #04aa6d;
+    background-color: #850304;
     cursor: pointer;
+    color: white;
 }
 .order-table-body .trash i:hover{
     cursor: pointer;
     font-size: 19px;
-    color: #04aa6d;
+    color: #850304;
 }
 main .contents .summary{
     float: left;
@@ -270,10 +278,11 @@ main .contents .summary .container .voucher .voucher-input input,BUTTON{
 }
 main .contents .summary .container .voucher .voucher-input BUTTON{
     flex-grow: 1;
+    border-right: 5px solid #5a0002;
 }
 main .contents .summary .container .voucher .voucher-input BUTTON:hover{
     cursor: pointer;
-    background-color: #04aa6d;
+    background-color: #5a0002;
     color: white;
 }
 main .contents .summary .container .footer{
@@ -292,7 +301,7 @@ main .contents .summary .container .footer button{
     font-weight: bold;
 }
 main .contents .summary .container .footer button:hover{
-    background-color: #04aa6d;
+    background-color: #850304;
 }
 #opendeliverymessage:hover{
     cursor: pointer;
