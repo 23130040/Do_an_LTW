@@ -7,7 +7,7 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 main{
@@ -75,37 +75,46 @@ main{
     transition: opacity 0.2s ease;
 }
 
-/* Search + Cart */
-.cart-icon {
+.right-section {
     position: absolute;
-    right: 90px;
-    top: 26px;
+    top: 20px;
+    right: 25px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    font-size: 18px;
-    transition: opacity 0.3s ease;
+    gap: 5px;
 }
-.search-icon {
-    position: absolute;
-    right: 10px;
-    top: 22px;
+
+.right-section,
+.right-section a {
     display: flex;
     align-items: center;
-    gap: 20px;
+    cursor: pointer;
+    color: white;
     font-size: 18px;
-    transition: opacity 0.3s ease;
 }
-.login{
-    position: absolute;
-    right: 150px;
-    top: 23px;
+
+.right-section i {
+    font-size: 20px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    font-size: 18px;
-    transition: opacity 0.3s ease;
 }
+.right-section i:hover {
+    color: #c30000;
+}
+#search-label i:hover {
+    color: #c30000;
+}
+#search-close:hover {
+    color: #c30000;
+}
+.login {
+    padding-left: 20px;
+}
+
+.login a:hover {
+    color: #c30000;
+}
+
 
 /* Search Box */
 #search-label i {
@@ -152,7 +161,11 @@ main{
     text-decoration: none;
     color: white;
 }
-
+.menu a:hover {
+    color: #c30000;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
 .menu.fixed {
     position: fixed;
     top: 0;
@@ -166,7 +179,7 @@ main{
     color: white;
 }
 .menu.fixed a:hover {
-    color: #8d2a3a;
+    color: #a30000;
 }
 
 /* ẨN LOGO KHI CUỘN */
@@ -179,23 +192,10 @@ main{
     display: none;
 }
 
-.search-icon.fixed {
+.right-section.fixed{
     position: fixed;
     z-index: 3000;
     top: 25px;
-    right: 10px;
-}
-.cart-icon.fixed {
-    position: fixed;
-    z-index: 3000;
-    top: 30px;
-    right: 90px;
-}
-.login.fixed {
-    position: fixed;
-    z-index: 3000;
-    top: 26px;
-    right: 150px;
 }
 .logo.fixed {
     position: fixed;

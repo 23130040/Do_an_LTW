@@ -6,124 +6,156 @@ body{
     background-color: #f8f8f8;
 }
 /***************Menu*******************/
+/* ======= MENUBAR ======= */
 #menubar{
-    height: 80px;
+    height: 70px;
     background-color: #343A40;
-    font-size: 20px;
+    font-size: 18px;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-}
-/*Thanh menu*/
-#menubar .column{
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-/*logo*/
-#menubar .left{
-    width: 30%;
-}
-#menubar .left IMG{
-    width: 100px;
-    height: 67px;
-    margin: 5px 30px;
-}
-/*menu giữa*/
-#menubar .center{
-    width: 50%;
-    text-align: center;
-    margin-right: 20px;
-}
-#menubar .center ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-#menubar .center li{
-    margin-top: 30px;
-}
-#menubar .center li a{
-    color: white;
-    text-decoration: none;
-    padding: 20px;
-}
-#menubar .center li a:hover{
-    color: #04aa6d;
-}
-/*menu phải*/
-#menubar .right .menu-right{
-    list-style-type: none;
-    margin-right: 20px;
-    padding: 0;
-    display: flex;
-}
-#menubar .right .menuitem{
-    margin-top: 0;
-}
-#menubar .right .menuitem{
-    color: white;
-    padding: 0;
-    font-weight: bold;
-    margin: 5px 10px;
-    cursor: pointer;
-}
-#menubar .right .menuitem .link-cart{
-    color: white;
-    font-weight: bold;
-}
-#menubar .right .menuitem .link-cart:hover{
-    color: #04aa6d;
-}
-#menubar .right .menuitem:hover{
-    color: #04aa6d;
-}
-#menubar .right .user-menu-wrapper{
-    position: relative;
     display: flex;
     align-items: center;
 }
-#menubar .right .user-menu-wrapper .user-menu{
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: white;
-    border-radius: 15px;
-    list-style: none;
-    padding: 5px 0;
-    width: 240px;
+
+#menubar .sixteen.column{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#menubar .left{
+    width: 10%;
+}
+#menubar .left img{
+    width: 95px;
     height: auto;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-left: 30px;
+    transition: transform 0.25s;
 }
-#menubar .right .user-menu-wrapper .user-menu a{
-    color: #333;
-    text-decoration: none;
-    padding: 12px 16px;
+#menubar .center{
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transform: translateX(calc(50% + 30px));
+}
+
+#menubar .center ul{
+    display: flex;
+    gap: 22px;
+}
+#menubar .center li{
+    list-style: none;
+}
+#menubar .center li a{
     display: block;
-    font-size: 16px;
-    transition: background 0.25s ease, color 0.25s ease;
-    border-bottom: 2px solid #ddd;
+    color: white;
+    text-decoration: none;
+    padding: 22px 10px;
+    transition: 0.25s;
+    font-weight: 500;
 }
-#menubar .right .user-menu-wrapper .user-menu li:last-child a{
-    border-bottom: none ;
+#menubar .center li a:hover{
+    text-decoration: underline;
+    color: #a30000;
+    text-underline-offset: 6px;
 }
-#menubar .right .user-menu-wrapper .user-menu a:hover{
-    background-color: #8d2a3a;
+
+/* ===== RIGHT ICON MENU ===== */
+#menubar .menu-right{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: auto;
+}
+#menubar .menuitem-right{
+    list-style: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+    padding: 30px 15px;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
+    color: #8e0000 !important;
+    transition: color 0.25s;
+}
+#searchBar{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+#input-searchBar,
+#close-searchBar {
+    display: none;
+    transition: all 0.25s;
+}
+#input-searchBar.active {
+    display: block;
+    width: 200px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+#close-searchBar.active {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
     color: white;
 }
-.user-menu.show {
-    display: flex;
-    opacity: 1;
-    transform: translateY(0);
+
+/* ===== USER MENU ===== */
+.user-menu-wrapper{
+    position: relative;
 }
-#menubar .right .user-menu-wrapper:hover .user-menu{
+.user-menu-wrapper .user{
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
+
+.user-menu{
+    position: absolute;
+    top: 80%;
+    right: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px 0;
+    width: 210px;
+    display: none;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.user-menu li{
+    list-style: none;
+}
+
+.user-menu a{
+    color: #333 !important;
+    text-decoration: none;
+    display: block;
+    padding: 12px 18px;
+    transition: 0.25s;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+}
+.user-menu li:last-child a{
+    border-bottom: none;
+}
+
+.user-menu a:hover{
+    background-color: #5a0002;
+    color: white !important;
+}
+
+.user-menu-wrapper:hover .user-menu{
     display: block;
 }
+
 /***********************Main******************************/
 .container{
     max-width: 1200px; /* Điều chỉnh thành max-width */

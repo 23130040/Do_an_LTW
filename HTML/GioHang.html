@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Clean Meat</title>
-    <link rel="stylesheet" href="../CSS/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-...paste-the-integrity-if-needed..."
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer">
     <link rel="stylesheet" href="../CSS/GioHangCSS.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="../JavaScript/menubar.js"></script>
 </head>
 <body>
     <nav id="menubar">
@@ -16,24 +20,29 @@
             </div>
             <div class="three-fifths column center">
                 <ul class="menu-center">
-                    <li class="menuitem"><a href="#">Trang chủ</a></li>
-                    <li class="menuitem"><a href="#">Sản phẩm</a></li>
-                    <li class="menuitem"><a href="#">Giới thiệu</a></li>
+                    <li class="menuitem"><a href="../HTML/trang_chu_da_login.html">Trang chủ</a></li>
+                    <li class="menuitem"><a href="../HTML/san_pham.html">Sản phẩm</a></li>
+                    <li class="menuitem"><a href="../HTML/gioi_thieu.html">Giới thiệu</a></li>
                     <li class="menuitem"><a href="#">Tin tức</a></li>
+                    <li class="menuitem"><a href="#">Chính sách đổi trả</a></li>
                 </ul>
             </div>
             <div class="one-fifth column right">
                 <ul class="menu-right">
-                    <li class="menuitem"><i class="fa-solid fa-magnifying-glass"></i></li>
-                    <li class="menuitem"><a href="" class="link-cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
-                    <li class="menuitem user-menu-wrapper">
+                    <li class="menuitem-right" id="searchBar">
+                        <span id="open-searchBar"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" placeholder="Nhập từ khóa..." id="input-searchBar">
+                        <span class="close-btn" id="close-searchBar">&times;</span>
+                    </li>
+                    <li class="menuitem-right" id="shopping-cart"><i class="fa-solid fa-cart-shopping"></i></li>
+                    <li class="menuitem-right user-menu-wrapper" id="user-setting">
                         <div class="user">
                             <i class="fa-solid fa-user"></i>
                         </div>
                         <ul class="user-menu">
-                            <li class ="user-menuitem"><a href="#">Tài khoản của tôi</a></li>
-                            <li class ="user-menuitem"><a href="#">Đơn hàng của tôi</a></li>
-                            <li class ="user-menuitem"><a href="#">Đăng xuất</a></li>
+                            <li class ="user-menuitem"><a href="../HTML/TaiKhoan.html">Tài khoản của tôi</a></li>
+                            <li class ="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
+                            <li class ="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
                         </ul>
                     </li>
                 </ul>
