@@ -11,36 +11,42 @@
 <main>
 
     <!-- HEADER -->
-    <nav class="header">
-        <div class="top-bar">
-            <div class="logo">
-                <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
+    <nav id="menubar">
+        <div class="sixteen column">
+            <div class="one-fifth column left">
+                <img src="../images/logoCleanmeat.png" alt="logo">
             </div>
-
-            <div class="menu">
-                <a href="trang_chu_chua_login.html">Trang chủ</a>
-                <a href="san_pham.html">Sản phẩm</a>
-                <a href="gioi_thieu.html">Giới Thiệu</a>
-                <a href="tin_tuc.html">Tin Tức</a>
-                <a href="#">Chính Sách Đổi Trả</a>
+            <div class="three-fifths column center">
+                <ul class="menu-center">
+                    <li class="menuitem"><a href="../HTML/trang_chu_da_login.html">Trang chủ</a></li>
+                    <li class="menuitem"><a href="../HTML/san_pham.html">Sản phẩm</a></li>
+                    <li class="menuitem"><a href="../HTML/gioi_thieu.html">Giới thiệu</a></li>
+                    <li class="menuitem"><a href="../HTML/tin_tuc.html">Tin tức</a></li>
+                    <li class="menuitem"><a href="../HTML/chinhsachdoitra.html">Chính sách đổi trả</a></li>
+                </ul>
             </div>
-
-            <div class="right-section">
-                <div class="search-cart">
-                    <div class="search-icon">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <div class="cart-icon">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </div>
-                </div>
-                <div class="login">
-                    <a href="TrangDangNhap.html">Đăng nhập</a>
-                </div>
+            <div class="one-fifth column right">
+                <ul class="menu-right">
+                    <li class="menuitem-right" id="searchBar">
+                        <span id="open-searchBar"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" placeholder="Nhập từ khóa..." id="input-searchBar">
+                        <span class="close-btn" id="close-searchBar">&times;</span>
+                    </li>
+                    <li class="menuitem-right" id="shopping-cart"><i class="fa-solid fa-cart-shopping"></i></li>
+                    <li class="menuitem-right user-menu-wrapper" id="user-setting">
+                        <div class="user">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <ul class="user-menu">
+                            <li class ="user-menuitem"><a href="../HTML/TaiKhoan.html">Tài khoản của tôi</a></li>
+                            <li class ="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
+                            <li class ="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
-
     <!-- NỘI DUNG TIN TỨC -->
     <section class="tin-tuc-layout">
         <section class="tin-tuc-container">
@@ -159,7 +165,7 @@
         <aside class="tin-moi">
             <h2>Bài viết mới nhất</h2>
             <div class="tin-moi-item">
-                <img src="https://i1-kinhdoanh.vnecdn.net/2025/11/08/2022-03-28T233711Z-1609630567-9659-6275-1762614764.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=YYHaORB6klbx3Rxj8uf9qQ"">
+                <img src="https://i1-kinhdoanh.vnecdn.net/2025/11/08/2022-03-28T233711Z-1609630567-9659-6275-1762614764.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=YYHaORB6klbx3Rxj8uf9qQ">
                 <div>
                     <a href="chitiettintuc.html">Tranh cãi vì sao giá thịt bò ở Mỹ ngày càng đắt đỏ</a>
                     <p><i class="fa-regular fa-calendar"></i> 9/11/2025</p>
@@ -188,7 +194,7 @@
         <a class="page" data-page="2">2</a>
         <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
     </div>
-
+</main>
     <!-- FOOTER -->
     <footer class="main-footer">
         <div class="footer-container">
@@ -204,4 +210,3 @@
         </div>
     </footer>
     <script src="../JavaScript/tin_tuc.js"></script>
-</main>
