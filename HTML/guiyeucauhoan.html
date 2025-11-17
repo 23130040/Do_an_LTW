@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Fresh Meat</title>
-    <link rel="stylesheet" href="../CSS/gioithieu.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-...paste-the-integrity-if-needed..."
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
-    <script src="../JavaScript/menubar.js"></script>
-</head>
+    <link rel="stylesheet" href="../CSS/guiyeucauhoan.css">
 <body>
+<main>
+    <!-- HEADER -->
     <nav id="menubar">
         <div class="sixteen column">
             <div class="one-fifth column left">
                 <img src="../images/logoCleanmeat.png" alt="logo">
             </div>
-
             <div class="three-fifths column center">
                 <ul class="menu-center">
                     <li class="menuitem"><a href="../HTML/trang_chu_da_login.html">Trang chủ</a></li>
@@ -49,74 +48,74 @@
             </div>
         </div>
     </nav>
-    <main>
+
+
     <!-- Nội dung chính -->
-    <section class="hero">
-        <div class="hero-text">
-            <h1>Cleanmeat<br>Hân hạnh được đón tiếp bạn</h1>
-            <p>
-                Cleanmeat – nơi mỗi bữa ăn là một cam kết cho sức khỏe và sự an tâm.
-                Chúng tôi hiểu rằng, đằng sau mỗi bữa ăn là tình yêu và sự chăm sóc dành cho gia đình.
-                Vì thế, Cleanmeat luôn nỗ lực mang đến nguồn thịt tươi sạch, chất lượng cao.
-            </p>
+    <div class="return-form">
 
-            <button class="order-btn">ĐẶT HÀNG NGAY</button>
-        </div>
-
-        <div class="hero-image">
-            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRhfa1mB-mf2xr6UymKhtSKcgWWeQ24xWZ_IglQHT0q10Rblp5s">
-        </div>
-    </section>
-
-    <!-- Phần giới thiệu sản phẩm Việt -->
-    <section class="product-intro">
-        <div class="product-container">
-            <div class="product-image">
-                <img src="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2025/3/4/variousjpg-17410877772621749963682.jpg" >
-            </div>
-            <div class="product-text">
-                <h2>Đa dạng về các loại</h2>
-                <p>
-                    Cleanmeat – mang đến nhiều lựa chọn phong phú từ thịt heo, bò đến gà.
-                    tất cả đều được kiểm định nghiêm ngặt, đảm bảo độ tươi ngon và an toàn cho sức khỏe của bạn.
-                    Mong mỗi bữa ăn đều có Cleameat ở cạnh bạn.
-                </p>
-                <button class="discount-btn">Sản phẩm khuyến mãi →</button>
+        <!-- Sản phẩm đã chọn -->
+        <div class="section product-section">
+            <h3>Sản phẩm đã chọn</h3>
+            <div class="product-item">
+                <img src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg" class="product-img">
+                <div class="product-info">
+                    <p class="product-name">
+                        Mỡ heo sạch - CleanMeat
+                    </p>
+                    <p class="product-price">
+                        <span class="old">52.000₫</span>
+                        <span class="new">62.000₫</span>
+                    </p>
+                </div>
+                <div class="product-qty">x2</div>
             </div>
         </div>
 
-    </section>
-    <!--  PHẦN QUY TRÌNH THỊT SẠCH -->
-    <section class="quytrinh-section">
-        <h2 class="title">Quy Trình Thịt Sạch Cleanmeat</h2>
-        <p class="subtitle">
-            Tại Cleanmeat, mỗi miếng thịt đều trải qua quy trình kiểm soát nghiêm ngặt
-            – đảm bảo tươi ngon, an toàn và giàu dinh dưỡng.
-        </p>
+        <!-- Lý do và mô tả -->
+        <div class="section">
+            <h3>Chọn sản phẩm cần Trả hàng và Hoàn tiền</h3>
 
-        <div class="steps">
-            <div class="step">
-                <i class="fa-solid fa-seedling icon"></i>
-                <h3>1. Chăn nuôi chuẩn sạch</h3>
-                <p>Vật nuôi được chăm sóc trong môi trường tự nhiên, sử dụng nguồn thức ăn hữu cơ,
-                    không chất tăng trưởng hay kháng sinh độc hại.</p>
+            <label class="form-label">*Lý do:</label>
+            <select class="form-input">
+                <option>Khác</option>
+                <option>Không đúng mô tả</option>
+                <option>Hàng bị lỗi</option>
+                <option>Giao sai hàng</option>
+                <option>Khác</option>
+            </select>
+
+            <label class="form-label">Mô tả:</label>
+            <textarea class="form-input textarea" placeholder="Chi tiết vấn đề bạn gặp phải"></textarea>
+            <div class="counter">0/2000</div>
+        </div>
+
+        <!-- Thông tin hoàn -->
+        <div class="section">
+            <h3>Thông tin hoàn tiền</h3>
+
+            <div class="refund-row">
+                <span>Số tiền hoàn lại:</span>
+                <span class="amount">124.000₫</span>
+                <a href="#" class="edit">SỬA</a>
             </div>
 
-            <div class="step">
-                <i class="fa-solid fa-shield icon"></i>
-                <h3>2. Kiểm định nghiêm ngặt</h3>
-                <p>Mỗi khâu trong quá trình giết mổ, bảo quản và vận chuyển đều được giám sát chặt chẽ
-                    bởi đội ngũ chuyên gia để đảm bảo vệ sinh tuyệt đối.</p>
+            <div class="refund-row">
+                <span>Hoàn tiền vào:</span>
+                <span>Ngân hàng BIDV</span>
             </div>
 
-            <div class="step">
-                <i class="fa-solid fa-truck icon"></i>
-                <h3>3. Đóng gói và giao tận tay</h3>
-                <p>Thịt được đóng gói bằng công nghệ bảo quản lạnh tiên tiến, giữ trọn vị tươi ngon
-                    và giao nhanh đến tay khách hàng.</p>
+            <div class="refund-row">
+                <span>Email:</span>
+                <input type="email" class="form-input" value="yourmail@gmail.com">
             </div>
         </div>
-    </section>
+
+        <!-- Gửi -->
+        <div class="submit-container">
+            <button class="submit-btn">Gửi yêu cầu</button>
+        </div>
+
+    </div>
 
     <!-- FOOTER -->
     <footer class="main-footer">
