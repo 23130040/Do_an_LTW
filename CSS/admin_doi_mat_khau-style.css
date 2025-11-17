@@ -279,14 +279,11 @@ a {
     margin-right: 10px;
     font-size: 1.1em;
 }
-/********************* CONTENT ********************/
-/* --- USER MANAGEMENT SPECIFIC STYLES (Dựa trên Product Management) --- */
-
+/* --- CONTENT STYLES (Chung) --- */
 .content {
     flex-grow: 1;
     padding: 20px;
     background-color: #fff;
-    /* Dùng màu nền trắng cho khu vực nội dung */
 }
 
 .page-title {
@@ -298,218 +295,81 @@ a {
     padding-bottom: 10px;
 }
 
-/* --- CONTROL PANEL & FILTERS --- */
-.control-panel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    border: 1px solid #eee;
-}
 
-.filters {
-    display: flex;
-    gap: 10px;
-}
+/* --- Styles Riêng cho Trang Đổi Mật Khẩu --- */
 
-.search-input, .filter-select {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 1em;
-}
-
-/* Nút chính */
-.btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-primary {
-    background-color: var(--main-red); /* Màu đỏ chủ đạo */
-    color: #fff;
-}
-
-.btn-primary:hover {
-    background-color: #8d2a3a;
-}
-
-/* --- USER TABLE --- */
-.user-table-container {
+.password-container {
+    max-width: 600px;
+    margin: 0 auto;
     background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.user-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.user-table thead {
-    background-color: #343A40; /* Màu xám đậm từ Header/Sidebar */
-    color: #fff;
-}
-
-.user-table th, .user-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    font-size: 0.95em;
-}
-
-.user-table tbody tr:hover {
-    background-color: #f5f5f5;
-}
-
-/* Trạng thái tài khoản */
-.status-badge {
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.85em;
-    font-weight: bold;
-    color: #fff;
-}
-
-.status-active {
-    background-color: #2ecc71; /* Xanh lá */
-}
-
-.status-locked {
-    background-color: var(--main-red); /* Đỏ sẫm */
-}
-
-/* Nút Lịch sử mua hàng */
-.btn-sm {
-    padding: 5px 10px;
-    font-size: 0.8em;
-}
-
-.btn-info {
-    background-color: #3498db;
-    color: #fff;
-}
-
-/* Icon Thao tác */
-.btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-right: 5px;
-    font-size: 1.1em;
-}
-
-.edit-btn { color: #2980b9; }
-.lock-btn { color: var(--main-red); } /* đỏ cho Khóa */
-.unlock-btn { color: #2ecc71; } /* Xanh lá cho Mở khóa */
-
-/* --- MODAL (THÊM/SỬA) Chung cho cả Sản phẩm và Người dùng --- */
-.modal {
-    display: none; /* Ẩn theo mặc định */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: #fefefe;
     padding: 30px;
     border-radius: 8px;
-    width: 80%;
-    max-width: 700px; /* Điều chỉnh max-width cho modal người dùng */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    cursor: pointer;
-}
-
-.modal-content h3 {
+/* Form Cập nhật */
+.password-change-form .form-group {
     margin-bottom: 20px;
-    font-weight: 400;
-    color: var(--main-red);
 }
-
-.user-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.form-section label {
+.password-change-form label {
     display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
-    font-size: 0.95em;
     color: #555;
 }
-
-.user-form input[type="text"],
-.user-form input[type="email"],
-.user-form input[type="tel"],
-.user-form input[type="password"],
-.user-form textarea,
-.user-form select {
+.password-change-form input[type="password"] {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    resize: vertical;
-    font-size: 1em;
-}
-
-/* Kế thừa toggle switch từ modal sản phẩm, nếu cần điều chỉnh */
-.small-switch { /* Đã định nghĩa từ trước */
-    width: 30px;
-    height: 15px;
-    margin-right: 10px;
-}
-.small-switch .slider:before { /* Đã định nghĩa từ trước */
-    height: 11px;
-    width: 11px;
-    left: 2px;
-    bottom: 2px;
-}
-input:checked + .small-switch .slider:before { /* Đã định nghĩa từ trước */
-    transform: translateX(15px);
-}
-.status-text { /* Đã định nghĩa từ trước */
-    font-size: 0.9em;
-    color: #666;
-    display: inline-block; /* Để nó nằm cạnh switch */
-    vertical-align: top;
-    margin-top: 2px; /* Căn chỉnh nhẹ */
-}
-
-.submit-btn {
-    grid-column: 1 / 3; /* Chiếm hết 2 cột */
     padding: 12px;
-    margin-top: 20px; /* Khoảng cách với các trường trên */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1em;
+    transition: border-color 0.2s;
+}
+.password-change-form input[type="password"]:focus {
+    border-color: var(--main-red);
+    outline: none;
+}
+
+/* Nút Đổi Mật Khẩu */
+.btn-update {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: var(--main-red);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.05em;
+    transition: background-color 0.2s;
+    width: 100%; /* Làm nút full width */
+}
+.btn-update:hover {
+    background-color: #72202c;
+}
+
+/* Vùng hiển thị thông báo */
+.message-area {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: none; /* Ban đầu ẩn */
+    text-align: center;
+}
+.message-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Cần thêm style để phân biệt link active trong dropdown nếu cần */
+.user-dropdown .active-dropdown-link {
+    background-color: #f1f1f1;
+    color: var(--main-red);
 }

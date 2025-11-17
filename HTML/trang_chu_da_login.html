@@ -8,9 +8,6 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
-
 </head>
 <body>
 <main>
@@ -24,40 +21,37 @@
             <div class="search-cart ">
                 <div class="search-icon">
                     <div class="search-box" id="searchBox">
-                <span id="search-label">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                </span>
+                        <span id="search-label">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
                         <input type="text" id="search-input" placeholder="Nhập từ khóa..." />
                         <span id="search-close">✖</span>
                     </div>
                 </div>
 
                 <div class="cart-icon">
-                    <i class="fa-solid fa-cart-shopping"></i>
-
+                    <a href="GioHang.html">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
                 </div>
             </div>
             <div class="user-icon">
                 <i class="fa-solid fa-user"></i>
                 <div class="user-menu" id="user-menu">
-                    <a href="#">Hồ sơ của tôi</a>
-                    <a href="#">Đơn hàng của tôi</a>
-                    <a href="#">Yêu thích</a>
-                    <a href="#">Cài đặt tài khoản</a>
+                    <a href="TaiKhoan.html">Tài khoản của tôi</a>
+                    <a href="donhang.html">Đơn hàng của tôi</a>
                     <a href="trang_chu_chua_login.html">Đăng xuất</a>
                 </div>
             </div>
-
         </div>
 
         <!-- Menu -->
-        <div class="menu">
-            <a href="trang_chu_chua_login.html">Trang chủ</a>
+        <div class="menu" id="menu">
+            <a href="trang_chu_da_login.html">Trang chủ</a>
             <a href="san_pham.html">Sản phẩm</a>
             <a href="gioi_thieu.html">Giới Thiệu</a>
-            <a href="tin_tuc.html">Tin Tức</a>
-            <a href="#">Chính Sách Đổi Trả</a>
+            <a href="#">Tin Tức</a>
+            <a href="#">Chính sách đổi trả</a>
         </div>
     </nav>
 
@@ -76,7 +70,7 @@
                 <h3>Thịt bò tươi</h3>
                 <p class="price">350.000 ₫ / KG</p>
                 <div class="badge-new">Nổi Bật</div>
-                <button class="buy-now-btn">Mua Ngay</button>
+                <button>THÊM VÀO GIỎ</button>
             </div>
 
             <div class="product-item featured-item">
@@ -84,7 +78,7 @@
                 <h3>Thịt thăn heo</h3>
                 <p class="price">89.000 ₫ / KG</p>
                 <div class="badge-new">Bán Chạy</div>
-                <button class="buy-now-btn">Mua Ngay</button>
+                <button>THÊM VÀO GIỎ</button>
             </div>
 
             <div class="product-item featured-item">
@@ -92,7 +86,7 @@
                 <h3>Thịt đùi gà</h3>
                 <p class="price">69.000 ₫ / KG</p>
                 <div class="badge-new">Giá Tốt</div>
-                <button class="buy-now-btn">Mua Ngay</button>
+                <button>THÊM VÀO GIỎ</button>
             </div>
         </div>
     </section>
@@ -109,26 +103,36 @@
                     <img src="../images/thitTC2.png" alt="Thịt đùi gà">
                     <h3>Thịt đùi gà</h3>
                     <p class="price">69.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
                     <img src="../images/thitTC1.png" alt="Thịt thăn heo">
                     <h3>Thịt thăn heo</h3>
                     <p class="price">89.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
                     <img src="../images/thitTC3.png" alt="Thịt bò tươi">
                     <h3>Thịt bò tươi</h3>
                     <p class="price">350.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
                     <img src="../images/thitTC4.png" alt="Thịt nọng heo">
                     <h3>Thịt nọng heo</h3>
                     <p class="price">330.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
                     <img src="../images/thitTC5.png" alt="Thịt ức gà">
                     <h3>Thịt ức gà</h3>
                     <p class="price">70.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
+                </div>
+                <div class="product-item view-all-item" onclick="window.location.href='san_pham.html'">
+                    <i class="fa-solid fa-arrow-right" style="font-size: 50px; margin-bottom: 10px;"></i>
+                    <h3>Xem tất cả</h3>
+                    <p>Khám phá toàn bộ sản phẩm</p>
                 </div>
             </div>
 
@@ -157,7 +161,6 @@
                     <li><a href="san_pham.html">Sản Phẩm</a></li>
                     <li><a href="#">Giới Thiệu</a></li>
                     <li><a href="#">Tin Tức</a></li>
-                    <li><a href="#">Chính Sách Đổi Trả</a></li>
                 </ul>
             </div>
 

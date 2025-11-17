@@ -2,40 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng ký</title>
+    <title>Clean Meat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../CSS/StyleTrangDangKy.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-...paste-the-integrity-if-needed..."
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer">
+
 </head>
 <body>
-    <main>
-        <div id="signup_container">
-            <div class="signup_title">
-                <img src="../images/logo_cmeat.png" class="signup_logo" alt="">
-                <h1 class="signup_title_txt">ĐĂNG KÝ</h1>
+<div id="container">
+    <div id="wrapper">
+        <form id="signup-form">
+            <img src="../images/logoCleanmeat.png" alt="logo">
+            <h1 class="heading_title">ĐĂNG KÝ</h1>
+
+            <div class="block user_name">
+                <i class="fa-regular fa-user"></i>
+                <input type="text" class="form_input" name="name" placeholder="Nhập họ và tên" required>
             </div>
-            <div class="signup_form">
-                <form class="form_content">
-                    <div class ="form_input name">
-                        <input type="text" id="username" class="input_field username_input" placeholder="Nhập họ và tên" required>
-                    </div>
-                    <div class ="form_input email">
-                        <input type="text" id="email" class="input_field email_input" placeholder="Nhập email" required>
-                    </div>
-                    <div class ="form_input password">
-                        <input type="password" id="password" class="input_field password_input" placeholder="Tạo mật khẩu" required>
-                    </div>
-                    <div class ="form_input confirm_password">
-                        <input type="password" id="confirm_password" class="input_field confirm_password_input" placeholder="Nhập lại mật khẩu" required>
-                    </div>
-                    <div class ="form_input submit">
-                        <input type="submit" id="submit" class="input_submit" value="ĐĂNG KÝ">
-                    </div>
-                </form>
-                <div class="login_link">
-                    <span class="login txt">Bạn đã có tài khoản?</span>
-                    <a href="TrangDangNhap.html" class="login link">Đăng nhập ngay</a>
-                </div>
+
+            <div class="block email">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="text" class="form_input" name="email" placeholder="Nhập email" required>
             </div>
-        </div>
-    </main>
+
+            <div class="block password">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" class="form_input" name="password" placeholder="Tạo mật khẩu" required>
+            </div>
+
+            <div class="block confirm_password">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" class="form_input" name="confirm_password" placeholder="Nhập lại mật khẩu" required>
+            </div>
+            <div id="signup-error" class="error-message"></div>
+            <div class="block submit">
+                <a href="#" class="home link form_submit" id="register-submit-btn">ĐĂNG KÝ</a>
+            </div>
+            <div class="separator-container">
+                <div class="separator-line"></div>
+                <span class="separator-text">HOẶC</span>
+                <div class="separator-line"></div>
+            </div>
+            <div class="block social-login">
+                <a href="#" class="link google-submit">
+                    <i class="fab fa-google"></i>
+                    TIẾP TỤC VỚI GOOGLE
+                </a>
+            </div>
+            <div class="block sign_up">
+                <span class="txt">Bạn đã có tài khoản?</span>
+                <a href="TrangDangNhap.html" class="link sign_up">Đăng nhập ngay</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../JavaScript/dataUser.js"></script>
 </body>
 </html>

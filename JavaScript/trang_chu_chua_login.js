@@ -12,8 +12,6 @@ function setupSearchBox() {
     searchLabel.addEventListener("click", () => {
         searchBox.classList.add("active");
         searchInput.focus();
-        cartIcon.style.display = "none";
-        login.style.display = "none";
     });
 
 // Khi bấm dấu X để đóng search
@@ -28,6 +26,7 @@ function setupSearchBox() {
 // Sticky Menu khi cuộn
 function setupStickyMenu() {
     const menu = document.getElementById("menu");
+    const rightMenu = document.querySelector(".right-section");
     const searchIcon = document.querySelector(".search-icon");
     const cartIcon = document.querySelector(".cart-icon");
     const login = document.querySelector(".login");
@@ -36,12 +35,14 @@ function setupStickyMenu() {
     window.addEventListener("scroll", () => {
         if (window.scrollY > 100) {
             menu.classList.add("fixed");
+            rightMenu.classList.add("fixed");
             searchIcon.classList.add("fixed");
             cartIcon.classList.add("fixed");
             login.classList.add("fixed");
             logo.classList.add("fixed");
         } else {
             menu.classList.remove("fixed");
+            rightMenu.classList.remove("fixed");
             searchIcon.classList.remove("fixed");
             cartIcon.classList.remove("fixed");
             login.classList.remove("fixed");

@@ -1,4 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    //thay đổi giao diện khi nhấn vào các link trong sidebar
+    changeTab();
+
+    //Lưu thông tin
+    const saveInfoBtn = document.getElementById("saveInfoBtn");
+    saveInfoBtn.addEventListener("click", () => {
+        saveInfo("Lưu thông tin thành công");
+    });
+
+    //Lưu mật khẩu
+    const savePasswordBtn = document.getElementById("savePasswordBtn");
+    savePasswordBtn.addEventListener("click", () => {
+       saveInfo("Đổi mật khẩu thành công! Vui lòng đăng nhập lại!");
+    });
+    const closeSaveModal = document.getElementById("closeConfirmSavemodal");
+    closeSaveModal.addEventListener("click", () => {
+        closeModal("confirmSave");
+    });
+});
+
+function changeTab(targetId) {
     //1. Lấy tất cả các link trong sidebar
     const sidebarLinks = document.querySelectorAll('#sidebar .sidebar.menu a');
     //2. lây tất cả các nội dung tab
@@ -6,21 +28,21 @@ document.addEventListener("DOMContentLoaded", () => {
     function switchTab(targetId) {
         // A. Ẩn tất cả các nội dung tab
         tabContents.forEach(content => {
-            content.classList.remove('active'); // Xóa lớp 'active'
-            content.classList.add('hidden');    // Thêm lớp 'hidden' (nếu bạn định nghĩa trong CSS)
+            content.classList.remove('active');
+            content.classList.add('hidden');
         });
 
-    const targetContent = document.querySelector(targetId);
-    if (targetContent) {
-        targetContent.classList.add('active');
-        targetContent.classList.remove('hidden');
-    }
-    sidebarLinks.forEach(link => {
-        // Xóa lớp 'active-link' khỏi tất cả
-        link.classList.remove('active-link');
-    });
-    // Thêm lớp 'active-link' vào link hiện tại
-    document.querySelector(`#sidebar .sidebar.menu a[href="${targetId}"]`).classList.add('active-link');
+        const targetContent = document.querySelector(targetId);
+        if (targetContent) {
+            targetContent.classList.add('active');
+            targetContent.classList.remove('hidden');
+        }
+        sidebarLinks.forEach(link => {
+            // Xóa lớp 'active-link' khỏi tất cả
+            link.classList.remove('active-link');
+        });
+        // Thêm lớp 'active-link' vào link hiện tại
+        document.querySelector(`#sidebar .sidebar.menu a[href="${targetId}"]`).classList.add('active-link');
     }
     // 3. Thiết lập sự kiện click cho các liên kết
     sidebarLinks.forEach(link => {
@@ -28,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
             // Ngăn chặn hành vi mặc định của thẻ <a> (chuyển hướng/nhảy trang)
             event.preventDefault();
 
-            // Lấy href (ví dụ: '#profile-content') để xác định tab cần hiển thị
             const targetId = this.getAttribute('href');
 
             // Gọi hàm chuyển đổi tab
@@ -36,8 +57,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 4. Thiết lập tab mặc định khi tải trang (ví dụ: tab đầu tiên)
-    // Tùy chọn: Gọi switchTab cho tab đầu tiên nếu nó chưa active
     const initialTarget = sidebarLinks[0].getAttribute('href');
     switchTab(initialTarget);
-});
+}
+
+function saveInfo(message){
+    const confirmSavemodal = document.getElementById('confirmSave');
+    confirmSavemodal.style.display = 'block';
+
+    const messageConfirm = document.getElementById('messageConfirm');
+    messageConfirm.innerText = message;
+}
+
+function closeModal(id){
+    document.getElementById(id).style.display = "none";
+}

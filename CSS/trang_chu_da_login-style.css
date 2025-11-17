@@ -7,7 +7,7 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 main{
@@ -66,6 +66,9 @@ main{
     width: 100%;
     height: 80px;
     position: relative;
+}
+.top-bar i:hover, #search-close:hover, #search-label i:hover{
+    color: #c30000;
 }
 
 /* Logo căn giữa cực chuẩn */
@@ -149,7 +152,7 @@ main{
 }
 
 .user-menu a:hover {
-    background-color: #8d2a3a;
+    background-color: #5a0002;
     color: white;
 }
 
@@ -209,7 +212,11 @@ main{
     text-decoration: none;
     color: white;
 }
-
+.menu a:hover{
+    color: #c30000;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
 /* KHI CUỘN */
 .menu.fixed {
     position: fixed;
@@ -228,7 +235,9 @@ main{
 }
 
 .menu.fixed a:hover {
-    color: #8d2a3a;
+    color: #a30000;
+    text-decoration: underline;
+    text-underline-offset: 6px;
 }
 
 
@@ -411,11 +420,71 @@ main{
     box-shadow: 0 4px 10px #00000033;
     cursor: pointer;
 }
+/* Nút thêm vào giỏ */
+.product-item button {
+    border: 1.5px solid #e00000;
+    background-color: #fff;
+    color: #e00000;font-weight: 600;
+    border-radius: 25px;
+    padding: 7px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.product-item button:hover {
+    background-color: #8d2a3a;
+    border-color: #8d2a3a;
+    color: #fff;
+    transform: scale(1.05);
+}
+
 
 .price {
     color: #8d2a3a;
     font-weight: bold;
     font-size: 16px;
+}
+.view-all-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #f0f0f0;
+    border: 2px dashed #8d2a3a;
+    transition: all 0.3s ease;
+    height: 380px;
+    width: 250px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.view-all-item h3 {
+    color: #8d2a3a;
+    margin: 5px 0;
+    width: 100%;
+}
+
+.view-all-item p {
+    color: #555;
+    font-size: 14px;
+    margin: 0;
+    padding: 0 5px;
+}
+
+.view-all-item i {
+    color: #8d2a3a;
+    margin-bottom: 10px;
+}
+
+.view-all-item:hover {
+    background-color: #ffebeb;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(141, 42, 58, 0.4);
+}
+
+.view-all-item button {
+    display: none;
 }
 
 /* Nút mũi tên điều hướng */
