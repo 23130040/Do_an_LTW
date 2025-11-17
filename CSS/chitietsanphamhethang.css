@@ -97,7 +97,24 @@ main {
     font-size: 16px;
     color: #666;
 }
+/* ------------------ ĐÁNH GIÁ ------------------ */
+.product-info .rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 5px 0 10px;
+}
 
+.product-info .rating i {
+    color: #f7b500; /* màu vàng sao */
+    font-size: 18px;
+}
+
+.product-info .rating span {
+    margin-left: 6px;
+    font-size: 16px;
+    color: #444;
+}
 /* Giá */
 .price-box {
     display: flex;
@@ -331,7 +348,70 @@ main {
     font-size: 16px;
     color: #333;
 }
+/* ================= xem them binh luan ================= */
 
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.popup-content {
+    background: #fff;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 85%;
+    padding: 30px;
+    border-radius: 12px;
+    overflow-y: auto;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
+
+/* TIÊU ĐỀ */
+.popup-content h3 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* CÁC COMMENT */
+.popup-comments .comment-item {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #e3e3e3;
+}
+
+.popup-comments .user {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+/* NÚT ĐÓNG */
+.close-popup {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: #e63946;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.close-popup:hover {
+    background: #cc2e3c;
+}
 /* Nút xem thêm */
 .see-more {
     text-align: right;

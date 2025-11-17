@@ -53,7 +53,7 @@
             <img id="main-img" src="https://phamgiafood.com.vn/wp-content/uploads/2017/07/beef-mince.jpg" class="main-image">
 
             <div class="thumbnail-list">
-                <img src="https://product.hstatic.net/200000276911/product/mince_beef_6297ddba25af4891b064c1f2a3b2c522_master.png"
+                <img src="https://phamgiafood.com.vn/wp-content/uploads/2017/07/beef-mince.jpg"
                      class="thumb active" onclick="changeImage(this)">
                 <img src="https://chosachaloha.vn/wp-content/uploads/2025/02/thit-bo-xay-1.png"
                      class="thumb" onclick="changeImage(this)">
@@ -70,7 +70,15 @@
         <div class="product-info">
             <h2 class="title">Thịt bò xay</h2>
 
-            <div class="rating">⭐ 4.9 | 1.999 đánh giá</div>
+            <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <span>4.9 | 1.999 đánh giá</span>
+            </div>
+
 
             <div class="price-box">
                 <span class="price">265.000₫</span>
@@ -84,13 +92,10 @@
                 </div>
             </div>
 
-            <div class="section">
-                <p class="label">Số lượng:</p>
-                <div class="qty">
-                    <button class="qty-btn">-</button>
-                    <input type="text" value="1">
-                    <button class="qty-btn">+</button>
-                </div>
+            <div class="qty">
+                <button class="qty-btn minus">-</button>
+                <input type="text" value="1">
+                <button class="qty-btn plus">+</button>
             </div>
 
             <div class="btn-group">
@@ -104,16 +109,29 @@
     <div class="product-detail">
         <h3>Chi tiết sản phẩm</h3>
         <p>
-            Phần thịt được tuyển chọn từ nguồn bò sạch, nuôi theo tiêu chuẩn an toàn thực phẩm.
-            "Nạm bò Úc" là phần thịt bụng của bò Úc, có đặc điểm là thịt và mỡ xen kẽ nhau. Đây là một phần thịt mềm, ngon, thường được sử dụng để chế biến các món ăn phổ biến như phở, bò kho, lẩu hoặc dùng để xào, nướng...
+            Thịt bò xay sẵn được chế biến từ thịt bò Úc chọn lọc, xay tại cơ sở đạt chuẩn an toàn thực phẩm.
+            Sản phẩm có kết cấu mịn, độ ẩm giữ tốt, phù hợp làm hamburger, chả, viên, sốt bò, xào nhanh hoặc các món ăn nhanh gia đình.
         </p>
         <ul>
-            <li>✅ Nguồn gốc: Úc</li>
-            <li>✅ Bảo quản: 0 - 4°C</li>
-            <li>✅ Hạn sử dụng: 7 ngày kể từ ngày đóng gói</li>
-            <li>✅ Đóng gói hút chân không đảm bảo vệ sinh an toàn thực phẩm</li>
+            <ul>
+                <li><i class="fa-solid fa"></i> Nguồn gốc: Úc</li>
+                <li><i class="fa-solid fa"></i> Tỉ lệ nạc/mỡ: 80/20</li>
+                <li><i class="fa-solid fa"></i> Bảo quản: 0 - 4°C</li>
+                <li><i class="fa-solid fa"></i> Hạn sử dụng: 3 ngày / 3 tháng (đông lạnh) kể từ ngày đóng gói — kiểm tra trên nhãn</li>
+                <li><i class="fa-solid fa"></i> Đóng gói: hút chân không - đảm bảo vệ sinh và giữ tươi</li>
+            </ul>
         </ul>
+
+        <h4>Hướng dẫn sử dụng & lưu ý</h4>
+        <p>
+            Rã đông trong ngăn mát trước khi chế biến, tránh rã đông ở nhiệt độ phòng. Chế biến chín kỹ trước khi ăn.
+            Không tái sử dụng phần rã đông chưa dùng hết nếu để lâu ngoài. Sản phẩm đã chế biến nên dùng trong 24 giờ nếu để tủ lạnh.
+        </p>
+
+        <h4>Món gợi ý</h4>
+        <p>Hamburger, chả bò, viên bò sốt cà, xào rau củ, sốt bò băm cho pasta...</p>
     </div>
+
 
     <!-- ======= BÌNH LUẬN ======= -->
     <section class="product-comments">
@@ -143,7 +161,37 @@
         </div>
     </section>
 </main>
+<!-- POPUP XEM THÊM BÌNH LUẬN -->
+<div id="comment-popup" class="popup-overlay">
+    <div class="popup-content">
+        <h3>Tất cả bình luận</h3>
 
+        <div class="popup-comments">
+            <div class="comment-item">
+                <p class="user"><strong>Nguyễn Văn An</strong> · 1 ngày trước</p>
+                <p class="content">Mãi mê thịt của CLeanMeat</p>
+            </div>
+
+            <div class="comment-item">
+                <p class="user"><strong>Nguyễn Trường Giang</strong> · 2 ngày trước</p>
+                <p class="content">Giao hàng nhanh, chất lượng tốt sẽ mua lại</p>
+            </div>
+
+            <div class="comment-item">
+                <p class="user"><strong>Hoàng Mai</strong> · 3 ngày trước</p>
+                <p class="content">Mua 2 lần chưa lần nào thất vọng:33</p>
+            </div>
+
+            <div class="comment-item">
+                <p class="user"><strong>Kẻ mê thịt</strong> · 3 ngày trước</p>
+                <p class="content"> giá cả hợp lí mà lại ngon, hông nói nhiều muaaaa! </p>
+            </div>
+
+        </div>
+
+        <button class="close-popup">Đóng</button>
+    </div>
+</div>
 <!--CAM KẾT-->
 <section class="features-section">
     <div class="features-container">

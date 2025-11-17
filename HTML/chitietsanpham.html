@@ -9,8 +9,6 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- File CSS giao diện trang chi tiết sản phẩm -->
     <link rel="stylesheet" href="../CSS/chitietsanpham.css">
 </head>
 <body>
@@ -52,10 +50,10 @@
 
         <!-- BÊN TRÁI: Hình ảnh sản phẩm -->
         <div class="product-images">
-            <img id="main-img" src="../images/sale1.png" class="main-image">
+            <img id="main-img" src="https://bizweb.dktcdn.net/100/021/951/products/nam-bo-uc-hifood-55x50-2.jpg?v=1674041433870" class="main-image">
 
             <div class="thumbnail-list">
-                <img src="https://phamgiafood.com.vn/wp-content/uploads/2017/07/Nac-mong-bo-UC-2.jpg"
+                <img src="https://bizweb.dktcdn.net/100/021/951/products/nam-bo-uc-hifood-55x50-2.jpg?v=1674041433870"
                      class="thumb active" onclick="changeImage(this)">
                 <img src="https://bizweb.dktcdn.net/thumb/1024x1024/100/522/252/products/nac-mong-jpg.png?v=1726452916157"
                      class="thumb" onclick="changeImage(this)">
@@ -70,9 +68,16 @@
 
         <!-- BÊN PHẢI: Thông tin sản phẩm -->
         <div class="product-info">
-            <h2 class="title">Nạn bò Úc</h2>
+            <h2 class="title">Nạm bò Úc</h2>
 
-            <div class="rating">⭐ 4.9 | 1.660 đánh giá</div>
+            <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <span>4.9 | 1.660 đánh giá</span>
+            </div>
 
             <div class="price-box">
                 <span class="new-price">199.000₫</span>
@@ -97,9 +102,9 @@
                 </div>
             </div>
 
-            <div class="btn-group">
+                <div class="btn-group">
                 <button class="add-cart"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
-                <button class="buy-now">Mua ngay</button>
+                <a href="giohang.html" class="buy-now">Mua ngay</a>
             </div>
         </div>
     </div>
@@ -112,10 +117,10 @@
             "Nạm bò Úc" là phần thịt bụng của bò Úc, có đặc điểm là thịt và mỡ xen kẽ nhau. Đây là một phần thịt mềm, ngon, thường được sử dụng để chế biến các món ăn phổ biến như phở, bò kho, lẩu hoặc dùng để xào, nướng...
         </p>
         <ul>
-            <li>✅ Nguồn gốc: Úc</li>
-            <li>✅ Bảo quản: 0 - 4°C</li>
-            <li>✅ Hạn sử dụng: 7 ngày kể từ ngày đóng gói</li>
-            <li>✅ Đóng gói hút chân không đảm bảo vệ sinh an toàn thực phẩm</li>
+            <li>Nguồn gốc: Úc</li>
+            <li>Bảo quản: 0 - 4°C</li>
+            <li>Hạn sử dụng: 7 ngày kể từ ngày đóng gói</li>
+            <li>Đóng gói hút chân không đảm bảo vệ sinh an toàn thực phẩm</li>
         </ul>
     </div>
 
@@ -135,7 +140,7 @@
             </div>
 
             <div class="comment-item">
-                <p class="user"><strong>Trần Thị Ngoc</strong> · 2 ngày trước</p>
+                <p class="user"><strong>Trần Thị Ngọc</strong> · 2 ngày trước</p>
                 <p class="content">Tiền nào của đó, thịt ăn rất mềm và ngon</p>
             </div>
 
@@ -146,8 +151,37 @@
         </div>
         <div class="see-more">Xem thêm</div>
     </section>
-</main>
+<!-- POPUP XEM THÊM BÌNH LUẬN -->
+<div id="comment-popup" class="popup-overlay">
+    <div class="popup-content">
+        <h3>Tất cả bình luận</h3>
 
+        <div class="popup-comments">
+            <div class="comment-item">
+                <p class="user"><strong>Nguyễn Minh Hậu</strong> · 1 ngày trước</p>
+                <p class="content">Sản phẩm chất lượng, đáng mua!</p>
+            </div>
+
+            <div class="comment-item">
+                <p class="user"><strong>Trần Thị Ngọc</strong> · 2 ngày trước</p>
+                <p class="content">Tiền nào của đó, thịt ăn rất mềm và ngon</p>
+            </div>
+
+            <div class="comment-item">
+                <p class="user"><strong>Lê Minh Hiếu</strong> · 3 ngày trước</p>
+                <p class="content">Khá ưng, nhưng giao hàng hơi lâu</p>
+            </div>
+
+            <div class="comment-item">
+                <p class="user"><strong>Phạm Lưu Quang</strong> · 3 ngày trước</p>
+                <p class="content">Ngon! đã mua mấy lần từ CleanMeat nhưng chưa bao giờ thất vọng </p>
+            </div>
+
+        </div>
+
+        <button class="close-popup">Đóng</button>
+    </div>
+</div>
 <!-- PHẦN CAM KẾT DỊCH VỤ -->
 <section class="features-section">
     <div class="features-container">

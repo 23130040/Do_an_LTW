@@ -111,3 +111,52 @@ function changeImage(img) {
     document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
     img.classList.add('active');
 }
+// Xử lý chọn khối lượng
+const optionButtons = document.querySelectorAll('.option');
+
+optionButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        optionButtons.forEach(b => b.classList.remove('active'));
+
+        btn.classList.add('active');
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* ========================= XỬ LÝ CHỌN KHỐI LƯỢNG ========================= */
+    const optionButtons = document.querySelectorAll('.option');
+
+    optionButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            optionButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    /* ========================= XỬ LÝ SỐ LƯỢNG + - ========================= */
+    const minusBtn = document.querySelector('.qty-btn.minus');
+    const plusBtn = document.querySelector('.qty-btn.plus');
+    const qtyInput = document.querySelector('.qty input');
+
+    if (minusBtn && plusBtn && qtyInput) {
+        minusBtn.addEventListener('click', () => {
+            let value = parseInt(qtyInput.value) || 1;
+            if (value > 1) qtyInput.value = value - 1;
+        });
+
+        plusBtn.addEventListener('click', () => {
+            let value = parseInt(qtyInput.value) || 1;
+            qtyInput.value = value + 1;
+        });
+    }
+
+});
+// MỞ xem them bình luận
+document.querySelector(".see-more").addEventListener("click", function () {
+    document.getElementById("comment-popup").style.display = "flex";
+});
+
+// ĐÓNG xem thêm bình luận
+document.querySelector(".close-popup").addEventListener("click", function () {
+    document.getElementById("comment-popup").style.display = "none";
+});
