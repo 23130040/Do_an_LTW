@@ -22,8 +22,6 @@ function setupSearchBox() {
     searchLabel.addEventListener("click", () => {
         searchBox.classList.add("active");
         searchInput.focus();
-        cartIcon.style.display = "none";
-        login.style.display = "none";
     });
 
 // Khi bấm dấu X để đóng search
@@ -38,6 +36,7 @@ function setupSearchBox() {
 // Sticky Menu khi cuộn
 function setupStickyMenu() {
     const menu = document.getElementById("menu");
+    const rightMenu = document.querySelector(".right-section");
     const searchIcon = document.querySelector(".search-icon");
     const cartIcon = document.querySelector(".cart-icon");
     const login = document.querySelector(".login");
@@ -46,12 +45,14 @@ function setupStickyMenu() {
     window.addEventListener("scroll", () => {
         if (window.scrollY > 100) {
             menu.classList.add("fixed");
+            rightMenu.classList.add("fixed");
             searchIcon.classList.add("fixed");
             cartIcon.classList.add("fixed");
             login.classList.add("fixed");
             logo.classList.add("fixed");
         } else {
             menu.classList.remove("fixed");
+            rightMenu.classList.remove("fixed");
             searchIcon.classList.remove("fixed");
             cartIcon.classList.remove("fixed");
             login.classList.remove("fixed");
@@ -106,3 +107,88 @@ function scrollToRight(button) {
     list.scrollBy({ left: 300, behavior: 'smooth' });
 }
 
+
+// PHẦN XỬ LÍ DANH MỤC
+const categories = document.querySelectorAll('.category');
+categories.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const page = btn.getAttribute('data-page');
+        if (page) {
+            window.location.href = page;
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const categoryButtons = document.querySelectorAll(".category");
+    const products = document.querySelectorAll(".product-item");
+    const viewAllBtn = document.getElementById("viewAllBtn");
+    const filterSort = document.querySelector(".filter-sort");
+
+    // Mặc định hiển thị thịt heo
+    let currentCategory = "heo";
+    filterProducts(currentCategory);
+
+    // ==== XỬ LÍ CHỌN DANH MỤC ====
+    categoryButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            categoryButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentCategory = btn.dataset.category;
+            filterProducts(currentCategory);
+        });
+    });
+
+    // ==== HÀM LỌC SẢN PHẨM ====
+    function filterProducts(category) {
+        products.forEach(product => {
+            const productCategory = product.getAttribute("data-category");
+            if (productCategory === category) {
+                product.style.display = "flex";
+            } else {
+                product.style.display = "none";
+            }
+        });
+        sortProducts(filterSort ? filterSort.value : "Mặc định");
+    }
+
+    // ==== HÀM TÁCH GIÁ SỐ ====
+    function extractPrice(priceText) {
+        return parseFloat(priceText.replace(/[^\d]/g, ""));
+    }
+
+    // ==== HÀM SẮP XẾP GIÁ ====
+    function sortProducts(order) {
+        const container = document.querySelector(".product-list");
+        if (!container) return;
+
+        // Lấy các sản phẩm đang hiển thị
+        const visibleProducts = Array.from(products).filter(p => p.style.display !== "none");
+        if (visibleProducts.length === 0) return;
+
+        visibleProducts.sort((a, b) => {
+            const priceA = extractPrice(a.querySelector(".price").innerText);
+            const priceB = extractPrice(b.querySelector(".price").innerText);
+            if (order === "Giá tăng dần") return priceA - priceB;
+            if (order === "Giá giảm dần") return priceB - priceA;
+            return 0;
+        });
+
+        // Cập nhật lại thứ tự trong DOM
+        visibleProducts.forEach(p => container.appendChild(p));
+    }
+
+    // ==== XỬ LÍ KHI ĐỔI "LỌC GIÁ" ====
+    if (filterSort) {
+        filterSort.addEventListener("change", () => {
+            sortProducts(filterSort.value);
+        });
+    }
+
+    // ==== NÚT XEM TẤT CẢ ====
+    if (viewAllBtn) {
+        viewAllBtn.addEventListener("click", () => {
+            window.location.href = "../HTML/XemTatCa.html";
+        });
+    }
+});

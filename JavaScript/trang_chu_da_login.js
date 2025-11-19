@@ -12,8 +12,6 @@ function setupSearchBox() {
     searchLabel.addEventListener("click", () => {
         searchBox.classList.add("active");
         searchInput.focus();
-        cartIcon.style.display = "none";
-        userIcon.style.display = "none";
     });
 
 // Khi bấm dấu X để đóng search

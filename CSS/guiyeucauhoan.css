@@ -1,0 +1,353 @@
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 20px;
+}
+
+main{
+    width: 100%;
+    margin: auto;
+    min-height: 100vh;
+    padding-top: 100px;
+}
+/* ======================= Nội dung ===================== */
+.return-form {
+    max-width: 800px;
+    width: 100%;       /* co giãn theo container */
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Section bo tròn + shadow */
+.section {
+    background: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    max-width: 900px;
+}
+
+.section h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Sản phẩm */
+.product-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.product-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    object-fit: cover;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-name {
+    font-size: 14px;
+    margin: 0;
+}
+
+.old {
+    text-decoration: line-through;
+    color: #aaa;
+    margin-right: 5px;
+}
+
+.new {
+    color: #d0011b;
+    font-weight: bold;
+}
+
+.product-qty {
+    color: #555;
+}
+
+/* FORM INPUTS */
+.form-label {
+    display: block;
+    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 6px;
+
+}
+
+.form-input {
+    width: 100%;
+    max-width: none;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #fafafa;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    border-color: #ee4d2d;
+    background: #fff;
+    outline: none;
+}
+
+/* Textarea */
+.textarea {
+    height: 130px;
+    resize: vertical;
+}
+
+/* Counter nhỏ */
+.counter {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #999;
+}
+
+/* Refund info */
+.section h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* từng dòng trong phần hoàn tiền */
+.refund-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+/* label bên trái */
+.refund-row span:first-child {
+    flex: 0 0 180px;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+/* số tiền hoàn lại */
+.amount {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* nút SỬA */
+.edit {
+    margin-left: auto;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.edit:hover {
+    text-decoration: underline;
+}
+
+/* ô input email */
+.form-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fafafa;
+    font-size: 15px;
+}
+
+/* Đảm bảo nút Sửa nằm phải cùng hàng */
+.edit {
+    margin-left: auto;
+    color: #0c7bdc;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+/* Submit */
+.submit-container {
+    text-align: right;
+    margin-top: 25px;
+}
+
+.submit-btn {
+    padding: 14px 35px;
+    font-size: 15px;
+    color: #fff;
+    background: #ee4d2d;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.submit-btn:hover {
+    background: #d63c1d;
+}
+
+
+/* ======================= HEADER ======================= */
+.header {
+    width: 100%;
+    background-color: #343A40;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    height: 80px;
+}
+.logo img {
+    width: 110px;
+    height: auto;
+}
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    flex: 1;
+}
+.menu a {
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+.menu a:hover {
+    color: #ff4b4b;
+}
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.search-cart {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.search-icon i,
+.cart-icon i {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.search-icon i:hover,
+.cart-icon i:hover {
+    color: #ff4b4b;
+}
+.login a {
+    color: white;
+    font-size: 17px;
+    transition: color 0.3s;
+}
+.login a:hover {
+    color: #ff4b4b;
+}
+
+/* ======================= FOOTER ======================= */
+.main-footer {
+    background: #5a0000;
+    color: #f8f8f8;
+    padding-top: 50px;
+    font-size: 16px;
+}
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 20px 40px 20px;
+}
+.footer-col {
+    width: 32%;
+    margin-bottom: 20px;
+}
+.footer-col h4 {
+    color: #FFD700;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+.footer-logo img {
+    width: 150px;
+    margin-bottom: 15px;
+}
+.about-us p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.quick-links ul {
+    list-style: none;
+    padding: 0;
+}
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+.quick-links ul li a {
+    color: #ccc;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+.quick-links ul li a:hover {
+    color: #8d2a3a;
+    padding-left: 5px;
+}
+.contact-info p {
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+.contact-info i {
+    margin-right: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-top: 3px;
+}
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #555;
+    color: white;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.social-icons a:hover {
+    background-color: #8d2a3a;
+    transform: rotate(10deg) scale(1.1);
+}
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid #444;
+    background-color: #222;
+    font-size: 14px;
+}

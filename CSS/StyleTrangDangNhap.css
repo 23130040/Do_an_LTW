@@ -1,109 +1,398 @@
+/* Đặt lại thuộc tính mặc định và chặn cuộn ngang */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-body{
+body {
     font-family: Arial, Helvetica, sans-serif;
-    background-image: url("../images/background.jpg");
+    background-image: url("https://png.pngtree.com/background/20250423/original/pngtree-raw-meat-and-knife-background-picture-image_16434426.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-}
-#wrapper{
-    width: 629px;
-    height: 859px;
-    margin: 45px 655px 45px 655px;
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.5) ;
-}
-#wrapper form{
-    text-align: center;
-}
-#wrapper form IMG{
-    margin-top: 100px;
-    border-radius: 50%;
-}
-#wrapper form h1{
-    font-size: 50px;
-    color: white;
-}
-#wrapper form .user_name, .password{
+    background-position: center;
 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+
+    overflow-x: hidden;
+    overflow-y: auto;
 }
-#wrapper form i{
+a {
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 20px;
+}
+a:hover {
+    text-decoration: underline;
+    color: #04aa6d !important;
+}
+#wrapper {
+    width: 500px;
+    margin: 65px auto;
+    max-width: 95%;
+
+    padding: 30px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#wrapper form {
+    text-align: center;
+    width: 100%;
+}
+#wrapper form IMG {
+    width: 30%;
+    max-width: 150px; /* Giới hạn kích thước logo */
+    height: auto;
+}
+
+#wrapper form h1 {
     font-size: 25px;
     color: white;
+    margin-top: 10px;
 }
-#wrapper form input[type=text], input[type=password]{
-    width: 490px;
-    height: 53px;
+
+#wrapper form i {
     font-size: 25px;
+    color: white;
+    margin-right: 10px;
+}
+
+#wrapper form .block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#wrapper form input[type=text], input[type=password] {
+    flex-grow: 1;
+    height: 53px;
+    font-size: 20px;
     border: none;
-    margin-bottom: 40px;
-    margin-left: 10px;
-    background: none ;
+    margin: 0;
+    background: none;
     color: white;
     border-bottom: 2px solid white;
+
+    &::placeholder {
+        color: white;
+        opacity: 0.7;
+    }
 }
-#wrapper form .forgot_password{
+
+#wrapper form .forgot_password {
     text-align: right;
-    margin-right: 50px;
-    font-size: 23px;
-    margin-bottom: 40px;
+    display: inline-block;
+    margin-right: 0;
+    margin-bottom: 10px;
+    width: 100%;
 }
 #wrapper form .forgot_password a{
     color: white;
 }
-a {
-    text-decoration: none;
-    color: white;
-    font-family: inherit;
-    font-size: 20px;
+.form_submit {
+    display: block;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 17px !important;
+    font-weight: bold;
+    color: black;
+    border: none;
+    margin: auto;
 }
 
-#wrapper form .block a{
+.form_submit:hover {
+    background-color: #04aa6d;
+    color: white !important;
+    text-decoration: none !important;
+}
+.separator-container{
+    color: #d3d3d3;
+    display: flex;
+}
+.separator-text{
+    padding: 0 5px;
+    font-size: 15px;
+}
+.separator-line{
+    flex-grow: 1;
+    height: 1px;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.social-login{
+    margin: 10px auto;
+    border: 1px solid white;
+    border-radius: 10px;
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+}
+.social-login:hover{
+    background-color: #04aa6d;
+}
+.social-login a{
+    color: white;
+    margin: auto;
+    font-size: 15px !important;
+}
+.social-login a:hover{
+    color: white !important;
     text-decoration: none;
 }
-#wrapper form .submit input[type=submit]{
-    width: 490px;
-    height: 70px;
-    border-radius: 20px;
+#wrapper form .sign_up {
     font-size: 20px;
-    font-weight: bold;
-    border: none;
-}
-#wrapper form .submit input[type=submit]:hover{
-    background-color: rgb(11, 170, 74);
-}
-#wrapper form .sign_up{
-    font-size: 25px;
     margin-top: 40px;
+    display: inline;
 }
-#wrapper form .sign_up .txt{
+#wrapper form .sign_up .txt {
     color: white;
 }
 #wrapper form .sign_up a{
-    color: #db1a26;
-}
-#wrapper form .block a:hover{
-    text-decoration: underline;
-}
-#wrapper form .block a:active{
-    color: black;
+    color:  #db1a26;
 }
 
-.form_submit {
-    display: inline-block;
-    width: 490px;
-    height: 70px;
-    line-height: 70px;
-    background: white;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-    border: none;
+@media (max-width: 650px) {
+    #wrapper {
+        width: 95%;
+        margin: 20px auto; /* Giảm margin trên dưới */
+        padding: 10px 20px 20px 20px; /* Giảm padding */
+    }
+
+    #wrapper form IMG {
+        margin-top: 50px; /* Giảm margin top trên mobile */
+    }
+
+    #wrapper form h1 {
+        font-size: 30px; /* Giảm kích thước tiêu đề */
+    }
+
+    #wrapper form input[type=text], input[type=password] {
+        height: 45px;
+        font-size: 18px; /* Giảm kích thước chữ input */
+    }
+
+    .form_submit {
+        height: 55px;
+        line-height: 55px;
+        font-size: 18px;
+    }
+
+    #wrapper form .sign_up {
+        font-size: 18px;
+    }
 }
-.form_submit:hover {
-    background-color: #8d2a3a;
+/*************form quên mật khẩu**********/
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 450px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #04aa6d;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#forgot-password-form, #resetpassword-form {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.modal .heading_title {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.modal .txt {
+    color: #555;
+    font-size: 15px;
+    display: block;
+    margin-bottom: 25px;
+}
+
+.modal .block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 10px;
+}
+
+.modal .block i {
+    color: #333;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.modal .form_input {
+    flex-grow: 1;
+    height: 30px;
+    font-size: 17px;
+    border: none;
+    margin: 0;
+    background: none;
+    color: #333;
+    padding: 0;
+
+    &::placeholder {
+        color: #aaa !important;
+        opacity: 1;
+    }
+}
+
+.modal .submit {
+    margin-top: 20px;
+}
+
+.modal .form_submit {
+    background-color: #5a0002;
     color: white;
-    text-decoration: none !important;
+    border: none;
+    width: 100%;
+}
+
+.modal .form_submit:hover {
+    background-color: #04aa6d;
+    color: white !important;
+}
+
+.error-message{
+    color: red;
+    display: none;
+    text-align: left;
+    margin: auto;
+    font-size: 13px;
+
+}
+#login-form .error-message{
+    margin-bottom: 10px;
+}
+.error-border {
+    border: 1px solid #ff0000 !important;
+    border-radius: 5px;
+}
+
+.message p {
+    font-size: 16px;
+    color: #333;
+    margin: 15px 0;
+}
+
+.message .txt {
+    font-weight: 500;
+}
+
+.message .note {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* ===== Email hiển thị ===== */
+.message .email {
+    font-weight: bold;
+    color: #04aa6d;
+}
+
+/* ===== Button group ===== */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+/* ===== Buttons ===== */
+.button-group .btn {
+    flex: 1;
+    margin: 0 5px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Cancel button */
+.button-group .cancel-btn {
+    background-color: #ccc;
+    color: #333;
+}
+
+.button-group .cancel-btn:hover {
+    background-color: #999;
+    color: #fff;
+}
+
+/* Resend button */
+.button-group .resend-btn {
+    background-color: #04aa6d;
+    color: #fff;
+}
+
+.button-group .resend-btn:hover {
+    background-color: #038f57;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 500px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group .btn {
+        margin: 8px 0;
+    }
+}
+
+@media (max-width: 650px) {
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
 }

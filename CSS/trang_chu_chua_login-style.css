@@ -7,7 +7,7 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 main{
@@ -16,8 +16,7 @@ main{
     min-height: 100vh;
 }
 
-/************************* HEADER *******************************/
-
+/******************* HEADER ***************/
 .banner {
     background-image: url('../images/banner_home.png');
     background-size: cover;
@@ -32,7 +31,6 @@ main{
     z-index: 1;
 }
 
-/** lớp phủ màu đen trong suốt */
 .banner::before {
     content: "";
     position: absolute;
@@ -40,10 +38,7 @@ main{
     left: 0;
     width: 100%;
     height: 100%;
-
-    /* độ mờ lớp phủ*/
     background-color: rgba(0,0,0, 0.5);
-
     z-index: -1;
 }
 
@@ -51,7 +46,6 @@ main{
     margin-top: 10px;
     text-align: center;
 }
-
 
 /* KHỐI HEADER */
 .header {
@@ -68,7 +62,6 @@ main{
     position: relative;
 }
 
-/* Logo căn giữa cực chuẩn */
 .logo {
     top: 11px;
     position: absolute;
@@ -76,54 +69,57 @@ main{
     transform: translateX(-50%);
 }
 .logo img {
-
     width: 70px;
     height: 50px;
     transition: opacity 0.2s ease;
 }
 
-/* Search + Cart nằm góc phải */
-.cart-icon {
+.right-section {
     position: absolute;
-    right: 90px;
-    top: 26px;
+    top: 20px;
+    right: 25px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    font-size: 18px;
-    transition: opacity 0.3s ease;
-}
-.search-icon {
-    position: absolute;
-    right: 10px;
-    top: 22px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    font-size: 18px;
-    transition: opacity 0.3s ease;
+    gap: 5px;
 }
 
-.login{
-    position: absolute;
-    right: 150px;
-    top: 23px;
+.right-section,
+.right-section a {
     display: flex;
     align-items: center;
-    gap: 20px;
+    cursor: pointer;
+    color: white;
     font-size: 18px;
-    transition: opacity 0.3s ease;
-
 }
+
+.right-section i {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+.right-section i:hover {
+    color: #c30000;
+}
+#search-label i:hover {
+    color: #c30000;
+}
+#search-close:hover {
+    color: #c30000;
+}
+.login {
+    padding-left: 20px;
+}
+
+.login a:hover {
+    color: #c30000;
+}
+
 
 /* Search Box */
 #search-label i {
     font-size: 18px;
     color: white;
-
 }
-
-
 .search-box {
     display: flex;
     align-items: center;
@@ -149,7 +145,6 @@ main{
 }
 .search-box.active #search-close { display: inline; }
 
-/* ICON GIỎ */
 .cart-icon { cursor: pointer; }
 
 /* MENU */
@@ -160,14 +155,16 @@ main{
     padding: 14px 0;
     font-size: 20px;
     margin-top: -20px;
-
 }
 .menu a {
     text-decoration: none;
     color: white;
 }
-
-/* KHI CUỘN */
+.menu a:hover {
+    color: #c30000;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
 .menu.fixed {
     position: fixed;
     top: 0;
@@ -175,19 +172,14 @@ main{
     width: 100%;
     background: #343A40;
     height: 70px;
-
 }
 .menu.fixed a {
     padding-top: 34px;
-}
-.menu.fixed a {
     color: white;
 }
-
 .menu.fixed a:hover {
-    color: #8d2a3a;
+    color: #a30000;
 }
-
 
 /* ẨN LOGO KHI CUỘN */
 .header.hide-logo .logo img {
@@ -199,25 +191,10 @@ main{
 .search-box.active ~ .login{
     display: none;
 }
-
-.search-icon.fixed {
+.right-section.fixed{
     position: fixed;
     z-index: 3000;
     top: 25px;
-    right: 10px;
-}
-
-.cart-icon.fixed {
-    position: fixed;
-    z-index: 3000;
-    top: 30px;
-    right: 90px;
-}
-.login.fixed {
-    position: fixed;
-    z-index: 3000;
-    top: 26px;
-    right: 150px;
 }
 .logo.fixed {
     position: fixed;
@@ -230,15 +207,13 @@ main{
     width: 110px;
     height: auto;
 }
-
 .login.fixed:hover {
     color: #8d2a3a;
 }
 
-
 /************************* MAIN *******************************/
 
-                            /************************* SẢN PHẨM NỐI BẬT **********************/
+/************************* SẢN PHẨM NỐI BẬT **********************/
 .featured-product-section .product-list {
     display: flex;
     justify-content: center;
@@ -305,7 +280,7 @@ main{
 }
 
 
-                        /************************* SẢN PHẨM CỦA CHÚNG TÔI **********************/
+/************************* SẢN PHẨM CỦA CHÚNG TÔI **********************/
 
 .product-section {
     text-align: center;
@@ -460,33 +435,25 @@ main{
 .arrow.right {
     right: 80px;
 }
-
-
-
 /************************* FOOTER *******************************/
-
 .main-footer {
-    /*background: #343A40;*/ /* Màu nền tối, sang trọng */
     background: #5a0000;
-    color: #f8f8f8; /* Chữ màu sáng */
+    color: #f8f8f8;
     padding-top: 50px;
     font-size: 16px;
 }
-
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    flex-wrap: wrap;
     padding: 0 20px 40px 20px;
 }
-
 .footer-col {
-    width: 32%; /* Độ rộng cho mỗi cột */
+    width: 32%;
     margin-bottom: 20px;
 }
-
 .footer-col h4 {
     /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
     color: #a3d046;
@@ -496,13 +463,10 @@ main{
     padding-bottom: 10px;
     display: inline-block;
 }
-
-/* Cột Logo */
 .footer-logo img {
-    width: 150px; /* Logo lớn hơn */
+    width: 150px;
     margin-bottom: 15px;
 }
-
 .about-us p {
     line-height: 1.6;
     margin-bottom: 20px;
@@ -516,35 +480,25 @@ main{
     list-style: none;
     padding: 0;
 }
-
 .quick-links ul li {
     margin-bottom: 10px;
 }
-
 .quick-links ul li a {
     color: #f8f8f8;
     font-size: 16px;
     transition: color 0.3s;
 }
-
 .quick-links ul li a:hover {
     padding-left: 5px; /* Thêm chút dịch chuyển */
 }
-
-/* Thông tin liên hệ */
 .contact-info p {
     margin-bottom: 15px;
-    align-items: flex-start;
 }
-
 .contact-info i {
     margin-right: 10px;
     color: #a3d046;
     font-size: 18px;
-    margin-top: 3px;
 }
-
-/* Mạng Xã Hội */
 .social-icons a {
     display: inline-block;
     width: 40px;
@@ -557,21 +511,14 @@ main{
     margin-right: 10px;
     transition: background-color 0.3s, transform 0.3s;
 }
-
 .social-icons a:hover {
     background-color: #8d2a3a;
     transform: rotate(10deg) scale(1.1);
 }
-
-/* Phần bản quyền */
 .footer-bottom {
     text-align: center;
     padding: 15px 0;
     border-top: 1px solid #444;
-    background-color: #222; /* Màu tối hơn một chút */
+    background-color: #222;
     font-size: 14px;
 }
-
-
-
-

@@ -1,0 +1,683 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+/***************Menu*******************/
+/* ======= MENUBAR ======= */
+#menubar{
+    height: 70px;
+    background-color: #343A40;
+    font-size: 18px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+#menubar .sixteen.column{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#menubar .left{
+    width: 10%;
+}
+#menubar .left img{
+    width: 95px;
+    height: auto;
+    margin-left: 30px;
+    transition: transform 0.25s;
+}
+#menubar .center{
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transform: translateX(calc(50% + 30px));
+}
+
+#menubar .center ul{
+    display: flex;
+    gap: 22px;
+}
+#menubar .center li{
+    list-style: none;
+}
+#menubar .center li a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 22px 10px;
+    transition: 0.25s;
+    font-weight: 500;
+}
+#menubar .center li a:hover{
+    text-decoration: underline;
+    color: #a30000;
+    text-underline-offset: 6px;
+}
+
+/* ===== RIGHT ICON MENU ===== */
+#menubar .menu-right{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: auto;
+}
+#menubar .menuitem-right{
+    list-style: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+    padding: 30px 15px;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
+    color: #8e0000 !important;
+    transition: color 0.25s;
+}
+#searchBar{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+#input-searchBar,
+#close-searchBar {
+    display: none;
+    transition: all 0.25s;
+}
+#input-searchBar.active {
+    display: block;
+    width: 200px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+#close-searchBar.active {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+}
+
+/* ===== USER MENU ===== */
+.user-menu-wrapper{
+    position: relative;
+}
+.user-menu-wrapper .user{
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
+
+.user-menu{
+    position: absolute;
+    top: 80%;
+    right: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px 0;
+    width: 210px;
+    display: none;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.user-menu li{
+    list-style: none;
+}
+
+.user-menu a{
+    color: #333 !important;
+    text-decoration: none;
+    display: block;
+    padding: 12px 18px;
+    transition: 0.25s;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+}
+.user-menu li:last-child a{
+    border-bottom: none;
+}
+
+.user-menu a:hover{
+    background-color: #5a0002;
+    color: white !important;
+}
+
+.user-menu-wrapper:hover .user-menu{
+    display: block;
+}
+
+/***********************Main******************************/
+.container{
+    max-width: 1200px; /* Điều chỉnh thành max-width */
+    min-height: 800px;
+    margin: 70px auto; /* Căn giữa */
+    display: flex;
+    padding: 0 20px; /* Thêm padding để nội dung không dính vào cạnh */
+    box-sizing: border-box;
+}
+/************sidebar********************/
+.container #sidebar{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    min-width: 200px;
+    margin-right: 20px;
+}
+.container #sidebar .header{
+    display: flex;
+    border-bottom: 1px solid #e9e9e9;
+    padding: 15px 0;
+    align-items: center;
+}
+.container #sidebar .header IMG{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.container #sidebar .header h3{
+    color: black;
+    font-size: 20px;
+}
+.container #sidebar .menu{
+    display: flex;
+    flex-direction: column;
+}
+.container #sidebar .menu a{
+    color: #565656;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 19px;
+}
+.container #sidebar .menu a:hover{
+    color: #04aa6d;
+}
+/************************content*************************/
+.container .main-content{
+    background-color: white;
+    /* Loại bỏ width cố định, dùng flex-grow để chiếm phần còn lại */
+    flex-grow: 1;
+    width: calc(100% - 270px); /* Dùng calc để tính toán (tổng - sidebar - margin) */
+}
+/**************Hồ sơ*******************/
+.container .main-content #profile-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #profile-content .header{
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 12px;
+}
+.container .main-content #profile-content .body{
+    display: flex;
+    font-size: 17px;
+    flex-wrap: wrap;
+}
+.container .main-content #profile-content .body .profile{
+    width: 65%;
+    min-width: 450px;
+    margin-top: 40px;
+    margin-left: 20px;
+    border-right: 1px solid #e9e9e9;
+    padding-right: 20px;
+}
+.container .main-content #profile-content .body .profile .group{
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+.container .main-content #profile-content .body .profile .group .label{
+    width: 170px;
+    font-weight: normal;
+    color: #555;
+    margin-right: 15px;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.static-value, .profile-form.input-field, .profile-form.value-wrapper {
+    flex-grow: 1;
+    margin-right: 50px;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.input-field {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+.container .main-content #profile-content .body .profile .group a{
+    margin-left: 5px;
+    color: #007bff;
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio input[type="radio"]{
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio input[type="radio"]:checked{
+    color: #04aa6d;
+}
+.container .main-content #profile-content .body .profile .group .profile-form.value-wrapper-radio label{
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .profile .submit-row{
+    text-align: center;
+}
+.container .main-content #profile-content .body .profile .submit-btn{
+    margin-top: 20px;
+    text-align: center;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+}
+.container .main-content #profile-content .body .profile .submit-btn:hover{
+    background-color: #04aa6d;
+}
+.container .main-content #profile-content .body .avatar{
+    width: 30%;
+    flex-grow: 1;
+}
+.container .main-content #profile-content .body .avatar .avatar-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px auto;
+    padding: 20px;
+}
+.container .main-content #profile-content .body .avatar IMG{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+.container .main-content #profile-content .body .avatar IMG:hover{
+    cursor: pointer;
+}
+.container .main-content #profile-content .body .avatar BUTTON{
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    background: white;
+    border: 1px solid #e9e9e9;
+    margin-top: 20px;
+    font-size: 15px;
+}
+.container .main-content #profile-content .body .avatar BUTTON:hover{
+    background-color: #04aa6d;
+    cursor: pointer;
+}
+.container .main-content .hidden{
+    display: none;
+}
+/******************************address**************************/
+.container .main-content #address-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #address-content .address-content.header{
+    border-bottom: 1px solid #e9e9e9;
+}
+.container .main-content #address-content .address-content.header .left{
+    float: left;
+    width: 50%;
+    font-size: 12px;
+}
+.container .main-content #address-content .address-content.header .right{
+    float: right;
+}
+.container .main-content #address-content .address-content.header .right BUTTON{
+    margin-top: 15px;
+    text-align: center;
+    width: 170px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-size: 17px;
+    border: none;
+}
+.container .main-content #address-content .address-content.header .right BUTTON:hover{
+    background-color: #04aa6d;
+    cursor: pointer;
+}
+.container .main-content #address-content .address-content.address-header{
+    font-size: 18px;
+}
+.container .main-content #address-content .address-content.content{
+    font-size: 16px;
+}
+.container .main-content #address-content .address-content .address{
+    display: flex;
+    border: 1px dashed #c3c3c3;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.container .main-content #address-content .address-content .address p{
+    flex-grow: 1;
+}
+.container .main-content #address-content .address-content .address BUTTON{
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+}
+.container .main-content #address-content .address-content .address.default BUTTON{
+    color: #9f9f9f;
+}
+.container .main-content #address-content .address-content .address.default BUTTON:hover{
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+}
+.container .main-content #address-content .address-content .address BUTTON:hover{
+    background: #04aa6d;
+    cursor: pointer;
+}
+/**************************password************************/
+.container .main-content #password-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #password-content .password-content.header{
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 12px;
+}
+.container .main-content #password-content .password-content.body{
+    display: flex;
+    font-size: 18px;
+    margin: 40px auto;
+    justify-content: center;
+    flex-direction: column;
+}
+.container .main-content #password-content .password-content.body .group{
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+}
+.container .main-content #password-content .password-content.body .group .label{
+    width: 250px;
+    font-weight: normal;
+    color: #555;
+    margin-right: 15px;
+}
+.container .main-content #password-content .password-content.body .group input[type='password']{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 300px;
+    font-size: 16px;
+}
+.container .main-content #password-content .password-content.body .submit-row{
+    text-align: center;
+}
+.container .main-content #password-content .password-content.body .submit-btn{
+    margin-top: 20px;
+    text-align: center;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-size: 17px;
+    border: none;
+}
+.container .main-content #password-content .password-content.body .submit-btn:hover{
+    background-color: #04aa6d;
+}
+/**************************setting*****************************/
+.container .main-content #setting-content.active{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+.container .main-content #setting-content .setting-content.header {
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 12px;
+}
+.container .main-content #setting-content .setting-content.body{
+    font-size: 17px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+.container .main-content #setting-content .setting-content.body .left{
+    width: auto;
+    float: none;
+}
+.container .main-content #setting-content .setting-content.body .left .txt{
+    color: #555;
+    font-weight: normal;
+}
+.container .main-content #setting-content .setting-content.body .right{
+    float: none;
+}
+.container .main-content #setting-content .setting-content.body .right button{
+    margin-top: 0;
+    text-align: center;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background: #5a0002;
+    color: white;
+    font-size: 18px;
+    border: none;
+}
+.container .main-content #setting-content .setting-content.body .right button:hover{
+    background-color: #04aa6d;
+}
+/************modal**********/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    top: 0;
+    left: 0;
+}
+.modal-content{
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 450px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+.close-btn{
+    color: #aaa;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #04aa6d;
+    text-decoration: none;
+    cursor: pointer;
+}
+#confirmSave{
+    text-align: center;
+}
+.message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.message i {
+    color: #04aa6d;
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+#messageConfirm {
+       display: inline-block;
+    vertical-align: middle;
+}
+
+.confirm-btn {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#confirmSaveBtn {
+    padding: 10px 30px;
+    background-color: #04aa6d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#confirmSaveBtn:hover {
+    background-color: #038a5b;
+}
+
+/*********************Footer**************************/
+.main-footer {
+    /*background: #343A40;*/ /* Màu nền tối, sang trọng */
+    background: #5a0000;
+    color: #f8f8f8; /* Chữ màu sáng */
+    padding-top: 50px;
+    font-size: 16px;
+    bottom: 0;
+}
+.footer-container {
+    max-width: 1200px; /* Điều chỉnh max-width */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    padding: 0 20px 40px 20px;
+}
+
+.footer-col {
+    width: 30%; /* Điều chỉnh width tương đối */
+    min-width: 250px; /* Thêm min-width để tránh bị co quá nhỏ */
+    margin-bottom: 20px;
+}
+
+.footer-col h4 {
+    /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
+    color: #FFD700;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Cột Logo */
+.footer-logo img {
+    width: 150px; /* Logo lớn hơn */
+    margin-bottom: 15px;
+}
+
+.about-us p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Liên kết Nhanh */
+.quick-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+
+.quick-links ul li a {
+    color: #ccc;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.quick-links ul li a:hover {
+    color: #8d2a3a; /* Hiệu ứng hover màu thương hiệu */
+    padding-left: 5px; /* Thêm chút dịch chuyển */
+}
+
+/* Thông tin liên hệ */
+.contact-info p {
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.contact-info i {
+    margin-right: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-top: 3px;
+}
+
+/* Mạng Xã Hội */
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #555;
+    color: white;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+    background-color: #8d2a3a;
+    transform: rotate(10deg) scale(1.1);
+}
+
+/* Phần bản quyền */
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid #444;
+    background-color: #222; /* Màu tối hơn một chút */
+    font-size: 14px;
+}
