@@ -243,7 +243,7 @@ main{
     display: flex;
     justify-content: center;
     gap: 30px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 
     align-items: flex-start;
     margin: 0 auto;
