@@ -122,3 +122,21 @@ document.querySelectorAll('.view-history').forEach(button => {
     });
 });
 
+document.querySelectorAll(".view-detail").forEach(btn => {
+    btn.addEventListener("click", function () {
+        const modal = document.getElementById("orderDetailModal");
+
+        modal.style.display = "block";
+
+        // Nếu muốn đóng historyModal trước khi mở
+        // document.getElementById("historyModal").style.display = "none";
+    });
+});
+
+document.querySelectorAll("#orderDetailModal .close-btn, #orderDetailModal .close-btn-footer")
+    .forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.getElementById("orderDetailModal").style.display = "none";
+        });
+    });
+

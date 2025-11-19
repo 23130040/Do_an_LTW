@@ -52,14 +52,6 @@
         <main class="content">
             <h2 class="page-title">Cấu Hình Hệ Thống</h2>
 
-            <div class="tab-nav">
-                <button class="tab-link active" onclick="openTab(event, 'store-settings')">
-                    <i class="fas fa-store"></i> Cài Đặt Cửa Hàng
-                </button>
-                <button class="tab-link" onclick="openTab(event, 'security-settings')">
-                    <i class="fas fa-user-shield"></i> Bảo Mật & Phân Quyền
-                </button>
-            </div>
             <div id="store-settings" class="tab-content active-tab">
                 <div class="setting-card">
                     <form class="setting-form">
@@ -109,45 +101,6 @@
                 </div>
             </div>
 
-            <div id="security-settings" class="tab-content">
-                <div class="setting-card">
-                    <div class="security-group">
-                        <div class="header-action">
-                            <h4>Quản lý Vai trò (Roles)</h4>
-                            <button class="btn btn-primary btn-action" onclick="openModal('role-modal')">
-                                <i class="fas fa-plus"></i> Thêm Vai trò Mới
-                            </button>
-                        </div>
-                        <p>Định nghĩa các nhóm quyền hạn khác nhau cho nhân viên Admin.</p>
-                        <table class="role-table">
-                            <thead>
-                            <tr>
-                                <th>Tên Vai trò</th>
-                                <th>Số lượng User</th>
-                                <th>Mô tả</th>
-                                <th>Thao tác</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Super Admin</td>
-                                <td>1</td>
-                                <td>Toàn quyền truy cập hệ thống.</td>
-                                <td><button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td>Quản lý Sản phẩm</td>
-                                <td>3</td>
-                                <td>Chỉ được quản lý sản phẩm và khuyến mãi.</td>
-                                <td><button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary submit-btn">Lưu Cài Đặt Bảo Mật</button>
-                </div>
-            </div>
         </main>
     </div>
     <!------------------- PHẦN THÔNG BÁO ----------------->

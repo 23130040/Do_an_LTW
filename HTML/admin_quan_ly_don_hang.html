@@ -58,8 +58,6 @@
 
                     <select name="status" class="filter-select">
                         <option value="">-- Trạng thái đơn --</option>
-                        <option value="pending">Chờ xác nhận</option>
-                        <option value="processing">Đang xử lý</option>
                         <option value="shipping">Đang giao hàng</option>
                         <option value="delivered">Đã giao hàng</option>
                         <option value="cancelled">Đã hủy</option>
@@ -101,13 +99,14 @@
                         <td>Nguyễn A<br>0901xxxx89</td>
                         <td>20/11/2023</td>
                         <td>350,000đ</td>
-                        <td><span class ="status-badge status-shipping">Chờ xác nhận</span></td>
+                        <td><span class="">Đang giao hàng</span></td>
                         <td><span class="status-badge status-unpaid">Chưa thanh toán</span></td>
                         <td>Standard</td>
                         <td>
-                            <button class="btn-sm btn-action view-detail" title="Xem chi tiết"><i class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-success update-status-btn" data-status="processing" title="Xác nhận & Chuyển xử lý"><i class="fas fa-check"></i></button>
-                            <button class="btn-sm btn-danger cancel-order" title="Hủy đơn hàng"><i class="fas fa-times"></i></button>
+                            <button class="btn-sm btn-action view-detail" title="Xem chi tiết"><i
+                                    class="fas fa-eye"></i></button>
+                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
+                                    class="fas fa-print"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -115,12 +114,13 @@
                         <td>Lê Thị B<br>0902xxxx67</td>
                         <td>19/11/2025</td>
                         <td>780,000đ</td>
-                        <td><span class ="status-badge status-pending">Đang giao hàng</span></td>
+                        <td><span class="">Đang giao hàng</span></td>
                         <td><span class="status-badge status-paid">Đã thanh toán</span></td>
                         <td>Express (ID: DN345)</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i class="fas fa-print"></i></button>
+                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
+                                    class="fas fa-print"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -128,12 +128,13 @@
                         <td>Phạm Văn C<br>0903xxxx45</td>
                         <td>15/11/2025</td>
                         <td>1,200,000đ</td>
-                        <td><span class="status-badge status-delivered">Đã giao hàng</span></td>
+                        <td><span class="">Đã giao hàng</span></td>
                         <td><span class="status-badge status-paid">Đã thanh toán</span></td>
                         <td>Standard</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i class="fas fa-print"></i></button>
+                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
+                                    class="fas fa-print"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -141,7 +142,7 @@
                         <td>Trần D<br>0904xxxx23</td>
                         <td>10/11/2025</td>
                         <td>450,000đ</td>
-                        <td><span class="status-badge status-cancelled">Đã hủy</span></td>
+                        <td><span class="">Đã hủy</span></td>
                         <td><span class="status-badge status-unpaid">Chưa thanh toán</span></td>
                         <td>Standard</td>
                         <td>
@@ -175,6 +176,7 @@
         </div>
     </div>
 </div>
+<!------------------- MODAL CHI TIẾT ĐƠN HÀNG ----------------->
 <div id="orderDetailModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -185,7 +187,7 @@
             <div class="summary-info">
                 <div class="summary-item">
                     <p class="summary-label">Trạng thái Đơn hàng:</p>
-                    <p id="modalOrderStatus" class="status-badge status-pending">Chờ xác nhận</p>
+                    <p id="modalOrderStatus" class="status-badge status-shipping">Đang giao hàng</p>
                 </div>
                 <div class="summary-item">
                     <p class="summary-label">Trạng thái Thanh toán:</p>
@@ -202,7 +204,8 @@
                 <div class="info-grid">
                     <p><strong>Khách hàng:</strong> <span id="modalCustomerName">Nguyễn A</span></p>
                     <p><strong>Điện thoại:</strong> <span id="modalCustomerPhone">0901xxxx89</span></p>
-                    <p><strong>Địa chỉ Giao hàng:</strong> <span id="modalShippingAddress">123 Đường ABC, Phường X, Quận Y, TP.HCM</span></p>
+                    <p><strong>Địa chỉ Giao hàng:</strong> <span id="modalShippingAddress">123 Đường ABC, Phường X, Quận Y, TP.HCM</span>
+                    </p>
                     <p><strong>Phương thức vận chuyển:</strong> <span id="modalShippingMethod">Standard</span></p>
                 </div>
             </div>

@@ -395,7 +395,7 @@ a {
 }
 
 
-/* Trạng thái đơn hàng và TT */
+ /*Trạng thái đơn hàng và TT */
 .status-badge {
     padding: 5px 8px;
     border-radius: 15px;
@@ -407,12 +407,13 @@ a {
     width: 125px;
 }
 
-/* Màu trạng thái Đơn hàng */
-.status-pending { background-color: #ffc107; color: #000000; }
-.status-processing { background-color: #17a2b8; color: #000000; }
-.status-shipping { background-color: #007bff; color: #000000; }
-.status-delivered { background-color: #28a745; }
-.status-cancelled { background-color: var(--main-red); }
+
+/*!* Màu trạng thái Đơn hàng *!*/
+/*.status-pending { color: #333333; }*/
+/*.status-processing { color: #333333; }*/
+/*.status-shipping { color: #333333; }*/
+/*.status-delivered { color: #333333; }*/
+/*.status-cancelled { color: #333333; }*/
 
 /* Màu trạng thái Thanh toán */
 .status-unpaid { background-color: var(--main-red); }
@@ -430,7 +431,7 @@ a {
 
 .btn-action { background-color: #6c757d; }
 .btn-success { background-color: #28a745; }
-.btn-primary { background-color: #007bff; }
+.btn-primary { background-color: #007bff; color: #fff; }
 .btn-danger { background-color: #dc3545; }
 .btn-info { background-color: #17a2b8; }
 
@@ -510,6 +511,8 @@ a {
 }
 
 /* --- Nội dung chi tiết trong Modal --- */
+
+
 .summary-info {
     display: flex;
     justify-content: space-between;
@@ -521,6 +524,11 @@ a {
 .summary-item {
     text-align: center;
     flex: 1;
+}
+#modalOrderStatus {
+    color: #555;
+    font-weight: normal;
+    font-size: 0.9em;
 }
 .summary-label {
     font-weight: bold;
