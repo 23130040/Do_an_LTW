@@ -177,6 +177,47 @@
         </div>
     </div>
 </div>
+<div id="replyModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Phản Hồi Đánh Giá</h3>
+            <span class="close-btn" onclick="closeReplyModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="review-details">
+                <p><strong>Khách hàng:</strong> <span id="modalCustomerName">Nguyễn Văn A</span></p>
+                <p><strong>Sản phẩm:</strong> <span id="modalProductName">Thịt heo</span></p>
+                <p><strong>Đánh giá:</strong> <span id="modalRatingStars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </span></p>
+                <p class="review-date-meta">Ngày: <span id="modalReviewDate">20/11/2023</span></p>
+            </div>
+
+            <hr>
+
+            <h4>Lịch Sử Phản Hồi</h4>
+            <div class="chat-history" id="modalReplyHistory">
+                <div class="history-item customer-review">
+                    <p class="history-meta"><strong>Khách hàng</strong> - 22/11/2023</p>
+                    <p class="history-text">Sản phẩm tươi ngon, đóng gói cẩn thận. Giao hàng hơi lâu.</p>
+                </div>
+                <div class="history-item admin-reply">
+                    <p class="history-meta"><strong>Bạn (Admin)</strong> - 23/11/2023</p>
+                    <p class="history-text">Cảm ơn bạn đã phản hồi! CleanMeat sẽ cải thiện dịch vụ giao hàng.</p>
+                </div>
+            </div>
+
+            <div class="reply-input-area">
+                <textarea id="replyInput" placeholder="Nhập phản hồi của bạn..."></textarea>
+                <button id="sendReplyButton" class="btn-info"><i class="fas fa-paper-plane"></i> Gửi Phản Hồi</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="../JavaScript/admin_quan_ly_danh_gia.js"></script>
 </body>
 </html>

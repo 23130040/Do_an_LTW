@@ -299,6 +299,10 @@ a {
 }
 
 /* --- CONTROL PANEL & FILTERS --- */
+
+.highlight-row:hover {
+    cursor: pointer;
+}
 .control-panel {
     display: flex;
     justify-content: space-between;
@@ -428,3 +432,154 @@ a {
 .status-pending { background-color: #ffc107; color: #333; }
 .status-replied { background-color: #17a2b8; }
 .status-hidden { background-color: #6c757d; }
+/* --- MODAL (POPUP) STYLES --- */
+.modal {
+    display: none; /* Mặc định ẩn */
+    position: fixed;
+    z-index: 1002; /* Đặt cao hơn notification panel */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5); /* Nền mờ */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* Đặt ở giữa */
+    padding: 0;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 600px; /* Chiều rộng tối đa */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background-color: var(--main-red);
+    color: white;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+#modalRatingStars i{
+    color: var(--warning-color);
+}
+
+.close-btn {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #ccc;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.review-details p {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.review-date-meta {
+    font-size: 0.8em;
+    color: #6c757d;
+    margin-top: 10px;
+}
+
+/* --- CHAT HISTORY STYLES --- */
+.chat-history {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #eee;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.history-item {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 85%;
+    clear: both;
+}
+
+.history-meta {
+    font-size: 0.75em;
+    color: #999;
+    margin-bottom: 3px;
+    font-weight: normal;
+}
+
+.history-text {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+/* Kiểu cho tin nhắn Khách hàng */
+.customer-review {
+    background-color: #e2f0fb;
+    float: left;
+    border-bottom-left-radius: 0;
+}
+.customer-review .history-meta {
+    color: #4c82b0;
+}
+
+/* Kiểu cho tin nhắn Admin */
+.admin-reply {
+    background-color: #dcf8c6;
+    float: right;
+    border-bottom-right-radius: 0;
+}
+.admin-reply .history-meta {
+    color: #28a745;
+    text-align: right;
+}
+
+/* --- INPUT AREA --- */
+.reply-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+#replyInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-height: 80px;
+    resize: vertical;
+    font-size: 1em;
+}
+
+#sendReplyButton {
+    padding: 10px 15px;
+    align-self: flex-end; /* Nút Gửi nằm bên phải */
+    width: 150px;
+}
