@@ -456,7 +456,7 @@ main{
 }
 .footer-col h4 {
     /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
-    color: #a3d046;
+    color: #FFD700;
     font-size: 18px;
     margin-bottom: 25px;
     border-bottom: 2px solid #555;
@@ -496,7 +496,7 @@ main{
 }
 .contact-info i {
     margin-right: 10px;
-    color: #a3d046;
+    color: #FFD700;
     font-size: 18px;
 }
 .social-icons a {
