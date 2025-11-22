@@ -10,7 +10,6 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -25,7 +24,7 @@ a {
 }
 a:hover {
     text-decoration: underline;
-    color: #04aa6d !important;
+    color: #ff0003 !important;
 }
 
 #wrapper {
@@ -103,7 +102,7 @@ a:hover {
 }
 
 .form_submit:hover {
-    background-color: #04aa6d;
+    background-color: #b50004;
     color: white !important;
     text-decoration: none !important;
 }
@@ -130,7 +129,7 @@ a:hover {
     padding: 10px;
 }
 .social-login:hover{
-    background-color: #04aa6d;
+    background-color: #b50004;
 }
 .social-login a{
     color: white;
@@ -153,7 +152,7 @@ a:hover {
 }
 
 #wrapper form .sign_up a {
-    color: #db1a26;
+    color: #a60008;
 }
 .error-message{
     color: red;
@@ -165,35 +164,4 @@ a:hover {
 .error-border {
     border: 1px solid red !important;
     border-radius: 5px;
-}
-@media (max-width: 550px) {
-    #wrapper {
-        width: 95%;
-        margin: 20px auto;
-        padding: 10px 20px 20px 20px;
-    }
-
-    #wrapper form IMG {
-        margin-top: 50px;
-    }
-
-    #wrapper form h1.heading_title {
-        font-size: 35px;
-        margin-bottom: 20px;
-    }
-
-    #wrapper form input[type=text], #wrapper form input[type=password] {
-        height: 40px;
-        font-size: 16px;
-    }
-
-    .form_submit {
-        height: 50px;
-        line-height: 50px;
-        font-size: 16px;
-    }
-
-    #wrapper form .sign_up {
-        font-size: 16px;
-    }
 }

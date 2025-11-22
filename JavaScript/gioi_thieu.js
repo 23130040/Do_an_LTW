@@ -105,13 +105,29 @@ function scrollToRight(button) {
     const list = carousel.querySelector('.product-list');
     list.scrollBy({ left: 300, behavior: 'smooth' });
 }
+function showSearchBar(){
+    const searchBarContainer = document.getElementById("searchBar");
+    searchBarContainer.classList.add("active");
+    const inputSearchbar = document.getElementById("input-searchBar");
+    inputSearchbar.classList.add("active");
+    const closeMenuBar = document.getElementById("close-searchBar");
+    closeMenuBar.classList.add("active");
+}
+function closeSearchBar(){
+    const searchBarContainer = document.getElementById("searchBar");
+    searchBarContainer.classList.remove("active");
+    const inputSearchbar = document.getElementById("input-searchBar");
+    inputSearchbar.classList.remove("active");
+    const closeMenuBar = document.getElementById("close-searchBar");
+    closeMenuBar.classList.remove("active");
+}
 // NÚT CỦA PHẦN GIỚI THIỆU
 document.addEventListener("DOMContentLoaded", function() {
     // Xử lý nút ĐẶT HÀNG NGAY
     const orderBtn = document.querySelector(".order-btn");
     if (orderBtn) {
         orderBtn.addEventListener("click", function() {
-            window.location.href = "../HTML/GioHang.html";
+            window.location.href = "../HTML/giohang.html";
         });
     }
 
@@ -122,4 +138,10 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = "../HTML/san_pham.html";
         });
     }
+
+    //Xử lý thanh tìm kiếm
+    const openSearchBar = document.getElementById("open-searchBar");
+    openSearchBar.addEventListener("click", showSearchBar);
+    const closeSearchBarBtn = document.getElementById("close-searchBar");
+    closeSearchBarBtn.addEventListener("click", closeSearchBar);
 });

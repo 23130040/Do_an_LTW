@@ -1,0 +1,503 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+/***************Menu*******************/
+/* ======= MENUBAR ======= */
+#menubar{
+    height: 70px;
+    background-color: #343A40;
+    font-size: 18px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+#menubar .sixteen.column{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#menubar .left{
+    width: 10%;
+}
+#menubar .left img{
+    width: 95px;
+    height: auto;
+    margin-left: 30px;
+    transition: transform 0.25s;
+}
+#menubar .center{
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transform: translateX(calc(50% + 50px));
+}
+
+#menubar .center ul{
+    display: flex;
+    gap: 22px;
+}
+#menubar .center li{
+    list-style: none;
+}
+#menubar .center li a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 22px 10px;
+    transition: 0.25s;
+    font-weight: 500;
+}
+#menubar .center li a:hover{
+    text-decoration: underline;
+    color: #a30000;
+    text-underline-offset: 6px;
+}
+
+/* ===== RIGHT ICON MENU ===== */
+#menubar .menu-right{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: auto;
+}
+#menubar .menuitem-right{
+    list-style: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+    padding: 30px 15px;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
+    color: #8e0000 !important;
+    transition: color 0.25s;
+}
+#searchBar{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+#input-searchBar,
+#close-searchBar {
+    display: none;
+    transition: 0.25s;
+}
+#input-searchBar.active{
+    display: block;
+    width: 200px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+#close-searchBar.active {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+}
+
+/* ===== USER MENU ===== */
+.user-menu-wrapper{
+    position: relative;
+}
+.user-menu-wrapper .user{
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
+
+.user-menu{
+    position: absolute;
+    top: 80%;
+    right: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px 0;
+    width: 210px;
+    display: none;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.user-menu li{
+    list-style: none;
+}
+
+.user-menu a{
+    color: #333 !important;
+    text-decoration: none;
+    display: block;
+    padding: 12px 18px;
+    transition: 0.25s;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+}
+.user-menu li:last-child a{
+    border-bottom: none;
+}
+
+.user-menu a:hover{
+    background-color: #5a0002;
+    color: white !important;
+}
+
+.user-menu-wrapper:hover .user-menu{
+    display: block;
+}
+
+/********************Main******************************/
+main{
+    margin-top: 70px;
+    background-color: #f8f8f8;
+}
+main header{
+    height: 50px;
+    text-align: center;
+}
+main header .title{
+    color: #5a0002;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+main .contents{
+    width: 90%;
+    min-height: 700px;
+    overflow: hidden;
+    margin: auto;
+    display: flex;
+}
+main .contents .details{
+    flex-grow: 1;
+    width: 74%;
+}
+main .contents .details table{
+    width: 99%;
+    border-collapse: collapse;
+    margin-left: 40px;
+}
+main .contents .details .order-table-header{
+    background-color: #5a0002;
+}
+main .contents .details .order-table-header th{
+    color: white;
+    font-size: 17px;
+    padding: 10px 0;
+}
+main .contents .details tr.order-table-body:hover{
+    background-color: rgba(90, 0, 2, 0.04);
+}
+main .contents .details .product{
+    width: 40%;
+}
+main .contents .details .price{
+    width: 12%;
+}
+main .contents .details .amount{
+    width: 25%;
+}
+main .contents .details .sum{
+    width: 13%;
+}
+main .contents .details .trash{
+    width: auto;
+}
+table{
+    text-align: center;
+}
+.order-table-body{
+    background-color: white;
+}
+.order-table-body IMG{
+    width: 100px;
+    height: 100px;
+}
+.choose{
+    width: 30px;
+    position: relative;
+}
+.choose input[type="checkbox"]{
+    width: 15px;
+    height: 15px;
+}
+.order-table-body .product-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 50px;
+}
+.order-table-body .amount-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.order-table-body .amount .quantity-input{
+    width: 50px;
+    text-align: center;
+}
+.order-table-body .amount .quantity-btn:hover{
+    background-color: #850304;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
+}
+.order-table-body .trash i:hover{
+    cursor: pointer;
+    font-size: 19px;
+    color: #850304;
+}
+main .contents .summary{
+    width: 30%;
+}
+main .contents .summary .container{
+    width: 330px;
+    background-color: #fff;
+    border-radius: 10px;
+    color: #5a0002;
+    margin-left: 50px;
+    margin-right: 0;
+}
+main .contents .summary .container .header{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: #e9e9e9 solid 3px;
+}
+
+main .contents .summary .container .txt{
+    font-size: 15px;
+    font-style: italic;
+    margin-top: 15px;
+    margin-left: 25px;
+}
+main .contents .summary .container .number{
+    font-size: 15px;
+    float: right;
+    margin-right: 25px;
+    text-align: right;
+}
+main .contents .summary .container .voucher{
+    display: flex;
+    font-size: 13px;
+    border-top: 3px solid #e9e9e9;
+    padding: 10px;
+
+}
+main .contents .summary .container .voucher label{
+    color: #333;
+    margin-top: 10px;
+    margin-left: 15px;
+    width: 30%;
+}
+main .contents .summary .container .voucher .voucher-input{
+    display: flex;
+    width:  auto;
+    border: 1px solid #e9e9e9;
+    border-radius: 5px;
+}
+.voucher-message{
+    color: red;
+    margin-left: 10px;
+    font-size: 12px;
+}
+main .contents .summary .container .voucher .voucher-input input,BUTTON{
+    border: none;
+}
+main .contents .summary .container .voucher .voucher-input BUTTON{
+    flex-grow: 1;
+    border-right: 5px solid #5a0002;
+}
+main .contents .summary .container .voucher .voucher-input BUTTON:hover{
+    cursor: pointer;
+    background-color: #5a0002;
+    color: white;
+    transition: 0.3s;
+}
+main .contents .summary .container .footer{
+    border-top: #e9e9e9 solid 3px;
+    text-align: center;
+}
+main .contents .summary .container .footer button{
+    background-color: #5a0002;
+    color: white;
+    border-radius: 5px;
+    width: 250px;
+    height: 30px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    font-weight: bold;
+}
+main .contents .summary .container .footer button:hover{
+    background-color: #850304;
+    transition: 0.3s;
+}
+#opendeliverymessage:hover{
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    top: 0;
+    left: 0;
+}
+.modal-content{
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 450px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+.close-btn{
+    color: #aaa;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #5a0002;
+    text-decoration: none;
+    cursor: pointer;
+}
+#delivery-message h3{
+    text-align: center;
+}
+#delivery-message span.bold{
+    font-weight: bold;
+}
+#delivery-message p{
+    line-height: 1.5;
+}
+
+/*********************Footer**************************/
+.main-footer {
+    /*background: #343A40;*/ /* Màu nền tối, sang trọng */
+    background: #5a0000;
+    color: #f8f8f8; /* Chữ màu sáng */
+    padding-top: 50px;
+    font-size: 16px;
+    bottom: 0;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    padding: 0 20px 40px 20px;
+}
+
+.footer-col {
+    width: 30%; /* Đã sửa: 32% -> 30% */
+    margin-bottom: 20px;
+}
+
+.footer-col h4 {
+    /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
+    color: #FFD700;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Cột Logo */
+.footer-logo img {
+    width: 150px; /* Logo lớn hơn */
+    margin-bottom: 15px;
+}
+
+.about-us p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Liên kết Nhanh */
+.quick-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+
+.quick-links ul li a {
+    color: #ccc;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.quick-links ul li a:hover {
+    color: #8d2a3a; /* Hiệu ứng hover màu thương hiệu */
+    padding-left: 5px; /* Thêm chút dịch chuyển */
+}
+
+/* Thông tin liên hệ */
+.contact-info p {
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.contact-info i {
+    margin-right: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-top: 3px;
+}
+
+/* Mạng Xã Hội */
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #555;
+    color: white;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+    background-color: #8d2a3a;
+    transform: rotate(10deg) scale(1.1);
+}
+
+/* Phần bản quyền */
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid #444;
+    background-color: #222; /* Màu tối hơn một chút */
+    font-size: 14px;
+}
