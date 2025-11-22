@@ -7,7 +7,7 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 main{
@@ -201,72 +201,155 @@ main{
 
 
 /* ======================= HEADER ======================= */
-.header {
-    width: 100%;
+/* ======= MENUBAR ======= */
+#menubar{
+    height: 70px;
     background-color: #343A40;
-    color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-size: 18px;
     position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
     z-index: 1000;
+    display: flex;
+    align-items: center;
 }
-.top-bar {
+
+#menubar .sixteen.column{
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 60px;
-    height: 80px;
 }
-.logo img {
-    width: 110px;
+#menubar .left{
+    width: 10%;
+}
+#menubar .left img{
+    width: 95px;
     height: auto;
+    margin-left: 30px;
+    transition: transform 0.25s;
 }
-.menu {
+#menubar .center{
+    width: auto;
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    gap: 35px;
-    flex: 1;
-}
-.menu a {
-    color: white;
-    font-size: 18px;
-    transition: color 0.3s;
-}
-.menu a:hover {
-    color: #ff4b4b;
-}
-.right-section {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-}
-.search-cart {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-.search-icon i,
-.cart-icon i {
-    font-size: 20px;
-    color: white;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-.search-icon i:hover,
-.cart-icon i:hover {
-    color: #ff4b4b;
-}
-.login a {
-    color: white;
-    font-size: 17px;
-    transition: color 0.3s;
-}
-.login a:hover {
-    color: #ff4b4b;
+    position: absolute;
+    transform: translateX(calc(50% + 50px));
 }
 
+#menubar .center ul{
+    display: flex;
+    gap: 22px;
+}
+#menubar .center li{
+    list-style: none;
+}
+#menubar .center li a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 22px 10px;
+    transition: 0.25s;
+    font-weight: 500;
+}
+#menubar .center li a:hover{
+    text-decoration: underline;
+    color: #a30000;
+    text-underline-offset: 6px;
+}
+
+/* ===== RIGHT ICON MENU ===== */
+#menubar .menu-right{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: auto;
+}
+#menubar .menuitem-right{
+    list-style: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+    padding: 30px 15px;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
+    color: #8e0000 !important;
+    transition: color 0.25s;
+}
+#searchBar{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+#input-searchBar,
+#close-searchBar {
+    display: none;
+    transition: 0.25s;
+}
+#input-searchBar.active{
+    display: block;
+    width: 200px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+#close-searchBar.active {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+}
+
+/* ===== USER MENU ===== */
+.user-menu-wrapper{
+    position: relative;
+}
+.user-menu-wrapper .user{
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
+
+.user-menu{
+    position: absolute;
+    top: 80%;
+    right: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px 0;
+    width: 210px;
+    display: none;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.user-menu li{
+    list-style: none;
+}
+
+.user-menu a{
+    color: #333 !important;
+    text-decoration: none;
+    display: block;
+    padding: 12px 18px;
+    transition: 0.25s;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+}
+.user-menu li:last-child a{
+    border-bottom: none;
+}
+
+.user-menu a:hover{
+    background-color: #5a0002;
+    color: white !important;
+}
+
+.user-menu-wrapper:hover .user-menu{
+    display: block;
+}
 /* ======================= FOOTER ======================= */
 .main-footer {
     background: #5a0000;

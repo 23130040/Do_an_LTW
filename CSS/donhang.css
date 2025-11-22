@@ -1,0 +1,448 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+}
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header .title {
+    text-align: center;
+    color: #5a0002;
+    margin-bottom: 30px;
+}
+/******menubar*********/
+#menubar{
+    height: 70px;
+    background-color: #343A40;
+    font-size: 18px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+#menubar .sixteen.column{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#menubar .left{
+    width: 10%;
+}
+#menubar .left img{
+    width: 95px;
+    height: auto;
+    margin-left: 30px;
+    transition: transform 0.25s;
+}
+#menubar .center{
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transform: translateX(calc(50% + 30px));
+}
+
+#menubar .center ul{
+    display: flex;
+    gap: 22px;
+}
+#menubar .center li{
+    list-style: none;
+}
+#menubar .center li a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 22px 10px;
+    transition: 0.25s;
+    font-weight: 500;
+}
+#menubar .center li a:hover{
+    text-decoration: underline;
+    color: #a30000;
+    text-underline-offset: 6px;
+}
+
+/* ===== RIGHT ICON MENU ===== */
+#menubar .menu-right{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: auto;
+}
+#menubar .menuitem-right{
+    list-style: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+    padding: 30px 15px;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
+    color: #8e0000 !important;
+    transition: color 0.25s;
+}
+#searchBar{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+#input-searchBar,
+#close-searchBar {
+    display: none;
+    transition: all 0.25s;
+}
+#input-searchBar.active {
+    display: block;
+    width: 200px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+#close-searchBar.active {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+}
+
+/* ===== USER MENU ===== */
+.user-menu-wrapper{
+    position: relative;
+}
+.user-menu-wrapper .user{
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
+
+.user-menu{
+    position: absolute;
+    top: 80%;
+    right: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px 0;
+    width: 210px;
+    display: none;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.user-menu li{
+    list-style: none;
+}
+
+.user-menu a{
+    color: #333 !important;
+    text-decoration: none;
+    display: block;
+    padding: 12px 18px;
+    transition: 0.25s;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+}
+.user-menu li:last-child a{
+    border-bottom: none;
+}
+
+.user-menu a:hover{
+    background-color: #5a0002;
+    color: white !important;
+}
+
+.user-menu-wrapper:hover .user-menu{
+    display: block;
+}
+/****************main************/
+/* ==================== TABS ==================== */
+main{
+    min-height: 700px;
+    margin-top: 50px;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+.tab {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.tab:hover {
+    background-color: #910004;
+    color: #fff;
+}
+
+.tab.active {
+    background-color: #5a0002;
+    color: #fff;
+    border: none;
+}
+
+/* ==================== ORDERS ==================== */
+.orders {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.order-group.hidden {
+    display: none;
+}
+
+.order-item {
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.08);
+    padding: 15px;
+    transition: transform 0.2s;
+}
+
+.order-item:hover {
+    transform: translateY(-3px);
+}
+
+/* Order Header */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.order-id {
+    font-weight: bold;
+    color: #555;
+}
+
+.order-status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: #fff;
+}
+
+.status-waiting{
+    background-color: #1f6c4c;
+}
+
+.status-delivering {
+    background-color: #0fb570;
+}
+
+.status-done {
+    background-color: #25e877;
+}
+
+.status-cancel {
+    background-color: #bb313a;
+}
+
+/* Products inside order */
+.order-products {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.product img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.product-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info .name {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.product-info .qty {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.price {
+    font-weight: 600;
+    color: #888888;
+}
+
+/* Order Footer */
+.order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.order-footer .total {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.order-footer .btn-detail {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #5a0002;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.order-footer .btn-detail a{
+    color: white;
+}
+.order-footer .btn-detail:hover {
+    background-color: #870003;
+}
+
+.none {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 20px 0;
+}
+
+/**************footer************/
+.main-footer {
+    /*background: #343A40;*/ /* Màu nền tối, sang trọng */
+    background: #5a0000;
+    color: #f8f8f8; /* Chữ màu sáng */
+    padding-top: 50px;
+    font-size: 16px;
+    bottom: 0;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 20px 40px 20px;
+}
+
+.footer-col {
+    width: 30%;
+    margin-bottom: 20px;
+}
+
+.footer-col h4 {
+    color: #FFD700;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Cột Logo */
+.footer-logo img {
+    width: 150px; /* Logo lớn hơn */
+    margin-bottom: 15px;
+}
+
+.about-us p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Liên kết Nhanh */
+.quick-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+
+.quick-links ul li a {
+    color: #ccc;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.quick-links ul li a:hover {
+    color: #8d2a3a; /* Hiệu ứng hover màu thương hiệu */
+    padding-left: 5px; /* Thêm chút dịch chuyển */
+}
+
+/* Thông tin liên hệ */
+.contact-info p {
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.contact-info i {
+    margin-right: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-top: 3px;
+}
+
+/* Mạng Xã Hội */
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #555;
+    color: white;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+    background-color: #8d2a3a;
+    transform: rotate(10deg) scale(1.1);
+}
+
+/* Phần bản quyền */
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid #444;
+    background-color: #222; /* Màu tối hơn một chút */
+    font-size: 14px;
+}

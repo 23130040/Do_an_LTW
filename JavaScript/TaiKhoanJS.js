@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     //thay đổi giao diện khi nhấn vào các link trong sidebar
     changeTab();
 

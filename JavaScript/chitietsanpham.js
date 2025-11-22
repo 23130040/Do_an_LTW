@@ -121,6 +121,22 @@ optionButtons.forEach(btn => {
         btn.classList.add('active');
     });
 });
+function showSearchBar(){
+    const searchBarContainer = document.getElementById("searchBar");
+    searchBarContainer.classList.add("active");
+    const inputSearchbar = document.getElementById("input-searchBar");
+    inputSearchbar.classList.add("active");
+    const closeMenuBar = document.getElementById("close-searchBar");
+    closeMenuBar.classList.add("active");
+}
+function closeSearchBar(){
+    const searchBarContainer = document.getElementById("searchBar");
+    searchBarContainer.classList.remove("active");
+    const inputSearchbar = document.getElementById("input-searchBar");
+    inputSearchbar.classList.remove("active");
+    const closeMenuBar = document.getElementById("close-searchBar");
+    closeMenuBar.classList.remove("active");
+}
 document.addEventListener("DOMContentLoaded", function () {
 
     /* ========================= XỬ LÝ CHỌN KHỐI LƯỢNG ========================= */
@@ -150,6 +166,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    //Xử lý thanh tìm kiếm
+    const openSearchBar = document.getElementById("open-searchBar");
+    openSearchBar.addEventListener("click", showSearchBar);
+    const closeSearchBarBtn = document.getElementById("close-searchBar");
+    closeSearchBarBtn.addEventListener("click", closeSearchBar);
 });
 // MỞ xem them bình luận
 document.querySelector(".see-more").addEventListener("click", function () {

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Clean Meat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../CSS/chitietdonhangstyle.css">
+    <link rel="stylesheet" href="../CSS/chitietdonhang.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-...paste-the-integrity-if-needed..."
           crossorigin="anonymous"
           referrerpolicy="no-referrer">
-    <script src="../JavaScript/menubar.js"></script>
+    <script src="../JavaScript/chitietdonhang.js"></script>
 </head>
 <body>
 <nav id="menubar">
@@ -40,145 +40,197 @@
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <ul class="user-menu">
-                        <li class ="user-menuitem"><a href="../HTML/TaiKhoan.html">Tài khoản của tôi</a></li>
-                        <li class ="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
-                        <li class ="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
+                        <li class="user-menuitem"><a href="../HTML/TaiKhoan.html">Tài khoản của tôi</a></li>
+                        <li class="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
+                        <li class="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-    <main>
-        <div class="order-container" id="order-DH001">
-            <div class="back-button-wrapper">
-                <a href="../HTML/donhang.html" class="back-button">
-                    <i class="fa-solid fa-angle-left"></i> Quay lại
-                </a>
-            </div>
+<main>
+    <div class="order-container" id="order-DH001">
+        <div class="back-button-wrapper">
+            <a href="../HTML/donhang.html" class="back-button">
+                <i class="fa-solid fa-angle-left"></i> Quay lại
+            </a>
+        </div>
+        <h2 class="order-title">Chi tiết đơn hàng DH001</h2>
 
-            <h2 class="order-title">Chi tiết đơn hàng DH001</h2>
+        <div class="customer-info" id="customer-info">
+            <h3 class="section-title">Thông tin người nhận</h3>
+            <p class="customer-name"><strong>Họ tên:</strong> Nguyễn Văn A</p>
+            <p class="customer-phone"><strong>Số điện thoại:</strong> 0123456789</p>
+            <p class="customer-address"><strong>Địa chỉ:</strong> 123 Đường ABC, Quận 1, TP.HCM</p>
+        </div>
 
-            <div class="customer-info" id="customer-info">
-                <h3 class="section-title">Thông tin người nhận</h3>
-                <p class="customer-name"><strong>Họ tên:</strong> Nguyễn Văn A</p>
-                <p class="customer-phone"><strong>Số điện thoại:</strong> 0123456789</p>
-                <p class="customer-address"><strong>Địa chỉ:</strong> 123 Đường ABC, Quận 1, TP.HCM</p>
-            </div>
+        <div class="products" id="products">
+            <h3 class="section-title">Sản phẩm</h3>
+            <table class="product-table">
+                <thead>
+                <tr>
+                    <th class="product-name-header">Sản phẩm</th>
+                    <th class="product-quantity-header">Số lượng</th>
+                    <th class="product-price-header">Đơn giá</th>
+                    <th class="product-total-header">Tổng tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="product-item">
+                    <td class="product-info">
+                        <img class="product-image"
+                             src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg"
+                             alt="Mỡ heo sạch 330gr">
+                        <span class="product-name-text">Mỡ heo sạch 330gr</span>
+                    </td>
+                    <td class="product-quantity">1</td>
+                    <td class="product-price">52,000 đ</td>
+                    <td class="product-total">52,000 đ</td>
+                </tr>
+                <tr class="product-item">
+                    <td class="product-info">
+                        <img class="product-image"
+                             src="https://www.thucphamsachhd.com/uploads/files/2023/06/19/thumbs-1024-768-0/HED0002-PD01588-WEB_Ba-Roi-Rut-Suon-Heo-Duc.png"
+                             alt="Ba rọi rút sườn">
+                        <span class="product-name-text">Ba rọi rút sườn</span>
+                    </td>
+                    <td class="product-quantity">2</td>
+                    <td class="product-price">170,000 đ</td>
+                    <td class="product-total">340,000 đ</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <div class="products" id="products">
-                <h3 class="section-title">Sản phẩm</h3>
-                <table class="product-table">
-                    <thead>
-                    <tr>
-                        <th class="product-name-header">Sản phẩm</th>
-                        <th class="product-quantity-header">Số lượng</th>
-                        <th class="product-price-header">Đơn giá</th>
-                        <th class="product-total-header">Tổng tiền</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="product-item">
-                        <td class="product-info">
-                            <img class="product-image" src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg" alt="Mỡ heo sạch 330gr">
-                            <span class="product-name-text">Mỡ heo sạch 330gr</span>
-                        </td>
-                        <td class="product-quantity">1</td>
-                        <td class="product-price">52,000 đ</td>
-                        <td class="product-total">52,000 đ</td>
-                    </tr>
-                    <tr class="product-item">
-                        <td class="product-info">
-                            <img class="product-image" src="https://www.thucphamsachhd.com/uploads/files/2023/06/19/thumbs-1024-768-0/HED0002-PD01588-WEB_Ba-Roi-Rut-Suon-Heo-Duc.png" alt="Ba rọi rút sườn">
-                            <span class="product-name-text">Ba rọi rút sườn</span>
-                        </td>
-                        <td class="product-quantity">2</td>
-                        <td class="product-price">170,000 đ</td>
-                        <td class="product-total">340,000 đ</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="order-status" id="order-status">
-                <h3 class="section-title">Trạng thái đơn hàng</h3>
-                <div class="status-bar">
-                    <div class="status-step status-active" id="status-step-1">Chờ xác nhận</div>
-                    <div class="status-step" id="status-step-2">Đang chuẩn bị</div>
-                    <div class="status-step" id="status-step-3">Đang giao</div>
-                    <div class="status-step" id="status-step-4">Đã giao</div>
-                </div>
-            </div>
-
-            <div class="total" id="order-total">
-                <table class="cost table">
-                    <tr class="table row">
-                        <th class="header-item">Tổng tiền hàng:</th>
-                        <td class="cost-item" id="totalCostProducts">392,000 đ</td>
-                    </tr>
-                    <tr class="table row">
-                        <th class="header-item">Phí vận chuyển:</th>
-                        <td class="cost-item" id="deliveryFee">30,000 đ</td>
-                    </tr>
-                    <tr class="table row">
-                        <th class="header-item">
-                            Giảm giá phí vận chuyển
-                            <i class="fa-solid fa-circle-exclamation" id="opendeliverymessage"></i>:
-                        </th>
-                        <td class="cost-item" id="discountDeliveryFee">0 đ</td>
-                    </tr>
-                    <tr class="table row">
-                        <th class="header-item">Voucher giảm giá:</th>
-                        <td class="cost-item" id="voucherDiscount">0 đ</td>
-                    </tr>
-                    <tr class="table row">
-                        <th class="header-item">Thành tiền:</th>
-                        <td class="cost-item" id="overallCost">422,000 đ</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="footer">
-                <button class="confirm-btn" id="cancleOrderBtn">Hủy đơn hàng</button>
-                <button class="confirm-btn" id="confirmOrderBtn">Đã nhận hàng</button>
+        <div class="order-status" id="order-status">
+            <h3 class="section-title">Trạng thái đơn hàng</h3>
+            <div class="status-bar">
+                <div class="status-step status-active" id="status-step-1">Chờ xác nhận</div>
+                <div class="status-step" id="status-step-2">Đang chuẩn bị</div>
+                <div class="status-step" id="status-step-3">Đang giao</div>
+                <div class="status-step" id="status-step-4">Đã giao</div>
             </div>
         </div>
 
-    </main>
-    <footer class="main-footer">
-        <div class="footer-container">
-            <div class="footer-col about-us">
-                <div class="footer-logo">
-                    <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
-                </div>
-                <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-
-            <div class="footer-col quick-links">
-                <h4>Liên Kết Nhanh</h4>
-                <ul>
-                    <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
-                    <li><a href="san_pham.html">Sản Phẩm</a></li>
-                    <li><a href="#">Giới Thiệu</a></li>
-                    <li><a href="#">Tin Tức</a></li>
-                    <li><a href="#">Chính Sách Đổi Trả</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col contact-info">
-                <h4>Liên Hệ Chúng Tôi</h4>
-                <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
-                <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
-                <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
-                <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
+        <div class="total" id="order-total">
+            <table class="cost table">
+                <tr class="table row">
+                    <th class="header-item">Tổng tiền hàng:</th>
+                    <td class="cost-item" id="total-cost-products">392,000 đ</td>
+                </tr>
+                <tr class="table row">
+                    <th class="header-item">Phí vận chuyển
+                        <i class="fa-solid fa-circle-exclamation" id="open-delivery-message"></i>:
+                    </th>
+                    <td class="cost-item" id="delivery-fee">30,000 đ</td>
+                </tr>
+                <tr class="table row">
+                    <th class="header-item">
+                        Giảm giá phí vận chuyển
+                        :
+                    </th>
+                    <td class="cost-item" id="discount-delivery-fee">0 đ</td>
+                </tr>
+                <tr class="table row">
+                    <th class="header-item">Voucher giảm giá:</th>
+                    <td class="cost-item" id="voucher-discount">0 đ</td>
+                </tr>
+                <tr class="table row">
+                    <th class="header-item">Thành tiền:</th>
+                    <td class="cost-item" id="overall-cost">422,000 đ</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <button class="confirm-btn" id="cancle-order-btn">Hủy đơn hàng</button>
+            <button class="confirm-btn" id="confirm-order-btn">Đã nhận hàng</button>
+        </div>
+    </div>
+    <div id="delivery-message" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-message-modal">&times;</span>
+            <div class="message">
+                <h3 class="message-header">Thông tin vận chuyển</h3>
+                <p class="txt">
+                    <span class="bold">Phí vận chuyển</span><br>
+                    * Nội thành: 20.000–30.000đ<br>
+                    * Ngoại thành: 30.000–50.000đ<br>
+                    * Giao tỉnh: 35.000–70.000đ<br>
+                    * Giao nhanh: cộng thêm 10.000–25.000đ<br>
+                    <span class="bold">Giảm phí vận chuyển</span><br>
+                    * Giảm 30% chi phí vận chuyển với đơn hàng trên 50,000 đ<br>
+                    * Giảm 50% chi phí vận chuyển với đơn hàng trên 100,000 đ<br>
+                    * Giảm 80% chi phí vận chuyển với đơn hàng trên 200,000 đ<br>
+                    * Giảm 100% chi phí vận chuyển với đơn hàng trên 300,000 đ<br>
+                    * Miễn phí vận chyển cho các đơn hàng trong bán kính 5km
+                </p>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
+    </div>
+    <div id="confirm-cancle-order-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-confirm-cancle-order-modal">&times;</span>
+            <div class="message">
+                <p class="txt">Xác nhận hủy đơn hàng?</p>
+                <div class="btn">
+                    <button id="cancle-btn">Hủy</button>
+                    <button id="confirm-btn">Xác nhận</button>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+    <div id="redirect-modal" class="modal">
+        <div class="modal-content">
+            <div class="message">
+                <p class="txt">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Hủy đơn hàng thành công!
+                </p>
+                <div class="btn">
+                    <button id="return-to-home-btn">Quay về trang chủ</button>
+                    <button id="view-orders-btn">Xem đơn hàng của tôi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-col about-us">
+            <div class="footer-logo">
+                <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
+            </div>
+            <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng
+                đầu của chúng tôi.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-col quick-links">
+            <h4>Liên Kết Nhanh</h4>
+            <ul>
+                <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
+                <li><a href="san_pham.html">Sản Phẩm</a></li>
+                <li><a href="#">Giới Thiệu</a></li>
+                <li><a href="#">Tin Tức</a></li>
+                <li><a href="#">Chính Sách Đổi Trả</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col contact-info">
+            <h4>Liên Hệ Chúng Tôi</h4>
+            <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
+            <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
+            <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
+            <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
+    </div>
+</footer>
 </body>
 </html>

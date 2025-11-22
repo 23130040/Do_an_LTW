@@ -27,7 +27,7 @@ a {
 }
 a:hover {
     text-decoration: underline;
-    color: #04aa6d !important;
+    color: #ff0003 !important;
 }
 #wrapper {
     width: 500px;
@@ -112,9 +112,10 @@ a:hover {
 }
 
 .form_submit:hover {
-    background-color: #04aa6d;
+    background-color: #b50004;
     color: white !important;
     text-decoration: none !important;
+    transition: 0.25s;
 }
 .separator-container{
     color: #d3d3d3;
@@ -139,7 +140,8 @@ a:hover {
     padding: 10px;
 }
 .social-login:hover{
-    background-color: #04aa6d;
+    background-color: #b50004;
+    transition: 0.25s;
 }
 .social-login a{
     color: white;
@@ -159,39 +161,9 @@ a:hover {
     color: white;
 }
 #wrapper form .sign_up a{
-    color:  #db1a26;
+    color: #a60008;
 }
 
-@media (max-width: 650px) {
-    #wrapper {
-        width: 95%;
-        margin: 20px auto; /* Giảm margin trên dưới */
-        padding: 10px 20px 20px 20px; /* Giảm padding */
-    }
-
-    #wrapper form IMG {
-        margin-top: 50px; /* Giảm margin top trên mobile */
-    }
-
-    #wrapper form h1 {
-        font-size: 30px; /* Giảm kích thước tiêu đề */
-    }
-
-    #wrapper form input[type=text], input[type=password] {
-        height: 45px;
-        font-size: 18px; /* Giảm kích thước chữ input */
-    }
-
-    .form_submit {
-        height: 55px;
-        line-height: 55px;
-        font-size: 18px;
-    }
-
-    #wrapper form .sign_up {
-        font-size: 18px;
-    }
-}
 /*************form quên mật khẩu**********/
 .modal{
     display: none;
@@ -226,7 +198,7 @@ a:hover {
 
 .close-btn:hover,
 .close-btn:focus {
-    color: #04aa6d;
+    color: #b50004;
     text-decoration: none;
     cursor: pointer;
 }
@@ -292,7 +264,7 @@ a:hover {
 }
 
 .modal .form_submit:hover {
-    background-color: #04aa6d;
+    background-color: #b50004;
     color: white !important;
 }
 
@@ -302,7 +274,6 @@ a:hover {
     text-align: left;
     margin: auto;
     font-size: 13px;
-
 }
 #login-form .error-message{
     margin-bottom: 10px;
@@ -331,7 +302,7 @@ a:hover {
 /* ===== Email hiển thị ===== */
 .message .email {
     font-weight: bold;
-    color: #04aa6d;
+    color: #b50004;
 }
 
 /* ===== Button group ===== */
@@ -363,36 +334,13 @@ a:hover {
     background-color: #999;
     color: #fff;
 }
-
 /* Resend button */
 .button-group .resend-btn {
-    background-color: #04aa6d;
+    background-color: #5a0002;
     color: #fff;
 }
-
 .button-group .resend-btn:hover {
-    background-color: #038f57;
+    background-color: #b50004;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 500px) {
-    .modal-content {
-        width: 90%;
-        padding: 20px;
-    }
 
-    .button-group {
-        flex-direction: column;
-    }
-
-    .button-group .btn {
-        margin: 8px 0;
-    }
-}
-
-@media (max-width: 650px) {
-    .modal-content {
-        width: 95%;
-        margin: 5% auto;
-    }
-}

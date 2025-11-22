@@ -204,7 +204,7 @@ html, body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    transform: translateX(calc(50% + 30px));
+    transform: translateX(calc(50% + 50px));
 }
 
 #menubar .center ul{

@@ -8,9 +8,8 @@
           integrity="sha512-...paste-the-integrity-if-needed..."
           crossorigin="anonymous"
           referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="../CSS/GioHangCSS.css">
+    <link rel="stylesheet" href="../CSS/giohang.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../JavaScript/menubar.js"></script>
 </head>
 <body>
     <nav id="menubar">
@@ -57,15 +56,19 @@
             <div class="order details">
                 <table class="order-table">
                     <tr class="order-table-header">
+                        <th class="header choose">
+                            <input type="checkbox" id="check-all">
+                        </th>
                         <th class="header product">Sản phẩm</th>
                         <th class="header price">Đơn giá</th>
                         <th class="header amount">Số lượng</th>
                         <th class="header sum">Thành tiền</th>
-                        <th class="header trash">
-                            <i class="fa-solid fa-trash"></i>
-                        </th>
+                        <th class="header trash"></th>
                     </tr>
                     <tr class="order-table-body" id="product1">
+                        <td class="order-table-item choose">
+                            <input type="checkbox" id="choose1">
+                        </td>
                         <td class="order-table-item product">
                             <div class="product-wrapper">
                                 <img src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg" alt="Mỡ heo">
@@ -93,6 +96,9 @@
                         </td>
                     </tr>
                     <tr class="order-table-body" id="product2">
+                        <td class="order-table-item choose">
+                            <input type="checkbox" id="choose2">
+                        </td>
                         <td class="order-table-item product">
                             <div class="product-wrapper">
                                 <img src="https://phamgiafood.com.vn/wp-content/uploads/2022/05/ucga-2.jpg" alt="Thịt ức gà">
@@ -120,6 +126,9 @@
                         </td>
                     </tr>
                     <tr class="order-table-body" id="product3">
+                        <td class="order-table-item choose">
+                            <input type="checkbox" id="choose3">
+                        </td>
                         <td class="order-table-item product">
                             <div class="product-wrapper">
                                 <img src="https://fohlafood.vn/cdn/shop/articles/1-1683857652-150-width800height550.jpg?v=1732018733" alt="Thịt bò tươi">
@@ -194,7 +203,7 @@
                         <p class="voucher-message"></p>
                     </div>
                     <div class="order-summary footer">
-                        <a href="../HTML/XacNhanDatHang.html"><button onclick="" class="order-summary submit" id="submit-btn">MUA HÀNG</button></a>
+                        <a href="xacnhandathang.html"><button onclick="" class="order-summary submit" id="submit-btn">MUA HÀNG</button></a>
                     </div>
                 </div>
             </div>
@@ -202,7 +211,6 @@
         <div id="delivery-message" class="modal">
             <div class="modal-content">
                 <span class="close-btn" id="close-message-modal">&times;</span>
-
                 <div class="message">
                     <h3 class="message-header">Thông tin vận chuyển</h3>
                     <p class="txt">
