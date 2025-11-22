@@ -162,7 +162,7 @@ main{
 }
 .menu a:hover {
     color: #c30000;
-    text-decoration: underline;
+    text-decoration: none;
     text-underline-offset: 6px;
 }
 .menu.fixed {
@@ -236,13 +236,13 @@ main{
 
 .featured-item {
     position: relative;
-    border: 3px solid #8d2a3a;
-    box-shadow: 0 4px 12px #8d2a3a;
+    border: 3px solid #e00000;
+    box-shadow: 0 4px 12px #e00000;
 }
 
 .featured-item:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 6px 15px #8d2a3a;
+    box-shadow: 0 6px 15px #e00000;
 }
 
 
@@ -250,7 +250,7 @@ main{
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #8d2a3a;
+    background-color: #e00000;
     color: white;
     padding: 5px 10px;
     font-size: 12px;
@@ -264,7 +264,7 @@ main{
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #8d2a3a;
+    background-color: #e00000;
     color: white;
     font-weight: bold;
     border: none;
@@ -274,9 +274,9 @@ main{
 }
 
 .buy-now-btn:hover {
-    background-color: #b93d4f;
+    background-color: #e00000;
     transform: scale(1.08);
-    box-shadow: 0 4px 10px rgba(141, 42, 58, 0.4);
+    box-shadow: 0 4px 10px #e00000;
 }
 
 
@@ -345,9 +345,9 @@ main{
 }
 /* Nút thêm vào giỏ */
 .product-item button {
-    border: 1.5px solid #8d2a3a;
+    border: 1.5px solid #e00000;
     background-color: #fff;
-    color: #8d2a3a;font-weight: 600;
+    color: #e00000;font-weight: 600;
     border-radius: 25px;
     padding: 7px 18px;
     font-size: 14px;
@@ -355,15 +355,15 @@ main{
     transition: all 0.3s ease;
 }
 .product-item button:hover {
-    background-color: #8d2a3a;
-    border-color: #8d2a3a;
+    background-color: #e00000;
+    border-color: #e00000;
     color: #fff;
     transform: scale(1.05);
 }
 
 
 .price {
-    color: #8d2a3a;
+    color: #e00000;
     font-weight: bold;
     font-size: 16px;
 }
@@ -374,7 +374,7 @@ main{
     align-items: center;
     text-align: center;
     background-color: #f0f0f0;
-    border: 2px dashed #8d2a3a;
+    border: 2px dashed #e00000;
     transition: all 0.3s ease;
     height: 380px;
     width: 250px;
@@ -383,7 +383,7 @@ main{
 }
 
 .view-all-item h3 {
-    color: #8d2a3a;
+    color: #e00000;
     margin: 5px 0;
     width: 100%;
 }
@@ -396,14 +396,14 @@ main{
 }
 
 .view-all-item i {
-    color: #8d2a3a;
+    color: #e00000;
     margin-bottom: 10px;
 }
 
 .view-all-item:hover {
     background-color: #ffebeb;
     transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(141, 42, 58, 0.4);
+    box-shadow: 0 4px 10px #e00000;
 }
 
 .view-all-item button {
@@ -412,7 +412,7 @@ main{
 
 /* Nút mũi tên điều hướng */
 .arrow {
-    background-color: #8d2a3a;
+    background-color: #e00000;
     color: white;
     border: none;
     padding: 15px;
@@ -426,7 +426,7 @@ main{
     z-index: 10;
 }
 .arrow:hover {
-    background-color: #b93d4f;
+    background-color: #e00000;
     transform: translateY(-50%) scale(1.1);
 }
 .arrow.left {
