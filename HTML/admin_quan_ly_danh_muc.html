@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý danh mục và nguồn gốc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/admin_quan_ly_danh_muc-style.css">
+</head>
+<body>
+<div class="admin-container">
+    <header class="header">
+        <div class="logo-placeholder">
+            <img src="../images/logoCleanmeat.png">
+        </div>
+
+        <div class="header-icons">
+            <div class="notification-wrapper" onclick="toggleNotificationMenu()">
+                <i class="fa-solid fa-bell notification-icon"></i>
+                <span class="notification-badge">3</span>
+            </div>
+
+            <div class="user-dropdown">
+                <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
+
+                <div id="userMenuContent" class="dropdown-content">
+                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
+                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="trang_chu_chua_login.html" class="logout-link"> Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
+                    <li class="active"><a href="#"> Quản lý danh mục và nguồn gốc</a></li>
+                    <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
+                    <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
+                    <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
+                    <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
+                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
+                    <li><a href="admin_cau_hinh_he_thong.html"> Cấu hình hệ thống</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content-area">
+            <h2><i class="fas fa-sitemap"></i> Quản lý Danh mục và Nguồn gốc</h2>
+
+            <div class="tab-container">
+                <div class="tab-links">
+                    <button class="tab-link active" onclick="openTab(event, 'QuanLyDanhMuc')">
+                        <i class="fas fa-tags"></i> Quản lý Danh mục
+                    </button>
+                    <button class="tab-link" onclick="openTab(event, 'QuanLyNguonGoc')">
+                        <i class="fas fa-globe-asia"></i> Quản lý Nguồn gốc
+                    </button>
+                </div>
+
+                <div id="QuanLyDanhMuc" class="tab-content active">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Danh mục sản phẩm (Thịt heo, Thịt bò,...)</h3>
+                            <button class="btn-add" onclick="openModal('addCategoryModal')"><i class="fas fa-plus"></i> Thêm Danh mục</button>
+                        </div>
+                        <div class="card-body">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Mã DM</th>
+                                    <th>Tên Danh mục</th>
+                                    <th>Tổng SP</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr><td>DM01</td><td>Thịt Heo</td><td>45</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                <tr><td>DM02</td><td>Thịt Gà</td><td>30</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                <tr><td>DM03</td><td>Thịt Bò</td><td>55</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Cập nhật danh mục cho sản phẩm</h3>
+                            <button class="btn-save"><i class="fas fa-save"></i> Lưu Thay đổi</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="product-assignment-table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 10%;">Mã Danh mục</th>
+                                        <th style="width: 40%;">Tên danh mục</th>
+                                        <th style="width: 25%;">Danh mục hiện tại</th>
+                                        <th style="width: 25%;">Cập nhật danh mục mới</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="categoryAssignmentBody">
+                                    <tr class="pagination-row page-1">
+                                        <td>SP001</td>
+                                        <td>Thịt Bò Thăn Nội (Lô 12/2025)</td>
+                                        <td>Thịt bò</td>
+                                        <td>
+                                            <select name="nguon_goc_sp003">
+                                                <option value="">-- Chọn danh mục --</option>
+                                                <option value="NG01">Thịt heo</option>
+                                                <option value="NG02">Thịt gà</option>
+                                                <option value="NG03" selected>Thịt bò</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="pagination-row page-1">
+                                        <td>SP002</td>
+                                        <td>Thịt Heo Ba Rọi (Lô 01/2026)</td>
+                                        <td>Thịt heo</td>
+                                        <td>
+                                            <select name="nguon_goc_sp003">
+                                                <option value="">-- Chọn danh mục --</option>
+                                                <option value="NG01" selected>Thịt heo</option>
+                                                <option value="NG02">Thịt gà</option>
+                                                <option value="NG03">Thịt bò</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="pagination-row page-1">
+                                        <td>SP003</td>
+                                        <td>Thịt Gà Đùi (Lô 02/2026)</td>
+                                        <td>Thịt gà</td>
+                                        <td>
+                                            <select name="nguon_goc_sp003">
+                                                <option value="">-- Chọn danh mục --</option>
+                                                <option value="NG01">Thịt heo</option>
+                                                <option value="NG02" selected>Thịt gà</option>
+                                                <option value="NG03">Thịt bò</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination-controls">
+                                <button id="prevPageCategory" class="btn-page disabled" onclick="changePage(-1)"><i class="fas fa-chevron-left"></i></button>
+                                <span id="currentPageCategory">Trang 1 / 2</span>
+                                <button id="nextPageCategory" class="btn-page" onclick="changePage(1)"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="QuanLyNguonGoc" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Nguồn gốc sản phẩm (Việt Nam, Mỹ, Úc,...)</h3>
+                            <button class="btn-add" onclick="openModal('addOriginModal')"><i class="fas fa-plus"></i> Thêm Nguồn gốc</button>
+                        </div>
+                        <div class="card-body">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Mã NG</th>
+                                    <th>Tên Nguồn gốc</th>
+                                    <th>Tổng SP</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr><td>NG01</td><td>Việt Nam</td><td>100</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                <tr><td>NG02</td><td>Hoa Kỳ (Mỹ)</td><td>30</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                <tr><td>NG03</td><td>Úc</td><td>20</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Cập nhật nguồn gốc cho sản phẩm</h3>
+                            <button class="btn-save"><i class="fas fa-save"></i> Lưu Thay đổi</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="product-assignment-table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 10%;">Mã SP</th>
+                                        <th style="width: 40%;">Tên Sản phẩm</th>
+                                        <th style="width: 25%;">Nguồn gốc hiện tại</th>
+                                        <th style="width: 25%;">Gán Nguồn gốc mới</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="productAssignmentBody">
+                                    <tr class="pagination-row page-1">
+                                        <td>SP001</td>
+                                        <td>Thịt Bò Thăn Nội (Lô 12/2025)</td>
+                                        <td>Úc</td>
+                                        <td>
+                                            <select name="nguon_goc_sp001">
+                                                <option value="">-- Chọn Nguồn gốc --</option>
+                                                <option value="NG01">Việt Nam</option>
+                                                <option value="NG02">Mỹ</option>
+                                                <option value="NG03" selected>Úc</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="pagination-row page-1">
+                                        <td>SP002</td>
+                                        <td>Thịt Heo Ba Rọi (Lô 01/2026)</td>
+                                        <td>Việt Nam</td>
+                                        <td>
+                                            <select name="nguon_goc_sp002">
+                                                <option value="">-- Chọn Nguồn gốc --</option>
+                                                <option value="NG01" selected>Việt Nam</option>
+                                                <option value="NG02">Mỹ</option>
+                                                <option value="NG03">Úc</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="pagination-row page-1">
+                                        <td>SP003</td>
+                                        <td>Thịt Gà Đùi (Lô 02/2026)</td>
+                                        <td>Mỹ</td>
+                                        <td>
+                                            <select name="nguon_goc_sp003">
+                                                <option value="">-- Chọn Nguồn gốc --</option>
+                                                <option value="NG01">Việt Nam</option>
+                                                <option value="NG02" selected>Mỹ</option>
+                                                <option value="NG03">Úc</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination-controls">
+                                <button id="prevPageBtn" class="btn-page disabled" onclick="changePage(-1)"><i class="fas fa-chevron-left"></i></button>
+                                <span id="currentPageInfo">Trang 1 / 2</span>
+                                <button id="nextPageBtn" class="btn-page" onclick="changePage(1)"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <div id="notification-panel" class="notification-panel">
+        <div class="panel-header">
+            <h3>Thông Báo Mới (3)</h3>
+            <span class="close-panel-btn" onclick="toggleNotificationMenu()">&times;</span>
+        </div>
+        <div class="panel-content">
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Đơn hàng mới #0012 vừa được tạo.</p>
+            </a>
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Tồn kho Thịt Bò Thăn Nội < 5kg.</p>
+            </a>
+            <a href="#" class="notification-item">
+                <i class="fas fa-comment"></i>
+                <p>Có 1 phản hồi mới cho sản phẩm Thịt Heo.</p>
+            </a>
+        </div>
+    </div>
+
+
+</div>
+<div id="addCategoryModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-tags"></i> Thêm Danh mục Sản phẩm</h3>
+            <span class="close-btn" onclick="closeModal('addCategoryModal')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="categoryName">Tên Danh mục:</label>
+                    <input type="text" id="categoryName" name="categoryName" required placeholder="Ví dụ: Thịt Heo Tươi">
+                </div>
+                <div class="form-group">
+                    <label for="categoryDescription">Mô tả (Tùy chọn):</label>
+                    <textarea id="categoryDescription" name="categoryDescription" rows="3" placeholder="Mô tả ngắn về danh mục này"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save"><i class="fas fa-plus"></i> Thêm mới</button>
+                    <button type="button" class="btn-cancel" onclick="closeModal('addCategoryModal')">Đóng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="addOriginModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-globe-asia"></i> Thêm Nguồn gốc Sản phẩm</h3>
+            <span class="close-btn" onclick="closeModal('addOriginModal')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="originName">Tên Nguồn gốc:</label>
+                    <input type="text" id="originName" name="originName" required placeholder="Ví dụ: Việt Nam">
+                </div>
+                <div class="form-group">
+                    <label for="originCode">Mã Nguồn gốc (Tùy chọn):</label>
+                    <input type="text" id="originCode" name="originCode" placeholder="Ví dụ: VN, US, AU">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save"><i class="fas fa-plus"></i> Thêm mới</button>
+                    <button type="button" class="btn-cancel" onclick="closeModal('addOriginModal')">Đóng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="../JavaScript/admin_quan_ly_danh_muc.js"></script>
+</body>
+</html>
