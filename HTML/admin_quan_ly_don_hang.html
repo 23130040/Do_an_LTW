@@ -5,6 +5,7 @@
     <title>Quản Lý Đơn Hàng</title>
     <link rel="stylesheet" href="../CSS/admin_quan_ly_don_hang-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
 <div class="admin-container">
@@ -15,17 +16,19 @@
         </div>
 
         <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
+            <div class="notification-wrapper" onclick="toggleNotificationMenu()">
+                <i class="fa-solid fa-bell notification-icon"></i>
+                <span class="notification-badge">3</span>
+            </div>
 
             <div class="user-dropdown">
                 <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
 
                 <div id="userMenuContent" class="dropdown-content">
-                    <a href="#"> Thông tin tài khoản</a>
-                    <a href="#"> Cài đặt cá nhân</a>
-                    <a href="#"> Quản lý vai trò</a>
+                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
+                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="logout-link"> Đăng xuất</a>
+                    <a href="trang_chu_chua_login.html" class="logout-link"> Đăng xuất</a>
                 </div>
             </div>
         </div>
@@ -35,14 +38,14 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
+                    <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
+                    <li><a href="admin_quan_ly_danh_muc.html"> Quản lý danh mục và nguồn gốc</a></li>
                     <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
                     <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
                     <li class="active"><a href="#"> Quản lý đơn hàng</a></li>
-                    <li><a href="admin_quan_ly_thanh_toan.html"> Quản lý thanh toán và doanh thu</a></li>
-                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
                     <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
+                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
                     <li><a href="admin_cau_hinh_he_thong.html"> Cấu hình hệ thống</a></li>
-                    <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
                 </ul>
             </nav>
         </aside>
@@ -56,8 +59,6 @@
 
                     <select name="status" class="filter-select">
                         <option value="">-- Trạng thái đơn --</option>
-                        <option value="pending">Chờ xác nhận</option>
-                        <option value="processing">Đang xử lý</option>
                         <option value="shipping">Đang giao hàng</option>
                         <option value="delivered">Đã giao hàng</option>
                         <option value="cancelled">Đã hủy</option>
@@ -99,13 +100,14 @@
                         <td>Nguyễn A<br>0901xxxx89</td>
                         <td>20/11/2023</td>
                         <td>350,000đ</td>
-                        <td><span>Chờ xác nhận</span></td>
+                        <td><span class="">Đang giao hàng</span></td>
                         <td><span class="status-badge status-unpaid">Chưa thanh toán</span></td>
                         <td>Standard</td>
                         <td>
-                            <button class="btn-sm btn-action view-detail" title="Xem chi tiết"><i class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-success update-status-btn" data-status="processing" title="Xác nhận & Chuyển xử lý"><i class="fas fa-check"></i></button>
-                            <button class="btn-sm btn-danger cancel-order" title="Hủy đơn hàng"><i class="fas fa-times"></i></button>
+                            <button class="btn-sm btn-action view-detail" title="Xem chi tiết"><i
+                                    class="fas fa-eye"></i></button>
+                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
+                                    class="fas fa-print"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -113,12 +115,13 @@
                         <td>Lê Thị B<br>0902xxxx67</td>
                         <td>19/11/2025</td>
                         <td>780,000đ</td>
-                        <td><span>Đang giao hàng</span></td>
+                        <td><span class="">Đang giao hàng</span></td>
                         <td><span class="status-badge status-paid">Đã thanh toán</span></td>
                         <td>Express (ID: DN345)</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i class="fas fa-print"></i></button>
+                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
+                                    class="fas fa-print"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -126,12 +129,13 @@
                         <td>Phạm Văn C<br>0903xxxx45</td>
                         <td>15/11/2025</td>
                         <td>1,200,000đ</td>
-                        <td><span class="status-badge status-delivered">Đã giao hàng</span></td>
+                        <td><span class="">Đã giao hàng</span></td>
                         <td><span class="status-badge status-paid">Đã thanh toán</span></td>
                         <td>Standard</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i class="fas fa-print"></i></button>
+                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
+                                    class="fas fa-print"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -139,7 +143,7 @@
                         <td>Trần D<br>0904xxxx23</td>
                         <td>10/11/2025</td>
                         <td>450,000đ</td>
-                        <td><span class="status-badge status-cancelled">Đã hủy</span></td>
+                        <td><span class="">Đã hủy</span></td>
                         <td><span class="status-badge status-unpaid">Chưa thanh toán</span></td>
                         <td>Standard</td>
                         <td>
@@ -151,12 +155,102 @@
             </div>
         </main>
     </div>
+    <!------------------- PHẦN THÔNG BÁO ----------------->
+    <div id="notification-panel" class="notification-panel">
+        <div class="panel-header">
+            <h3>Thông Báo Mới (3)</h3>
+            <span class="close-panel-btn" onclick="toggleNotificationMenu()">&times;</span>
+        </div>
+        <div class="panel-content">
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Đơn hàng mới #0012 vừa được tạo.</p>
+            </a>
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Tồn kho Thịt Bò Thăn Nội < 5kg.</p>
+            </a>
+            <a href="#" class="notification-item">
+                <i class="fas fa-comment"></i>
+                <p>Có 1 phản hồi mới cho sản phẩm Thịt Heo.</p>
+            </a>
+        </div>
+    </div>
 </div>
-<script>
-    function toggleUserMenu() {
-        document.getElementById("userMenuContent").classList.toggle("show");
-    }
-    // Logic đóng menu... (cần thêm vào script thực tế)
-</script>
+<!------------------- MODAL CHI TIẾT ĐƠN HÀNG ----------------->
+<div id="orderDetailModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Chi Tiết Đơn Hàng <span id="modalOrderId">#101</span></h3>
+            <span class="close-btn">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="summary-info">
+                <div class="summary-item">
+                    <p class="summary-label">Trạng thái Đơn hàng:</p>
+                    <p id="modalOrderStatus" class="status-badge status-shipping">Đang giao hàng</p>
+                </div>
+                <div class="summary-item">
+                    <p class="summary-label">Trạng thái Thanh toán:</p>
+                    <p id="modalPaymentStatus" class="status-badge status-unpaid">Chưa thanh toán</p>
+                </div>
+                <div class="summary-item">
+                    <p class="summary-label">Ngày đặt:</p>
+                    <p id="modalOrderDate">20/11/2023</p>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <h4><i class="fas fa-user"></i> Thông tin Khách hàng & Giao hàng</h4>
+                <div class="info-grid">
+                    <p><strong>Khách hàng:</strong> <span id="modalCustomerName">Nguyễn A</span></p>
+                    <p><strong>Điện thoại:</strong> <span id="modalCustomerPhone">0901xxxx89</span></p>
+                    <p><strong>Địa chỉ Giao hàng:</strong> <span id="modalShippingAddress">123 Đường ABC, Phường X, Quận Y, TP.HCM</span>
+                    </p>
+                    <p><strong>Phương thức vận chuyển:</strong> <span id="modalShippingMethod">Standard</span></p>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <h4><i class="fas fa-boxes"></i> Sản phẩm trong đơn hàng</h4>
+                <table class="product-table">
+                    <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>SL</th>
+                        <th>Tổng</th>
+                    </tr>
+                    </thead>
+                    <tbody id="modalProductList">
+                    <tr>
+                        <td>Thịt Bò Thăn Nội (300g)</td>
+                        <td>200,000đ</td>
+                        <td>1</td>
+                        <td>200,000đ</td>
+                    </tr>
+                    <tr>
+                        <td>Thịt Heo Ba Chỉ (500g)</td>
+                        <td>150,000đ</td>
+                        <td>1</td>
+                        <td>150,000đ</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="total-summary">
+                <p>Phụ phí (Shipping): <span>0đ</span></p>
+                <p>Mã giảm giá (Discount): <span>-0đ</span></p>
+                <h4 class="grand-total">Tổng thanh toán: <span id="modalGrandTotal">350,000đ</span></h4>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary close-btn-footer">Đóng</button>
+            <button type="button" class="btn btn-primary"><i class="fas fa-print"></i> In Hóa Đơn</button>
+        </div>
+    </div>
+</div>
+<script src="../JavaScript/admin_quan_ly_don_hang.js"></script>
 </body>
 </html>

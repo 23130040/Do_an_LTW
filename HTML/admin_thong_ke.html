@@ -15,17 +15,19 @@
         </div>
 
         <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
+            <div class="notification-wrapper" onclick="toggleNotificationMenu()">
+                <i class="fa-solid fa-bell notification-icon"></i>
+                <span class="notification-badge">3</span>
+            </div>
 
             <div class="user-dropdown">
                 <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
 
                 <div id="userMenuContent" class="dropdown-content">
-                    <a href="#"> Thông tin tài khoản</a>
-                    <a href="#"> Cài đặt cá nhân</a>
-                    <a href="#"> Quản lý vai trò</a>
+                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
+                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="logout-link"> Đăng xuất</a>
+                    <a href="trang_chu_chua_login.html" class="logout-link"> Đăng xuất</a>
                 </div>
             </div>
         </div>
@@ -35,19 +37,202 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
+                    <li class="active"><a href="#"> Thống kê và Phân tích </a></li>
+                    <li><a href="admin_quan_ly_danh_muc.html"> Quản lý danh mục và nguồn gốc</a></li>
                     <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
                     <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
                     <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
-                    <li><a href="admin_quan_ly_thanh_toan.html"> Quản lý thanh toán và doanh thu</a></li>
-                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
                     <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
+                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
                     <li><a href="admin_cau_hinh_he_thong.html"> Cấu hình hệ thống</a></li>
-                    <li class="active"><a href="#"> Thống kê và Phân tích </a></li>
                 </ul>
             </nav>
         </aside>
 
+        <main class="content">
+            <h2 class="page-title">Tổng Quan Thống Kê</h2>
 
+            <div class="kpi-row">
+                <div class="kpi-card bg-red">
+                    <div class="kpi-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="kpi-info">
+                        <span class="kpi-value">98.230.000₫</span>
+                        <span class="kpi-label">Doanh Thu Tháng</span>
+                    </div>
+                </div>
+                <div class="kpi-card bg-blue">
+                    <div class="kpi-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="kpi-info">
+                        <span class="kpi-value">1,280</span>
+                        <span class="kpi-label">Đơn Hàng Mới</span>
+                    </div>
+                </div>
+                <div class="kpi-card bg-yellow">
+                    <div class="kpi-icon"><i class="fas fa-user-plus"></i></div>
+                    <div class="kpi-info">
+                        <span class="kpi-value">2,500</span>
+                        <span class="kpi-label">Khách Hàng Mới</span>
+                    </div>
+                </div>
+                <div class="kpi-card bg-dark">
+                    <div class="kpi-icon"><i class="fas fa-boxes"></i></div>
+                    <div class="kpi-info">
+                        <span class="kpi-value">45</span>
+                        <span class="kpi-label">Mục Cần Nhập</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="widget-row full-width-widget">
+                <div class="widget-card">
+                    <h4><i class="fas fa-medal"></i> Top 5 Sản Phẩm Bán Chạy</h4>
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Sản Phẩm</th>
+                            <th>Đã Bán</th>
+                            <th>Doanh Thu</th>
+                            <th>Tỷ Trọng (%)</th>
+                            <th>Đánh Giá</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Thịt Bò Thăn Nội Cao Cấp (Mỹ)</td>
+                            <td>952</td>
+                            <td>238M</td>
+                            <td>25.1%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </td> </tr>
+                        <tr>
+                            <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
+                            <td>1,280</td>
+                            <td>153M</td>
+                            <td>16.2%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td> </tr>
+                        <tr>
+                            <td>Thịt Gà Ta Organic</td>
+                            <td>788</td>
+                            <td>95M</td>
+                            <td>10.0%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                        </td> </tr>
+                        <tr>
+                            <td>Cá Hồi Fillet Na Uy</td>
+                            <td>604</td>
+                            <td>181M</td>
+                            <td>19.1%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </td> </tr>
+                        <tr>
+                            <td>Gân Bò Úc Tươi</td>
+                            <td>1,010</td>
+                            <td>120M</td>
+                            <td>12.7%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </td> </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="widget-row two-cols">
+                <div class="widget-card">
+                    <h4><i class="fas fa-clipboard-list"></i> Trạng Thái Đơn Hàng</h4>
+                    <ul class="order-status-list">
+                        <li>
+                            <i class="fas fa-circle status-pending"></i>
+                            Đang Chờ Xác Nhận: <span>25 Đơn</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle status-processing"></i>
+                            Đang Xử Lý: <span>50 Đơn</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle status-shipped"></i>
+                            Đang Vận Chuyển: <span>120 Đơn</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle status-completed"></i>
+                            Đã Giao Thành Công: <span>1,085 Đơn</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle status-cancelled"></i>
+                            Đã Hủy: <span>15 Đơn</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="widget-card">
+                    <h4><i class="fas fa-money-check-alt"></i> Thống Kê Thanh Toán</h4>
+                    <ul class="payment-stats-list">
+                        <li>
+                            <i class="fas fa-money-bill-wave icon-cash"></i>
+                            Tiền Mặt (COD): <span class="value-cash">55.8%</span>
+                        </li>
+                        <li>
+                            <i class="fab fa-cc-visa icon-visa"></i>
+                            Thẻ Visa/Master: <span class="value-visa">20.1%</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-qrcode icon-qr"></i>
+                            QR Code (Ngân hàng): <span class="value-online">18.5%</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-wallet icon-e-wallet"></i>
+                            Ví Điện Tử (Momo, ZaloPay): <span class="value-wallet">5.6%</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-hourglass-half icon-pending"></i>
+                            Đang chờ thanh toán: <span>12 Đơn</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!------------------- PHẦN THÔNG BÁO ----------------->
+    <div id="notification-panel" class="notification-panel">
+        <div class="panel-header">
+            <h3>Thông Báo Mới (3)</h3>
+            <span class="close-panel-btn" onclick="toggleNotificationMenu()">&times;</span>
+        </div>
+        <div class="panel-content">
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Đơn hàng mới #0012 vừa được tạo.</p>
+            </a>
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Tồn kho Thịt Bò Thăn Nội < 5kg.</p>
+            </a>
+            <a href="#" class="notification-item">
+                <i class="fas fa-comment"></i>
+                <p>Có 1 phản hồi mới cho sản phẩm Thịt Heo.</p>
+            </a>
+        </div>
     </div>
 </div>
 <script src="../JavaScript/admin_thong_ke.js"></script>
