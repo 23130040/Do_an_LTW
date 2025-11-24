@@ -7,8 +7,9 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 18px;
+    font-size: 20px;
 }
+
 main {
     width: 100%;
     display: flex;
@@ -95,24 +96,7 @@ main {
     font-size: 16px;
     color: #666;
 }
-/* ------------------ ĐÁNH GIÁ ------------------ */
-.product-info .rating {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin: 5px 0 10px;
-}
 
-.product-info .rating i {
-    color: #f7b500;
-    font-size: 18px;
-}
-
-.product-info .rating span {
-    margin-left: 6px;
-    font-size: 16px;
-    color: #444;
-}
 /* Giá */
 .price-box {
     display: flex;
@@ -136,7 +120,24 @@ main {
     color: #008000;
     font-weight: bold;
 }
+/* ------------------ ĐÁNH GIÁ ------------------ */
+.product-info .rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 5px 0 10px;
+}
 
+.product-info .rating i {
+    color: #f7b500;
+    font-size: 18px;
+}
+
+.product-info .rating span {
+    margin-left: 6px;
+    font-size: 16px;
+    color: #444;
+}
 /* Lựa chọn */
 .section {
     display: flex;
@@ -205,24 +206,27 @@ main {
     display: flex;
     gap: 12px;
     margin-top: 10px;
+    width: 100%;
 }
 
+/* Thêm chung cho cả nút */
 .add-cart,
 .buy-now {
     flex: 1;
-    padding: 12px;
+    padding: 12px 0;
     border-radius: 8px;
-    cursor: pointer;
     font-weight: bold;
     font-size: 16px;
-    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: .2s;
 }
 
+/* Thêm vào giỏ hàng */
 .add-cart {
     color: #cc0000;
     background: #fff;
     border: 2px solid #cc0000;
-    transition: .2s;
 }
 
 .add-cart:hover {
@@ -230,10 +234,15 @@ main {
     color: #fff;
 }
 
+/* Mua ngay */
 .buy-now {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: #fff;
     background: #cc0000;
-    transition: .2s;
+    border: none;
+    text-decoration: none;
 }
 
 .buy-now:hover {
@@ -272,6 +281,8 @@ main {
     width: 100%;
     background: #f7f7f7;
     padding-bottom: 40px;
+    margin-bottom: 0;
+
 }
 
 .product-comments {
@@ -346,6 +357,27 @@ main {
     font-size: 16px;
     color: #333;
 }
+.stars i {
+    color: #f8b400;
+    margin-left: 2px;
+    font-size: 14px;
+}
+
+
+/* Nút xem thêm */
+.see-more {
+    text-align: right;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0,0,0,.35);
+    cursor: pointer;
+    margin-top: 10px;
+    transition: .2s;
+}
+
+.see-more:hover {
+    color: rgba(0,0,0,.55);
+}
 /* ================= xem them binh luan ================= */
 
 .popup-overlay {
@@ -410,48 +442,37 @@ main {
 .close-popup:hover {
     background: #cc2e3c;
 }
-/* Nút xem thêm */
-.see-more {
-    text-align: right;
-    font-size: 16px;
-    font-weight: 600;
-    color: rgba(0,0,0,.35);
-    cursor: pointer;
-    margin-top: 10px;
-    transition: .2s;
-}
-
-.see-more:hover {
-    color: rgba(0,0,0,.55);
-}
 
 /* ======================= CAM KẾT ======================= */
 .features-section {
-    background: #fff;
-    margin-top: 40px;
-    padding: 60px 0 70px;
+    width: 100%;
+    padding: 40px 0;
     border-top: 1px solid #eee;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-top: 0;
 }
 
 .features-container {
     width: 95%;
+    max-width: 1200px; /* tùy chỉnh theo layout */
     margin: 0 auto;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap; /* giữ 4 item thẳng hàng */
     text-align: center;
 }
-
 .feature-item {
-    flex: 1;
-    min-width: 180px;
+    flex: 1; /* mỗi item chiếm cùng 1 phần */
+    min-width: 200px; /* tránh quá nhỏ */
+    max-width: 250px; /* tránh quá rộng */
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: .3s;
 }
+
 
 .feature-item i {
     font-size: 50px;
@@ -511,7 +532,7 @@ main {
     align-items: center;
     justify-content: center;
     position: absolute;
-    transform: translateX(calc(50% + 50px));
+    transform: translateX(calc(50% + 30px));
 }
 
 #menubar .center ul{

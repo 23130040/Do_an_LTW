@@ -7,7 +7,7 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 main{
@@ -19,12 +19,11 @@ main{
 /* ======================= Nội dung ===================== */
 .return-form {
     max-width: 800px;
-    width: 100%;       /* co giãn theo container */
+    width: 100%;
     margin: 20px auto;
     font-family: Arial, sans-serif;
 }
 
-/* Section bo tròn + shadow */
 .section {
     background: #fff;
     padding: 20px;
@@ -80,7 +79,6 @@ main{
     color: #555;
 }
 
-/* FORM INPUTS */
 .form-label {
     display: block;
     font-size: 14px;
@@ -125,7 +123,6 @@ main{
     margin-bottom: 20px;
 }
 
-/* từng dòng trong phần hoàn tiền */
 .refund-row {
     display: flex;
     align-items: center;
@@ -133,7 +130,6 @@ main{
     margin-bottom: 15px;
 }
 
-/* label bên trái */
 .refund-row span:first-child {
     flex: 0 0 180px;
     white-space: nowrap;
@@ -169,7 +165,6 @@ main{
     font-size: 15px;
 }
 
-/* Đảm bảo nút Sửa nằm phải cùng hàng */
 .edit {
     margin-left: auto;
     color: #0c7bdc;
@@ -177,8 +172,6 @@ main{
     font-weight: 600;
 }
 
-
-/* Submit */
 .submit-container {
     text-align: right;
     margin-top: 25px;
@@ -198,9 +191,6 @@ main{
 .submit-btn:hover {
     background: #d63c1d;
 }
-
-
-/* ======================= HEADER ======================= */
 /* ======= MENUBAR ======= */
 #menubar{
     height: 70px;
@@ -236,7 +226,7 @@ main{
     align-items: center;
     justify-content: center;
     position: absolute;
-    transform: translateX(calc(50% + 50px));
+    transform: translateX(calc(50% + 30px));
 }
 
 #menubar .center ul{
@@ -279,6 +269,7 @@ main{
     color: #8e0000 !important;
     transition: color 0.25s;
 }
+
 #searchBar{
     display: flex;
     gap: 5px;
@@ -287,9 +278,9 @@ main{
 #input-searchBar,
 #close-searchBar {
     display: none;
-    transition: 0.25s;
+    transition: all 0.25s;
 }
-#input-searchBar.active{
+#input-searchBar.active {
     display: block;
     width: 200px;
     padding: 5px 10px;
