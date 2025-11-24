@@ -7,7 +7,7 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 main{
@@ -19,12 +19,10 @@ main{
 /* ======================= Nội dung ===================== */
 .return-form {
     max-width: 800px;
-    width: 100%;       /* co giãn theo container */
+    width: 100%;
     margin: 20px auto;
     font-family: Arial, sans-serif;
 }
-
-/* Section bo tròn + shadow */
 .section {
     background: #fff;
     padding: 20px;
@@ -79,8 +77,6 @@ main{
 .product-qty {
     color: #555;
 }
-
-/* FORM INPUTS */
 .form-label {
     display: block;
     font-size: 14px;
@@ -124,15 +120,12 @@ main{
     font-size: 20px;
     margin-bottom: 20px;
 }
-
-/* từng dòng trong phần hoàn tiền */
 .refund-row {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 15px;
 }
-
 /* label bên trái */
 .refund-row span:first-child {
     flex: 0 0 180px;
@@ -168,15 +161,12 @@ main{
     background: #fafafa;
     font-size: 15px;
 }
-
-/* Đảm bảo nút Sửa nằm phải cùng hàng */
 .edit {
     margin-left: auto;
     color: #0c7bdc;
     cursor: pointer;
     font-weight: 600;
 }
-
 
 /* Submit */
 .submit-container {
@@ -198,9 +188,6 @@ main{
 .submit-btn:hover {
     background: #d63c1d;
 }
-
-
-/* ======================= HEADER ======================= */
 /* ======= MENUBAR ======= */
 #menubar{
     height: 70px;
@@ -287,9 +274,15 @@ main{
 #input-searchBar,
 #close-searchBar {
     display: none;
+<<<<<<< HEAD
+    transition: all 0.25s;
+}
+#input-searchBar.active {
+=======
     transition: 0.25s;
 }
 #input-searchBar.active{
+>>>>>>> a70c9927fac177b1b00bcc97b77978c91134e6c7
     display: block;
     width: 200px;
     padding: 5px 10px;
@@ -434,3 +427,4 @@ main{
     background-color: #222;
     font-size: 14px;
 }
+

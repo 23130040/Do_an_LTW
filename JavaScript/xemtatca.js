@@ -17,8 +17,7 @@ function setupSearchBox() {
     const searchLabel = document.getElementById("search-label");
     const login = document.querySelector(".login");
 
-
-// Khi click vào Ô tìm kiếm hoặc icon
+    // Khi click vào Ô tìm kiếm hoặc icon
     searchLabel.addEventListener("click", () => {
         searchBox.classList.add("active");
         searchInput.focus();
@@ -26,7 +25,7 @@ function setupSearchBox() {
         login.style.display = "none";
     });
 
-// Khi bấm dấu X để đóng search
+    // Khi bấm dấu X để đóng search
     searchClose.addEventListener("click", () => {
         searchBox.classList.remove("active");
         searchInput.blur();
@@ -66,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setupStickyMenu();
 });
 
-
 // Import header → xong rồi mới gắn sự kiện vào
 includeHTML("#header-container", "header.html", () => {
     setupSearchBox();
@@ -87,7 +85,6 @@ function updateBannerFromAttributes() {
     if (desc) document.getElementById("greet-desc").textContent = desc;
 }
 
-
 // Banner import nếu cần
 includeHTML("#banner-container", "banner.html", () => {
     updateBannerFromAttributes();
@@ -107,109 +104,77 @@ function scrollToRight(button) {
 }
 
 
-// =================== PHẦN XỬ LÍ DANH MỤC ===================
-const categories = document.querySelectorAll('.category');
-categories.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const page = btn.getAttribute('data-page');
-        if (page) {
-            window.location.href = page;
-        }
-    });
-});
-
-function showSearchBar(){
-    const searchBarContainer = document.getElementById("searchBar");
-    searchBarContainer.classList.add("active");
-    const inputSearchbar = document.getElementById("input-searchBar");
-    inputSearchbar.classList.add("active");
-    const closeMenuBar = document.getElementById("close-searchBar");
-    closeMenuBar.classList.add("active");
-}
-function closeSearchBar(){
-    const searchBarContainer = document.getElementById("searchBar");
-    searchBarContainer.classList.remove("active");
-    const inputSearchbar = document.getElementById("input-searchBar");
-    inputSearchbar.classList.remove("active");
-    const closeMenuBar = document.getElementById("close-searchBar");
-    closeMenuBar.classList.remove("active");
-}
-
+// =================== XỬ LÍ DANH MỤC & SẮP XẾP CHUNG ===================
 document.addEventListener("DOMContentLoaded", () => {
     const categoryButtons = document.querySelectorAll(".category");
     const products = document.querySelectorAll(".product-item");
-    const viewAllBtn = document.getElementById("viewAllBtn");
-    const filterSort = document.querySelector(".filter-sort");
+    const customSelect = document.querySelector(".custom-select");
+    const selected = customSelect.querySelector(".selected");
+    const selectItems = customSelect.querySelectorAll(".select-list li");
 
-    // ======= MẶC ĐỊNH HIỂN THỊ TẤT CẢ SẢN PHẨM =======
     let currentCategory = "all";
-    filterProducts(currentCategory);
+    const originalOrder = Array.from(products);
 
-    // ======= XỬ LÍ KHI CLICK DANH MỤC =======
-    categoryButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            currentCategory = btn.dataset.category;
-            filterProducts(currentCategory);
-        });
-    });
+    function getPrice(product) {
+        const priceText = product.querySelector(".price .new")?.textContent || "0";
+        return parseInt(priceText.replace(/\D/g, ""), 10);
+    }
 
-    // ======= HÀM LỌC SẢN PHẨM THEO DANH MỤC =======
     function filterProducts(category) {
-        products.forEach(product => {
-            const productCategory = product.getAttribute("data-category");
+        currentCategory = category;
 
-            // Hiển thị tất cả nếu chọn "all"
-            if (category === "all") {
-                product.style.display = "flex";
+        products.forEach(p => {
+            if (category === "all" || p.dataset.category === category) {
+                p.style.display = "flex";
             } else {
-                product.style.display = (productCategory === category) ? "flex" : "none";
+                p.style.display = "none";
             }
         });
 
-        sortProducts(filterSort ? filterSort.value : "Mặc định");
+        sortProducts(selected.dataset.value);
     }
 
-    // ======= HÀM TÁCH SỐ GIÁ =======
-    function extractPrice(priceText) {
-        return parseFloat(priceText.replace(/[^\d]/g, ""));
+    function sortProducts(sortValue) {
+        const parent = document.querySelector(".product-list");
+        if (!parent) return;
+
+        const available = Array.from(products)
+            .filter(p => p.style.display !== "none" && !p.classList.contains("out-of-stock"));
+        const outOfStock = Array.from(products)
+            .filter(p => p.style.display !== "none" && p.classList.contains("out-of-stock"));
+
+        if (sortValue === "up") {
+            available.sort((a, b) => getPrice(a) - getPrice(b));
+        } else if (sortValue === "down") {
+            available.sort((a, b) => getPrice(b) - getPrice(a));
+        } else if (sortValue === "default") {
+            available.sort((a, b) => originalOrder.indexOf(a) - originalOrder.indexOf(b));
+        }
+
+        available.forEach(p => parent.appendChild(p));
+        outOfStock.forEach(p => parent.appendChild(p));
     }
 
-    // ======= HÀM SẮP XẾP SẢN PHẨM =======
-    function sortProducts(order) {
-        const container = document.querySelector(".product-list");
-        if (!container) return;
-
-        const visibleProducts = Array.from(products).filter(p => p.style.display !== "none");
-        if (visibleProducts.length === 0) return;
-
-        visibleProducts.sort((a, b) => {
-            const priceA = extractPrice(a.querySelector(".price").innerText);
-            const priceB = extractPrice(b.querySelector(".price").innerText);
-            if (order === "Giá tăng dần") return priceA - priceB;
-            if (order === "Giá giảm dần") return priceB - priceA;
-            return 0;
+    categoryButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            categoryButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            filterProducts(btn.dataset.category);
         });
+    });
 
-        visibleProducts.forEach(p => container.appendChild(p));
-    }
-
-    // ======= XỬ LÍ KHI ĐỔI LỌC GIÁ =======
-    if (filterSort) {
-        filterSort.addEventListener("change", () => {
-            sortProducts(filterSort.value);
+    selected.addEventListener("click", () => customSelect.classList.toggle("open"));
+    selectItems.forEach(item => {
+        item.addEventListener("click", () => {
+            selected.textContent = item.textContent;
+            selected.dataset.value = item.dataset.value;
+            customSelect.classList.remove("open");
+            sortProducts(item.dataset.value);
         });
-    }
+    });
+    document.addEventListener("click", e => {
+        if (!customSelect.contains(e.target)) customSelect.classList.remove("open");
+    });
 
-    // ======= XỬ LÍ NÚT "XEM TẤT CẢ" =======
-    if (viewAllBtn) {
-        viewAllBtn.addEventListener("click", () => {
-            window.location.href = "../HTML/XemTatCa.html";
-        });
-    }
-
-    //Xử lý thanh tìm kiếm
-    const openSearchBar = document.getElementById("open-searchBar");
-    openSearchBar.addEventListener("click", showSearchBar);
-    const closeSearchBarBtn = document.getElementById("close-searchBar");
-    closeSearchBarBtn.addEventListener("click", closeSearchBar);
+    filterProducts("all");
 });

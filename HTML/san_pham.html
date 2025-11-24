@@ -58,7 +58,7 @@
     <!-- ================= FLASH SALE ================= -->
     <section class="flash-sale">
         <div class="flash-header">
-            <h2>🔥 Flash Sale</h2>
+            <h2><i class="fas fa-fire"></i> Flash Sale</h2>
         </div>
 
         <div class="flash-products">
@@ -145,10 +145,20 @@
                 <button class="category" data-category="ga">Thịt gà</button>
                 <button class="category" data-category="bo">Thịt bò</button>
             </div>
-            <select class="filter-sort">
-                <option>Mặc định</option>
-                <option>Giá tăng dần</option>
-                <option>Giá giảm dần</option>
+            <div class="custom-select">
+                <div class="selected">Mặc định</div>
+                <ul class="select-list">
+                    <li data-value="default">Mặc định</li>
+                    <li data-value="up">Giá tăng dần</li>
+                    <li data-value="down">Giá giảm dần</li>
+                </ul>
+            </div>
+
+            <!-- select thật để giữ giá trị gửi form (ẩn đi) -->
+            <select id="sortSelect" style="display:none;">
+                <option value="default">Mặc định</option>
+                <option value="up">Giá tăng dần</option>
+                <option value="down">Giá giảm dần</option>
             </select>
         </div>
     </div>
@@ -461,7 +471,7 @@
                     <li><a href="san_pham.html">Sản Phẩm</a></li>
                     <li><a href="gioi_thieu.html">Giới Thiệu</a></li>
                     <li><a href="tin_tuc.html">Tin Tức</a></li>
-                    <li><a href="#">Chính Sách Đổi Trả</a></li>
+                    <li><a href="chinhsachdoitra.html">Chính Sách Đổi Trả</a></li>
                 </ul>
             </div>
 

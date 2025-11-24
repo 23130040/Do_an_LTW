@@ -102,9 +102,9 @@
             <div class="section">
                 <p class="label">Số lượng:</p>
                 <div class="qty">
-                    <button class="qty-btn">-</button>
+                    <button class="qty-btn minus">-</button>
                     <input type="text" value="1">
-                    <button class="qty-btn">+</button>
+                    <button class="qty-btn plus">+</button>
                 </div>
             </div>
 
@@ -141,53 +141,119 @@
 
         <div class="comments-list">
             <div class="comment-item">
-                <p class="user"><strong>Nguyễn Minh Hậu</strong> · 1 ngày trước</p>
+                <p class="user">
+                    <strong>Nguyễn Minh Hậu</strong> · 1 ngày trước
+                    <span class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+            </span>
+                </p>
                 <p class="content">Sản phẩm chất lượng, đáng mua!</p>
             </div>
 
             <div class="comment-item">
-                <p class="user"><strong>Trần Thị Ngọc</strong> · 2 ngày trước</p>
+                <p class="user">
+                    <strong>Trần Thị Ngọc</strong> · 2 ngày trước
+                    <span class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </span>
+                </p>
                 <p class="content">Tiền nào của đó, thịt ăn rất mềm và ngon</p>
             </div>
 
             <div class="comment-item">
-                <p class="user"><strong>Lê Minh Hiếu</strong> · 3 ngày trước</p>
+                <p class="user">
+                    <strong>Lê Minh Hiếu</strong> · 3 ngày trước
+                    <span class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <i class="fa-regular fa-star"></i>
+            </span>
+                </p>
                 <p class="content">Khá ưng, nhưng giao hàng hơi lâu</p>
             </div>
         </div>
         <div class="see-more">Xem thêm</div>
     </section>
-<!-- POPUP XEM THÊM BÌNH LUẬN -->
-<div id="comment-popup" class="popup-overlay">
-    <div class="popup-content">
-        <h3>Tất cả bình luận</h3>
+    <!-- POPUP XEM THÊM BÌNH LUẬN -->
+    <div id="comment-popup" class="popup-overlay">
+        <div class="popup-content">
+            <h3>Tất cả bình luận</h3>
 
-        <div class="popup-comments">
-            <div class="comment-item">
-                <p class="user"><strong>Nguyễn Minh Hậu</strong> · 1 ngày trước</p>
-                <p class="content">Sản phẩm chất lượng, đáng mua!</p>
+            <div class="popup-comments">
+
+                <div class="comment-item">
+                    <p class="user">
+                        <strong>Nguyễn Minh Hậu</strong> · 1 ngày trước
+                        <span class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+            </span>
+                    </p>
+                    <p class="content">Sản phẩm chất lượng, đáng mua!</p>
+                </div>
+
+                <div class="comment-item">
+                    <p class="user">
+                        <strong>Trần Thị Ngọc</strong> · 2 ngày trước
+                        <span class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </span>
+                    </p>
+                    <p class="content">Tiền nào của đó, thịt ăn rất mềm và ngon</p>
+                </div>
+
+                <div class="comment-item">
+                    <p class="user">
+                        <strong>Lê Minh Hiếu</strong> · 3 ngày trước
+                        <span class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <i class="fa-regular fa-star"></i>
+            </span>
+                    </p>
+                    <p class="content">Khá ưng, nhưng giao hàng hơi lâu</p>
+                </div>
+
+                <div class="comment-item">
+                    <p class="user">
+                        <strong>Phạm Lưu Quang</strong> · 3 ngày trước
+                        <span class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </span>
+                    </p>
+                    <p class="content">Ngon! đã mua mấy lần từ CleanMeat nhưng chưa bao giờ thất vọng</p>
+                </div>
+
             </div>
 
-            <div class="comment-item">
-                <p class="user"><strong>Trần Thị Ngọc</strong> · 2 ngày trước</p>
-                <p class="content">Tiền nào của đó, thịt ăn rất mềm và ngon</p>
-            </div>
-
-            <div class="comment-item">
-                <p class="user"><strong>Lê Minh Hiếu</strong> · 3 ngày trước</p>
-                <p class="content">Khá ưng, nhưng giao hàng hơi lâu</p>
-            </div>
-
-            <div class="comment-item">
-                <p class="user"><strong>Phạm Lưu Quang</strong> · 3 ngày trước</p>
-                <p class="content">Ngon! đã mua mấy lần từ CleanMeat nhưng chưa bao giờ thất vọng </p>
-            </div>
-
+            <button class="close-popup">Đóng</button>
         </div>
-
-        <button class="close-popup">Đóng</button>
     </div>
-</div>
+</main>
+
 <!-- PHẦN CAM KẾT DỊCH VỤ -->
 <section class="features-section">
     <div class="features-container">
@@ -209,7 +275,12 @@
         </div>
     </div>
 </section>
+<<<<<<< HEAD
+
+
+=======
 </main>
+>>>>>>> a70c9927fac177b1b00bcc97b77978c91134e6c7
 <!-- ============ CHÂN TRANG / FOOTER ============ -->
 <footer class="main-footer">
     <div class="footer-container">
@@ -231,7 +302,7 @@
                 <li><a href="san_pham.html">Sản phẩm</a></li>
                 <li><a href="gioi_thieu.html">Giới thiệu</a></li>
                 <li><a href="tin_tuc.html">Tin tức</a></li>
-                <li><a href="#">Chính sách đổi trả</a></li>
+                <li><a href="chinhsachdoitra.html">Chính sách đổi trả</a></li>
             </ul>
         </div>
 

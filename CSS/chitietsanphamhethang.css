@@ -95,7 +95,7 @@ main {
     font-size: 16px;
     color: #666;
 }
-/* ------------------ ĐÁNH GIÁ ------------------ */
+/* ------------------ ĐÁNH GIÁ SẢN PHẨM------------------ */
 .product-info .rating {
     display: flex;
     align-items: center;
@@ -136,7 +136,24 @@ main {
     color: #008000;
     font-weight: bold;
 }
+/* ------------------ ĐÁNH GIÁ ------------------ */
+.product-info .rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 5px 0 10px;
+}
 
+.product-info .rating i {
+    color: #f7b500;
+    font-size: 18px;
+}
+
+.product-info .rating span {
+    margin-left: 6px;
+    font-size: 16px;
+    color: #444;
+}
 /* Lựa chọn */
 .section {
     display: flex;
@@ -205,24 +222,27 @@ main {
     display: flex;
     gap: 12px;
     margin-top: 10px;
+    width: 100%;
 }
 
+/* Thêm chung cho cả nút */
 .add-cart,
 .buy-now {
     flex: 1;
-    padding: 12px;
+    padding: 12px 0;
     border-radius: 8px;
-    cursor: pointer;
     font-weight: bold;
     font-size: 16px;
-    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: .2s;
 }
 
+/* Thêm vào giỏ hàng */
 .add-cart {
     color: #cc0000;
     background: #fff;
     border: 2px solid #cc0000;
-    transition: .2s;
 }
 
 .add-cart:hover {
@@ -230,10 +250,15 @@ main {
     color: #fff;
 }
 
+/* Mua ngay */
 .buy-now {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: #fff;
     background: #cc0000;
-    transition: .2s;
+    border: none;
+    text-decoration: none;
 }
 
 .buy-now:hover {
@@ -272,6 +297,8 @@ main {
     width: 100%;
     background: #f7f7f7;
     padding-bottom: 40px;
+    margin-bottom: 0;
+
 }
 
 .product-comments {
@@ -346,8 +373,13 @@ main {
     font-size: 16px;
     color: #333;
 }
-/* ================= xem them binh luan ================= */
+.stars i {
+    color: #f8b400;
+    margin-left: 2px;
+    font-size: 14px;
+}
 
+/* ================= xem them binh luan ================= */
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -424,34 +456,101 @@ main {
 .see-more:hover {
     color: rgba(0,0,0,.55);
 }
+/* ================= xem them binh luan ================= */
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.popup-content {
+    background: #fff;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 85%;
+    padding: 30px;
+    border-radius: 12px;
+    overflow-y: auto;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
+
+/* TIÊU ĐỀ */
+.popup-content h3 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* CÁC COMMENT */
+.popup-comments .comment-item {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #e3e3e3;
+}
+
+.popup-comments .user {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+/* NÚT ĐÓNG */
+.close-popup {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: #e63946;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.close-popup:hover {
+    background: #cc2e3c;
+}
 
 /* ======================= CAM KẾT ======================= */
 .features-section {
-    background: #fff;
-    margin-top: 40px;
-    padding: 60px 0 70px;
+    width: 100%;
+    padding: 40px 0;
     border-top: 1px solid #eee;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-top: 0;
 }
 
 .features-container {
     width: 95%;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
     text-align: center;
 }
-
 .feature-item {
     flex: 1;
-    min-width: 180px;
+    min-width: 200px;
+    max-width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: .3s;
 }
+
 
 .feature-item i {
     font-size: 50px;
@@ -476,7 +575,6 @@ main {
     color: #ff4b4b;
 }
 /***************Menu*******************/
-/* ======= MENUBAR ======= */
 #menubar{
     height: 70px;
     background-color: #343A40;
