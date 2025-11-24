@@ -23,7 +23,6 @@ main{
     margin: 20px auto;
     font-family: Arial, sans-serif;
 }
-
 .section {
     background: #fff;
     padding: 20px;
@@ -78,7 +77,6 @@ main{
 .product-qty {
     color: #555;
 }
-
 .form-label {
     display: block;
     font-size: 14px;
@@ -122,14 +120,13 @@ main{
     font-size: 20px;
     margin-bottom: 20px;
 }
-
 .refund-row {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 15px;
 }
-
+/* label bên trái */
 .refund-row span:first-child {
     flex: 0 0 180px;
     white-space: nowrap;
@@ -164,7 +161,6 @@ main{
     background: #fafafa;
     font-size: 15px;
 }
-
 .edit {
     margin-left: auto;
     color: #0c7bdc;
@@ -172,6 +168,7 @@ main{
     font-weight: 600;
 }
 
+/* Submit */
 .submit-container {
     text-align: right;
     margin-top: 25px;
@@ -226,7 +223,7 @@ main{
     align-items: center;
     justify-content: center;
     position: absolute;
-    transform: translateX(calc(50% + 30px));
+    transform: translateX(calc(50% + 50px));
 }
 
 #menubar .center ul{
@@ -269,7 +266,6 @@ main{
     color: #8e0000 !important;
     transition: color 0.25s;
 }
-
 #searchBar{
     display: flex;
     gap: 5px;
@@ -278,9 +274,15 @@ main{
 #input-searchBar,
 #close-searchBar {
     display: none;
+<<<<<<< HEAD
     transition: all 0.25s;
 }
 #input-searchBar.active {
+=======
+    transition: 0.25s;
+}
+#input-searchBar.active{
+>>>>>>> a70c9927fac177b1b00bcc97b77978c91134e6c7
     display: block;
     width: 200px;
     padding: 5px 10px;
@@ -425,3 +427,4 @@ main{
     background-color: #222;
     font-size: 14px;
 }
+

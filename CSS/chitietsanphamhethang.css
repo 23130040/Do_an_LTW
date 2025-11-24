@@ -7,9 +7,8 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 20px;
+    font-size: 18px;
 }
-
 main {
     width: 100%;
     display: flex;
@@ -96,7 +95,24 @@ main {
     font-size: 16px;
     color: #666;
 }
+/* ------------------ ĐÁNH GIÁ SẢN PHẨM------------------ */
+.product-info .rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 5px 0 10px;
+}
 
+.product-info .rating i {
+    color: #f7b500;
+    font-size: 18px;
+}
+
+.product-info .rating span {
+    margin-left: 6px;
+    font-size: 16px;
+    color: #444;
+}
 /* Giá */
 .price-box {
     display: flex;
@@ -363,7 +379,69 @@ main {
     font-size: 14px;
 }
 
+/* ================= xem them binh luan ================= */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+}
 
+.popup-content {
+    background: #fff;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 85%;
+    padding: 30px;
+    border-radius: 12px;
+    overflow-y: auto;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
+
+/* TIÊU ĐỀ */
+.popup-content h3 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* CÁC COMMENT */
+.popup-comments .comment-item {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #e3e3e3;
+}
+
+.popup-comments .user {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+/* NÚT ĐÓNG */
+.close-popup {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: #e63946;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.close-popup:hover {
+    background: #cc2e3c;
+}
 /* Nút xem thêm */
 .see-more {
     text-align: right;
@@ -455,18 +533,18 @@ main {
 
 .features-container {
     width: 95%;
-    max-width: 1200px; /* tùy chỉnh theo layout */
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: nowrap; /* giữ 4 item thẳng hàng */
+    flex-wrap: nowrap;
     text-align: center;
 }
 .feature-item {
-    flex: 1; /* mỗi item chiếm cùng 1 phần */
-    min-width: 200px; /* tránh quá nhỏ */
-    max-width: 250px; /* tránh quá rộng */
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -497,7 +575,6 @@ main {
     color: #ff4b4b;
 }
 /***************Menu*******************/
-/* ======= MENUBAR ======= */
 #menubar{
     height: 70px;
     background-color: #343A40;
@@ -532,7 +609,7 @@ main {
     align-items: center;
     justify-content: center;
     position: absolute;
-    transform: translateX(calc(50% + 30px));
+    transform: translateX(calc(50% + 50px));
 }
 
 #menubar .center ul{

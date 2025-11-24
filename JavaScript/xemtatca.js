@@ -103,6 +103,7 @@ function scrollToRight(button) {
     list.scrollBy({ left: 300, behavior: 'smooth' });
 }
 
+
 // =================== XỬ LÍ DANH MỤC & SẮP XẾP CHUNG ===================
 document.addEventListener("DOMContentLoaded", () => {
     const categoryButtons = document.querySelectorAll(".category");
@@ -171,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
             sortProducts(item.dataset.value);
         });
     });
-
     document.addEventListener("click", e => {
         if (!customSelect.contains(e.target)) customSelect.classList.remove("open");
     });

@@ -7,7 +7,7 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 main {
@@ -454,18 +454,18 @@ main {
 
 .features-container {
     width: 95%;
-    max-width: 1200px; /* tùy chỉnh theo layout */
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: nowrap; /* giữ 4 item thẳng hàng */
+    flex-wrap: nowrap;
     text-align: center;
 }
 .feature-item {
-    flex: 1; /* mỗi item chiếm cùng 1 phần */
-    min-width: 200px; /* tránh quá nhỏ */
-    max-width: 250px; /* tránh quá rộng */
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -495,7 +495,6 @@ main {
     transform: scale(1.1);
     color: #ff4b4b;
 }
-/***************Menu*******************/
 /* ======= MENUBAR ======= */
 #menubar{
     height: 70px;
@@ -531,7 +530,7 @@ main {
     align-items: center;
     justify-content: center;
     position: absolute;
-    transform: translateX(calc(50% + 30px));
+    transform: translateX(calc(50% + 50px));
 }
 
 #menubar .center ul{
