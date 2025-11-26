@@ -37,12 +37,12 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
+                    <li class="active"><a href="#"> Thống kê và Phân tích </a></li>
                     <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
                     <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
                     <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
                     <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
                     <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
-                    <li class="active"><a href="#"> Thống kê và Phân tích </a></li>
                     <li><a href="admin_cau_hinh_he_thong.html"> Cấu hình hệ thống</a></li>
                 </ul>
             </nav>
@@ -82,34 +82,8 @@
                 </div>
             </div>
 
-            <div class="chart-section">
-                <div class="chart-header">
-                    <h4>Doanh Thu & Lượt Truy Cập</h4>
-                    <div class="time-filter">
-                        <button class="filter-btn active">Tuần</button>
-                        <button class="filter-btn">Tháng</button>
-                        <button class="filter-btn">Năm</button>
-                    </div>
-                </div>
-                <div class="chart-placeholder">
-                </div>
-                <div class="chart-summary">
-                    <div class="summary-item">
-                        <span class="summary-label">Tổng lượt truy cập</span>
-                        <span class="summary-value">35K</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Khách hàng mới (Tỷ lệ)</span>
-                        <span class="summary-value">12.500 (35%)</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Tỷ lệ thoát (Bounce Rate)</span>
-                        <span class="summary-value">40.15%</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="widget-row three-cols">
+            <div class="widget-row full-width-widget">
                 <div class="widget-card">
                     <h4><i class="fas fa-medal"></i> Top 5 Sản Phẩm Bán Chạy</h4>
                     <table class="data-table">
@@ -118,33 +92,72 @@
                             <th>Sản Phẩm</th>
                             <th>Đã Bán</th>
                             <th>Doanh Thu</th>
+                            <th>Tỷ Trọng (%)</th>
+                            <th>Đánh Giá</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>Thịt Bò Thăn Nội Cao Cấp (Mỹ)</td>
                             <td>952</td>
-                            <td>238M ₫</td>
-                        </tr>
+                            <td>238M</td>
+                            <td>25.1%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </td> </tr>
                         <tr>
                             <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
                             <td>1,280</td>
-                            <td>153M ₫</td>
-                        </tr>
+                            <td>153M</td>
+                            <td>16.2%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td> </tr>
                         <tr>
                             <td>Thịt Gà Ta Organic</td>
                             <td>788</td>
-                            <td>95M ₫</td>
-                        </tr>
+                            <td>95M</td>
+                            <td>10.0%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                        </td> </tr>
                         <tr>
                             <td>Cá Hồi Fillet Na Uy</td>
                             <td>604</td>
-                            <td>181M ₫</td>
-                        </tr>
+                            <td>181M</td>
+                            <td>19.1%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </td> </tr>
+                        <tr>
+                            <td>Gân Bò Úc Tươi</td>
+                            <td>1,010</td>
+                            <td>120M</td>
+                            <td>12.7%</td> <td>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </td> </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
 
+            <div class="widget-row two-cols">
                 <div class="widget-card">
                     <h4><i class="fas fa-clipboard-list"></i> Trạng Thái Đơn Hàng</h4>
                     <ul class="order-status-list">

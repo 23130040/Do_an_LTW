@@ -38,12 +38,12 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
+                    <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
                     <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
                     <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
                     <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
                     <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
                     <li class="active"><a href="#"> Quản lý đánh giá và phản hồi</a></li>
-                    <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
                     <li><a href="admin_cau_hinh_he_thong.html"> Cấu hình hệ thống</a></li>
                 </ul>
             </nav>
@@ -174,6 +174,47 @@
                 <i class="fas fa-comment"></i>
                 <p>Có 1 phản hồi mới cho sản phẩm Thịt Heo.</p>
             </a>
+        </div>
+    </div>
+</div>
+<div id="replyModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Phản Hồi Đánh Giá</h3>
+            <span class="close-btn" onclick="closeReplyModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="review-details">
+                <p><strong>Khách hàng:</strong> <span id="modalCustomerName">Nguyễn Văn A</span></p>
+                <p><strong>Sản phẩm:</strong> <span id="modalProductName">Thịt heo</span></p>
+                <p><strong>Đánh giá:</strong> <span id="modalRatingStars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </span></p>
+                <p class="review-date-meta">Ngày: <span id="modalReviewDate">20/11/2023</span></p>
+            </div>
+
+            <hr>
+
+            <h4>Lịch Sử Phản Hồi</h4>
+            <div class="chat-history" id="modalReplyHistory">
+                <div class="history-item customer-review">
+                    <p class="history-meta"><strong>Khách hàng</strong> - 22/11/2023</p>
+                    <p class="history-text">Sản phẩm tươi ngon, đóng gói cẩn thận. Giao hàng hơi lâu.</p>
+                </div>
+                <div class="history-item admin-reply">
+                    <p class="history-meta"><strong>Bạn (Admin)</strong> - 23/11/2023</p>
+                    <p class="history-text">Cảm ơn bạn đã phản hồi! CleanMeat sẽ cải thiện dịch vụ giao hàng.</p>
+                </div>
+            </div>
+
+            <div class="reply-input-area">
+                <textarea id="replyInput" placeholder="Nhập phản hồi của bạn..."></textarea>
+                <button id="sendReplyButton" class="btn-info"><i class="fas fa-paper-plane"></i> Gửi Phản Hồi</button>
+            </div>
         </div>
     </div>
 </div>

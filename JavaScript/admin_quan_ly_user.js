@@ -84,3 +84,59 @@ document.querySelector('.control-panel .btn-primary').addEventListener('click', 
 document.querySelectorAll('.edit-btn').forEach(button => {
     button.addEventListener('click', () => openUserModal(true));
 });
+
+// Thêm hàm mở Modal Lịch sử mua hàng
+function openHistoryModal(userId, userName) {
+    const modal = document.getElementById('historyModal');
+    const userIdDisplay = document.getElementById('historyUserId');
+    const modalTitle = modal.querySelector('.modal-title');
+
+    // Cập nhật thông tin ID và Tên khách hàng trên tiêu đề modal
+    userIdDisplay.textContent = userId;
+    // Tùy chọn: nếu muốn hiển thị tên
+    // modalTitle.innerHTML = `Lịch Sử Mua Hàng - ${userName} (ID: ${userId})`;
+
+    // Logic tải dữ liệu lịch sử mua hàng cho userId này sẽ nằm ở đây
+    // Ví dụ: loadHistoryData(userId);
+
+    modal.style.display = 'flex';
+}
+
+// Thêm hàm đóng Modal Lịch sử mua hàng
+function closeHistoryModal() {
+    document.getElementById('historyModal').style.display = 'none';
+}
+
+// Gán sự kiện cho nút đóng (X)
+document.querySelector('.history-close-btn').addEventListener('click', closeHistoryModal);
+
+// Gán sự kiện cho nút "Xem Lịch sử" trong bảng
+document.querySelectorAll('.view-history').forEach(button => {
+    button.addEventListener('click', (event) => {
+        // Lấy ID và Tên từ hàng (giả định ID nằm ở cột thứ nhất)
+        const row = event.target.closest('tr');
+        const userId = row.querySelector('td:nth-child(1)').textContent;
+        const userName = row.querySelector('td:nth-child(2)').firstChild.textContent.trim(); // Lấy tên
+
+        openHistoryModal(userId, userName);
+    });
+});
+
+document.querySelectorAll(".view-detail").forEach(btn => {
+    btn.addEventListener("click", function () {
+        const modal = document.getElementById("orderDetailModal");
+
+        modal.style.display = "block";
+
+        // Nếu muốn đóng historyModal trước khi mở
+        // document.getElementById("historyModal").style.display = "none";
+    });
+});
+
+document.querySelectorAll("#orderDetailModal .close-btn, #orderDetailModal .close-btn-footer")
+    .forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.getElementById("orderDetailModal").style.display = "none";
+        });
+    });
+

@@ -9,43 +9,47 @@
           integrity="sha512-...paste-the-integrity-if-needed..."
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../CSS/gioithieu.css">
+    <script src="../JavaScript/xacnhandathang.js"></script>
 </head>
 <body>
-<main>
-    <nav class="header">
-        <div class="top-bar">
-            <!-- Logo trái -->
-            <div class="logo">
-                <img src="../images/logoCleanmeat.png" >
+    <nav id="menubar">
+        <div class="sixteen column">
+            <div class="one-fifth column left">
+                <img src="../images/logoCleanmeat.png" alt="logo">
             </div>
 
-            <!-- Menu giữa -->
-            <div class="menu">
-                <a href="trang_chu_chua_login.html">Trang chủ</a>
-                <a href="san_pham.html">Sản phẩm</a>
-                <a href="#">Giới Thiệu</a>
-                <a href="#">Tin Tức</a>
-                <a href="#">Chính Sách Đổi Trả</a>
+            <div class="three-fifths column center">
+                <ul class="menu-center">
+                    <li class="menuitem"><a href="../HTML/trang_chu_da_login.html">Trang chủ</a></li>
+                    <li class="menuitem"><a href="../HTML/san_pham.html">Sản phẩm</a></li>
+                    <li class="menuitem"><a href="../HTML/gioi_thieu.html">Giới thiệu</a></li>
+                    <li class="menuitem"><a href="../HTML/tin_tuc.html">Tin tức</a></li>
+                    <li class="menuitem"><a href="../HTML/chinhsachdoitra.html">Chính sách đổi trả</a></li>
+                </ul>
             </div>
-
-            <!-- Icon + Đăng nhập phải -->
-            <div class="right-section">
-                <div class="search-cart">
-                    <div class="search-icon">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <div class="cart-icon">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </div>
-                </div>
-                <div class="login">
-                    <a href="TrangDangNhap.html">Đăng nhập</a>
-                </div>
+            <div class="one-fifth column right">
+                <ul class="menu-right">
+                    <li class="menuitem-right" id="searchBar">
+                        <span id="open-searchBar"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" placeholder="Nhập từ khóa..." id="input-searchBar">
+                        <span class="close-btn" id="close-searchBar">&times;</span>
+                    </li>
+                    <li class="menuitem-right" id="shopping-cart"><i class="fa-solid fa-cart-shopping"></i></li>
+                    <li class="menuitem-right user-menu-wrapper" id="user-setting">
+                        <div class="user">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <ul class="user-menu">
+                            <li class ="user-menuitem"><a href="../HTML/TaiKhoan.html">Tài khoản của tôi</a></li>
+                            <li class ="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
+                            <li class ="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
-
+    <main>
     <!-- Nội dung chính -->
     <section class="hero">
         <div class="hero-text">
@@ -60,7 +64,7 @@
         </div>
 
         <div class="hero-image">
-            <img src="../images/gioithieu.png">
+            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRhfa1mB-mf2xr6UymKhtSKcgWWeQ24xWZ_IglQHT0q10Rblp5s">
         </div>
     </section>
 
@@ -68,7 +72,7 @@
     <section class="product-intro">
         <div class="product-container">
             <div class="product-image">
-                <img src="../images/gioithieu1.png" >
+                <img src="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2025/3/4/variousjpg-17410877772621749963682.jpg" >
             </div>
             <div class="product-text">
                 <h2>Đa dạng về các loại</h2>
@@ -133,8 +137,8 @@
                 <ul>
                     <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
                     <li><a href="san_pham.html">Sản Phẩm</a></li>
-                    <li><a href="#">Giới Thiệu</a></li>
-                    <li><a href="#">Tin Tức</a></li>
+                    <li><a href="gioi_thieu.html">Giới Thiệu</a></li>
+                    <li><a href="tin_tuc.html">Tin Tức</a></li>
                     <li><a href="#">Chính Sách Đổi Trả</a></li>
                 </ul>
             </div>
