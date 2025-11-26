@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý kho</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/admin_quan_ly_kho-style.css">
+
+</head>
+<body>
+<div class="admin-container">
+    <!---------------- Thanh menu ------------------->
+    <header class="header">
+        <div class="logo-placeholder">
+            <img src="../images/logoCleanmeat.png">
+        </div>
+
+        <div class="header-icons">
+            <div class="notification-wrapper" onclick="toggleNotificationMenu()">
+                <i class="fa-solid fa-bell notification-icon"></i>
+                <span class="notification-badge">3</span>
+            </div>
+
+            <div class="user-dropdown">
+                <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
+
+                <div id="userMenuContent" class="dropdown-content">
+                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
+                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="trang_chu_chua_login.html" class="logout-link"> Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!---------------- Side Bar ------------------->
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
+                    <li class="active"><a href="#"> Quản lý kho</a></li>
+                    <li><a href="admin_quan_ly_danh_muc.html"> Quản lý danh mục và nguồn gốc</a></li>
+                    <li><a href="admin_quan_ly_sp.html"> Quản lý sản phẩm</a></li>
+                    <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
+                    <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
+                    <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
+                    <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
+                    <li><a href="#"> Cấu hình hệ thống</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Quản Lý Kho</h2>
+
+            <div class="tab-nav">
+                <button class="tab-link" onclick="openTab(event, 'input_history')">Lịch Sử Nhập Kho</button>
+                <button class="tab-link" onclick="openTab(event, 'output_history')">Lịch Sử Xuất Kho</button>
+            </div>
+
+            <div id="input_history" class="tab-content" style="display: none;">
+                <div class="control-panel history-panel">
+                    <div class="filters">
+                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input" style="width: 300px;">
+                        <select name="category" class="filter-select">
+                            <option value="">-- Danh mục --</option>
+                            <option value="ThitBo">Thịt Bò</option>
+                            <option value="ThitHeo">Thịt Heo</option>
+                            <option value="ThitGa">Thịt Gà</option>
+                        </select>
+                        <select name="origin" class="filter-select">
+                            <option value="">-- Nguồn gốc --</option>
+                            <option value="VietNam">Việt Nam</option>
+                            <option value="My">Mỹ</option>
+                            <option value="Uc">Úc</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="openStockModal('input')">
+                        <i class="fas fa-plus-circle"></i> Tạo Phiếu Nhập
+                    </button>
+
+                </div>
+                <div class="history-table-container">
+                    <table class="history-table">
+                        <thead>
+                        <tr>
+                            <th>Mã Phiếu</th>
+                            <th>Thời gian</th>
+                            <th>Danh mục</th>
+                            <th>Sản phẩm</th>
+                            <th>Nguồn gốc</th>
+                            <th>Loại</th>
+                            <th>Số lượng</th>
+                            <th>Người tạo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>#IN001</td>
+                            <td>20/11/2025 09:30</td>
+                            <td>Thịt Bò</td>
+                            <td>Thịt Bò Thăn Nội (Mỹ)</td>
+                            <td>Mỹ</td>
+                            <td><span class="type-badge type-input">Nhập hàng</span></td>
+                            <td>+10 kg</td>
+                            <td>Admin A</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="output_history" class="tab-content" style="display: none;">
+                <div class="control-panel history-panel">
+                    <div class="filters">
+                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input" style="width: 300px;">
+                        <select name="category" class="filter-select">
+                            <option value="">-- Danh mục --</option>
+                            <option value="ThitBo">Thịt Bò</option>
+                            <option value="ThitHeo">Thịt Heo</option>
+                            <option value="ThitGa">Thịt Gà</option>
+                        </select>
+                        <select name="origin" class="filter-select">
+                            <option value="">-- Nguồn gốc --</option>
+                            <option value="VietNam">Việt Nam</option>
+                            <option value="My">Mỹ</option>
+                            <option value="Uc">Úc</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-secondary" onclick="openStockModal('output')">
+                        <i class="fas fa-minus-circle"></i> Tạo Phiếu Xuất
+                    </button>
+                </div>
+                <div class="history-table-container">
+                    <table class="history-table">
+                        <thead>
+                        <tr>
+                            <th>Mã Phiếu</th>
+                            <th>Thời gian</th>
+                            <th>Danh mục</th>
+                            <th>Sản phẩm</th>
+                            <th>Nguồn gốc</th>
+                            <th>Loại</th>
+                            <th>Số lượng</th>
+                            <th>Người tạo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>#OUT001</td>
+                            <td>19/11/2025 14:00</td>
+                            <td>Thịt Bò</td>
+                            <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
+                            <td>Việt Nam</td>
+                            <td><span class="type-badge type-output">Xuất hủy</span></td>
+                            <td>-5 kg</td>
+                            <td>Admin B</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+    </div>
+    <!------------------- PHẦN THÔNG BÁO ----------------->
+    <div id="notification-panel" class="notification-panel">
+        <div class="panel-header">
+            <h3>Thông Báo Mới (3)</h3>
+            <span class="close-panel-btn" onclick="toggleNotificationMenu()">&times;</span>
+        </div>
+        <div class="panel-content">
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Đơn hàng mới #0012 vừa được tạo.</p>
+            </a>
+            <a href="#" class="notification-item unread">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Tồn kho Thịt Bò Thăn Nội < 5kg.</p>
+            </a>
+            <a href="#" class="notification-item">
+                <i class="fas fa-comment"></i>
+                <p>Có 1 phản hồi mới cho sản phẩm Thịt Heo.</p>
+            </a>
+        </div>
+    </div>
+</div>
+<div id="stockAdjustmentModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="stockModalTitle">Tạo Phiếu Nhập Kho</h3>
+            <span class="close-btn" onclick="closeStockModal()">&times;</span>
+        </div>
+
+        <div class="modal-body">
+            <form id="stockForm">
+                <div class="form-group">
+                    <label for="product_id">Sản phẩm:</label>
+                    <select id="product_id" required>
+                        <option value="">-- Chọn Sản phẩm --</option>
+                        <option value="1">Thịt Bò Thăn Nội Cao Cấp (Mỹ) - Tồn: 8 kg</option>
+                        <option value="2">Thịt Heo Ba Chỉ Thảo Mộc - Tồn: 150 kg</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="type">Loại giao dịch :</label>
+                        <select id="type" required>
+                            <option value="">-- Chọn loại --</option>
+                            <option value="input">Nhập Hàng (Tăng kho)</option>
+                            <option value="output">Xuất Hủy (Giảm kho)</option>
+                            <option value="adjustment_plus">Điều chỉnh (+)</option>
+                            <option value="adjustment_minus">Điều chỉnh (-)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group half-width">
+                        <label for="quantity">Số lượng :</label>
+                        <input type="number" id="quantity" step="0.01" placeholder="Nhập số lượng" required min="0.01">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Ghi chú/Lý do:</label>
+                    <textarea id="notes" rows="3" placeholder="Ghi rõ lý do Nhập/Xuất/Điều chỉnh"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="created_by">Người thực hiện:</label>
+                    <input type="text" id="created_by" value="Admin A" readonly>
+                </div>
+
+                <button type="submit" class="btn btn-primary submit-btn">Lưu Phiếu</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="../JavaScript/admin_quan_ly_kho.js"></script>
+</body>
+</html>

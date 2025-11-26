@@ -39,6 +39,7 @@
                 <nav class="sidebar-nav">
                     <ul>
                         <li><a href="admin_thong_ke.html"> Thống kê và Phân tích </a></li>
+                        <li><a href="admin_quan_ly_kho.html"> Quản lý kho</a></li>
                         <li><a href="admin_quan_ly_danh_muc.html"> Quản lý danh mục và nguồn gốc</a></li>
                         <li class="active"><a href="#"> Quản lý sản phẩm</a></li>
                         <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
@@ -60,7 +61,7 @@
                     <div class="filters">
                         <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input">
                         <select name="category" class="filter-select">
-                            <option value="">-- Phân loại thịt --</option>
+                            <option value="">-- Danh mục --</option>
                             <option value="beef">Thịt Bò</option>
                             <option value="pork">Thịt Heo</option>
                             <option value="chicken">Thịt Gà</option>
@@ -70,12 +71,6 @@
                             <option value="vn">Việt Nam</option>
                             <option value="us">Mỹ</option>
                             <option value="au">Úc</option>
-                        </select>
-                        <select name="status" class="filter-select">
-                            <option value="">-- Trạng thái --</option>
-                            <option value="selling">Đang bán</option>
-                            <option value="hidden">Đã ẩn</option>
-                            <option value="low-stock">Sắp hết hàng</option>
                         </select>
                     </div>
                     <button class="btn btn-primary" onclick="openProductModal()">
@@ -94,9 +89,9 @@
                             <th>Ảnh</th>
                             <th>Tên sản phẩm</th>
                             <th>Danh mục</th>
+                            <th>Nguồn gốc</th>
                             <th>Giá (VND)</th>
                             <th class="inventory-col">Tồn kho</th>
-                            <th>Trạng thái</th>
                             <th>Thao tác</th>
                         </tr>
                         </thead>
@@ -105,14 +100,9 @@
                             <td><img src="../images/DMSP4.png" alt="Beef" class="product-thumb"></td>
                             <td>Thịt Bò Thăn Nội Cao Cấp (Mỹ)</td>
                             <td>Thịt Bò</td>
+                            <td>Mỹ</td>
                             <td>250.000</td>
                             <td class="inventory-col low-stock">8 kg</td>
-                            <td>
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
                             <td>
                                 <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
                                 <button class="btn-icon delete-btn"><i class="fas fa-trash-alt"></i></button>
@@ -122,14 +112,9 @@
                             <td><img src="../images/DMSP3.png" alt="Pork" class="product-thumb"></td>
                             <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
                             <td>Thịt Heo</td>
+                            <td>Việt Nam</td>
                             <td>120.000</td>
                             <td class="inventory-col">150 kg</td>
-                            <td>
-                                <label class="switch">
-                                    <input type="checkbox">
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
                             <td>
                                 <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
                                 <button class="btn-icon delete-btn"><i class="fas fa-trash-alt"></i></button>
@@ -213,12 +198,6 @@
                         <input type="number" placeholder="5 (Cảnh báo khi <= 5)">
                     </div>
 
-                    <label>Trạng thái hiển thị:</label>
-                    <label class="switch small-switch">
-                        <input type="checkbox" checked>
-                        <span class="slider round"></span>
-                    </label>
-                    <span class="status-text">Đang ẩn / Đang hiển thị</span>
 
                     <label>Hình ảnh sản phẩm:</label>
                     <div class="image-upload-box">
