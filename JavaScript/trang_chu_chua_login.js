@@ -7,14 +7,13 @@ function setupSearchBox() {
     const searchLabel = document.getElementById("search-label");
     const login = document.querySelector(".login");
 
-
-// Khi click vào Ô tìm kiếm hoặc icon
+    // Khi click vào Ô tìm kiếm hoặc icon
     searchLabel.addEventListener("click", () => {
         searchBox.classList.add("active");
         searchInput.focus();
     });
 
-// Khi bấm dấu X để đóng search
+    // Khi bấm dấu X để đóng search
     searchClose.addEventListener("click", () => {
         searchBox.classList.remove("active");
         searchInput.blur();

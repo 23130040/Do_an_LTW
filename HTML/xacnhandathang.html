@@ -40,7 +40,7 @@
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <ul class="user-menu">
-                        <li class="user-menuitem"><a href="../HTML/TaiKhoan.html">Tài khoản của tôi</a></li>
+                        <li class="user-menuitem"><a href="taikhoan.html">Tài khoản của tôi</a></li>
                         <li class="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
                         <li class="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
                     </ul>
@@ -178,7 +178,7 @@
                     <tr class="table-detail">
                         <td class="detail-item type">
                             <input type="radio" id="standard-delivery" name="delivery-type" checked>
-                            <label for="standard-delivery" class="radio-label">Giao hàng tiêu chuẩn</label>
+                            <label for="standard-delivery" class="radio-label">Standard</label>
                         </td>
                         <td class="detail-item price">
                             <span class="detail" id="deli-price1">30,000</span>
@@ -188,7 +188,7 @@
                     <tr class="table-detail">
                         <td class="detail-item type">
                             <input type="radio" id="fast-delivery" name="delivery-type">
-                            <label for="fast-delivery" class="radio-label">Giao hàng nhanh</label>
+                            <label for="fast-delivery" class="radio-label">Express</label>
                         </td>
                         <td class="detail-item price">
                             <span class="detail" id="deli-price2">50,000</span>
@@ -210,19 +210,6 @@
                 <div class="payment-item">
                     <input type="radio" id="cash-on-delivery" name="payment-type" checked>
                     <label for="cash-on-delivery" class="radio-label">Thanh toán khi nhận hàng</label>
-                </div>
-                <div class="payment-item">
-                    <input type="radio" id="payment-via-linked-account" name="payment-type">
-                    <label for="payment-via-linked-account" class="radio-label">Thanh toán bằng tài khoản liên
-                        kết</label>
-                </div>
-            </div>
-            <div id="choose-bank-card">
-                <h5 class="choose-bank-title">Chọn tài khoản thanh toán</h5>
-                <div class="bank-item">
-                    <i class="fa-solid fa-check"></i>
-                    <span class="bank-name">Ngân hàng BIDV</span>
-                    <span class="bank-account">******789</span>
                 </div>
             </div>
         </div>
@@ -268,7 +255,7 @@
                     <i class="fa-solid fa-circle-check"></i>
                     Đặt hàng thành công!
                 </p>
-                <p id="message-confirm"></p>
+                <p id="message-confirm">Vui lòng không thanh toán trước khi nhận hàng!</p>
                 <div class="btn">
                     <button id="return-to-home-btn">Quay về trang chủ</button>
                     <button id="view-orders-btn">Xem đơn hàng của tôi</button>

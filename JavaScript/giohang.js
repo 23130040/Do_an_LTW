@@ -4,15 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     openSearchBar.addEventListener("click", showSearchBar);
     const closeSearchBarBtn = document.getElementById("close-searchBar");
     closeSearchBarBtn.addEventListener("click", closeSearchBar);
-    /**Xử lý việc chọn sản phẩm*/
-    const checkAll = document.getElementById("check-all");
-    checkAll.addEventListener("click", check);
-    const choose1 = document.getElementById("choose1");
-    choose1.addEventListener("click", check);
-    const choose2 = document.getElementById("choose2");
-    choose2.addEventListener("click", check);
-    const choose3 = document.getElementById("choose3");
-    choose3.addEventListener("click", check);
 
     /**Xử lý tăng giảm số lượng*/
     const decreaseBtn1 = document.getElementById("decrease1");
@@ -204,16 +195,4 @@ function updateCalculateSubTotalOrder(){
     const total = calculateSubTotal();
     document.getElementById("subtotal").innerText = total;
 }
-function check(event) {
-    const checkAll = document.getElementById("check-all");
-    const choose1 = document.getElementById("choose1");
-    const choose2 = document.getElementById("choose2");
-    const choose3 = document.getElementById("choose3");
-    if (event.target === checkAll) {
-        const checked = checkAll.checked;
-        choose1.checked = checked;
-        choose2.checked = checked;
-        choose3.checked = checked;
-    }
-    checkAll.checked = (choose1.checked && choose2.checked && choose3.checked);
-}
+

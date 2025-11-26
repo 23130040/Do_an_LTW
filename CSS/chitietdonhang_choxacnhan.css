@@ -175,6 +175,7 @@ main {
     font-weight: 700;
     margin-bottom: 10px;
     color: #5a0002;
+    text-align: center;
 }
 
 .back-button{
@@ -330,19 +331,29 @@ main .footer BUTTON{
     flex-grow: 1;
     font-weight: bold;
 }
+.italic-txt{
+    font-style: italic;
+    color: #bbb;
+    font-size: 13px;
+}
+main .footer span{
+    display: inline-block;
+    width: 50%;
+}
 #cancle-order-btn{
-    background-color: #5a0002;
+    background-color: #818181;
 }
 #cancle-order-btn:hover{
-    background-color: #970206;
+    background-color: #777777;
     cursor: pointer;
 }
 #confirm-order-btn{
-    background-color: rgba(4, 170, 109, 0.5);
+    background-color: rgb(181, 0, 4, 0.2);
 }
 #confirm-order-btn:hover{
     cursor: not-allowed;
 }
+
 .modal{
     display: none;
     position: fixed;
@@ -461,12 +472,12 @@ main .footer BUTTON{
     border-radius: 5px;
     border: none;
     font-size: 16px;
-    background-color: #04aa6d;
+    background-color: #870002;
     color: white;
 }
 #return-to-home-btn:hover, #view-orders-btn:hover{
     cursor: pointer;
-    background-color: #04734a;
+    background-color: #a80005;
     transition: 0.3s;
 }
 /*****footer***/

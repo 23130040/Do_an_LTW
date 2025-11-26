@@ -24,12 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //xác nhận đặt hàng
     const confirmOrder = document.getElementById("confirmOrder");
     confirmOrder.addEventListener("click", () => {
-        if (document.getElementById("cash-on-delivery").checked) {
-            document.getElementById("message-confirm").innerText = "Vui lòng không thanh toán trước khi đơn hàng được giao.";
-        }
-        if (document.getElementById("payment-via-linked-account").checked) {
-            document.getElementById("message-confirm").innerText = "Số tiền sẽ tự động trừ vào tài khoản ngân hàng liên kết.";
-        }
         document.getElementById("redirect-modal").style.display = "block";
     });
     const returnToHome = document.getElementById("return-to-home-btn");
