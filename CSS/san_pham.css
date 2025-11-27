@@ -248,7 +248,7 @@ main {
 
 .flash-header h2 {
     font-size: 32px;
-    color: #ff0000;
+    color: #e00000;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -263,7 +263,7 @@ main {
     padding: 10px 5px 20px;
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: #ff0000 transparent;
+    scrollbar-color: #e00000 transparent;
 }
 
 .flash-products::-webkit-scrollbar {
@@ -271,9 +271,9 @@ main {
 }
 
 .flash-products::-webkit-scrollbar-thumb {
-    background-color: #ff5050;
+    background-color: #e00000;
     border-radius: 10px;
-    border: 3px solid #5a0000;
+    border: 3px solid #e00000;
 }
 
 .flash-item {
@@ -315,7 +315,7 @@ main {
 
 .flash-item .price {
     font-size: 16px;
-    color: #e60000;
+    color: #e00000;
     font-weight: bold;
 }
 
@@ -328,8 +328,8 @@ main {
 
 .flash-item button {
     background-color: white;
-    color: red;
-    border: 1px solid red;
+    color: #e00000;
+    border: 1px solid #e00000;
     border-radius: 20px;
     padding: 6px 15px;
     cursor: pointer;
@@ -339,9 +339,9 @@ main {
 }
 
 .flash-item button:hover {
-    background-color: #8d2a3a;
+    background-color: #e00000;
     color: white;
-    border-color: #8d2a3a;
+    border-color: #e00000;
     transform: scale(1.05);
 }
 
@@ -349,7 +349,7 @@ main {
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: red;
+    background-color:#e00000;
     color: white;
     padding: 4px 8px;
     font-size: 13px;
@@ -400,8 +400,8 @@ main {
 
 .category:hover,
 .category.active {
-    background-color: #8d2a3a;
-    border-color: #8d2a3a;
+    background-color: #e00000;
+    border-color: #e00000;
     color: #fff;
     transform: translateY(-2px);
 }
@@ -471,8 +471,8 @@ main {
 }
 
 .product-item button:hover {
-    background-color: #8d2a3a;
-    border-color: #8d2a3a;
+    background-color: #e00000;
+    border-color:#e00000;
     color: #fff;
     transform: scale(1.05);
 }
@@ -511,20 +511,25 @@ main {
 
 .custom-select .select-list li {
     list-style: none;
-    padding: 10px 15px;
+    padding: 12px 15px;
     cursor: pointer;
     text-align: center;
-}
 
+    border-bottom: 0.1px solid #c5c5c5;
+    transition: 0.25s ease;
+}
 .custom-select .select-list li:hover {
-    background: #8d2a3a;
+    background: #e00000;
     color: white;
 }
 
 .custom-select.open .select-list {
     display: block;
 }
-
+/* icon lọc */
+.custom-select .selected i {
+    font-size: 13px;
+}
 /* Xem tất cả */
 .view-all {
     display: flex;
@@ -547,8 +552,8 @@ main {
 }
 
 #viewAllBtn:hover {
-    background-color: #8d2a3a;
-    border-color: #8d2a3a;
+    background-color: #e00000;
+    border-color: #e00000;
     color: #fff;
     transform: translateY(-3px);
 }

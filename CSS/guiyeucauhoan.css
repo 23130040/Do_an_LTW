@@ -70,7 +70,7 @@ main{
 }
 
 .new {
-    color: #d0011b;
+    color: #e00000;
     font-weight: bold;
 }
 
@@ -97,7 +97,7 @@ main{
 }
 
 .form-input:focus {
-    border-color: #ee4d2d;
+    border-color: #e00000;
     background: #fff;
     outline: none;
 }
@@ -135,7 +135,7 @@ main{
 
 /* số tiền hoàn lại */
 .amount {
-    color: red;
+    color: #e00000;
     font-weight: bold;
     font-size: 18px;
 }
@@ -178,7 +178,7 @@ main{
     padding: 14px 35px;
     font-size: 15px;
     color: #fff;
-    background: #ee4d2d;
+    background: #e00000;
     border: none;
     border-radius: 14px;
     cursor: pointer;
@@ -186,7 +186,7 @@ main{
 }
 
 .submit-btn:hover {
-    background: #d63c1d;
+    background: #e00000;
 }
 /* ======= MENUBAR ======= */
 #menubar{

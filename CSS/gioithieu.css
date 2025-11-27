@@ -274,7 +274,7 @@ main{
 .hero-text h1 {
     font-size: 40px;
     font-weight: bold;
-    color: #d10000;
+    color: #e00000;
     margin-bottom: 20px;
     line-height: 1.4;
 }
@@ -288,8 +288,8 @@ main{
 
 .order-btn {
     background: white;
-    border: 2px solid #d0011b;
-    color: #d0011b;
+    border: 2px solid #e00000;
+    color: #e00000;
     font-weight: 700;
     font-size: 16px;
     padding: 12px 36px;
@@ -298,7 +298,7 @@ main{
     transition: 0.3s;
 }
 .order-btn:hover {
-    background: #d0011b;
+    background:#e00000;
     color: white;
 }
 
@@ -353,7 +353,7 @@ main{
 .product-text h2 {
     font-size: 40px;
     font-weight: bold;
-    color: #d10000;
+    color: #e00000;
     margin-bottom: 20px;
     line-height: 1.4;
 }
@@ -367,8 +367,8 @@ main{
 
 .discount-btn {
     background: white;
-    border: 2px solid #d0011b;
-    color: #d0011b;
+    border: 2px solid #e00000;
+    color: #e00000;
     font-weight: 700;
     font-size: 16px;
     padding: 12px 36px;
@@ -378,7 +378,7 @@ main{
 }
 
 .discount-btn:hover {
-    background: #d0011b;
+    background: #e00000;
     color: white;
 }
 /* ======= PHẦN QUY TRÌNH THỊT SẠCH ======= */

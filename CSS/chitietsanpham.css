@@ -75,7 +75,7 @@ main {
 
 .thumbnail-list .thumb:hover,
 .thumbnail-list .thumb.active {
-    border-color: #cc0000;
+    border-color:#e00000;
 }
 
 /* ======================= THÔNG TIN SẢN PHẨM ======================= */
@@ -108,7 +108,7 @@ main {
 .new-price {
     font-size: 22px;
     font-weight: bold;
-    color: #e60000;
+    color: #e00000;
 }
 
 .old-price {
@@ -166,8 +166,8 @@ main {
 
 .option:hover,
 .option.active {
-    border-color: #cc0000;
-    color: #cc0000;
+    border-color: #e00000;
+    color: #e00000;
 }
 
 /* ======================= SỐ LƯỢNG ======================= */
@@ -224,13 +224,13 @@ main {
 
 /* Thêm vào giỏ hàng */
 .add-cart {
-    color: #cc0000;
+    color: #e00000;
     background: #fff;
-    border: 2px solid #cc0000;
+    border: 2px solid #e00000;
 }
 
 .add-cart:hover {
-    background: #cc0000;
+    background: #e00000;
     color: #fff;
 }
 
@@ -240,13 +240,13 @@ main {
     align-items: center;
     justify-content: center;
     color: #fff;
-    background: #cc0000;
+    background: #e00000;
     border: none;
     text-decoration: none;
 }
 
 .buy-now:hover {
-    background: #a00000;
+    background: #e00000;
 }
 
 /* ======================= CHI TIẾT SẢN PHẨM ======================= */
@@ -320,7 +320,7 @@ main {
 .comment-box button {
     align-self: flex-end;
     padding: 10px 20px;
-    background: #cc0000;
+    background: #e00000;
     border-radius: 6px;
     color: #fff;
     border: none;
@@ -330,7 +330,7 @@ main {
 }
 
 .comment-box button:hover {
-    background: #a00000;
+    background: #e00000;
 }
 
 /* Danh sách bình luận */
@@ -430,7 +430,7 @@ main {
 .close-popup {
     margin-top: 20px;
     padding: 12px 25px;
-    background: #e63946;
+    background: #e00000;
     border: none;
     color: white;
     cursor: pointer;
@@ -439,7 +439,7 @@ main {
 }
 
 .close-popup:hover {
-    background: #cc2e3c;
+    background: #e00000;
 }
 
 /* ======================= CAM KẾT ======================= */
@@ -476,7 +476,7 @@ main {
 .feature-item i {
     font-size: 50px;
     margin-bottom: 15px;
-    color: #cc0000;
+    color: #c30000;
     transition: .3s;
 }
 
@@ -493,7 +493,7 @@ main {
 
 .feature-item:hover i {
     transform: scale(1.1);
-    color: #ff4b4b;
+    color: #c30000;
 }
 /* ======= MENUBAR ======= */
 #menubar{

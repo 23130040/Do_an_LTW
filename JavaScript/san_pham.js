@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     items.forEach(item => {
         item.addEventListener("click", () => {
-            selected.textContent = item.textContent;
+            selected.innerHTML = `<i class="fas fa-filter"></i> ${item.textContent}`;
             realSelect.value = item.dataset.value;
             customSelect.classList.remove("open");
             sortProducts(realSelect.value);

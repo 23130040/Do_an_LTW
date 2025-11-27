@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     selected.addEventListener("click", () => customSelect.classList.toggle("open"));
     selectItems.forEach(item => {
         item.addEventListener("click", () => {
-            selected.textContent = item.textContent;
+            selected.querySelector("span").textContent = item.textContent;
             selected.dataset.value = item.dataset.value;
             customSelect.classList.remove("open");
             sortProducts(item.dataset.value);
