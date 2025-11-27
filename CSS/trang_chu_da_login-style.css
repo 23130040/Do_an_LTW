@@ -152,7 +152,7 @@ main{
 }
 
 .user-menu a:hover {
-    background-color: #5a0002;
+    background-color: #e00000;
     color: white;
 }
 
@@ -213,8 +213,8 @@ main{
     color: white;
 }
 .menu a:hover{
-    color: #c30000;
-    text-decoration: underline;
+    color: #e00000;
+    text-decoration: none;
     text-underline-offset: 6px;
 }
 /* KHI CUỘN */
@@ -235,8 +235,8 @@ main{
 }
 
 .menu.fixed a:hover {
-    color: #a30000;
-    text-decoration: underline;
+    color: #e00000;
+    text-decoration: none;
     text-underline-offset: 6px;
 }
 
@@ -432,8 +432,8 @@ main{
     transition: all 0.3s ease;
 }
 .product-item button:hover {
-    background-color: #8d2a3a;
-    border-color: #8d2a3a;
+    background-color: #e00000;
+    border-color: #e00000;
     color: #fff;
     transform: scale(1.05);
 }

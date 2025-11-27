@@ -98,20 +98,20 @@ main{
     align-items: center;
 }
 .right-section i:hover {
-    color: #c30000;
+    color: #e00000;
 }
 #search-label i:hover {
-    color: #c30000;
+    color: #e00000;
 }
 #search-close:hover {
-    color: #c30000;
+    color: #e00000;
 }
 .login {
     padding-left: 20px;
 }
 
 .login a:hover {
-    color: #c30000;
+    color: #e00000;
 }
 /* Search Box */
 #search-label i {
@@ -127,7 +127,7 @@ main{
 #search-label i:hover,
 #search-close:hover,
 .login a:hover {
-    color: #c30000;
+    color: #e00000;
 }
 
 .search-box {
@@ -181,13 +181,8 @@ main{
 }
 
 .menu a:hover {
-    color: #c30000;
-    text-decoration: underline;
-    text-underline-offset: 6px;
-}
-.menu a:hover {
-    color: #c30000;
-    text-decoration: underline;
+    color: #e00000;
+    text-decoration: none;
     text-underline-offset: 6px;
 }
 .menu.fixed {
@@ -203,7 +198,7 @@ main{
     padding-top: 34px;
 }
 .menu.fixed a:hover {
-    color: #a30000;
+    color: #e00000;
 }
 
 .header.hide-logo .logo img {
