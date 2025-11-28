@@ -7,7 +7,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-...paste-the-integrity-if-needed..."
           crossorigin="anonymous"
-          referrerpolicy="no-referrer" />
+          referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="../CSS/guiyeucauhoan.css">
 <body>
 <main>
@@ -33,15 +33,16 @@
                         <input type="text" placeholder="Nhập từ khóa..." id="input-searchBar">
                         <span class="close-btn" id="close-searchBar">&times;</span>
                     </li>
-                    <li class="menuitem-right" id="shopping-cart"><a href="giohang.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <li class="menuitem-right" id="shopping-cart"><a href="giohang.html"><i
+                            class="fa-solid fa-cart-shopping"></i></a></li>
                     <li class="menuitem-right user-menu-wrapper" id="user-setting">
                         <div class="user">
                             <i class="fa-solid fa-user"></i>
                         </div>
                         <ul class="user-menu">
-                            <li class ="user-menuitem"><a href="taikhoan.html">Tài khoản của tôi</a></li>
-                            <li class ="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
-                            <li class ="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
+                            <li class="user-menuitem"><a href="taikhoan.html">Tài khoản của tôi</a></li>
+                            <li class="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
+                            <li class="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -57,7 +58,8 @@
         <div class="section product-section">
             <h3>Sản phẩm đã chọn</h3>
             <div class="product-item">
-                <img src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg" class="product-img">
+                <img src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg"
+                     class="product-img">
                 <div class="product-info">
                     <p class="product-name">
                         Mỡ heo sạch - CleanMeat
@@ -113,9 +115,15 @@
         <div class="submit-container">
             <button class="submit-btn">Gửi yêu cầu</button>
         </div>
-
     </div>
-
+    <!-- POPUP THÔNG BÁO -->
+    <div id="success-popup" class="popup">
+        <div class="popup-content"><h2><i class="fa-solid fa-circle-check success-icon">
+        </i> Đã gửi yêu cầu thành công!
+        </h2>
+            <button id="back-home" class="popup-btn">Quay về trang chủ</button>
+        </div>
+    </div>
     <!-- FOOTER -->
     <footer class="main-footer">
         <div class="footer-container">
@@ -123,7 +131,8 @@
                 <div class="footer-logo">
                     <img src="../images/logoCleanmeat.png">
                 </div>
-                <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên
+                    hàng đầu của chúng tôi.</p>
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
@@ -137,7 +146,7 @@
                     <li><a href="san_pham.html">Sản Phẩm</a></li>
                     <li><a href="gioi_thieu.html">Giới Thiệu</a></li>
                     <li><a href="tin_tuc.html">Tin Tức</a></li>
-                    <li><a href="#">Chính Sách Đổi Trả</a></li>
+                    <li><a href="chinhsachdoitra.html">Chính Sách Đổi Trả</a></li>
                 </ul>
             </div>
 
@@ -153,7 +162,7 @@
             <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
         </div>
     </footer>
-    <script src="../JavaScript/gioi_thieu.js"></script>
+    <script src="../JavaScript/guiyeucauhoan.js"></script>
 </main>
 </body>
 </html>

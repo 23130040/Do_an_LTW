@@ -97,7 +97,7 @@ includeHTML("#banner-container", "banner.html", () => {
 function scrollToLeft(button) {
     const carousel = button.closest('.product-carousel');
     const list = carousel.querySelector('.product-list');
-    list.scrollBy({ left: -300, behavior: 'smooth' });
+    list.scrollBy({left: -300, behavior: 'smooth'});
 }
 
 function scrollToRight(button) {
@@ -105,3 +105,45 @@ function scrollToRight(button) {
     const list = carousel.querySelector('.product-list');
     list.scrollBy({left: 300, behavior: 'smooth'});
 }
+
+function showSearchBar() {
+    const searchBarContainer = document.getElementById("searchBar");
+    searchBarContainer.classList.add("active");
+    const inputSearchbar = document.getElementById("input-searchBar");
+    inputSearchbar.classList.add("active");
+    const closeMenuBar = document.getElementById("close-searchBar");
+    closeMenuBar.classList.add("active");
+}
+
+function closeSearchBar() {
+    const searchBarContainer = document.getElementById("searchBar");
+    searchBarContainer.classList.remove("active");
+    const inputSearchbar = document.getElementById("input-searchBar");
+    inputSearchbar.classList.remove("active");
+    const closeMenuBar = document.getElementById("close-searchBar");
+    closeMenuBar.classList.remove("active");
+}
+
+//Xử lý thanh tìm kiếm
+const openSearchBar = document.getElementById("open-searchBar");
+openSearchBar.addEventListener("click", showSearchBar);
+const closeSearchBarBtn = document.getElementById("close-searchBar");
+closeSearchBarBtn.addEventListener("click", closeSearchBar);
+
+// Thông báo sau khi gửi
+document.addEventListener("DOMContentLoaded", function () {
+    const submitBtn = document.querySelector(".submit-btn");
+    const popup = document.getElementById("success-popup");
+    const backHome = document.getElementById("back-home");
+
+    // Khi bấm Gửi yêu cầu
+    submitBtn.addEventListener("click", function (e) {
+        e.preventDefault(); // tránh reload form
+        popup.style.display = "flex";
+    });
+
+    // Khi bấm Quay về trang chủ
+    backHome.addEventListener("click", function () {
+        window.location.href = "../HTML/trang_chu_da_login.html";
+    });
+});
