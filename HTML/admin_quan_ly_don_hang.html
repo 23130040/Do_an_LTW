@@ -60,15 +60,11 @@
 
                     <select name="status" class="filter-select">
                         <option value="">-- Trạng thái đơn --</option>
+                        <option value="shipping">Chờ xác nhận</option>
+                        <option value="shipping">Đang chẩn bị</option>
                         <option value="shipping">Đang giao hàng</option>
                         <option value="delivered">Đã giao hàng</option>
                         <option value="cancelled">Đã hủy</option>
-                    </select>
-
-                    <select name="payment" class="filter-select">
-                        <option value="">-- Trạng thái thanh toán --</option>
-                        <option value="unpaid">Chưa thanh toán</option>
-                        <option value="paid">Đã thanh toán</option>
                     </select>
 
                     <input type="date" class="filter-date" title="Lọc theo ngày đặt hàng">
@@ -90,7 +86,6 @@
                         <th>Ngày đặt</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái Đơn hàng</th>
-                        <th>Trạng thái thanh toán</th>
                         <th>Vận chuyển</th>
                         <th>Thao tác</th>
                     </tr>
@@ -102,8 +97,7 @@
                         <td>20/11/2023</td>
                         <td>350,000đ</td>
                         <td><span class="">Đang giao hàng</span></td>
-                        <td><span class="status-badge status-unpaid">Chưa thanh toán</span></td>
-                        <td>Standard</td>
+                        <td>Tiêu chuẩn</td>
                         <td>
                             <button class="btn-sm btn-action view-detail" title="Xem chi tiết"><i
                                     class="fas fa-eye"></i></button>
@@ -117,8 +111,7 @@
                         <td>19/11/2025</td>
                         <td>780,000đ</td>
                         <td><span class="">Đang giao hàng</span></td>
-                        <td><span class="status-badge status-paid">Đã thanh toán</span></td>
-                        <td>Express (ID: DN345)</td>
+                        <td>Nhanh</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
                             <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
@@ -131,8 +124,7 @@
                         <td>15/11/2025</td>
                         <td>1,200,000đ</td>
                         <td><span class="">Đã giao hàng</span></td>
-                        <td><span class="status-badge status-paid">Đã thanh toán</span></td>
-                        <td>Standard</td>
+                        <td>Tiêu chuẩn</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
                             <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
@@ -145,8 +137,7 @@
                         <td>10/11/2025</td>
                         <td>450,000đ</td>
                         <td><span class="">Đã hủy</span></td>
-                        <td><span class="status-badge status-unpaid">Chưa thanh toán</span></td>
-                        <td>Standard</td>
+                        <td>Tiêu chuẩn</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
                         </td>

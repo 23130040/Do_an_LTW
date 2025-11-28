@@ -355,7 +355,6 @@ a {
 
 /* Bố cục 2 cột */
 .widget-row.two-cols {
-    grid-template-columns: repeat(2, 1fr);
 }
 
 .widget-row.three-cols {
