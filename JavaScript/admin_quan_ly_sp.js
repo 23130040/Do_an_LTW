@@ -42,6 +42,15 @@ window.onclick = function(event) {
         notificationPanel.classList.remove('show-panel');
     }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", () => openProductModal(true));
+    });
+
+    document.getElementById("add-product-btn")
+        ?.addEventListener("click", () => openProductModal(false));
+});
+
 function openProductModal(isEdit = false) {
     const modal = document.getElementById('product-modal');
     const modalTitleSpan = document.getElementById('modal-title-product');
@@ -50,14 +59,6 @@ function openProductModal(isEdit = false) {
         button.addEventListener('click', () => openProductModal(true));
     });
 
-    if (isEdit) {
-        modalTitleSpan.textContent = 'Sửa';
-
-    } else {
-        modalTitleSpan.textContent = 'Thêm';
-        // Đảm bảo form được reset khi thêm mới
-        modal.querySelector('.product-form').reset();
-    }
 
     modal.style.display = 'flex';
 }
