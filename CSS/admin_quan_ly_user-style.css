@@ -362,7 +362,7 @@ a {
 
 .user-table th, .user-table td {
     padding: 12px 15px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #eee;
     font-size: 0.95em;
 }
@@ -371,25 +371,8 @@ a {
     background-color: #f5f5f5;
 }
 
-/* Trạng thái tài khoản */
-.status-badge {
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.85em;
-    font-weight: bold;
-    color: #fff;
-    width: 100px;
-    display: inline-block;
-    text-align: center;
-}
 
-.status-active {
-    background-color: #2ecc71; /* Xanh lá */
-}
 
-.status-locked {
-    background-color: var(--main-red);
-}
 
 /* Nút Lịch sử mua hàng */
 .btn-sm {
@@ -416,8 +399,6 @@ a {
 }
 
 .edit-btn { color: #2980b9; }
-.lock-btn { color: var(--main-red); }
-.unlock-btn { color: #2ecc71; }
 
 /* --- MODAL  --- */
 .modal {

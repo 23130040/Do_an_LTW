@@ -63,15 +63,8 @@
                         <option value="">-- Phân quyền --</option>
                         <option value="customer">Khách hàng</option>
                         <option value="admin">Quản trị viên (Admin)</option>
-                        <option value="sale">Nhân viên bán hàng</option>
-                        <option value="delivery">Nhân viên giao hàng</option>
                     </select>
 
-                    <select name="status" class="filter-select">
-                        <option value="">-- Trạng thái TK --</option>
-                        <option value="active">Hoạt động</option>
-                        <option value="locked">Đã khóa</option>
-                    </select>
                 </div>
                 <button class="btn btn-primary" onclick="openUserModal()">
                     <i class="fas fa-user-plus"></i> Thêm Người Dùng
@@ -87,7 +80,6 @@
                         <th>Thông tin liên hệ</th>
                         <th>Phân quyền</th>
                         <th>Lịch sử mua hàng</th>
-                        <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
                     </thead>
@@ -98,10 +90,8 @@
                         <td>a@email.com<br>0123456789</td>
                         <td>Khách hàng</td>
                         <td><button class="btn-sm btn-info view-history"><i class="fas fa-history"></i> Xem (12)</button></td>
-                        <td><span class="status-badge status-active">Hoạt động</span></td>
                         <td>
                             <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="btn-icon lock-btn" title="Khóa tài khoản"><i class="fas fa-lock"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -110,10 +100,8 @@
                         <td>b@admin.com<br>0123456789</td>
                         <td>Admin</td>
                         <td>-</td>
-                        <td><span class="status-badge status-active">Hoạt động</span></td>
                         <td>
                             <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="btn-icon lock-btn" title="Khóa tài khoản" disabled><i class="fas fa-lock"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -122,10 +110,8 @@
                         <td>c@email.com<br>0123456789</td>
                         <td>Khách hàng</td>
                         <td><button class="btn-sm btn-info view-history"><i class="fas fa-history"></i> Xem (2)</button></td>
-                        <td><span class="status-badge status-locked">Đã khóa</span></td>
                         <td>
                             <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="btn-icon unlock-btn" title="Mở khóa tài khoản"><i class="fas fa-lock-open"></i></button>
                         </td>
                     </tr>
                     </tbody>
@@ -181,8 +167,6 @@
                     <option value="">-- Chọn vai trò --</option>
                     <option value="customer">Khách hàng</option>
                     <option value="admin">Quản trị viên (Admin)</option>
-                    <option value="sale">Nhân viên bán hàng</option>
-                    <option value="delivery">Nhân viên giao hàng</option>
                 </select>
 
                 <label for="userPassword">Mật khẩu:</label>
@@ -191,12 +175,6 @@
                 <label for="userConfirmPassword">Xác nhận mật khẩu:</label>
                 <input type="password" id="userConfirmPassword" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
 
-                <label>Trạng thái tài khoản:</label>
-                <label class="switch small-switch">
-                    <input type="checkbox" id="userStatus" checked>
-                    <span class="slider round"></span>
-                </label>
-                <span class="status-text" id="userStatusText">Hoạt động</span>
             </div>
 
             <button type="submit" class="btn btn-primary submit-btn">Lưu Người Dùng</button>
