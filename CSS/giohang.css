@@ -4,6 +4,9 @@ body{
     flex-direction: column;
     margin: 0;
 }
+a{
+    text-decoration: none;
+}
 /***************Menu*******************/
 /* ======= MENUBAR ======= */
 #menubar{
@@ -59,9 +62,7 @@ body{
     font-weight: 500;
 }
 #menubar .center li a:hover{
-    text-decoration: underline;
-    color: #a30000;
-    text-underline-offset: 6px;
+    color: #e00000;
 }
 
 /* ===== RIGHT ICON MENU ===== */
@@ -79,8 +80,11 @@ body{
     transition: 0.25s;
     padding: 30px 15px;
 }
-#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
-    color: #8e0000 !important;
+#shopping-cart a{
+    color: white;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart a:hover, #user-setting:hover .user i {
+    color: #e00000 !important;
     transition: color 0.25s;
 }
 #searchBar{
@@ -122,10 +126,11 @@ body{
     right: 0;
     background-color: #fff;
     border-radius: 12px;
-    padding: 8px 0;
     width: 210px;
     display: none;
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .user-menu li{
@@ -136,25 +141,30 @@ body{
     color: #333 !important;
     text-decoration: none;
     display: block;
-    padding: 12px 18px;
     transition: 0.25s;
     font-size: 16px;
     font-weight: 500;
     border-bottom: 1px solid #eee;
+    padding: 10px 15px;
+}
+.user-menu li:first-child a{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 .user-menu li:last-child a{
     border-bottom: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .user-menu a:hover{
-    background-color: #5a0002;
+    background-color: #e00000;
     color: white !important;
 }
 
 .user-menu-wrapper:hover .user-menu{
     display: block;
 }
-
 /********************Main******************************/
 main{
     margin-top: 70px;
@@ -165,7 +175,7 @@ main header{
     text-align: center;
 }
 main header .title{
-    color: #5a0002;
+    color: #e00000;
     font-weight: bold;
     font-size: 25px;
     margin-top: 30px;
@@ -188,7 +198,7 @@ main .contents .details table{
     margin-left: 40px;
 }
 main .contents .details .order-table-header{
-    background-color: #5a0002;
+    background-color: #e00000;
 }
 main .contents .details .order-table-header th{
     color: white;
@@ -248,7 +258,7 @@ table{
     text-align: center;
 }
 .order-table-body .amount .quantity-btn:hover{
-    background-color: #850304;
+    background-color: #e00000;
     cursor: pointer;
     color: white;
     transition: 0.3s;
@@ -256,7 +266,7 @@ table{
 .order-table-body .trash i:hover{
     cursor: pointer;
     font-size: 19px;
-    color: #850304;
+    color: #e00000;
 }
 main .contents .summary{
     width: 30%;
@@ -265,7 +275,7 @@ main .contents .summary .container{
     width: 330px;
     background-color: #fff;
     border-radius: 10px;
-    color: #5a0002;
+    color: #676767;
     margin-left: 50px;
     margin-right: 0;
 }
@@ -298,7 +308,7 @@ main .contents .summary .container .voucher{
 
 }
 main .contents .summary .container .voucher label{
-    color: #333;
+    color: #676767;
     margin-top: 10px;
     margin-left: 15px;
     width: 30%;
@@ -319,11 +329,12 @@ main .contents .summary .container .voucher .voucher-input input,BUTTON{
 }
 main .contents .summary .container .voucher .voucher-input BUTTON{
     flex-grow: 1;
-    border-right: 5px solid #5a0002;
+    border-right: 5px solid #e00000;
+    color: #676767;
 }
 main .contents .summary .container .voucher .voucher-input BUTTON:hover{
     cursor: pointer;
-    background-color: #5a0002;
+    background-color: #e00000;
     color: white;
     transition: 0.3s;
 }
@@ -332,7 +343,7 @@ main .contents .summary .container .footer{
     text-align: center;
 }
 main .contents .summary .container .footer button{
-    background-color: #5a0002;
+    background-color: #e00000;
     color: white;
     border-radius: 5px;
     width: 250px;
@@ -343,7 +354,7 @@ main .contents .summary .container .footer button{
     font-weight: bold;
 }
 main .contents .summary .container .footer button:hover{
-    background-color: #850304;
+    background-color: #ef0000;
     transition: 0.3s;
 }
 #opendeliverymessage:hover{
@@ -381,7 +392,7 @@ main .contents .summary .container .footer button:hover{
 
 .close-btn:hover,
 .close-btn:focus {
-    color: #5a0002;
+    color: #e00000;
     text-decoration: none;
     cursor: pointer;
 }
@@ -397,28 +408,23 @@ main .contents .summary .container .footer button:hover{
 
 /*********************Footer**************************/
 .main-footer {
-    /*background: #343A40;*/ /* Màu nền tối, sang trọng */
     background: #5a0000;
-    color: #f8f8f8; /* Chữ màu sáng */
+    color: #f8f8f8;
     padding-top: 50px;
     font-size: 16px;
-    bottom: 0;
 }
-
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    flex-wrap: wrap;
     padding: 0 20px 40px 20px;
 }
-
 .footer-col {
-    width: 30%; /* Đã sửa: 32% -> 30% */
+    width: 32%;
     margin-bottom: 20px;
 }
-
 .footer-col h4 {
     /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
     color: #FFD700;
@@ -428,53 +434,42 @@ main .contents .summary .container .footer button:hover{
     padding-bottom: 10px;
     display: inline-block;
 }
-
-/* Cột Logo */
 .footer-logo img {
-    width: 150px; /* Logo lớn hơn */
+    width: 150px;
     margin-bottom: 15px;
 }
-
 .about-us p {
     line-height: 1.6;
     margin-bottom: 20px;
 }
 
 /* Liên kết Nhanh */
+.quick-links{
+    width: 250px;
+}
 .quick-links ul {
     list-style: none;
     padding: 0;
 }
-
 .quick-links ul li {
     margin-bottom: 10px;
 }
-
 .quick-links ul li a {
-    color: #ccc;
+    color: #f8f8f8;
     font-size: 16px;
     transition: color 0.3s;
 }
-
 .quick-links ul li a:hover {
-    color: #8d2a3a; /* Hiệu ứng hover màu thương hiệu */
     padding-left: 5px; /* Thêm chút dịch chuyển */
 }
-
-/* Thông tin liên hệ */
 .contact-info p {
     margin-bottom: 15px;
-    align-items: flex-start;
 }
-
 .contact-info i {
     margin-right: 10px;
     color: #FFD700;
     font-size: 18px;
-    margin-top: 3px;
 }
-
-/* Mạng Xã Hội */
 .social-icons a {
     display: inline-block;
     width: 40px;
@@ -487,17 +482,14 @@ main .contents .summary .container .footer button:hover{
     margin-right: 10px;
     transition: background-color 0.3s, transform 0.3s;
 }
-
 .social-icons a:hover {
     background-color: #8d2a3a;
     transform: rotate(10deg) scale(1.1);
 }
-
-/* Phần bản quyền */
 .footer-bottom {
     text-align: center;
     padding: 15px 0;
     border-top: 1px solid #444;
-    background-color: #222; /* Màu tối hơn một chút */
+    background-color: #222;
     font-size: 14px;
 }

@@ -102,20 +102,20 @@ main {
     align-items: center;
 }
 .right-section i:hover {
-    color: #c30000;
+    color: #e00000;
 }
 #search-label i:hover {
-    color: #c30000;
+    color: #e00000;
 }
 #search-close:hover {
-    color: #c30000;
+    color: #e00000;
 }
 .login {
     padding-left: 20px;
 }
 
 .login a:hover {
-    color: #c30000;
+    color: #e00000;
 }
 /* Search Box */
 #search-label i {
@@ -131,7 +131,7 @@ main {
 #search-label i:hover,
 #search-close:hover,
 .login a:hover {
-    color: #c30000;
+    color: #e00000;
 }
 
 .search-box {
@@ -185,14 +185,11 @@ main {
 }
 
 .menu a:hover {
-    color: #c30000;
-    text-decoration: underline;
-    text-underline-offset: 6px;
+    color: #e00000;
+
 }
 .menu a:hover {
-    color: #c30000;
-    text-decoration: underline;
-    text-underline-offset: 6px;
+    color: #e00000;
 }
 .menu.fixed {
     position: fixed;
@@ -207,7 +204,7 @@ main {
     padding-top: 34px;
 }
 .menu.fixed a:hover {
-    color: #a30000;
+    color: #e00000;
 }
 
 .header.hide-logo .logo img {
@@ -565,22 +562,20 @@ main {
     padding-top: 50px;
     font-size: 16px;
 }
-
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 0 20px 40px;
+    padding: 0 20px 40px 20px;
 }
-
 .footer-col {
     width: 32%;
     margin-bottom: 20px;
 }
-
 .footer-col h4 {
+    /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
     color: #FFD700;
     font-size: 18px;
     margin-bottom: 25px;
@@ -588,17 +583,16 @@ main {
     padding-bottom: 10px;
     display: inline-block;
 }
-
 .footer-logo img {
     width: 150px;
     margin-bottom: 15px;
 }
-
 .about-us p {
     line-height: 1.6;
     margin-bottom: 20px;
 }
 
+/* Liên kết Nhanh */
 .quick-links{
     width: 250px;
 }
@@ -606,34 +600,25 @@ main {
     list-style: none;
     padding: 0;
 }
-
 .quick-links ul li {
     margin-bottom: 10px;
 }
-
 .quick-links ul li a {
     color: #f8f8f8;
     font-size: 16px;
     transition: color 0.3s;
 }
-
 .quick-links ul li a:hover {
-    color: #8d2a3a;
-    padding-left: 5px;
+    padding-left: 5px; /* Thêm chút dịch chuyển */
 }
-
 .contact-info p {
     margin-bottom: 15px;
-    align-items: flex-start;
 }
-
 .contact-info i {
     margin-right: 10px;
     color: #FFD700;
     font-size: 18px;
-    margin-top: 3px;
 }
-
 .social-icons a {
     display: inline-block;
     width: 40px;
@@ -646,12 +631,10 @@ main {
     margin-right: 10px;
     transition: background-color 0.3s, transform 0.3s;
 }
-
 .social-icons a:hover {
     background-color: #8d2a3a;
     transform: rotate(10deg) scale(1.1);
 }
-
 .footer-bottom {
     text-align: center;
     padding: 15px 0;

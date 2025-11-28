@@ -61,9 +61,7 @@ a{
     font-weight: 500;
 }
 #menubar .center li a:hover{
-    text-decoration: underline;
-    color: #a30000;
-    text-underline-offset: 6px;
+    color: #e00000;
 }
 
 /* ===== RIGHT ICON MENU ===== */
@@ -81,8 +79,11 @@ a{
     transition: 0.25s;
     padding: 30px 15px;
 }
-#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
-    color: #8e0000 !important;
+#shopping-cart a{
+    color: white;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart a:hover, #user-setting:hover .user i {
+    color: #e00000 !important;
     transition: color 0.25s;
 }
 #searchBar{
@@ -124,10 +125,11 @@ a{
     right: 0;
     background-color: #fff;
     border-radius: 12px;
-    padding: 8px 0;
     width: 210px;
     display: none;
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .user-menu li{
@@ -138,18 +140,24 @@ a{
     color: #333 !important;
     text-decoration: none;
     display: block;
-    padding: 12px 18px;
     transition: 0.25s;
     font-size: 16px;
     font-weight: 500;
     border-bottom: 1px solid #eee;
+    padding: 10px 15px;
+}
+.user-menu li:first-child a{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 .user-menu li:last-child a{
     border-bottom: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .user-menu a:hover{
-    background-color: #5a0002;
+    background-color: #e00000;
     color: white !important;
 }
 
@@ -174,7 +182,7 @@ main {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
-    color: #5a0002;
+    color: #e00000;
     text-align: center;
 }
 
@@ -343,12 +351,12 @@ main .footer span{
 #return-order-btn, #confirm-order-btn{
     color: white;
     border: none;
-    background: #870002;
+    background: #e00000;
 
 }
 #return-order-btn:hover, #confirm-order-btn:hover{
     cursor: pointer;
-    background-color: #a80005;
+    background-color: #ef0000;
 }
 .modal{
     display: none;
@@ -427,12 +435,12 @@ main .footer span{
     transition: 0.3s;
 }
 #confirm-btn{
-    background-color: #870002;
+    background-color: #e00000;
     color: white;
 }
 #confirm-btn:hover{
     cursor: pointer;
-    background-color: #a80005;
+    background-color: #ef0000;
     transition: 0.3s;
 }
 
@@ -468,24 +476,21 @@ main .footer span{
     border-radius: 5px;
     border: none;
     font-size: 16px;
-    background-color: #870002;
+    background-color: #e00000;
     color: white;
 }
 #return-to-home-btn:hover, #view-orders-btn:hover{
     cursor: pointer;
-    background-color: #a80005;
+    background-color: #ef0000;
     transition: 0.3s;
 }
 /*****footer***/
 .main-footer {
-    /*background: #343A40;*/ /* Màu nền tối, sang trọng */
     background: #5a0000;
-    color: #f8f8f8; /* Chữ màu sáng */
+    color: #f8f8f8;
     padding-top: 50px;
     font-size: 16px;
-    bottom: 0;
 }
-
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -494,13 +499,12 @@ main .footer span{
     flex-wrap: wrap;
     padding: 0 20px 40px 20px;
 }
-
 .footer-col {
-    width: 30%;
+    width: 32%;
     margin-bottom: 20px;
 }
-
 .footer-col h4 {
+    /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
     color: #FFD700;
     font-size: 18px;
     margin-bottom: 25px;
@@ -508,53 +512,42 @@ main .footer span{
     padding-bottom: 10px;
     display: inline-block;
 }
-
-/* Cột Logo */
 .footer-logo img {
-    width: 150px; /* Logo lớn hơn */
+    width: 150px;
     margin-bottom: 15px;
 }
-
 .about-us p {
     line-height: 1.6;
     margin-bottom: 20px;
 }
 
 /* Liên kết Nhanh */
+.quick-links{
+    width: 250px;
+}
 .quick-links ul {
     list-style: none;
     padding: 0;
 }
-
 .quick-links ul li {
     margin-bottom: 10px;
 }
-
 .quick-links ul li a {
-    color: #ccc;
+    color: #f8f8f8;
     font-size: 16px;
     transition: color 0.3s;
 }
-
 .quick-links ul li a:hover {
-    color: #8d2a3a; /* Hiệu ứng hover màu thương hiệu */
     padding-left: 5px; /* Thêm chút dịch chuyển */
 }
-
-/* Thông tin liên hệ */
 .contact-info p {
     margin-bottom: 15px;
-    align-items: flex-start;
 }
-
 .contact-info i {
     margin-right: 10px;
     color: #FFD700;
     font-size: 18px;
-    margin-top: 3px;
 }
-
-/* Mạng Xã Hội */
 .social-icons a {
     display: inline-block;
     width: 40px;
@@ -567,17 +560,14 @@ main .footer span{
     margin-right: 10px;
     transition: background-color 0.3s, transform 0.3s;
 }
-
 .social-icons a:hover {
     background-color: #8d2a3a;
     transform: rotate(10deg) scale(1.1);
 }
-
-/* Phần bản quyền */
 .footer-bottom {
     text-align: center;
     padding: 15px 0;
     border-top: 1px solid #444;
-    background-color: #222; /* Màu tối hơn một chút */
+    background-color: #222;
     font-size: 14px;
 }

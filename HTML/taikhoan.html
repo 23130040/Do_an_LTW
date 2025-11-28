@@ -34,7 +34,7 @@
                     <input type="text" placeholder="Nhập từ khóa..." id="input-searchBar">
                     <span class="close-btn" id="close-searchBar">&times;</span>
                 </li>
-                <li class="menuitem-right" id="shopping-cart"><i class="fa-solid fa-cart-shopping"></i></li>
+                <li class="menuitem-right" id="shopping-cart"><a href="giohang.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
                 <li class="menuitem-right user-menu-wrapper" id="user-setting">
                     <div class="user">
                         <i class="fa-solid fa-user"></i>
@@ -59,7 +59,6 @@
             <div class="sidebar menu">
                 <a href="#profile-content">Hồ sơ</a>
                 <a href="#address-content">Địa chỉ</a>
-                <a href="#bank-account-content">Tài khoản ngân hàng</a>
                 <a href="#password-content">Đổi mật khẩu</a>
                 <a href="#setting-content">Những thiết lập riêng tư</a>
             </div>
@@ -156,22 +155,6 @@
                             <span class="edit open-change-address-modal"><i
                                     class="fa-solid fa-pen-to-square"></i></span>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div id="bank-account-content" class="tab-content hidden">
-                <div class="bank-account-content header">
-                    <div class="header-left">
-                        <h1 class="txt big">TÀI KHOẢN NGÂN HÀNG LIÊN KẾT</h1>
-                    </div>
-                    <div class="header-right">
-                        <button id="add-bank-button">+ Thêm tài khoản mới</button>
-                    </div>
-                </div>
-                <div class="bank-content body">
-                    <div class="bank">
-                        <p class="bank-detail">Ngân hàng BIDV - Số tài khoản: *******789</p>
-                        <i class="fa-solid fa-trash"></i>
                     </div>
                 </div>
             </div>
@@ -337,32 +320,7 @@
             </div>
         </div>
     </div>
-    <div id="add-bank-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="close-add-bank-modal">&times;</span>
-            <div class="bank-form">
-                <h2>Thêm tài khoản ngân hàng mới</h2>
-                <div class="form-row">
 
-                    <div class="form-group">
-                        <label for="bankName">Ngân hàng</label>
-                        <input type="text" id="bankName" class="profile-form input-field" placeholder="Tên ngân hàng">
-                    </div>
-                    <div class="form-group">
-                        <label for="accountNumber">Số tài khoản</label>
-                        <input type="text" id="accountNumber" class="profile-form input-field"
-                               placeholder="Số tài khoản">
-                    </div>
-                    <div class="form-group">
-                        <label for="accountHolder">Chủ tài khoản</label>
-                        <input type="text" id="accountHolder" class="profile-form input-field"
-                               placeholder="Tên chủ tài khoản">
-                    </div>
-                </div>
-                <button id="save-bank-btn" class="submit-btn">Lưu tài khoản</button>
-            </div>
-        </div>
-    </div>
     <div id="delete-account-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" id="close-delete-account-modal">&times;</span>

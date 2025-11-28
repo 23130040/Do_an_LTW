@@ -24,7 +24,7 @@ a {
 }
 a:hover {
     text-decoration: underline;
-    color: #ff0003 !important;
+    color: #e00000 !important;
 }
 
 #wrapper {
@@ -102,7 +102,7 @@ a:hover {
 }
 
 .form_submit:hover {
-    background-color: #b50004;
+    background-color: #e00000;
     color: white !important;
     text-decoration: none !important;
 }
@@ -129,7 +129,7 @@ a:hover {
     padding: 10px;
 }
 .social-login:hover{
-    background-color: #b50004;
+    background-color: #e00000;
 }
 .social-login a{
     color: white;
@@ -152,7 +152,7 @@ a:hover {
 }
 
 #wrapper form .sign_up a {
-    color: #a60008;
+    color: #e00000;
 }
 .error-message{
     color: red;
