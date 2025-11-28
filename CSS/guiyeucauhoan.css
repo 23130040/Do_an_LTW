@@ -7,7 +7,7 @@ a {
     text-decoration: none;
     color: inherit;
     font-family: inherit;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 main{
@@ -19,12 +19,10 @@ main{
 /* ======================= Nội dung ===================== */
 .return-form {
     max-width: 800px;
-    width: 100%;       /* co giãn theo container */
+    width: 100%;
     margin: 20px auto;
     font-family: Arial, sans-serif;
 }
-
-/* Section bo tròn + shadow */
 .section {
     background: #fff;
     padding: 20px;
@@ -72,15 +70,13 @@ main{
 }
 
 .new {
-    color: #d0011b;
+    color: #e00000;
     font-weight: bold;
 }
 
 .product-qty {
     color: #555;
 }
-
-/* FORM INPUTS */
 .form-label {
     display: block;
     font-size: 14px;
@@ -101,7 +97,7 @@ main{
 }
 
 .form-input:focus {
-    border-color: #ee4d2d;
+    border-color: #e00000;
     background: #fff;
     outline: none;
 }
@@ -124,15 +120,12 @@ main{
     font-size: 20px;
     margin-bottom: 20px;
 }
-
-/* từng dòng trong phần hoàn tiền */
 .refund-row {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 15px;
 }
-
 /* label bên trái */
 .refund-row span:first-child {
     flex: 0 0 180px;
@@ -142,7 +135,7 @@ main{
 
 /* số tiền hoàn lại */
 .amount {
-    color: red;
+    color: #e00000;
     font-weight: bold;
     font-size: 18px;
 }
@@ -168,15 +161,12 @@ main{
     background: #fafafa;
     font-size: 15px;
 }
-
-/* Đảm bảo nút Sửa nằm phải cùng hàng */
 .edit {
     margin-left: auto;
     color: #0c7bdc;
     cursor: pointer;
     font-weight: 600;
 }
-
 
 /* Submit */
 .submit-container {
@@ -188,7 +178,7 @@ main{
     padding: 14px 35px;
     font-size: 15px;
     color: #fff;
-    background: #ee4d2d;
+    background: #e00000;
     border: none;
     border-radius: 14px;
     cursor: pointer;
@@ -196,11 +186,8 @@ main{
 }
 
 .submit-btn:hover {
-    background: #d63c1d;
+    background: #e00000;
 }
-
-
-/* ======================= HEADER ======================= */
 /* ======= MENUBAR ======= */
 #menubar{
     height: 70px;
@@ -255,9 +242,7 @@ main{
     font-weight: 500;
 }
 #menubar .center li a:hover{
-    text-decoration: underline;
-    color: #a30000;
-    text-underline-offset: 6px;
+    color: #e00000;
 }
 
 /* ===== RIGHT ICON MENU ===== */
@@ -275,8 +260,11 @@ main{
     transition: 0.25s;
     padding: 30px 15px;
 }
-#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
-    color: #8e0000 !important;
+#shopping-cart a{
+    color: white;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart a:hover, #user-setting:hover .user i {
+    color: #e00000 !important;
     transition: color 0.25s;
 }
 #searchBar{
@@ -287,9 +275,15 @@ main{
 #input-searchBar,
 #close-searchBar {
     display: none;
+<<<<<<< HEAD
+    transition: all 0.25s;
+}
+#input-searchBar.active {
+=======
     transition: 0.25s;
 }
 #input-searchBar.active{
+>>>>>>> a70c9927fac177b1b00bcc97b77978c91134e6c7
     display: block;
     width: 200px;
     padding: 5px 10px;
@@ -318,10 +312,11 @@ main{
     right: 0;
     background-color: #fff;
     border-radius: 12px;
-    padding: 8px 0;
     width: 210px;
     display: none;
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .user-menu li{
@@ -332,18 +327,24 @@ main{
     color: #333 !important;
     text-decoration: none;
     display: block;
-    padding: 12px 18px;
     transition: 0.25s;
     font-size: 16px;
     font-weight: 500;
     border-bottom: 1px solid #eee;
+    padding: 10px 15px;
+}
+.user-menu li:first-child a{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 .user-menu li:last-child a{
     border-bottom: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .user-menu a:hover{
-    background-color: #5a0002;
+    background-color: #e00000;
     color: white !important;
 }
 
@@ -370,6 +371,7 @@ main{
     margin-bottom: 20px;
 }
 .footer-col h4 {
+    /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
     color: #FFD700;
     font-size: 18px;
     margin-bottom: 25px;
@@ -385,6 +387,11 @@ main{
     line-height: 1.6;
     margin-bottom: 20px;
 }
+
+/* Liên kết Nhanh */
+.quick-links{
+    width: 250px;
+}
 .quick-links ul {
     list-style: none;
     padding: 0;
@@ -393,23 +400,20 @@ main{
     margin-bottom: 10px;
 }
 .quick-links ul li a {
-    color: #ccc;
+    color: #f8f8f8;
     font-size: 16px;
     transition: color 0.3s;
 }
 .quick-links ul li a:hover {
-    color: #8d2a3a;
-    padding-left: 5px;
+    padding-left: 5px; /* Thêm chút dịch chuyển */
 }
 .contact-info p {
     margin-bottom: 15px;
-    align-items: flex-start;
 }
 .contact-info i {
     margin-right: 10px;
     color: #FFD700;
     font-size: 18px;
-    margin-top: 3px;
 }
 .social-icons a {
     display: inline-block;
@@ -434,3 +438,4 @@ main{
     background-color: #222;
     font-size: 14px;
 }
+

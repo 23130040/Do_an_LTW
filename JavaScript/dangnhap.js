@@ -66,8 +66,10 @@ function login(event) {
     // }
 
     if (email === 'admin.a@cleanmeat.com' && password === 'Admin@123456'){
-        window.location.href = '../HTML/admin_thong_tin_tai_khoan.html';
+        alert('Đăng nhập thành công!');
+        window.location.href = '../HTML/admin_thong_ke.html';
     }else{
+        alert('Đăng nhập thành công!');
         window.location.href = '../HTML/trang_chu_da_login.html';
     }
 }

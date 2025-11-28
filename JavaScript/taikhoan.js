@@ -85,19 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
         closeModal("address-modal");
     });
 
-    //Thêm tài khoản ngân hàng
-    const addBankBtn = document.getElementById("add-bank-button");
-    addBankBtn.addEventListener("click", () => {
-        openModal("add-bank-modal");
-    });
-    const closeAddBankModal = document.getElementById("close-add-bank-modal");
-    closeAddBankModal.addEventListener("click", () => {
-        closeModal("add-bank-modal");
-    });
-    const saveBankBtn = document.getElementById("save-bank-btn");
-    saveBankBtn.addEventListener("click", () => {
-        closeModal("add-bank-modal");
-    });
     //Lưu thay đổi mật khẩu
     const savePasswordBtn = document.getElementById("save-password-btn");
     savePasswordBtn.addEventListener("click", () => {
@@ -156,9 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (e.target === document.getElementById("address-modal")) {
             closeModal("address-modal");
-        }
-        if (e.target === document.getElementById("add-bank-modal")) {
-            closeModal("add-bank-modal");
         }
         if (e.target === document.getElementById("delete-account-modal")) {
             closeModal("delete-account-modal");

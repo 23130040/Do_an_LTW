@@ -75,7 +75,7 @@ main {
 
 .thumbnail-list .thumb:hover,
 .thumbnail-list .thumb.active {
-    border-color: #cc0000;
+    border-color:#e00000;
 }
 
 /* ======================= THÔNG TIN SẢN PHẨM ======================= */
@@ -108,7 +108,7 @@ main {
 .new-price {
     font-size: 22px;
     font-weight: bold;
-    color: #e60000;
+    color: #e00000;
 }
 
 .old-price {
@@ -166,8 +166,8 @@ main {
 
 .option:hover,
 .option.active {
-    border-color: #cc0000;
-    color: #cc0000;
+    border-color: #e00000;
+    color: #e00000;
 }
 
 /* ======================= SỐ LƯỢNG ======================= */
@@ -224,13 +224,13 @@ main {
 
 /* Thêm vào giỏ hàng */
 .add-cart {
-    color: #cc0000;
+    color: #e00000;
     background: #fff;
-    border: 2px solid #cc0000;
+    border: 2px solid #e00000;
 }
 
 .add-cart:hover {
-    background: #cc0000;
+    background: #e00000;
     color: #fff;
 }
 
@@ -240,13 +240,13 @@ main {
     align-items: center;
     justify-content: center;
     color: #fff;
-    background: #cc0000;
+    background: #e00000;
     border: none;
     text-decoration: none;
 }
 
 .buy-now:hover {
-    background: #a00000;
+    background: #e00000;
 }
 
 /* ======================= CHI TIẾT SẢN PHẨM ======================= */
@@ -281,6 +281,8 @@ main {
     width: 100%;
     background: #f7f7f7;
     padding-bottom: 40px;
+    margin-bottom: 0;
+
 }
 
 .product-comments {
@@ -318,7 +320,7 @@ main {
 .comment-box button {
     align-self: flex-end;
     padding: 10px 20px;
-    background: #cc0000;
+    background: #e00000;
     border-radius: 6px;
     color: #fff;
     border: none;
@@ -328,7 +330,7 @@ main {
 }
 
 .comment-box button:hover {
-    background: #a00000;
+    background: #e00000;
 }
 
 /* Danh sách bình luận */
@@ -354,6 +356,11 @@ main {
 .comment-item .content {
     font-size: 16px;
     color: #333;
+}
+.stars i {
+    color: #f8b400;
+    margin-left: 2px;
+    font-size: 14px;
 }
 
 /* Nút xem thêm */
@@ -423,7 +430,7 @@ main {
 .close-popup {
     margin-top: 20px;
     padding: 12px 25px;
-    background: #e63946;
+    background: #e00000;
     border: none;
     color: white;
     cursor: pointer;
@@ -432,41 +439,44 @@ main {
 }
 
 .close-popup:hover {
-    background: #cc2e3c;
+    background: #e00000;
 }
 
 /* ======================= CAM KẾT ======================= */
 .features-section {
-    background: #fff;
-    margin-top: 40px;
-    padding: 60px 0 70px;
+    width: 100%;
+    padding: 40px 0;
     border-top: 1px solid #eee;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-top: 0;
 }
 
 .features-container {
     width: 95%;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
     text-align: center;
 }
-
 .feature-item {
     flex: 1;
-    min-width: 180px;
+    min-width: 200px;
+    max-width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: .3s;
 }
 
+
 .feature-item i {
     font-size: 50px;
     margin-bottom: 15px;
-    color: #cc0000;
+    color: #c30000;
     transition: .3s;
 }
 
@@ -483,9 +493,8 @@ main {
 
 .feature-item:hover i {
     transform: scale(1.1);
-    color: #ff4b4b;
+    color: #c30000;
 }
-/***************Menu*******************/
 /* ======= MENUBAR ======= */
 #menubar{
     height: 70px;
@@ -540,9 +549,7 @@ main {
     font-weight: 500;
 }
 #menubar .center li a:hover{
-    text-decoration: underline;
-    color: #a30000;
-    text-underline-offset: 6px;
+    color: #e00000;
 }
 
 /* ===== RIGHT ICON MENU ===== */
@@ -560,8 +567,11 @@ main {
     transition: 0.25s;
     padding: 30px 15px;
 }
-#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart:hover, #user-setting:hover .user i {
-    color: #8e0000 !important;
+#shopping-cart a{
+    color: white;
+}
+#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart a:hover, #user-setting:hover .user i {
+    color: #e00000 !important;
     transition: color 0.25s;
 }
 
@@ -604,10 +614,11 @@ main {
     right: 0;
     background-color: #fff;
     border-radius: 12px;
-    padding: 8px 0;
     width: 210px;
     display: none;
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .user-menu li{
@@ -618,18 +629,24 @@ main {
     color: #333 !important;
     text-decoration: none;
     display: block;
-    padding: 12px 18px;
     transition: 0.25s;
     font-size: 16px;
     font-weight: 500;
     border-bottom: 1px solid #eee;
+    padding: 10px 15px;
+}
+.user-menu li:first-child a{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 .user-menu li:last-child a{
     border-bottom: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .user-menu a:hover{
-    background-color: #5a0002;
+    background-color: #e00000;
     color: white !important;
 }
 
@@ -656,6 +673,7 @@ main {
     margin-bottom: 20px;
 }
 .footer-col h4 {
+    /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
     color: #FFD700;
     font-size: 18px;
     margin-bottom: 25px;
@@ -671,6 +689,11 @@ main {
     line-height: 1.6;
     margin-bottom: 20px;
 }
+
+/* Liên kết Nhanh */
+.quick-links{
+    width: 250px;
+}
 .quick-links ul {
     list-style: none;
     padding: 0;
@@ -679,23 +702,20 @@ main {
     margin-bottom: 10px;
 }
 .quick-links ul li a {
-    color: #ccc;
+    color: #f8f8f8;
     font-size: 16px;
     transition: color 0.3s;
 }
 .quick-links ul li a:hover {
-    color: #8d2a3a;
-    padding-left: 5px;
+    padding-left: 5px; /* Thêm chút dịch chuyển */
 }
 .contact-info p {
     margin-bottom: 15px;
-    align-items: flex-start;
 }
 .contact-info i {
     margin-right: 10px;
     color: #FFD700;
     font-size: 18px;
-    margin-top: 3px;
 }
 .social-icons a {
     display: inline-block;

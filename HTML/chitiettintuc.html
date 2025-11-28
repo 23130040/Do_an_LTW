@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi Tiết Bài Viết</title>
+    <title>Clean Meat</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../CSS/chitiettintuc.css">
     <script src="../JavaScript/chitiettintuc.js"></script>
@@ -31,13 +31,13 @@
                     <input type="text" placeholder="Nhập từ khóa..." id="input-searchBar">
                     <span class="close-btn" id="close-searchBar">&times;</span>
                 </li>
-                <li class="menuitem-right" id="shopping-cart"><i class="fa-solid fa-cart-shopping"></i></li>
+                <li class="menuitem-right" id="shopping-cart"><a href="giohang.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
                 <li class="menuitem-right user-menu-wrapper" id="user-setting">
                     <div class="user">
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <ul class="user-menu">
-                        <li class ="user-menuitem"><a href="../HTML/TaiKhoan.html">Tài khoản của tôi</a></li>
+                        <li class ="user-menuitem"><a href="taikhoan.html">Tài khoản của tôi</a></li>
                         <li class ="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
                         <li class ="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
                     </ul>
@@ -105,7 +105,7 @@
 
 
         <p class="author">Tác giả: <strong>Bùi Thúy</strong></p>
-        <a href="../HTML/tintuc.html" class="back-link">&larr; Quay lại tin tức</a>
+        <a href="../HTML/tin_tuc.html" class="back-link">&larr; Quay lại tin tức</a>
     </article>
 
     <!-- Cột phải: Bài viết mới -->
@@ -115,7 +115,7 @@
         <div class="tin-moi-item">
             <img src="https://i1-kinhdoanh.vnecdn.net/2025/11/08/2022-03-28T233711Z-1609630567-9659-6275-1762614764.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=YYHaORB6klbx3Rxj8uf9qQ">
             <div>
-                <a href="../HTML/tintuc.html">Tranh cãi vì sao giá thịt bò ở Mỹ ngày càng đắt đỏ</a>
+                <a href="../HTML/chitiettintuc.html">Tranh cãi vì sao giá thịt bò ở Mỹ ngày càng đắt đỏ</a>
                 <p><i class="fa-regular fa-calendar"></i> 9/11/2025</p>
             </div>
         </div>
@@ -123,7 +123,7 @@
         <div class="tin-moi-item">
             <img src="https://image.plo.vn/w850/Uploaded/2025/ymzmf/2025_10_24/thit-ga-5892-1825.png.webp">
             <div>
-                <a href="../HTML/tintuc.html">Lợi ích ít biết của thịt gà</a>
+                <a href="../HTML/chitiettintuc.html">Lợi ích ít biết của thịt gà</a>
                 <p><i class="fa-regular fa-calendar"></i> 06/11/2025</p>
             </div>
         </div>
@@ -131,21 +131,21 @@
         <div class="tin-moi-item">
             <img src="https://giadinh.mediacdn.vn/296230595582509056/2025/11/5/base64-1762249618661447229543-1762261408169-1762261409604616239000-1762335155765-1762335156193169516050.jpeg" alt="">
             <div>
-                <a href="../HTML/tintuc.html">Trời lạnh, nhất định phải ăn 5 món hấp này...</a>
+                <a href="../HTML/chitiettintuc.html">Trời lạnh, nhất định phải ăn 5 món hấp này...</a>
                 <p><i class="fa-regular fa-calendar"></i> 06/11/2025</p>
             </div>
         </div>
     </aside>
 </main>
 
-<!-- ============ FOOTER ============ -->
+<!-- FOOTER -->
 <footer class="main-footer">
     <div class="footer-container">
         <div class="footer-col about-us">
             <div class="footer-logo">
-                <img src="../images/logoCleanmeat.png" alt="Logo">
+                <img src="../images/logoCleanmeat.png" alt="CleanMeat Logo">
             </div>
-            <p>CleanMeat - Nguồn thịt tươi sạch...</p>
+            <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
@@ -157,21 +157,20 @@
             <ul>
                 <li><a href="trang_chu_chua_login.html">Trang Chủ</a></li>
                 <li><a href="san_pham.html">Sản Phẩm</a></li>
-                <li><a href="gioithieu.html">Giới Thiệu</a></li>
+                <li><a href="gioi_thieu.html">Giới Thiệu</a></li>
                 <li><a href="tin_tuc.html">Tin Tức</a></li>
-                <li><a href="#">Chính Sách Đổi Trả</a></li>
+                <li><a href="chinhsachdoitra.html">Chính sách đổi trả</a></li>
             </ul>
         </div>
 
         <div class="footer-col contact-info">
             <h4>Liên Hệ Chúng Tôi</h4>
-            <p><i class="fa-solid fa-map-location-dot"></i> 123 ABC, DEF, XYZ</p>
-            <p><i class="fa-solid fa-phone"></i> Hotline: 1900 6868 (8h-20h)</p>
-            <p><i class="fa-solid fa-envelope"></i> support@cleanmeat.vn</p>
-            <p><i class="fa-solid fa-clock"></i> T2 - CN (7:00 - 21:00)</p>
+            <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
+            <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
+            <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
+            <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
         </div>
     </div>
-
     <div class="footer-bottom">
         <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
     </div>

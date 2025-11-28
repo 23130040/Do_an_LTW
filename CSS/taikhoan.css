@@ -71,9 +71,7 @@ a {
 }
 
 #menubar .center li a:hover {
-    text-decoration: underline;
-    color: #a30000;
-    text-underline-offset: 6px;
+    color: #e00000;
 }
 
 /* ===== RIGHT ICON MENU ===== */
@@ -92,9 +90,11 @@ a {
     transition: 0.25s;
     padding: 30px 15px;
 }
-
-#open-searchBar:hover, #close-searchBar.active:hover, #shopping-cart:hover, #user-setting:hover .user i {
-    color: #8e0000 !important;
+#shopping-cart a{
+    color: white;
+}
+#open-searchBar:hover, #close-searchBar.active:hover, #shopping-cart a:hover, #user-setting:hover .user i {
+    color: #e00000 !important;
     transition: color 0.25s;
 }
 
@@ -125,56 +125,60 @@ a {
 }
 
 /* ===== USER MENU ===== */
-.user-menu-wrapper {
+.user-menu-wrapper{
     position: relative;
 }
-
-.user-menu-wrapper .user {
+.user-menu-wrapper .user{
     font-size: 22px;
     color: white;
     cursor: pointer;
 }
 
-.user-menu {
+.user-menu{
     position: absolute;
     top: 80%;
     right: 0;
     background-color: #fff;
     border-radius: 12px;
-    padding: 8px 0;
     width: 210px;
     display: none;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    padding-left: 0;
+    margin-left: 0;
 }
 
-.user-menu li {
+.user-menu li{
     list-style: none;
 }
 
-.user-menu a {
+.user-menu a{
     color: #333 !important;
     text-decoration: none;
     display: block;
-    padding: 12px 18px;
     transition: 0.25s;
     font-size: 16px;
     font-weight: 500;
     border-bottom: 1px solid #eee;
+    padding: 10px 15px;
 }
-
-.user-menu li:last-child a {
+.user-menu li:first-child a{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.user-menu li:last-child a{
     border-bottom: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
-.user-menu a:hover {
-    background-color: #5a0002;
+.user-menu a:hover{
+    background-color: #e00000;
     color: white !important;
 }
 
-.user-menu-wrapper:hover .user-menu {
+.user-menu-wrapper:hover .user-menu{
     display: block;
 }
-
 /***********************Main******************************/
 /* ============================
     MAIN LAYOUT
@@ -240,15 +244,13 @@ main {
 }
 
 #sidebar .menu a:hover {
-    background: rgba(90, 0, 2, 0.08);
-    border-left: 4px solid #5a0002;
+    background: rgba(224, 0, 0, 0.2);
     color: #000;
 }
 
 #sidebar .menu a.active-link {
-    background: #5a0002;
+    background: #e00000;
     color: #fff;
-    border-left: 4px solid #FFD700;
 }
 
 /* ============================
@@ -277,14 +279,14 @@ main {
     width: 150px;
     height: 30px;
     font-size: 13px;
-    background-color: #5a0002;
+    background-color: #e00000;
     color: #fff;
     border: none;
     border-radius: 5px;
 }
 
 .header BUTTON:hover {
-    background-color: #a80005;
+    background-color: #ef0000;
     cursor: pointer;
     transition: 0.25s;
 }
@@ -352,11 +354,12 @@ main {
     height: 30px;
     border-radius: 5px;
     border: none;
-    background-color: #5a0002;
+    background-color: #e00000;
     color: #fff;
 }
 .profile-content.body .profile BUTTON:hover {
-    background-color: #a80005;
+    background-color: #ef0000;
+    cursor: pointer;
 }
 .avatar {
     display: flex;
@@ -444,49 +447,9 @@ main {
 }
 
 .address i:hover {
-    color: #a80005;
+    color: #e00000;
 }
 
-/* ============================
-    BANK SECTION
-=============================== */
-.bank-account-content.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.bank-content.body {
-    margin-top: 25px;
-}
-.bank {
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ddd;
-    padding: 16px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.bank button {
-    margin-left: 12px;
-    width: 70px;
-    height: 25px;
-    border-radius: 5px;
-    border: none;
-    background: #5a0002;
-    color: #fff;
-}
-.bank button:hover {
-    background: #a80005;
-}
-.bank i:hover{
-    color: #a80005;
-    cursor: pointer;
-}
 /* ============================
     PASSWORD SECTION
 =============================== */
@@ -511,14 +474,14 @@ main {
     width: 150px;
     height: 30px;
     font-size: 13px;
-    background-color: #5a0002;
+    background-color: #e00000;
     color: #fff;
     border: none;
     border-radius: 5px;
 }
 
 .password-content BUTTON:hover {
-    background-color: #a80005;
+    background-color: #ef0000;
     cursor: pointer;
     transition: 0.25s;
 }
@@ -538,14 +501,14 @@ main {
     width: 150px;
     height: 30px;
     font-size: 13px;
-    background-color: #5a0002;
+    background-color: #e00000;
     color: #fff;
     border: none;
     border-radius: 5px;
 }
 
 .setting-content.body BUTTON:hover {
-    background-color: #a80005;
+    background-color: #ef0000;
     cursor: pointer;
     transition: 0.25s;
 }
@@ -585,7 +548,7 @@ main {
 
 .close-btn:hover,
 .close-btn:focus {
-    color: #5a0002;
+    color: #e00000;
     text-decoration: none;
     cursor: pointer;
 }
@@ -641,13 +604,13 @@ main {
     width: 150px;
     height: 30px;
     font-size: 13px;
-    background-color: #5a0002;
+    background-color: #e00000;
     color: #fff;
     border: none;
     border-radius: 5px;
 }
 .modal BUTTON:hover {
-    background-color: #a80005;
+    background-color: #ef0000;
     cursor: pointer;
     transition: 0.25s;
 }
@@ -661,7 +624,7 @@ main {
     font-size: 18px;
     text-align: center;
 }
-.modal .address-form label, .bank-form label{
+.modal .address-form label{
     font-size: 16px;
     width: 31%;
 }
@@ -676,10 +639,10 @@ main {
     justify-content: space-between;
     gap: 10px;
 }
-.address-form select, .address-form textarea, .bank-form input[type="text"]{
+.address-form select, .address-form textarea{
     flex-grow: 1;
 }
-.address-form BUTTON, .bank-form BUTTON{
+.address-form BUTTON{
     margin-top: 20px;
 }
 .modal .btn-group{
@@ -701,29 +664,23 @@ main {
 }
 /*********************Footer**************************/
 .main-footer {
-    /*background: #343A40;*/ /* Màu nền tối, sang trọng */
     background: #5a0000;
-    color: #f8f8f8; /* Chữ màu sáng */
+    color: #f8f8f8;
     padding-top: 50px;
     font-size: 16px;
-    bottom: 0;
 }
-
 .footer-container {
-    max-width: 1200px; /* Điều chỉnh max-width */
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    flex-wrap: wrap;
     padding: 0 20px 40px 20px;
 }
-
 .footer-col {
-    width: 30%; /* Điều chỉnh width tương đối */
-    min-width: 250px; /* Thêm min-width để tránh bị co quá nhỏ */
+    width: 32%;
     margin-bottom: 20px;
 }
-
 .footer-col h4 {
     /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
     color: #FFD700;
@@ -733,53 +690,42 @@ main {
     padding-bottom: 10px;
     display: inline-block;
 }
-
-/* Cột Logo */
 .footer-logo img {
-    width: 150px; /* Logo lớn hơn */
+    width: 150px;
     margin-bottom: 15px;
 }
-
 .about-us p {
     line-height: 1.6;
     margin-bottom: 20px;
 }
 
 /* Liên kết Nhanh */
+.quick-links{
+    width: 250px;
+}
 .quick-links ul {
     list-style: none;
     padding: 0;
 }
-
 .quick-links ul li {
     margin-bottom: 10px;
 }
-
 .quick-links ul li a {
-    color: #ccc;
+    color: #f8f8f8;
     font-size: 16px;
     transition: color 0.3s;
 }
-
 .quick-links ul li a:hover {
-    color: #8d2a3a; /* Hiệu ứng hover màu thương hiệu */
     padding-left: 5px; /* Thêm chút dịch chuyển */
 }
-
-/* Thông tin liên hệ */
 .contact-info p {
     margin-bottom: 15px;
-    align-items: flex-start;
 }
-
 .contact-info i {
     margin-right: 10px;
     color: #FFD700;
     font-size: 18px;
-    margin-top: 3px;
 }
-
-/* Mạng Xã Hội */
 .social-icons a {
     display: inline-block;
     width: 40px;
@@ -792,17 +738,14 @@ main {
     margin-right: 10px;
     transition: background-color 0.3s, transform 0.3s;
 }
-
 .social-icons a:hover {
     background-color: #8d2a3a;
     transform: rotate(10deg) scale(1.1);
 }
-
-/* Phần bản quyền */
 .footer-bottom {
     text-align: center;
     padding: 15px 0;
     border-top: 1px solid #444;
-    background-color: #222; /* Màu tối hơn một chút */
+    background-color: #222;
     font-size: 14px;
 }

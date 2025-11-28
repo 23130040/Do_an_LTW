@@ -18,10 +18,10 @@ main{
 
 /******************* HEADER ***************/
 .banner {
-    background-image: url('../images/banner_home.png');
+    background-image: url('https://png.pngtree.com/background/20230513/original/pngtree-fresh-meat-in-a-display-case-picture-image_2506943.jpg');
     background-size: cover;
     background-position: center;
-    height: 400px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -38,7 +38,7 @@ main{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0, 0.5);
+    background-color: rgba(0,0,0,0.5);
     z-index: -1;
 }
 
@@ -47,7 +47,6 @@ main{
     text-align: center;
 }
 
-/* KHỐI HEADER */
 .header {
     width: 100%;
     position: absolute;
@@ -68,6 +67,7 @@ main{
     left: 50%;
     transform: translateX(-50%);
 }
+
 .logo img {
     width: 70px;
     height: 50px;
@@ -98,34 +98,45 @@ main{
     align-items: center;
 }
 .right-section i:hover {
-    color: #c30000;
+    color: #e00000;
 }
 #search-label i:hover {
-    color: #c30000;
+    color: #e00000;
 }
 #search-close:hover {
-    color: #c30000;
+    color: #e00000;
 }
 .login {
     padding-left: 20px;
 }
 
 .login a:hover {
-    color: #c30000;
+    color: #e00000;
 }
-
-
 /* Search Box */
 #search-label i {
     font-size: 18px;
     color: white;
 }
+
+.right-section i {
+    font-size: 20px;
+}
+
+.right-section i:hover,
+#search-label i:hover,
+#search-close:hover,
+.login a:hover {
+    color: #e00000;
+}
+
 .search-box {
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
 }
+
 #search-input {
     width: 0;
     opacity: 0;
@@ -135,34 +146,43 @@ main{
     outline: none;
     transition: 0.3s ease;
 }
-#search-close { display: none; }
 
-.search-box.active #search-label { display: inline-block; }
 .search-box.active #search-input {
     width: 200px;
     opacity: 1;
     background: #fff;
 }
-.search-box.active #search-close { display: inline; }
 
-.cart-icon { cursor: pointer; }
+#search-close {
+    display: none;
+}
 
-/* MENU */
+.search-box.active #search-close {
+    display: inline;
+}
+
+.cart-icon,
+.login {
+    cursor: pointer;
+}
+
 .menu {
     display: flex;
     justify-content: center;
-    gap: 23px;
+    gap: 22px;
     padding: 14px 0;
     font-size: 20px;
     margin-top: -20px;
 }
+
 .menu a {
-    text-decoration: none;
     color: white;
+    text-decoration: none;
 }
+
 .menu a:hover {
-    color: #c30000;
-    text-decoration: underline;
+    color: #e00000;
+    text-decoration: none;
     text-underline-offset: 6px;
 }
 .menu.fixed {
@@ -173,24 +193,24 @@ main{
     background: #343A40;
     height: 70px;
 }
+
 .menu.fixed a {
     padding-top: 34px;
-    color: white;
 }
 .menu.fixed a:hover {
-    color: #a30000;
+    color: #e00000;
 }
 
-/* ẨN LOGO KHI CUỘN */
 .header.hide-logo .logo img {
     opacity: 0;
     pointer-events: none;
 }
 
 .search-box.active ~ .cart-icon,
-.search-box.active ~ .login{
+.search-box.active ~ .login {
     display: none;
 }
+
 .right-section.fixed{
     position: fixed;
     z-index: 3000;
@@ -199,16 +219,17 @@ main{
 .logo.fixed {
     position: fixed;
     z-index: 3000;
+}
+
+.logo.fixed {
     top: 0;
     left: 85px;
-    padding-left: 60px;
+    padding-left: 30px;
 }
+
 .logo.fixed img {
     width: 110px;
     height: auto;
-}
-.login.fixed:hover {
-    color: #8d2a3a;
 }
 
 /************************* MAIN *******************************/
@@ -236,13 +257,13 @@ main{
 
 .featured-item {
     position: relative;
-    border: 3px solid #8d2a3a;
-    box-shadow: 0 4px 12px #8d2a3a;
+    border: 3px solid #e00000;
+    box-shadow: 0 4px 12px #e00000;
 }
 
 .featured-item:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 6px 15px #8d2a3a;
+    box-shadow: 0 6px 15px #e00000;
 }
 
 
@@ -250,7 +271,7 @@ main{
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #8d2a3a;
+    background-color: #e00000;
     color: white;
     padding: 5px 10px;
     font-size: 12px;
@@ -264,7 +285,7 @@ main{
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #8d2a3a;
+    background-color: #e00000;
     color: white;
     font-weight: bold;
     border: none;
@@ -274,9 +295,9 @@ main{
 }
 
 .buy-now-btn:hover {
-    background-color: #b93d4f;
+    background-color: #e00000;
     transform: scale(1.08);
-    box-shadow: 0 4px 10px rgba(141, 42, 58, 0.4);
+    box-shadow: 0 4px 10px #e00000;
 }
 
 
@@ -345,9 +366,9 @@ main{
 }
 /* Nút thêm vào giỏ */
 .product-item button {
-    border: 1.5px solid #8d2a3a;
+    border: 1.5px solid #e00000;
     background-color: #fff;
-    color: #8d2a3a;font-weight: 600;
+    color: #e00000;font-weight: 600;
     border-radius: 25px;
     padding: 7px 18px;
     font-size: 14px;
@@ -355,15 +376,15 @@ main{
     transition: all 0.3s ease;
 }
 .product-item button:hover {
-    background-color: #8d2a3a;
-    border-color: #8d2a3a;
+    background-color: #e00000;
+    border-color: #e00000;
     color: #fff;
     transform: scale(1.05);
 }
 
 
 .price {
-    color: #8d2a3a;
+    color: #e00000;
     font-weight: bold;
     font-size: 16px;
 }
@@ -374,7 +395,7 @@ main{
     align-items: center;
     text-align: center;
     background-color: #f0f0f0;
-    border: 2px dashed #8d2a3a;
+    border: 2px dashed #e00000;
     transition: all 0.3s ease;
     height: 380px;
     width: 250px;
@@ -383,7 +404,7 @@ main{
 }
 
 .view-all-item h3 {
-    color: #8d2a3a;
+    color: #e00000;
     margin: 5px 0;
     width: 100%;
 }
@@ -396,14 +417,14 @@ main{
 }
 
 .view-all-item i {
-    color: #8d2a3a;
+    color: #e00000;
     margin-bottom: 10px;
 }
 
 .view-all-item:hover {
     background-color: #ffebeb;
     transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(141, 42, 58, 0.4);
+    box-shadow: 0 4px 10px #e00000;
 }
 
 .view-all-item button {
@@ -412,7 +433,7 @@ main{
 
 /* Nút mũi tên điều hướng */
 .arrow {
-    background-color: #8d2a3a;
+    background-color: #e00000;
     color: white;
     border: none;
     padding: 15px;
@@ -426,7 +447,7 @@ main{
     z-index: 10;
 }
 .arrow:hover {
-    background-color: #b93d4f;
+    background-color: #e00000;
     transform: translateY(-50%) scale(1.1);
 }
 .arrow.left {
@@ -456,7 +477,7 @@ main{
 }
 .footer-col h4 {
     /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
-    color: #a3d046;
+    color: #FFD700;
     font-size: 18px;
     margin-bottom: 25px;
     border-bottom: 2px solid #555;
@@ -496,7 +517,7 @@ main{
 }
 .contact-info i {
     margin-right: 10px;
-    color: #a3d046;
+    color: #FFD700;
     font-size: 18px;
 }
 .social-icons a {

@@ -1,14 +1,13 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
     margin: 0;
+    padding-top: 80px;
 }
 a{
     text-decoration: none;
 }
-/***************Menu*******************/
-/* ======= MENUBAR ======= */
+/*menu*/
 #menubar{
     height: 70px;
     background-color: #343A40;
@@ -95,9 +94,9 @@ a{
 #input-searchBar,
 #close-searchBar {
     display: none;
-    transition: 0.25s;
+    transition: all 0.25s;
 }
-#input-searchBar.active{
+#input-searchBar.active {
     display: block;
     width: 200px;
     padding: 5px 10px;
@@ -165,203 +164,205 @@ a{
 .user-menu-wrapper:hover .user-menu{
     display: block;
 }
-/********************Main******************************/
-main{
-    margin-top: 70px;
-    background-color: #f8f8f8;
-}
-main header{
-    height: 50px;
-    text-align: center;
-}
-main header .title{
-    color: #e00000;
-    font-weight: bold;
-    font-size: 25px;
-    margin-top: 30px;
-    margin-left: 50px;
-}
-main .contents{
-    width: 90%;
-    min-height: 700px;
-    overflow: hidden;
+
+/***main*/
+/* ===== Main Container ===== */
+main {
+    max-width: 1200px;
     margin: auto;
-    display: flex;
+    padding: 20px;
+    color: #333;
 }
-main .contents .details{
-    flex-grow: 1;
-    width: 74%;
+/* ===== Order Container ===== */
+.order-container {
+    background-color: #fff;
+    padding: 30px;
 }
-main .contents .details table{
-    width: 99%;
-    border-collapse: collapse;
-    margin-left: 40px;
-}
-main .contents .details .order-table-header{
-    background-color: #e00000;
-}
-main .contents .details .order-table-header th{
-    color: white;
-    font-size: 17px;
-    padding: 10px 0;
-}
-main .contents .details tr.order-table-body:hover{
-    background-color: rgba(90, 0, 2, 0.04);
-}
-main .contents .details .product{
-    width: 40%;
-}
-main .contents .details .price{
-    width: 12%;
-}
-main .contents .details .amount{
-    width: 25%;
-}
-main .contents .details .sum{
-    width: 13%;
-}
-main .contents .details .trash{
-    width: auto;
-}
-table{
+.order-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #e00000;
     text-align: center;
 }
-.order-table-body{
-    background-color: white;
+
+.back-button{
+    color: #b6b6b6;
+    border: none;
+    background: none;
+    font-size: 17px;
 }
-.order-table-body IMG{
-    width: 100px;
-    height: 100px;
+.back-button:hover{
+    color: #979797;
 }
-.choose{
-    width: 30px;
-    position: relative;
+/* ===== Section Titles ===== */
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #04aa6d;
 }
-.choose input[type="checkbox"]{
-    width: 15px;
-    height: 15px;
+
+/* ===== Customer Info ===== */
+.customer-info p {
+    font-size: 16px;
+    margin: 6px 0;
 }
-.order-table-body .product-wrapper{
+
+/* ===== Products Table ===== */
+.products table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.product-table th,
+.product-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.product-table th {
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.product-item:hover {
+    background-color: #f0f9f9;
+}
+
+.product-info {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 50px;
+    gap: 15px;
 }
-.order-table-body .amount-wrapper{
+
+.product-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* ===== Order Status ===== */
+.order-status {
+    margin-top: 30px;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.status-step {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    font-weight: 600;
+    color: #bbb;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.status-step:last-child {
+    margin-right: 0;
+}
+
+.status-step::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 4px;
+    background-color: #f0f0f0;
+    z-index: -1;
+}
+
+.status-step:last-child::after {
+    content: none;
+}
+
+.status-active {
+    background-color: #25bf87;
+    color: white;
+}
+
+.status-active::after {
+    background-color: #25bf87;
+}
+
+/* ===== Order Total ===== */
+.total {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.total table {
+    width: auto;
+    margin-left: auto;
+    border-collapse: collapse;
+}
+
+.total th, .total td {
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.total th {
+    color: #555;
+}
+
+.total td {
+    font-weight: 600;
+    color: #04aa6d;
+}
+main .footer{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 15px;
+    margin-top: 20px;
 }
-.order-table-body .amount .quantity-input{
-    width: 50px;
-    text-align: center;
-}
-.order-table-body .amount .quantity-btn:hover{
-    background-color: #e00000;
-    cursor: pointer;
-    color: white;
-    transition: 0.3s;
-}
-.order-table-body .trash i:hover{
-    cursor: pointer;
-    font-size: 19px;
-    color: #e00000;
-}
-main .contents .summary{
-    width: 30%;
-}
-main .contents .summary .container{
-    width: 330px;
-    background-color: #fff;
+main .footer BUTTON{
+    font-size: 15px;
+    padding: 12px;
     border-radius: 10px;
-    color: #676767;
-    margin-left: 50px;
-    margin-right: 0;
-}
-main .contents .summary .container .header{
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    border-bottom: #e9e9e9 solid 3px;
-}
-
-main .contents .summary .container .txt{
-    font-size: 15px;
-    font-style: italic;
-    margin-top: 15px;
-    margin-left: 25px;
-}
-main .contents .summary .container .number{
-    font-size: 15px;
-    float: right;
-    margin-right: 25px;
-    text-align: right;
-}
-main .contents .summary .container .voucher{
-    display: flex;
-    font-size: 13px;
-    border-top: 3px solid #e9e9e9;
-    padding: 10px;
-
-}
-main .contents .summary .container .voucher label{
-    color: #676767;
-    margin-top: 10px;
-    margin-left: 15px;
-    width: 30%;
-}
-main .contents .summary .container .voucher .voucher-input{
-    display: flex;
-    width:  auto;
-    border: 1px solid #e9e9e9;
-    border-radius: 5px;
-}
-.voucher-message{
-    color: red;
-    margin-left: 10px;
-    font-size: 12px;
-}
-main .contents .summary .container .voucher .voucher-input input,BUTTON{
     border: none;
-}
-main .contents .summary .container .voucher .voucher-input BUTTON{
+    color: white;
     flex-grow: 1;
-    border-right: 5px solid #e00000;
-    color: #676767;
-}
-main .contents .summary .container .voucher .voucher-input BUTTON:hover{
-    cursor: pointer;
-    background-color: #e00000;
-    color: white;
-    transition: 0.3s;
-}
-main .contents .summary .container .footer{
-    border-top: #e9e9e9 solid 3px;
-    text-align: center;
-}
-main .contents .summary .container .footer button{
-    background-color: #e00000;
-    color: white;
-    border-radius: 5px;
-    width: 250px;
-    height: 30px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-size: 15px;
     font-weight: bold;
 }
-main .contents .summary .container .footer button:hover{
-    background-color: #ef0000;
-    transition: 0.3s;
+.italic-txt{
+    font-style: italic;
+    color: #bbb;
+    font-size: 13px;
 }
-#opendeliverymessage:hover{
+main .footer span{
+    display: inline-block;
+    width: 50%;
+}
+#cancle-order-btn{
+    background-color: #818181;
+}
+#cancle-order-btn:hover{
+    background-color: #777777;
     cursor: pointer;
 }
+#confirm-order-btn{
+    background-color: rgba(224, 0, 0, 0.2);
+}
+#confirm-order-btn:hover{
+    cursor: not-allowed;
+}
 
-.modal {
+.modal{
     display: none;
     position: fixed;
     z-index: 9999;
@@ -405,8 +406,89 @@ main .contents .summary .container .footer button:hover{
 #delivery-message p{
     line-height: 1.5;
 }
+#confirm-cancle-order-modal .message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    gap: 15px;
+    margin-top: 20px;
+}
+#confirm-cancle-order-modal .btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+#cancle-btn, #confirm-btn{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+#cancle-btn{
+    background-color: #d3d3d3;
+    color: #808080;
+}
+#cancle-btn:hover{
+    cursor: pointer;
+    background-color: #e3e3e3;
+    transition: 0.3s;
+}
+#confirm-btn{
+    background-color: #e00000;
+    color: white;
+}
+#confirm-btn:hover{
+    cursor: pointer;
+    background-color: #ef0000;
+    transition: 0.3s;
+}
 
-/*********************Footer**************************/
+#redirect-modal .message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    gap: 15px;
+    margin-top: 20px;
+    color: #0fb570;
+}
+#redirect-modal p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+#redirect-modal .message i{
+    font-size: 50px;
+}
+#redirect-modal .btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+#return-to-home-btn, #view-orders-btn{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #e00000;
+    color: white;
+}
+#return-to-home-btn:hover, #view-orders-btn:hover{
+    cursor: pointer;
+    background-color: #ef0000;
+    transition: 0.3s;
+}
+/*****footer***/
 .main-footer {
     background: #5a0000;
     color: #f8f8f8;

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Clean Meat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../CSS/chitietdonhang.css">
+    <link rel="stylesheet" href="../CSS/chitietdonhang_dagiaohang.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-...paste-the-integrity-if-needed..."
           crossorigin="anonymous"
           referrerpolicy="no-referrer">
-    <script src="../JavaScript/chitietdonhang.js"></script>
+    <script src="../JavaScript/chitietdonhang_dagiaohang.js"></script>
 </head>
 <body>
 <nav id="menubar">
@@ -40,7 +40,7 @@
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <ul class="user-menu">
-                        <li class="user-menuitem"><a href="../HTML/TaiKhoan.html">Tài khoản của tôi</a></li>
+                        <li class="user-menuitem"><a href="taikhoan.html">Tài khoản của tôi</a></li>
                         <li class="user-menuitem"><a href="../HTML/donhang.html">Đơn hàng của tôi</a></li>
                         <li class="user-menuitem"><a href="../HTML/trang_chu_chua_login.html">Đăng xuất</a></li>
                     </ul>
@@ -105,11 +105,12 @@
 
         <div class="order-status" id="order-status">
             <h3 class="section-title">Trạng thái đơn hàng</h3>
+            <p class="italic-txt">Đơn hàng được đặt vào lúc 00:00:00 ngày 24/11/2025</p>
             <div class="status-bar">
-                <div class="status-step status-active" id="status-step-1">Chờ xác nhận</div>
+                <div class="status-step" id="status-step-1">Chờ xác nhận</div>
                 <div class="status-step" id="status-step-2">Đang chuẩn bị</div>
                 <div class="status-step" id="status-step-3">Đang giao</div>
-                <div class="status-step" id="status-step-4">Đã giao</div>
+                <div class="status-step status-active" id="status-step-4">Đã giao</div>
             </div>
         </div>
 
@@ -127,8 +128,7 @@
                 </tr>
                 <tr class="table row">
                     <th class="header-item">
-                        Giảm giá phí vận chuyển
-                        :
+                        Giảm giá phí vận chuyển:
                     </th>
                     <td class="cost-item" id="discount-delivery-fee">0 đ</td>
                 </tr>
@@ -143,11 +143,8 @@
             </table>
         </div>
         <div class="footer">
-<<<<<<< Updated upstream:HTML/Chitietdonhang.html
-=======
             <span class="italic-txt">Dự kiến đơn hàng sẽ được giao trong khoảng 2 đến 3 ngày</span>
->>>>>>> Stashed changes:HTML/Chitietdonhang_Choxacnhan.html
-            <button class="confirm-btn" id="cancle-order-btn">Hủy đơn hàng</button>
+            <button class="confirm-btn" id="return-order-btn">Hoàn trả hàng</button>
             <button class="confirm-btn" id="confirm-order-btn">Đã nhận hàng</button>
         </div>
     </div>
@@ -172,11 +169,11 @@
             </div>
         </div>
     </div>
-    <div id="confirm-cancle-order-modal" class="modal">
+    <div id="confirm-return-order-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" id="close-confirm-cancle-order-modal">&times;</span>
+            <span class="close-btn" id="close-confirm-return-order-modal">&times;</span>
             <div class="message">
-                <p class="txt">Xác nhận hủy đơn hàng?</p>
+                <p class="txt">Xác nhận hoàn trả đơn hàng?</p>
                 <div class="btn">
                     <button id="cancle-btn">Hủy</button>
                     <button id="confirm-btn">Xác nhận</button>
@@ -189,7 +186,7 @@
             <div class="message">
                 <p class="txt">
                     <i class="fa-solid fa-circle-check"></i>
-                    Hủy đơn hàng thành công!
+                    Giao hàng thành công!
                 </p>
                 <div class="btn">
                     <button id="return-to-home-btn">Quay về trang chủ</button>
