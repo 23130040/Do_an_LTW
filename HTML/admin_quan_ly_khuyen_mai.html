@@ -116,31 +116,6 @@
             <div id="content" class="tab-content">
                 <div class="content-section">
                     <div class="control-panel">
-                        <h3><i class="fas fa-image"></i> Quản lý Banner và Slider</h3>
-                        <button class="btn btn-primary" onclick="openAddBannerModal()"><i class="fas fa-plus"></i> Thêm Banner Mới</button>
-                    </div>
-                    <div class="banner-grid">
-                        <div class="banner-item">
-                            <img src="../images/banner.png" alt="Banner Trang Chủ 1" class="banner-thumb">
-                            <p>Banner Trang Chủ (1920x400)</p>
-                            <div class="banner-actions">
-                                <button class="btn-icon edit-btn"><i class="fas fa-edit"></i> Sửa</button>
-                                <button class="btn-icon delete-btn"><i class="fas fa-trash-alt"></i> Xóa</button>
-                            </div>
-                        </div>
-                        <div class="banner-item">
-                            <img src="../images/banner_home.png" alt="Banner Mobile 1" class="banner-thumb">
-                            <p>Banner Mobile (720x400)</p>
-                            <div class="banner-actions">
-                                <button class="btn-icon edit-btn"><i class="fas fa-edit"></i> Sửa</button>
-                                <button class="btn-icon delete-btn"><i class="fas fa-trash-alt"></i> Xóa</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-section">
-                    <div class="control-panel">
                         <h3><i class="fas fa-newspaper"></i> Quản lý Bài viết và Tin tức</h3>
                         <button class="btn btn-primary" onclick="openAddArticleModal()"><i class="fas fa-plus"></i> Tạo Bài viết Mới</button>
                     </div>
@@ -256,45 +231,6 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary submit-btn">Lưu Khuyến Mãi</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="banner-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('banner-modal')">&times;</span>
-            <h3><span id="modal-title-banner">Thêm</span> Banner & Slider</h3>
-            <form class="banner-form">
-                <div class="form-section full-col">
-                    <label>Vị trí Banner:</label>
-                    <select required>
-                        <option value="">Chọn vị trí hiển thị</option>
-                        <option value="home">Banner Trang Chủ (PC - 1920x400)</option>
-                        <option value="mobile">Banner Mobile (720x400)</option>
-                        <option value="product">Banner Trang Sản Phẩm</option>
-                    </select>
-
-                    <label>Liên kết (URL) khi click:</label>
-                    <input type="url" placeholder="https://cleanmeat.com/chuong-trinh-khuyen-mai">
-
-                    <label>Thứ tự hiển thị (Ưu tiên):</label>
-                    <input type="number" placeholder="1">
-
-                    <label>Hình ảnh Banner:</label>
-                    <div class="image-upload-box">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Kéo thả ảnh hoặc **Nhấn để chọn** (Tỷ lệ khuyến nghị 1920x400)</p>
-                    </div>
-
-                    <label>Trạng thái hiển thị:</label>
-                    <label class="switch small-switch">
-                        <input type="checkbox" checked>
-                        <span class="slider round"></span>
-                    </label>
-                    <span class="status-text">Đang ẩn / Đang hiển thị</span>
-                </div>
-
-                <button type="submit" class="btn btn-primary submit-btn">Lưu Banner</button>
             </form>
         </div>
     </div>
