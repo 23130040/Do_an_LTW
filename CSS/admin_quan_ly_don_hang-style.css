@@ -414,9 +414,9 @@ a {
 /*.status-delivered { color: #333333; }*/
 /*.status-cancelled { color: #333333; }*/
 
-/* Màu trạng thái Thanh toán */
-.status-unpaid { background-color: var(--main-red); }
-.status-paid { background-color: #28a745; }
+/*!* Màu trạng thái Thanh toán *!*/
+/*.status-unpaid { background-color: var(--main-red); }*/
+/*.status-paid { background-color: #28a745; }*/
 /* Nút Thao tác nhỏ */
 .btn-sm {
     padding: 5px 8px;
