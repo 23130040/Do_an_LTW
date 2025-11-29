@@ -184,9 +184,7 @@ function calculateSubTotal(){
     const totalOrderValue = parseFloat(document.getElementById("total-order").innerText.replaceAll(",", ""));
     const discountValue = parseFloat(document.getElementById("discount").innerText.replaceAll(",", ""));
     const deliveryFeeValue = parseFloat(document.getElementById("delivery").innerText.replaceAll(",", ""));
-    const deliveryDiscountValue = parseFloat(document.getElementById("delivery-discount").innerText.replaceAll(",", ""));
-
-    let subTotal = totalOrderValue - discountValue + deliveryFeeValue - deliveryDiscountValue;
+    let subTotal = totalOrderValue - discountValue + deliveryFeeValue;
 
     return subTotal.toLocaleString("en-US");
 }
