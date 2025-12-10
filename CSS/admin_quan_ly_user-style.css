@@ -399,6 +399,7 @@ a {
 }
 
 .edit-btn { color: #2980b9; }
+.delete-btn { color: var(--main-red); }
 
 /* --- MODAL  --- */
 .modal {

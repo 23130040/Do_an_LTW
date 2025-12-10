@@ -42,26 +42,7 @@ window.onclick = function(event) {
         notificationPanel.classList.remove('show-panel');
     }
 }
-// Hàm chuyển đổi tab
-function openTab(tabName) {
-    const tabContents = document.getElementsByClassName("tab-content");
-    for (let i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove('active');
-    }
 
-    const tabButtons = document.getElementsByClassName("tab-btn");
-    for (let i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove('active');
-    }
-
-    document.getElementById(tabName).classList.add('active');
-    // Đặt active cho nút bấm tương ứng (dựa vào thứ tự)
-    if (tabName === 'promotion') {
-        tabButtons[0].classList.add('active');
-    } else if (tabName === 'content') {
-        tabButtons[1].classList.add('active');
-    }
-}
 // Hàm mở modal chung
 function openModal(modalId) {
     document.getElementById(modalId).style.display = 'block';
@@ -70,20 +51,6 @@ function openModal(modalId) {
 // Hàm đóng modal chung
 function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
-}
-
-// Hàm mở modal tạo khuyến mãi
-function openAddPromoModal() {
-    document.getElementById('modal-title-promo').textContent = 'Thêm';
-    // Logic khác khi mở modal (ví dụ: reset form,...)
-    openModal('promo-modal');
-}
-
-// Hàm mở modal thêm banner
-function openAddBannerModal() {
-    document.getElementById('modal-title-banner').textContent = 'Thêm';
-    // Logic khác khi mở modal
-    openModal('banner-modal');
 }
 
 // Hàm mở modal tạo bài viết

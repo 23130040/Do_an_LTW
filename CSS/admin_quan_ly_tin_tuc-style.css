@@ -294,48 +294,6 @@ a {
     padding-bottom: 10px;
 }
 
-/* --- TAB NAVIGATION --- */
-.tab-nav {
-    display: flex;
-    border-bottom: 2px solid var(--border-color);
-    margin-bottom: 20px;
-}
-
-.tab-btn {
-    padding: 10px 20px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 500;
-    color: #555;
-    transition: all 0.2s;
-    border-bottom: 3px solid transparent;
-}
-
-.tab-btn i {
-    margin-right: 5px;
-}
-
-.tab-btn:hover {
-    color: var(--main-red);
-}
-
-.tab-btn.active {
-    color: var(--main-red);
-    border-bottom: 3px solid var(--main-red);
-    font-weight: bold;
-}
-
-/* --- TAB CONTENT --- */
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
 /* --- CONTROL PANEL --- */
 .control-panel {
     display: flex;
@@ -343,9 +301,24 @@ a {
     align-items: center;
     margin-bottom: 15px;
     padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
     border-radius: 5px;
+}
+.filters {
+    display: flex;
+    gap: 10px;
+    flex-grow: 1; /* Cho phép phần filter mở rộng */
+}
+
+.search-input {
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.search-input, .filter-date {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1em;
 }
 .control-panel h3 {
     font-size: 1.2em;
@@ -416,7 +389,6 @@ a {
 /* --- CONTENT MANAGEMENT SPECIFIC --- */
 .content-section {
     margin-bottom: 30px;
-    border: 1px solid #eee;
     border-radius: 5px;
 }
 

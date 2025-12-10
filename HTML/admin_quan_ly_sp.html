@@ -44,7 +44,7 @@
                         <li class="active"><a href="#"> Quản lý sản phẩm</a></li>
                         <li><a href="admin_quan_ly_user.html"> Quản lý người dùng</a></li>
                         <li><a href="admin_quan_ly_don_hang.html"> Quản lý đơn hàng</a></li>
-                        <li><a href="admin_quan_ly_khuyen_mai.html"> Quản lý khuyến mãi và nội dung</a></li>
+                        <li><a href="admin_quan_ly_tin_tuc.html"> Quản lý khuyến mãi và nội dung</a></li>
                         <li><a href="admin_quan_ly_danh_gia.html"> Quản lý đánh giá và phản hồi</a></li>
                         <li><a href="admin_cau_hinh_he_thong.html"> Cấu hình hệ thống</a></li>
                     </ul>
@@ -162,7 +162,7 @@
                     <textarea rows="3" placeholder="Mô tả ngắn gọn"></textarea>
 
                     <label>Mô tả chi tiết:</label>
-                    <textarea rows="5" placeholder="Mô tả chi tiết (Nên dùng Rich Editor)"></textarea>
+                    <textarea rows="5" placeholder="Mô tả chi tiết "></textarea>
 
                     <label>Danh mục:</label>
                     <select required>
@@ -176,12 +176,19 @@
                     <select required>
                         <option value="">Chọn nguồn gốc</option>
                         <option value="vn">Việt Nam</option>
-                        <option value="vn">Mỹ</option>
-                        <option value="vn">Úc</option>
+                        <option value="my">Mỹ</option>
+                        <option value="uc">Úc</option>
                     </select>
                 </div>
 
                 <div class="form-section right-col">
+                    <label>Khối lượng:</label>
+                    <select required>
+                        <option value="">Chọn khối lượng</option>
+                        <option value="beef">250g</option>
+                        <option value="pork">500g</option>
+                        <option value="chicken">1kg</option>
+                    </select>
                     <label>Giá bán (VND):</label>
                     <input type="number" placeholder="250000" required>
 
