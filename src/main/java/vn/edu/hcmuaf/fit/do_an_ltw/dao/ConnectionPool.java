@@ -22,7 +22,7 @@ public class ConnectionPool {
         try {
             for (int i = 0; i < MAX_CONNECTIONS; i++) {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                String url = "jdbc:mysql://localhost:3306/cleanmeat";
+                String url = "jdbc:mysql://localhost:3306/cleanmeat?zeroDateTimeBehavior=CONVERT_TO_NULL";
                 String user = "root";
                 String password = "";
                 Connection conn = DriverManager.getConnection(url, user, password);

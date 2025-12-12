@@ -19,14 +19,28 @@ public abstract class BaseDAO<T> {
 
     //thực thi các câu lệnh update, insert, delete
     protected void executeSQL(String sql) throws ClassNotFoundException, SQLException {
-        Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.executeUpdate();
+        Connection conn = null;
+        try {
+            conn = getConnection();
+
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.executeUpdate();
+
+                conn.commit();
+            }
+        } catch (SQLException e) {
+            if (conn != null) {
+                conn.rollback();
+            }
+            throw e;
+        } finally {
+            closeResource(conn, null, null);
+        }
     }
 
     protected abstract T mapResultSetToEntity(ResultSet rs) throws SQLException;
 
-    protected abstract boolean insert(T t);
+    protected abstract boolean insert(T t) throws SQLException, ClassNotFoundException;
 
     protected abstract boolean update(T t, int id);
 
@@ -64,4 +78,3 @@ public abstract class BaseDAO<T> {
     }
 
 }
-
