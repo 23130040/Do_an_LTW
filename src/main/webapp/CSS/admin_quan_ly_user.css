@@ -797,3 +797,15 @@ input:checked + .small-switch .slider:before {
 .grand-total span {
     font-weight: bold;
 }
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    font-weight: normal;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+    color: var(--main-red);
+}

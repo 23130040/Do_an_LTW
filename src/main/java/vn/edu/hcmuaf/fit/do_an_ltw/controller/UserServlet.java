@@ -113,7 +113,7 @@ public class UserServlet extends HttpServlet {
             String phone = request.getParameter("userPhone");
             String role = request.getParameter("userRole");
             String newPassword = request.getParameter("userPassword");
-            String statusParam = request.getParameter("userStatus"); // Lấy từ checkbox nếu có
+            String statusParam = request.getParameter("userStatus");
 
             User existingUser = userDAO.findById(id);
 
@@ -130,7 +130,7 @@ public class UserServlet extends HttpServlet {
                 }
 
                 if (userDAO.update(existingUser, id)) {
-                    response.sendRedirect(request.getContextPath() + "/admin/quanlyuser");
+                    response.sendRedirect(request.getContextPath() + "/quanlyuser");
                 } else {
                     response.getWriter().write("Lỗi: Không thể cập nhật người dùng.");
                 }
@@ -144,7 +144,6 @@ public class UserServlet extends HttpServlet {
 
     private String userToJson(User user) {
         if (user == null) return "{}";
-        // Trong trường hợp này, ta cần cả trường địa chỉ (address) và trạng thái (status)
         return String.format(
                 "{\"id\": %d, \"name\": \"%s\", \"email\": \"%s\", \"phone\": \"%s\", \"role\": \"%s\", \"status\": %b}",
                 user.getId(), user.getName(), user.getEmail(), user.getPhone(), user.getRole(), user.isStatus()

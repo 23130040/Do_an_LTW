@@ -35,11 +35,32 @@ document.addEventListener("DOMContentLoaded", () => {
     window.openUserModal = function (isEdit = false, userData = null) {
         userForm.reset();
 
+        const userPassword = document.getElementById('userPassword');
+        const userConfirmPassword = document.getElementById('userConfirmPassword');
+        const userIdHidden = document.getElementById('userIdHidden');
+
         if (isEdit && userData) {
             modalTitle.textContent = "Sửa";
             fillUserForm(userData);
+
+
+            userForm.setAttribute('action', USER_API_URL + '?action=update');
+            userPassword.placeholder = 'Bỏ trống nếu không muốn đổi';
+            userPassword.removeAttribute('required');
+            userConfirmPassword.removeAttribute('required');
+            userIdHidden.value = userData.id;
+
+
         } else {
             modalTitle.textContent = "Thêm";
+
+
+            userForm.setAttribute('action', USER_API_URL + '?action=add');
+            userPassword.placeholder = 'Nhập mật khẩu';
+            userPassword.setAttribute('required', 'required');
+            userConfirmPassword.setAttribute('required', 'required');
+            userIdHidden.value = '';
+
         }
 
         userModal.style.display = "flex";
@@ -48,40 +69,71 @@ document.addEventListener("DOMContentLoaded", () => {
     window.closeUserModal = function () {
         userModal.style.display = "none";
     };
+    const USER_API_URL = 'quanlyuser';
+
+    window.editUser = function (id) {
+
+        fetch(USER_API_URL + '?action=edit&id=' + id)
+            .then(response => {
+                if (!response.ok) {
+
+                    return response.text().then(text => Promise.reject(text));
+                }
+                return response.json();
+            })
+            .then(user => {
+                console.log("Dữ liệu User từ Servlet:", user);
+                openUserModal(true, user);
+            })
+            .catch(error => {
+                console.error('Lỗi khi tải thông tin người dùng:', error);
+                alert('Lỗi: Không thể tải thông tin người dùng. Chi tiết: ' + error);
+            });
+    }
 
     function fillUserForm(user) {
-        userForm.querySelector("input[name='userName']").value = user.name;
-        userForm.querySelector("input[name='userEmail']").value = user.email;
-        userForm.querySelector("input[name='userPhone']").value = user.phone;
-        userForm.querySelector("input[name='userRole']").value = user.role;
-        userForm.querySelector("input[name='userPassword']").value = user.password;
+        document.getElementById('userIdHidden').value = user.id || "";
+
+        document.getElementById('userName').value = user.name || "";
+        document.getElementById('userEmail').value = user.email || "";
+        document.getElementById('userPhone').value = user.phone || "";
+
+        document.getElementById('userRole').value = user.role || "";
+
+        document.getElementById('userPassword').value = "";
+        document.getElementById('userConfirmPassword').value = "";
     }
 
 
     document.querySelector(".control-panel .btn-primary")
         .addEventListener("click", () => openUserModal(false));
 
-
-    document.addEventListener("click", (e) => {
-        if (e.target.closest(".edit-btn")) {
-            const btn = e.target.closest(".edit-btn");
-            const row = btn.closest("tr");
-
-            const user = {
-                id: row.dataset.id,
-                name: row.querySelector(".col-name").textContent.trim(),
-                email: row.querySelector(".col-email").textContent.trim(),
-                phone: row.querySelector(".col-phone").textContent.trim(),
-                gender: row.querySelector(".col-gender").textContent.trim(),
-                birthday: row.querySelector(".col-birthday").dataset.value,
-                role: row.querySelector(".col-role").dataset.value,
-                status: row.querySelector(".col-status").dataset.active === "true"
-            };
-
-            openUserModal(true, user);
+    window.deleteUser = function (id) {
+        if (!confirm(`Bạn có chắc chắn muốn xóa người dùng ID: ${id} không? Thao tác này không thể hoàn tác.`)) {
+            return;
         }
-    });
 
+        const URL = USER_API_URL + '?action=delete&id=' + id;
+
+        fetch(URL, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    return response.text().then(text => Promise.reject(text));
+                }
+            })
+            .then(message => {
+                alert("Xóa thành công: " + message);
+                window.location.reload();
+            })
+            .catch(errorText => {
+                console.error('Lỗi khi xóa người dùng:', errorText);
+                alert('Lỗi: ' + errorText);
+            });
+    };
 
     /* ***************** LỊCH SỬ MUA HÀNG **************/
     const historyModal = document.getElementById("historyModal");

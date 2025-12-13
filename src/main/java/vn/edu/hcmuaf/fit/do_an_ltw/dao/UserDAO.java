@@ -10,13 +10,20 @@ import java.util.List;
 import java.util.Map;
 
 public class UserDAO extends BaseDAO<User>{
+    private static final int RECORDS_PER_PAGE = 9;
     public static Map<Integer,User> users = new HashMap<Integer,User>();
 
 
     public UserDAO() {
         String sql = "select * from user";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
         try {
-            ResultSet rs = selectData(sql);
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
@@ -42,6 +49,10 @@ public class UserDAO extends BaseDAO<User>{
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {}
         }
     }
 
@@ -137,7 +148,7 @@ public class UserDAO extends BaseDAO<User>{
         } finally {
             if (conn != null) {
                 try {
-                    conn.close();
+                    closeResource(conn, null, null);
                 } catch (SQLException ignored) {
                 }
             }
@@ -148,35 +159,50 @@ public class UserDAO extends BaseDAO<User>{
     public boolean update(User user, int id) {
         String sql = "UPDATE user SET name=?, email=?, password=?, phone=?, gender=?, birthday=?, role=?, avatar=?, status=?, updated_at=NOW() " +
                 "WHERE id=?";
+        Connection conn = null;
+        PreparedStatement ps = null;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
 
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPassword());
-            ps.setString(4, user.getPhone());
-            ps.setString(5, user.getGender());
-            ps.setDate(6, user.getBirthday() != null ? Date.valueOf(user.getBirthday()) : null);
-            ps.setString(7, user.getRole());
-            ps.setString(8, user.getAvatar());
-            ps.setBoolean(9, user.isStatus());
-            ps.setInt(10, id);
 
-            return ps.executeUpdate() > 0;
+                ps.setString(1, user.getName());
+                ps.setString(2, user.getEmail());
+                ps.setString(3, user.getPassword());
+                ps.setString(4, user.getPhone());
+                ps.setString(5, user.getGender());
+                ps.setDate(6, user.getBirthday() != null ? Date.valueOf(user.getBirthday()) : null);
+                ps.setString(7, user.getRole());
+                ps.setString(8, user.getAvatar());
+                ps.setBoolean(9, user.isStatus());
+                ps.setInt(10, id);
+
+                if (ps.executeUpdate() > 0) {
+                    users.put(id, user);
+                    return true;
+                }
+                return false;
 
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        } finally {
+            try {
+                closeResource(conn, ps, null);
+            } catch (SQLException ignored) {}
         }
     }
 
     @Override
     public boolean delete(User user, int id) {
         String sql = "DELETE FROM user WHERE id=?";
+        Connection conn = null;
+        PreparedStatement ps = null;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
 
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
@@ -184,38 +210,54 @@ public class UserDAO extends BaseDAO<User>{
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        } finally {
+            try {
+                closeResource(conn, ps, null);
+            } catch (SQLException ignored) {}
         }
     }
 
     @Override
     public User findById(int id) {
         String sql = "SELECT * FROM user WHERE id=?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
 
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             if (rs.next()) {
                 return mapResultSetToEntity(rs);
             }
+            return null;
 
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {}
         }
-
-        return null;
     }
 
     @Override
     public List<User> findAll() {
         List<User> list = new ArrayList<>();
         String sql = "SELECT * FROM user";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
 
             while (rs.next()) {
                 list.add(mapResultSetToEntity(rs));
@@ -223,8 +265,70 @@ public class UserDAO extends BaseDAO<User>{
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        } finally {
 
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {}
+        }
+        return list;
+    }
+    public int getNoOfRecords() {
+        String sql = "SELECT COUNT(id) FROM user";
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {}
+        }
+        return count;
+    }
+
+    public List<User> findUsersByPage(int offset, int noOfRecords) {
+        List<User> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT * FROM user ORDER BY id ASC LIMIT ? OFFSET ?";
+
+        try {
+            conn = getConnection();
+
+            ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, noOfRecords);
+            ps.setInt(2, offset);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {
+            }
+        }
         return list;
     }
 

@@ -5,10 +5,33 @@
 <%-- Dùng Jakarta JSTL Taglib --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%
+    final int RECORDS_PER_PAGE = 9;
     UserDAO dao = new UserDAO();
-    List<User> list = dao.findAll();
+    int currentPage = 1;
+    String pageParam = request.getParameter("page");
+    if (pageParam != null) {
+        try {
+            currentPage = Integer.parseInt(pageParam);
+        } catch (NumberFormatException e) {
+            currentPage = 1;
+        }
+    }
+    if (currentPage < 1) currentPage = 1;
+    int noOfRecords = dao.getNoOfRecords();
+    int offset = (currentPage - 1) * RECORDS_PER_PAGE;
+    if (offset >= noOfRecords && noOfRecords > 0) {
+        currentPage = (int) Math.ceil((double) noOfRecords / RECORDS_PER_PAGE);
+        offset = (currentPage - 1) * RECORDS_PER_PAGE;
+    }
+    int noOfPages = (int) Math.ceil((double) noOfRecords / RECORDS_PER_PAGE);
+    if (noOfPages == 0) noOfPages = 1;
+    List<User> list = dao.findUsersByPage(offset, RECORDS_PER_PAGE);
     request.setAttribute("users", list);
+    request.setAttribute("currentPage", currentPage);
+    request.setAttribute("noOfPages", noOfPages);
+    request.setAttribute("noOfRecords", noOfRecords);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +91,19 @@
                             <td>${u.id}</td>
                             <td>${u.name}</td>
                             <td>${u.email}<br>${u.phone}</td>
-                            <td>${u.role}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${u.role eq 'admin'}">
+                                        Quản trị viên
+                                    </c:when>
+                                    <c:when test="${u.role eq 'customer'}">
+                                        Khách hàng
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${u.role}
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
                             <td>—</td>
                             <td>
                                 <button class="btn-icon edit-btn" onclick="editUser(${u.id})"><i class="fas fa-edit"></i></button>
@@ -80,6 +115,41 @@
 
                 </table>
             </div>
+            <c:if test="${noOfPages > 1}">
+                <div class="pagination-container" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-size: 0.9em; color: #777;">
+                        Đang hiển thị ${fn:length(users)} trên tổng số ${noOfRecords} người dùng.
+                    </div>
+                    <nav>
+                        <ul class="pagination" style="display: inline-flex; list-style: none; padding: 0;">
+
+                                <%-- Nút trang trước --%>
+                            <c:if test="${currentPage > 1}">
+                                <li class="page-item" style="margin-right: 5px;">
+                                    <a class="page-link btn btn-secondary" href="?page=${currentPage - 1}" style="padding: 6px 12px; text-decoration: none;">&laquo; Trước</a>
+                                </li>
+                            </c:if>
+
+                                <%-- Hiển thị các trang --%>
+                            <c:forEach begin="1" end="${noOfPages}" var="i">
+                                <li class="page-item" style="margin-right: 5px;">
+                                    <a class="page-link ${currentPage == i ? 'btn-primary' : 'btn-secondary'}" href="?page=${i}"
+                                       style="padding: 6px 12px; text-decoration: none; border-radius: 3px; background-color: ${currentPage == i ? '#8d2a3a' : '#f0f0f0'}; color: ${currentPage == i ? '#fff' : '#333'}; border: 1px solid ${currentPage == i ? '#8d2a3a' : '#ddd'};">
+                                            ${i}
+                                    </a>
+                                </li>
+                            </c:forEach>
+
+                                <%-- Nút trang sau --%>
+                            <c:if test="${currentPage < noOfPages}">
+                                <li class="page-item">
+                                    <a class="page-link btn btn-secondary" href="?page=${currentPage + 1}" style="padding: 6px 12px; text-decoration: none;">Sau &raquo;</a>
+                                </li>
+                            </c:if>
+                        </ul>
+                    </nav>
+                </div>
+            </c:if>
         </main>
     </div>
 </div>
@@ -132,8 +202,8 @@
                 <label for="userRole">Phân quyền:</label>
                 <select id="userRole" name="userRole" required>
                     <option value="">-- Chọn vai trò --</option>
-                    <option value="Khách Hàng">Khách hàng</option>
-                    <option value="Quản trị viên">Quản trị viên</option>
+                    <option value="customer">Khách hàng</option>
+                    <option value="admin">Quản trị viên</option>
                 </select>
 
                 <label for="userPassword">Mật khẩu:</label>

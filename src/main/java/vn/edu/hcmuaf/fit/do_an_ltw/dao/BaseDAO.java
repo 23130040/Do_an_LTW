@@ -69,8 +69,8 @@ public abstract class BaseDAO<T> {
         }
         if (conn != null) {
             try {
-                conn.close();
-            } catch (SQLException e) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            } catch (Exception e) {
                 System.err.println(e.getMessage());
                 e.printStackTrace();
             }
