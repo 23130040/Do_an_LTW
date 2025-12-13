@@ -2,37 +2,10 @@
 <%@ page import="vn.edu.hcmuaf.fit.do_an_ltw.model.User" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%-- Dùng Jakarta JSTL Taglib --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
-<%
-    final int RECORDS_PER_PAGE = 9;
-    UserDAO dao = new UserDAO();
-    int currentPage = 1;
-    String pageParam = request.getParameter("page");
-    if (pageParam != null) {
-        try {
-            currentPage = Integer.parseInt(pageParam);
-        } catch (NumberFormatException e) {
-            currentPage = 1;
-        }
-    }
-    if (currentPage < 1) currentPage = 1;
-    int noOfRecords = dao.getNoOfRecords();
-    int offset = (currentPage - 1) * RECORDS_PER_PAGE;
-    if (offset >= noOfRecords && noOfRecords > 0) {
-        currentPage = (int) Math.ceil((double) noOfRecords / RECORDS_PER_PAGE);
-        offset = (currentPage - 1) * RECORDS_PER_PAGE;
-    }
-    int noOfPages = (int) Math.ceil((double) noOfRecords / RECORDS_PER_PAGE);
-    if (noOfPages == 0) noOfPages = 1;
-    List<User> list = dao.findUsersByPage(offset, RECORDS_PER_PAGE);
-    request.setAttribute("users", list);
-    request.setAttribute("currentPage", currentPage);
-    request.setAttribute("noOfPages", noOfPages);
-    request.setAttribute("noOfRecords", noOfRecords);
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +23,7 @@
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
         <jsp:include page="admin_sidebar.jsp">
-            <jsp:param name="active" value="config"/>
+            <jsp:param name="active" value="user"/>
         </jsp:include>
 
         <!---------------- QUẢN LÝ NGƯỜI DÙNG ------------------->
@@ -59,12 +32,16 @@
 
             <div class="control-panel">
                 <div class="filters">
-                    <input type="text" placeholder="Tìm kiếm theo Tên, Email, SĐT..." class="search-input">
+                    <input type="text"
+                           placeholder="Tìm kiếm theo Tên, Email, SĐT..."
+                           class="search-input"
+                           id="searchInput"
+                           value="${searchKeyword}">
 
-                    <select name="role" class="filter-select">
+                    <select name="role" class="filter-select" id="roleFilter">
                         <option value="">-- Phân quyền --</option>
-                        <option value="customer">Khách hàng</option>
-                        <option value="admin">Quản trị viên (Admin)</option>
+                        <option value="customer" ${filterRole eq 'customer' ? 'selected' : ''}>Khách hàng</option>
+                        <option value="admin" ${filterRole eq 'admin' ? 'selected' : ''}>Quản trị viên</option>
                     </select>
 
                 </div>

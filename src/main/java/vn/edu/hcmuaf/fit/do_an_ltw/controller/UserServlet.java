@@ -8,6 +8,8 @@ import vn.edu.hcmuaf.fit.do_an_ltw.dao.UserDAO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "UserServlet", value = "/quanlyuser")
 public class UserServlet extends HttpServlet {
@@ -16,6 +18,9 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+
+        String searchKeyword = request.getParameter("search");
+        String filterRole = request.getParameter("role");
 
         if ("edit".equals(action)) {
             int idToEdit = Integer.parseInt(request.getParameter("id"));
@@ -32,6 +37,66 @@ public class UserServlet extends HttpServlet {
         } else if ("delete".equals(action)) {
             doDelete(request, response);
         } else {
+            final int RECORDS_PER_PAGE = 9;
+            int currentPage = 1;
+            String pageParam = request.getParameter("page");
+
+            if (pageParam != null) {
+                try {
+                    currentPage = Integer.parseInt(pageParam);
+                } catch (NumberFormatException e) {
+                    currentPage = 1;
+                }
+            }
+            if (currentPage < 1) currentPage = 1;
+
+            List<User> fullFilteredList;
+
+            if ((searchKeyword != null && !searchKeyword.isEmpty()) || (filterRole != null && !filterRole.isEmpty())) {
+                fullFilteredList = userDAO.searchAndFilter(searchKeyword, filterRole);
+            } else {
+                fullFilteredList = userDAO.findAll();
+            }
+
+            int noOfRecords = fullFilteredList.size();
+            int noOfPages = (int) Math.ceil((double) noOfRecords / RECORDS_PER_PAGE);
+
+            if (noOfPages == 0) noOfPages = 1;
+
+            int offset = (currentPage - 1) * RECORDS_PER_PAGE;
+
+            if (offset >= noOfRecords && noOfRecords > 0) {
+                currentPage = noOfPages;
+                offset = (currentPage - 1) * RECORDS_PER_PAGE;
+            }
+
+            List<User> list = new ArrayList<>();
+
+            if (noOfRecords > 0) {
+                int start = Math.min(offset, noOfRecords);
+
+                int end = Math.min(start + RECORDS_PER_PAGE, noOfRecords);
+
+                if (start < end) {
+                    try {
+                        list = fullFilteredList.subList(start, end);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.err.println("Lỗi Index khi phân trang: " + e.getMessage());
+                        list = new ArrayList<>();
+                    }
+                } else {
+                    list = new ArrayList<>();
+                }
+            }
+
+            request.setAttribute("users", list);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("noOfPages", noOfPages);
+            request.setAttribute("noOfRecords", noOfRecords);
+
+            request.setAttribute("searchKeyword", searchKeyword);
+            request.setAttribute("filterRole", filterRole);
+
             request.getRequestDispatcher("admin_quan_ly_user.jsp").forward(request, response);
         }
     }
@@ -94,7 +159,7 @@ public class UserServlet extends HttpServlet {
             newUser.setStatus(true);
 
             if (userDAO.insert(newUser)) {
-                request.getRequestDispatcher("/admin_quan_ly_user.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/quanlyuser");
             } else {
                 response.getWriter().write("Lỗi: Không thể thêm người dùng vào database.");
                 return;

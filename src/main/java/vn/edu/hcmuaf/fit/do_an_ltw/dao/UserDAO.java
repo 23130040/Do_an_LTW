@@ -15,7 +15,7 @@ public class UserDAO extends BaseDAO<User>{
 
 
     public UserDAO() {
-        String sql = "select * from user";
+        String sql = "select * from user ORDER BY id ASC";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -249,7 +249,7 @@ public class UserDAO extends BaseDAO<User>{
     @Override
     public List<User> findAll() {
         List<User> list = new ArrayList<>();
-        String sql = "SELECT * FROM user";
+        String sql = "SELECT * FROM user ORDER BY id ASC";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -328,6 +328,58 @@ public class UserDAO extends BaseDAO<User>{
                 closeResource(conn, ps, rs);
             } catch (SQLException ignored) {
             }
+        }
+        return list;
+    }
+
+    public List<User> searchAndFilter(String keyword, String role) {
+        List<User> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM user WHERE 1=1";
+
+        List<Object> params = new ArrayList<>();
+        final String SENSITIVE_COLLATE = " COLLATE utf8mb4_bin";
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql += " AND (name" + SENSITIVE_COLLATE + " LIKE ? OR email" + SENSITIVE_COLLATE + " LIKE ? OR phone" + SENSITIVE_COLLATE + " LIKE ?)";
+
+            String likeValue = "%" + keyword.trim() + "%";
+            params.add(likeValue);
+            params.add(likeValue);
+            params.add(likeValue);
+        }
+
+        if (role != null && !role.trim().isEmpty()) {
+            sql += " AND role = ?";
+            params.add(role);
+        }
+
+        sql += " ORDER BY id ASC";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {}
         }
         return list;
     }

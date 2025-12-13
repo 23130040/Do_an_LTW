@@ -20,7 +20,7 @@
             </li>
 
             <li class="${param.active == 'user' ? 'active' : ''}">
-                <a href="admin_quan_ly_user.jsp">Quản lý người dùng</a>
+                <a href="${pageContext.request.contextPath}/quanlyuser">Quản lý người dùng</a>
             </li>
 
             <li class="${param.active == 'order' ? 'active' : ''}">

@@ -19,7 +19,7 @@
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
         <jsp:include page="admin_sidebar.jsp">
-            <jsp:param name="active" value="config"/>
+            <jsp:param name="active" value="feedback"/>
         </jsp:include>
 
         <!---------------- QUẢN LÝ ĐÁNH GIÁ VÀ PHẢN HỒI ------------------->
