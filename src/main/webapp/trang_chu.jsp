@@ -1,0 +1,190 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CleanMeat</title>
+    <link rel="stylesheet" href="CSS/trang_chu.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+<main>
+    <nav class="header">
+        <!-- Hàng trên: Logo + Search & Cart -->
+        <div class="top-bar">
+            <div class="logo">
+                <img src="images/logoCleanmeat.png">
+            </div>
+            <div class="right-section">
+                <div class="search-cart ">
+                    <div class="search-icon">
+                        <div class="search-box" id="searchBox">
+                            <span id="search-label">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" id="search-input" placeholder="Nhập từ khóa..." />
+                            <span id="search-close">✖</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-icon">
+                    <a href="giohang.jsp"><i class="fa-solid fa-cart-shopping"></i></a>
+                </div>
+                <div class="login">
+                    <a href="dangnhap.jsp">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu -->
+        <div class="menu" id="menu">
+            <a href="trang_chu_chua_login.jsp">Trang chủ</a>
+            <a href="san_pham.jsp">Sản phẩm</a>
+            <a href="gioi_thieu.jsp">Giới Thiệu</a>
+            <a href="tin_tuc.jsp">Tin Tức</a>
+            <a href="chinhsachdoitra.jsp">Chính sách đổi trả</a>
+        </div>
+    </nav>
+
+    <div class="banner">
+        <img src="images/banner.jpg" alt="Banner background" class="banner-img">
+
+        <div class="gretting">
+            <h1 id="greet-title">Chào Mừng Đến Với CleanMeat</h1>
+            <p id="greet-desc">Vì sức khỏe, vì gia đình, và vì chính bạn. Chúng tôi mong mỗi bữa ăn đều là một niềm hạnh phúc</p>
+        </div>
+    </div>
+
+    <section class="featured-product-section product-section">
+        <h2 class="section-title"> SẢN PHẨM NỔI BẬT </h2>
+        <div class="product-list">
+            <div class="product-item featured-item">
+                <img src="https://minhchaufood.vn/wp-content/uploads/sites/7/2021/06/shortplateslice_1024x1024_2_625x556-1-600x534.jpg" alt="Thịt bò tươi nổi bật">
+                <h3>Ba chỉ bò</h3>
+                <p class="price">250.000 ₫ / KG</p>
+                <div class="badge-new">Sản phẩm mới</div>
+                <button>THÊM VÀO GIỎ</button>
+            </div>
+
+            <div class="product-item featured-item">
+                <img src="images/thitTC3.png" alt="Thịt bò tươi nổi bật">
+                <h3>Thịt bò tươi</h3>
+                <p class="price">350.000 ₫ / KG</p>
+                <div class="badge-new">Nổi Bật</div>
+                <button>THÊM VÀO GIỎ</button>
+            </div>
+
+            <div class="product-item featured-item">
+                <img src="images/thitTC1.png" alt="Thịt thăn heo nổi bật">
+                <h3>Thịt thăn heo</h3>
+                <p class="price">89.000 ₫ / KG</p>
+                <div class="badge-new">Bán Chạy</div>
+                <button>THÊM VÀO GIỎ</button>
+            </div>
+
+            <div class="product-item featured-item">
+                <img src="images/thitTC2.png" alt="Thịt đùi gà nổi bật">
+                <h3>Thịt đùi gà</h3>
+                <p class="price">69.000 ₫ / KG</p>
+                <div class="badge-new">Giá Tốt</div>
+                <button>THÊM VÀO GIỎ</button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SẢN PHẨM CỦA CHÚNG TÔI -->
+    <section class="product-section">
+        <h2 class="section-title">SẢN PHẨM CỦA CHÚNG TÔI</h2>
+        <div class="product-carousel">
+            <button class="arrow left" onclick="scrollToLeft(this)">&#10094;</button>
+
+            <div class="product-list scrollable">
+                <div class="product-item">
+                    <img src="images/thitTC2.png" alt="Thịt đùi gà">
+                    <h3>Thịt đùi gà</h3>
+                    <p class="price">69.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
+                </div>
+                <div class="product-item">
+                    <img src="images/thitTC1.png" alt="Thịt thăn heo">
+                    <h3>Thịt thăn heo</h3>
+                    <p class="price">89.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
+                </div>
+                <div class="product-item">
+                    <img src="images/thitTC3.png" alt="Thịt bò tươi">
+                    <h3>Thịt bò tươi</h3>
+                    <p class="price">350.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
+                </div>
+                <div class="product-item">
+                    <img src="images/thitTC4.png" alt="Thịt nọng heo">
+                    <h3>Thịt nọng heo</h3>
+                    <p class="price">330.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
+                </div>
+                <div class="product-item">
+                    <img src="images/thitTC5.png" alt="Thịt ức gà">
+                    <h3>Thịt ức gà</h3>
+                    <p class="price">70.000 ₫ / KG</p>
+                    <button>THÊM VÀO GIỎ</button>
+                </div>
+                <div class="product-item view-all-item" onclick="window.location.href='san_pham.jsp'">
+                    <i class="fa-solid fa-arrow-right" style="font-size: 50px; margin-bottom: 10px;"></i>
+                    <h3>Xem tất cả</h3>
+                    <p>Khám phá toàn bộ sản phẩm</p>
+                </div>
+            </div>
+
+            <button class="arrow right" onclick="scrollToRight(this)">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col about-us">
+                <div class="footer-logo">
+                    <img src="images/logoCleanmeat.png" alt="CleanMeat Logo">
+                </div>
+                <p>CleanMeat - Nguồn thịt tươi sạch, an toàn cho mọi bữa ăn gia đình. Vì sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col quick-links">
+                <h4>Liên Kết Nhanh</h4>
+                <ul>
+                    <li><a href="trang_chu_chua_login.jsp">Trang Chủ</a></li>
+                    <li><a href="san_pham.jsp">Sản Phẩm</a></li>
+                    <li><a href="gioi_thieu.jsp">Giới Thiệu</a></li>
+                    <li><a href="tin_tuc.jsp">Tin Tức</a></li>
+                    <li><a href="chinhsachdoitra.jsp">Chính sách đổi trả</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col contact-info">
+                <h4>Liên Hệ Chúng Tôi</h4>
+                <p><i class="fa-solid fa-map-location-dot"></i> <strong>Địa chỉ:</strong> 123 ABC, DEF, XYZ</p>
+                <p><i class="fa-solid fa-phone"></i> <strong>Hotline:</strong> 1900 6868 (8h-20h)</p>
+                <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> support@cleanmeat.vn</p>
+                <p><i class="fa-solid fa-clock"></i> <strong>Giờ mở cửa:</strong> T2 - CN (7:00 - 21:00)</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CleanMeat. Bảo lưu mọi quyền.</p>
+        </div>
+    </footer>
+
+
+</main>
+<script src="JS/trang_chu.js"></script>
+</body>
+</html>

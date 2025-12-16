@@ -16,10 +16,10 @@ public class User {
     private LocalDate created_at;
     private LocalDate updated_at;
 
-    public User(String name,  String password, String email, String phone, String gender, LocalDate birthday, String role, String avatar) {
+    public User(String name, String email,  String password, String phone, String gender, LocalDate birthday, String role, String avatar) {
         this.name = name;
-        this.password = password;
         this.email = email;
+        this.password = password;
         this.phone = phone;
         this.gender = gender;
         this.birthday = birthday;
@@ -28,11 +28,11 @@ public class User {
         this.status = true;
     }
 
-    public User(int id, String name,  String password, String email, String phone, String gender, LocalDate birthday, String role, String avatar, boolean status, LocalDate created_at, LocalDate updated_at) {
+    public User(int id, String name, String email,  String password, String phone, String gender, LocalDate birthday, String role, String avatar, boolean status, LocalDate created_at, LocalDate updated_at) {
         this.id = id;
         this.name = name;
-        this.password = password;
         this.email = email;
+        this.password = password;
         this.phone = phone;
         this.gender = gender;
         this.birthday = birthday;
@@ -41,6 +41,10 @@ public class User {
         this.status = status;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public User() {
+
     }
 
     public int getId() {
@@ -138,4 +142,6 @@ public class User {
     public void setUpdated_at(LocalDate updated_at) {
         this.updated_at = updated_at;
     }
+
+
 }

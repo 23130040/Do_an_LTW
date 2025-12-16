@@ -22,7 +22,7 @@ public class ConnectionPool {
         try {
             for (int i = 0; i < MAX_CONNECTIONS; i++) {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                String url = "jdbc:mysql://localhost:3306/cleanmeat";
+                String url = "jdbc:mysql://localhost:3306/cleanmeat?zeroDateTimeBehavior=CONVERT_TO_NULL";
                 String user = "root";
                 String password = "";
                 Connection conn = DriverManager.getConnection(url, user, password);
@@ -36,30 +36,36 @@ public class ConnectionPool {
     }
 
     public synchronized Connection getConnection() {
-        while (pool.isEmpty()) {
-            try {
-                pool.wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+        synchronized (pool) {
+            while (pool.isEmpty()) {
+                try {
+                    pool.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
+            return pool.poll();
         }
-        return pool.poll();
     }
 
     public synchronized void releaseConnection(Connection conn) {
-        pool.offer(conn);
-        notifyAll();
+        synchronized (pool) {
+            pool.offer(conn);
+            notifyAll();
+        }
     }
 
     public synchronized void closePool() {
-        for (Connection conn : pool) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        synchronized (pool) {
+            for (Connection conn : pool) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+            pool.clear();
         }
-        pool.clear();
     }
 
 }
