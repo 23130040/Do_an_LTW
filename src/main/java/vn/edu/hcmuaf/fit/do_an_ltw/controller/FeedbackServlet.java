@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "QuanLyDanhGia", value = "/quanlydanhgia")
-public class QuanLyDanhGia extends HttpServlet {
+public class FeedbackServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("admin_quan_ly_danh_gia.jsp").forward(request, response);

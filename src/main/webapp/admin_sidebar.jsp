@@ -28,11 +28,11 @@
             </li>
 
             <li class="${param.active == 'news' ? 'active' : ''}">
-                <a href="admin_quan_ly_tin_tuc.jsp">Quản lý khuyến mãi và nội dung</a>
+                <a href="admin_quan_ly_tin_tuc.jsp">Quản lý tin tức</a>
             </li>
 
             <li class="${param.active == 'feedback' ? 'active' : ''}">
-                <a href="admin_quan_ly_danh_gia.jsp">Quản lý đánh giá và phản hồi</a>
+                <a href="${pageContext.request.contextPath}/quanlydanhgia">Quản lý đánh giá và phản hồi</a>
             </li>
 
             <li class="${param.active == 'config' ? 'active' : ''}">

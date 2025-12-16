@@ -1,7 +1,21 @@
-
+<%@ page import="vn.edu.hcmuaf.fit.do_an_ltw.dao.FeedbackDAO" %>
+<%@ page import="vn.edu.hcmuaf.fit.do_an_ltw.model.Feedback" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    FeedbackDAO feedbackDAO = new FeedbackDAO();
+    List<Feedback> feedbackList = feedbackDAO.findAll();
+    request.setAttribute("feedbackList", feedbackList);
+
+    DateTimeFormatter localTimeFmt = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter localDateFmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    request.setAttribute("localTimeFmt", localTimeFmt);
+    request.setAttribute("localDateFmt", localDateFmt);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,39 +40,6 @@
         <main class="content">
             <h2 class="page-title">Quản Lý Đánh Giá và Phản Hồi</h2>
 
-            <div class="control-panel">
-                <div class="filters">
-                    <input type="text" placeholder="Tìm kiếm theo Tên SP, Nội dung..." class="search-input">
-
-                    <select name="rating" class="filter-select">
-                        <option value="">-- Xếp hạng --</option>
-                        <option value="5">5 Sao</option>
-                        <option value="4">4 Sao</option>
-                        <option value="3">3 Sao</option>
-                        <option value="2">2 Sao</option>
-                        <option value="1">1 Sao</option>
-                    </select>
-
-                    <select name="status" class="filter-select">
-                        <option value="">-- Trạng thái --</option>
-                        <option value="pending">Chờ duyệt</option>
-                        <option value="approved">Đã duyệt</option>
-                        <option value="hidden">Đã xóa</option>
-                    </select>
-
-                    <select name="type" class="filter-select">
-                        <option value="">-- Loại --</option>
-                        <option value="no-reply">Chưa trả lời</option>
-                        <option value="spam">Đã trả lời</option>
-                    </select>
-                </div>
-
-                <div class="summary-info">
-                    <div class="total-reviews">Tổng: 10 đánh giá</div>
-                    <div class="avg-rating">TB: <i class="fas fa-star text-warning"></i> 4/5</div>
-                </div>
-            </div>
-
             <div class="review-table-container">
                 <table class="review-table">
                     <thead>
@@ -73,55 +54,56 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="highlight-row">
-                        <td>10:30 <br>22/11/2023</td>
-                        <td>Thịt Bò Thăn Nội Cao Cấp (Mỹ)</td>
-                        <td>Nguyễn Văn A</td>
-                        <td class="rating-stars">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star"></i>
-                        </td>
-                        <td>Sản phẩm tươi ngon, đóng gói cẩn thận. Giao hàng hơi lâu.</td>
-                        <td><span class="status-badge status-pending">Chưa trả lời</span></td>
-                        <td>
-                            <button class="btn-sm btn-info reply-btn" title="Phản hồi lại"><i class="fas fa-reply"></i> Trả lời</button>
-                            <button class="btn-sm btn-danger delete-btn" title="Xóa"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="highlight-row">
-                        <td>20:00<br>19/11/2023</td>
-                        <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
-                        <td>Lê Thị B</td>
-                        <td class="rating-stars">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </td>
-                        <td>Thịt không tươi như quảng cáo, có mùi lạ. Yêu cầu xem xét. <span class="report-alert"></span></td>
-                        <td><span class="status-badge status-pending">Chưa trả lời</span></td>
-                        <td>
-                            <button class="btn-sm btn-info reply-btn" title="Phản hồi lại"><i class="fas fa-reply"></i> Trả lời</button>
-                            <button class="btn-sm btn-danger delete-btn" title="Xóa"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="highlight-row">
-                        <td>08:00<br>15/11/2023</td>
-                        <td>Thịt Gà Ta Đùi</td>
-                        <td>Phạm Văn C</td>
-                        <td class="rating-stars">
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                        </td>
-                        <td>Chất lượng tuyệt vời! Sẽ mua lại.</td>
-                        <td><span class="status-badge status-replied">Đã trả lời</span></td>
-                        <td>
-                            <button class="btn-sm btn-danger delete-btn"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
+
+                    <c:forEach var="f" items="${feedbackList}">
+                        <c:set var="isReplied" value="${f.response_id > 0}"/>
+                        <c:set var="statusClass" value="${isReplied ? 'status-replied' : 'status-pending'}"/>
+                        <c:set var="statusText" value="${isReplied ? 'Đã trả lời' : 'Chưa trả lời'}"/>
+
+                        <tr class="highlight-row">
+                            <td>
+                                <mytag:formatDateTime value="${f.created_at}" pattern="HH:mm" />
+                                <br>
+                                <mytag:formatDateTime value="${f.created_at}" pattern="dd/MM/yyyy" />
+                            </td>
+
+                                <%-- Hiển thị ID Sản phẩm thô --%>
+                            <td> ${f.item_id_raw}</td>
+
+                            <td>
+                                <c:choose>
+                                    <c:when test="${f.user != null}">
+                                        ${f.user.name}
+                                    </c:when>
+                                    <c:otherwise>
+                                        *Khách hàng ẩn*
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+
+
+
+                            <td class="rating-stars">
+                                    <%-- Logic hiển thị sao --%>
+                                <c:forEach begin="1" end="${f.rating}" var="star">
+                                    <i class="fas fa-star text-warning"></i>
+                                </c:forEach>
+                                <c:forEach begin="${f.rating + 1}" end="5" var="star">
+                                    <i class="fas fa-star"></i>
+                                </c:forEach>
+                            </td>
+                            <td>${f.comment}</td>
+                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                            <td>
+                                <button class="btn-sm btn-info reply-btn" title="${isReplied ? 'Xem/Sửa phản hồi' : 'Phản hồi lại'}" onclick="openReplyModal(${f.id})">
+                                    <i class="fas fa-reply"></i> ${isReplied ? 'Xem' : 'Trả lời'}
+                                </button>
+                                <button class="btn-sm btn-danger delete-btn" title="Xóa" onclick="deleteFeedback(${f.id})">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -185,6 +167,7 @@
             </div>
 
             <div class="reply-input-area">
+                <label for="replyInput" class="visually-hidden">Phản hồi</label>
                 <textarea id="replyInput" placeholder="Nhập phản hồi của bạn..."></textarea>
                 <button id="sendReplyButton" class="btn-info"><i class="fas fa-paper-plane"></i> Gửi Phản Hồi</button>
             </div>
