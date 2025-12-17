@@ -4,13 +4,40 @@ import vn.edu.hcmuaf.fit.do_an_ltw.model.Feedback;
 import vn.edu.hcmuaf.fit.do_an_ltw.model.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FeedbackDAO extends BaseDAO<Feedback> {
 
+    public static Map<Integer, Feedback> feedbacks = new HashMap<>();
     private UserDAO userDAO = new UserDAO();
+
+    public FeedbackDAO() {
+        String sql = "SELECT * FROM feedback ORDER BY created_at DESC";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Feedback feedback = mapResultSetToEntity(rs);
+                feedbacks.put(feedback.getId(), feedback);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {}
+        }
+    }
 
     @Override
     protected Feedback mapResultSetToEntity(ResultSet rs) throws SQLException {
@@ -33,10 +60,95 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     }
 
     @Override
+    public boolean insert(Feedback feedback) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(Feedback feedback, int id) {
+        String sql = "UPDATE feedback SET response_id = ?, rating = ?, comment = ?, updated_at = NOW() WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, feedback.getResponse_id());
+            ps.setInt(2, feedback.getRating());
+            ps.setString(3, feedback.getComment());
+            ps.setInt(4, id);
+
+            if (ps.executeUpdate() > 0) {
+                feedbacks.put(id, feedback);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                closeResource(conn, ps, null);
+            } catch (SQLException ignored) {}
+        }
+    }
+
+    @Override
+    public boolean delete(Feedback feedback, int id) {
+        String sql = "DELETE FROM feedback WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            if (ps.executeUpdate() > 0) {
+                feedbacks.remove(id);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                closeResource(conn, ps, null);
+            } catch (SQLException ignored) {}
+        }
+    }
+
+    @Override
+    public Feedback findById(int id) {
+        String sql = "SELECT * FROM feedback WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToEntity(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {}
+        }
+        return null;
+    }
+
+    @Override
     public List<Feedback> findAll() {
         List<Feedback> list = new ArrayList<>();
         String sql = "SELECT * FROM feedback ORDER BY created_at DESC";
-
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -45,7 +157,6 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-
             while (rs.next()) {
                 list.add(mapResultSetToEntity(rs));
             }
@@ -54,20 +165,60 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
         } finally {
             try {
                 closeResource(conn, ps, rs);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            } catch (SQLException ignored) {}
         }
         return list;
     }
 
-    @Override
-    protected boolean insert(Feedback feedback) throws SQLException, ClassNotFoundException { return false; }
-    @Override
-    protected boolean update(Feedback feedback, int id) { return false; }
-    @Override
-    protected boolean delete(Feedback feedback, int id) { return false; }
-    @Override
-    protected Feedback findById(int id) { return null; }
+    public List<Feedback> applyFilterAndSearch(String rate, String type, String keyword) {
+        List<Feedback> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM feedback WHERE 1=1");
+        List<Object> params = new ArrayList<>();
 
+        if (rate != null && !rate.trim().isEmpty()) {
+            try {
+                int ratingValue = Integer.parseInt(rate.trim());
+                sql.append(" AND rating = ?");
+                params.add(ratingValue);
+            } catch (NumberFormatException ignored) {}
+        }
+
+        if ("no-reply".equals(type)) {
+            sql.append(" AND (response_id IS NULL OR response_id = 0)");
+        } else if ("replied".equals(type)) {
+            sql.append(" AND response_id > 0");
+        }
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND comment LIKE ?");
+            params.add("%" + keyword.trim() + "%");
+        }
+
+        sql.append(" ORDER BY created_at DESC");
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql.toString());
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                closeResource(conn, ps, rs);
+            } catch (SQLException ignored) {}
+        }
+        return list;
+    }
 }

@@ -1,104 +1,117 @@
-// Hàm User Menu
-function toggleUserMenu() {
-    document.getElementById("userMenuContent").classList.toggle("show");
-}
-// Hàm cho Notification Menu
-function toggleNotificationMenu() {
-    const userDropdown = document.getElementById("userMenuContent");
+document.addEventListener("DOMContentLoaded", () => {
+    /* ********************* MENU & NOTIFICATION ****************/
+    const userMenu = document.getElementById("userMenuContent");
     const notificationPanel = document.getElementById("notification-panel");
 
-    // 1. Đóng User Menu nếu nó đang mở
-    if (userDropdown) {
-        userDropdown.classList.remove("show");
-    }
+    window.toggleUserMenu = function () {
+        userMenu.classList.toggle("show");
+        notificationPanel.classList.remove("show-panel");
+    };
 
-    // 2. Bật/Tắt Notification Panel
-    if (notificationPanel) {
+    window.toggleNotificationMenu = function () {
+        userMenu.classList.remove("show");
         notificationPanel.classList.toggle("show-panel");
-    }
-}
+    };
 
-// Hàm MỞ Modal Trả lời
-function openReplyModal() {
-    const modal = document.getElementById('replyModal');
-    if (modal) {
-        modal.style.display = 'block';
-    }
-}
-
-// Hàm ĐÓNG Modal Trả lời
-function closeReplyModal() {
-    const modal = document.getElementById('replyModal');
-    if (modal) {
-        modal.style.display = 'none';
-        // Tùy chọn: Xóa nội dung nhập cũ khi đóng
-        const replyInput = document.getElementById('replyInput');
-        if (replyInput) {
-            replyInput.value = '';
+    document.addEventListener("click", (event) => {
+        if (!event.target.closest(".user-dropdown") && !event.target.matches(".user-logo")) {
+            userMenu.classList.remove("show");
         }
+        if (!event.target.closest("#notification-panel") && !event.target.matches(".notification-icon")) {
+            notificationPanel.classList.remove("show-panel");
+        }
+    });
+
+    /* ************* REPLY MODAL (PHẢN HỒI) **************/
+    const replyModal = document.getElementById("replyModal");
+    const replyInput = document.getElementById("replyInput");
+
+    window.openReplyModal = function (feedbackId = null) {
+        if (feedbackId) {
+            console.log("Đang mở phản hồi cho ID:", feedbackId);
+        }
+
+        replyModal.style.display = "block";
+    };
+
+    window.closeReplyModal = function () {
+        replyModal.style.display = "none";
+        if (replyInput) replyInput.value = "";
+    };
+
+    const sendReplyButton = document.getElementById("sendReplyButton");
+    if (sendReplyButton) {
+        sendReplyButton.addEventListener("click", () => {
+            const content = replyInput.value.trim();
+            if (content) {
+                alert("Đã gửi phản hồi: " + content);
+                closeReplyModal();
+            } else {
+                alert("Vui lòng nhập nội dung phản hồi.");
+            }
+        });
     }
-}
 
-const reviewRows = document.querySelectorAll('.highlight-row');
+    /* *********** EVENT DELEGATION CHO BẢNG ĐÁNH GIÁ **************/
+    document.addEventListener("click", (event) => {
+        const replyBtn = event.target.closest(".reply-btn");
+        if (replyBtn) {
+            event.stopPropagation();
+            openReplyModal();
+            return;
+        }
 
-reviewRows.forEach(row => {
-    // Gán sự kiện click cho TẤT CẢ các hàng
-    row.addEventListener('click', function(event) {
-        const isActionButton = event.target.closest('td:last-child');
-        if (!isActionButton) {
+        const deleteBtn = event.target.closest(".delete-btn");
+        if (deleteBtn) {
+            event.stopPropagation();
+            const feedbackId = "nào đó";
+            if (confirm("Bạn có chắc chắn muốn xóa đánh giá này?")) {
+                alert("Đã xóa ID: " + feedbackId);
+            }
+            return;
+        }
+
+        const row = event.target.closest(".highlight-row");
+        if (row && !event.target.closest("td:last-child")) {
             openReplyModal();
         }
-    });
-});
 
-const replyButtons = document.querySelectorAll('.reply-btn');
-replyButtons.forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        openReplyModal();
-    });
-});
-
-
-const sendButton = document.getElementById('sendReplyButton');
-if (sendButton) {
-    sendButton.addEventListener('click', function() {
-        const replyText = document.getElementById('replyInput').value.trim();
-        if (replyText) {
-            alert('Đã gửi phản hồi mẫu: ' + replyText);
+        if (event.target === replyModal) {
             closeReplyModal();
-        } else {
-            alert('Vui lòng nhập nội dung phản hồi.');
+        }
+
+        if (event.target.closest(".close-btn")) {
+            closeReplyModal();
         }
     });
-}
 
-window.onclick = function(event) {
-    const userDropdown = document.getElementById("userMenuContent");
-    const notificationPanel = document.getElementById("notification-panel");
-    const replyModal = document.getElementById('replyModal');
+    /* *********** SEARCH & FILTER (LỌC ĐÁNH GIÁ) **************/
+    const searchInput = document.getElementById('searchInput');
+    const rateFilter = document.getElementById('rateFilter');
+    const typeFilter = document.getElementById('typeFilter');
 
-    // Logic đóng User Dropdown
-    if (
-        !event.target.matches('.user-logo') &&
-        userDropdown && userDropdown.classList.contains('show') &&
-        !event.target.closest('.user-dropdown')
-    ) {
-        userDropdown.classList.remove('show');
+    function applyFilterAndSearch() {
+        const keyword = searchInput.value.trim();
+        const rate = rateFilter.value;
+        const type = typeFilter.value;
+
+        const params = new URLSearchParams();
+        if (keyword) params.append('search', keyword);
+        if (rate) params.append('rating', rate);
+        if (type) params.append('type', type);
+
+        window.location.href = 'quanlydanhgia?' + params.toString();
     }
 
-    // Logic đóng Notification Panel
-    if (
-        notificationPanel &&
-        notificationPanel.classList.contains('show-panel') &&
-        !event.target.matches('.notification-icon') &&
-        !event.target.closest('#notification-panel')
-    ) {
-        notificationPanel.classList.remove('show-panel');
+    if (searchInput) {
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyFilterAndSearch();
+            }
+        });
     }
 
-    // Logic đóng Reply Modal
-    if (event.target === replyModal) {
-        closeReplyModal();
-    }
-}
+    if (rateFilter) rateFilter.addEventListener('change', applyFilterAndSearch);
+    if (typeFilter) typeFilter.addEventListener('change', applyFilterAndSearch);
+});

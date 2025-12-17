@@ -24,7 +24,7 @@ public class Feedback {
         this.updated_at = updated_at;
     }
 
-    // THÊM GETTERS
+    public int getId() { return id; }
     public int getItem_id_raw() { return item_id_raw; }
     public User getUser() { return user; }
     public String getComment() { return comment; }

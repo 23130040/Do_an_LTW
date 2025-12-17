@@ -7,10 +7,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-    FeedbackDAO feedbackDAO = new FeedbackDAO();
-    List<Feedback> feedbackList = feedbackDAO.findAll();
-    request.setAttribute("feedbackList", feedbackList);
-
     DateTimeFormatter localTimeFmt = DateTimeFormatter.ofPattern("HH:mm");
     DateTimeFormatter localDateFmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     request.setAttribute("localTimeFmt", localTimeFmt);
@@ -39,6 +35,31 @@
         <!---------------- QUẢN LÝ ĐÁNH GIÁ VÀ PHẢN HỒI ------------------->
         <main class="content">
             <h2 class="page-title">Quản Lý Đánh Giá và Phản Hồi</h2>
+            <div class="control-panel">
+                <div class="filters">
+                    <input type="text" placeholder="Tìm kiếm..." class="search-input" id="searchInput" value="${keyword}">
+
+                    <select name="rating" class="filter-select" id="rateFilter">
+                        <option value="">-- Xếp hạng --</option>
+                        <option value="5" ${selectedRate == '5' ? 'selected' : ''}>5 Sao</option>
+                        <option value="4" ${selectedRate == '4' ? 'selected' : ''}>4 Sao</option>
+                        <option value="3" ${selectedRate == '3' ? 'selected' : ''}>3 Sao</option>
+                        <option value="2" ${selectedRate == '2' ? 'selected' : ''}>2 Sao</option>
+                        <option value="1" ${selectedRate == '1' ? 'selected' : ''}>1 Sao</option>
+                    </select>
+
+                    <select name="type" class="filter-select" id="typeFilter">
+                        <option value="">-- Loại --</option>
+                        <option value="no-reply" ${selectedType == 'no-reply' ? 'selected' : ''}>Chưa trả lời</option>
+                        <option value="replied" ${selectedType == 'replied' ? 'selected' : ''}>Đã trả lời</option>
+                    </select>
+                </div>
+
+                <div class="summary-info">
+                    <div class="total-reviews">Tổng: 10 đánh giá</div>
+                    <div class="avg-rating">TB: <i class="fas fa-star text-warning"></i> 4/5</div>
+                </div>
+            </div>
 
             <div class="review-table-container">
                 <table class="review-table">
@@ -62,12 +83,22 @@
 
                         <tr class="highlight-row">
                             <td>
-                                <mytag:formatDateTime value="${f.created_at}" pattern="HH:mm" />
-                                <br>
-                                <mytag:formatDateTime value="${f.created_at}" pattern="dd/MM/yyyy" />
+                                <%
+                                    Feedback feedbackItem = (Feedback) pageContext.findAttribute("f");
+
+                                    DateTimeFormatter timeFmt = (DateTimeFormatter) request.getAttribute("localTimeFmt");
+                                    DateTimeFormatter dateFmt = (DateTimeFormatter) request.getAttribute("localDateFmt");
+
+                                    if (feedbackItem != null && feedbackItem.getCreated_at() != null) {
+                                        LocalDateTime createdAt = feedbackItem.getCreated_at();
+                                %>
+                                <%= createdAt.format(timeFmt) %><br>
+                                <%= createdAt.format(dateFmt) %>
+                                <%  } else { %>
+                                --:--
+                                <%  } %>
                             </td>
 
-                                <%-- Hiển thị ID Sản phẩm thô --%>
                             <td> ${f.item_id_raw}</td>
 
                             <td>
@@ -84,7 +115,6 @@
 
 
                             <td class="rating-stars">
-                                    <%-- Logic hiển thị sao --%>
                                 <c:forEach begin="1" end="${f.rating}" var="star">
                                     <i class="fas fa-star text-warning"></i>
                                 </c:forEach>
