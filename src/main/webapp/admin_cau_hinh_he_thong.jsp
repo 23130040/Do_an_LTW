@@ -24,54 +24,63 @@
         </jsp:include>
 
 
+
         <main class="content">
             <h2 class="page-title">Cấu Hình Hệ Thống</h2>
+            <c:if test="${param.status == 'success'}">
+                <div id="success-alert" style="color: green; padding: 10px; border: 1px solid green; margin-bottom: 10px;">
+                    Cập nhật cấu hình thành công!
+                </div>
+            </c:if>
 
             <div id="store-settings" class="tab-content active-tab">
                 <div class="setting-card">
-                    <form class="setting-form">
+                    <form class="setting-form" action="cauhinhhethong" method="POST">
+                        <input type="hidden" name="action" value="save">
+                        <input type="hidden" name="id" value="${config.id}">
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Tên Cửa Hàng:</label>
-                                <input type="text" value="Clean Meat" required>
+                                <input type="text" name="webName" value="${config.name}" required>
                             </div>
                             <div class="form-group">
                                 <label>Email Liên Hệ:</label>
-                                <input type="email" value="contact@cleanmeat.com" required>
+                                <input type="email" name="email" value="${config.email}" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Hotline:</label>
-                                <input type="tel" value="090-123-4567">
+                                <input type="tel" name="hotline" value="${config.hotline}">
                             </div>
                             <div class="form-group">
-                                <label>Mã Số Thuế/Kinh Doanh:</label>
-                                <input type="text" value="0312345678">
+                                <label>Mã Số Thuế:</label>
+                                <input type="text" name="taxCode" value="${config.tax_code}">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Facebook :</label>
-                                <input type="tel" value="https://www.facebook.com/cleanmeat">
+                                <input type="text" name="facebook" value="${config.facebook}">
                             </div>
                             <div class="form-group">
                                 <label>Instagram:</label>
-                                <input type="tel" value="https://www.instagram.com/cleanmeat">
+                                <input type="text" name="instagram" value="${config.instagram}">
                             </div>
                         </div>
 
-                        <label>Địa Chỉ Chi Tiết (Hiển thị trên website):</label>
-                        <textarea rows="3" placeholder="Số nhà, đường, Phường/Xã, Quận/Huyện, Tỉnh/Thành phố">123 Đường Nguyễn Văn Linh, Phường 1, Quận 7, TP.HCM</textarea>
-
+                        <label>Địa Chỉ Chi Tiết:</label>
+                        <textarea name="address" rows="3">${config.address}</textarea>
                         <label>Logo Hiện Tại:</label>
                         <div class="logo-preview-box">
-                            <img src="images/logoCleanmeat.png" alt="Logo" class="logo-preview">
+                            <img src="" alt="Logo" class="logo-preview">
                             <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cloud-upload-alt"></i> Thay đổi Logo</button>
                         </div>
-                        <button type="submit" class="btn btn-primary submit-btn">Lưu Cấu Hình Cửa Hàng</button>
+
+                        <button type="submit" class="btn btn-primary submit-btn">Lưu Cấu Hình</button>
                     </form>
                 </div>
             </div>
