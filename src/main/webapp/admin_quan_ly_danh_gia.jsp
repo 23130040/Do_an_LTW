@@ -56,8 +56,8 @@
                 </div>
 
                 <div class="summary-info">
-                    <div class="total-reviews">Tổng: 10 đánh giá</div>
-                    <div class="avg-rating">TB: <i class="fas fa-star text-warning"></i> 4/5</div>
+                    <div class="total-reviews">Tổng: ${totalReviews} đánh giá</div>
+                    <div class="avg-rating">TB: <i class="fas fa-star text-warning"></i> ${avgRating}/5</div>
                 </div>
             </div>
 
@@ -77,9 +77,12 @@
                     <tbody>
 
                     <c:forEach var="f" items="${feedbackList}">
-                        <c:set var="isReplied" value="${f.response_id > 0}"/>
-                        <c:set var="statusClass" value="${isReplied ? 'status-replied' : 'status-pending'}"/>
-                        <c:set var="statusText" value="${isReplied ? 'Đã trả lời' : 'Chưa trả lời'}"/>
+                        <c:set var="isReplied" value="${f.replied}"/>
+                        <c:set var="statusClass"
+                               value="${isReplied ? 'status-replied' : 'status-pending'}"/>
+                        <c:set var="statusText"
+                               value="${isReplied ? 'Đã trả lời' : 'Chưa trả lời'}"/>
+
 
                         <tr class="highlight-row">
                             <td>
@@ -125,11 +128,9 @@
                             <td>${f.comment}</td>
                             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                             <td>
-                                <button class="btn-sm btn-info reply-btn" title="${isReplied ? 'Xem/Sửa phản hồi' : 'Phản hồi lại'}" onclick="openReplyModal(${f.id})">
-                                    <i class="fas fa-reply"></i> ${isReplied ? 'Xem' : 'Trả lời'}
-                                </button>
-                                <button class="btn-sm btn-danger delete-btn" title="Xóa" onclick="deleteFeedback(${f.id})">
-                                    <i class="fas fa-trash-alt"></i>
+                                <button class="btn-sm btn-info reply-btn"
+                                        onclick="openReplyModal(${f.id}, ${f.user.id}, '${f.user.name}', '${f.item_id_raw}', ${f.rating}, '${createdAt.format(dateFmt)}')">
+                                        ${isReplied ? '<i class="fa-solid fa-eye"></i> Xem' : '<i class="fas fa-reply"></i> Trả lời'}
                                 </button>
                             </td>
                         </tr>
@@ -170,16 +171,10 @@
         </div>
         <div class="modal-body">
             <div class="review-details">
-                <p><strong>Khách hàng:</strong> <span id="modalCustomerName">Nguyễn Văn A</span></p>
-                <p><strong>Sản phẩm:</strong> <span id="modalProductName">Thịt heo</span></p>
-                <p><strong>Đánh giá:</strong> <span id="modalRatingStars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </span></p>
-                <p class="review-date-meta">Ngày: <span id="modalReviewDate">20/11/2023</span></p>
+                <p><strong>Khách hàng:</strong> <span id="modalCustomerName"></span></p>
+                <p><strong>Sản phẩm:</strong> <span id="modalProductName"></span></p>
+                <p><strong>Đánh giá:</strong> <span id="modalRatingStars"></span></p>
+                <p class="review-date-meta">Ngày: <span id="modalReviewDate"></span></p>
             </div>
 
             <hr>
@@ -191,7 +186,7 @@
                     <p class="history-text">Sản phẩm tươi ngon, đóng gói cẩn thận. Giao hàng hơi lâu.</p>
                 </div>
                 <div class="history-item admin-reply">
-                    <p class="history-meta"><strong>Bạn (Admin)</strong> - 23/11/2023</p>
+                    <p class="history-meta"><strong>Bạn</strong> - 23/11/2023</p>
                     <p class="history-text">Cảm ơn bạn đã phản hồi! CleanMeat sẽ cải thiện dịch vụ giao hàng.</p>
                 </div>
             </div>

@@ -11,6 +11,7 @@ public class Feedback {
     private String comment;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    private boolean isReplied;
 
 
     public Feedback(int id, int response_id, User user, int item_id, int rating, String comment,LocalDateTime created_at, LocalDateTime updated_at) {
@@ -31,6 +32,13 @@ public class Feedback {
     public int getRating() { return rating; }
     public LocalDateTime getCreated_at() { return created_at; }
     public int getResponse_id() { return response_id; }
+    public boolean isReplied() {
+        return isReplied;
+    }
+
+    public void setReplied(boolean replied) {
+        isReplied = replied;
+    }
 
 }
 

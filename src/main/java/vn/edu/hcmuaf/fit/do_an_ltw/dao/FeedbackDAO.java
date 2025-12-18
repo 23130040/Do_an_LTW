@@ -48,15 +48,24 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
         int rating = rs.getInt("rating");
         String comment = rs.getString("comment");
 
-        Timestamp createdTimestamp = rs.getTimestamp("created_at");
-        LocalDateTime created_at = (createdTimestamp != null) ? createdTimestamp.toLocalDateTime() : null;
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime()
+                : null;
 
-        Timestamp updatedTimestamp = rs.getTimestamp("updated_at");
-        LocalDateTime updated_at = (updatedTimestamp != null) ? updatedTimestamp.toLocalDateTime() : null;
+        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                ? rs.getTimestamp("updated_at").toLocalDateTime()
+                : null;
 
         User user = userDAO.findById(user_id);
 
-        return new Feedback(id, response_id, user, item_id, rating, comment, created_at, updated_at);
+        Feedback feedback = new Feedback(id, response_id, user, item_id, rating, comment, created_at, updated_at);
+
+        try {
+            feedback.setReplied(rs.getInt("is_replied") == 1);
+        } catch (SQLException ignored) {
+        }
+
+        return feedback;
     }
 
     @Override
@@ -148,7 +157,9 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     @Override
     public List<Feedback> findAll() {
         List<Feedback> list = new ArrayList<>();
-        String sql = "SELECT * FROM feedback ORDER BY created_at DESC";
+        String sql = "SELECT f.*, " +
+                "(SELECT EXISTS(SELECT 1 FROM feedback r WHERE r.response_id = f.id)) AS is_replied " +
+                "FROM feedback f WHERE f.response_id = 0";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -172,7 +183,9 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
 
     public List<Feedback> applyFilterAndSearch(String rate, String type, String keyword) {
         List<Feedback> list = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT * FROM feedback WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT f.*, " +
+                "(SELECT EXISTS(SELECT 1 FROM feedback r WHERE r.response_id = f.id)) AS is_replied " +
+                "FROM feedback f WHERE f.response_id = 0");
         List<Object> params = new ArrayList<>();
 
         if (rate != null && !rate.trim().isEmpty()) {
@@ -184,9 +197,9 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
         }
 
         if ("no-reply".equals(type)) {
-            sql.append(" AND (response_id IS NULL OR response_id = 0)");
+            sql.append(" AND NOT EXISTS (SELECT 1 FROM feedback r WHERE r.response_id = f.id)");
         } else if ("replied".equals(type)) {
-            sql.append(" AND response_id > 0");
+            sql.append(" AND EXISTS (SELECT 1 FROM feedback r WHERE r.response_id = f.id)");
         }
 
         if (keyword != null && !keyword.trim().isEmpty()) {
@@ -220,5 +233,46 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
             } catch (SQLException ignored) {}
         }
         return list;
+    }
+    public List<Feedback> getChatHistoryByUserId(int userId) {
+        List<Feedback> list = new ArrayList<>();
+        String sql = "SELECT * FROM feedback " +
+                "WHERE user_id = ? OR response_id IN (SELECT id FROM feedback WHERE user_id = ?) " +
+                "ORDER BY created_at ASC";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public boolean insertReply(int parentId, int adminId, String comment) {
+        String sql = """
+        INSERT INTO feedback (response_id, user_id, item_id, rating, comment, created_at)
+        SELECT ?, ?, item_id, rating, ?, NOW()
+        FROM feedback
+        WHERE id = ?
+    """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, parentId);
+            ps.setInt(2, adminId);
+            ps.setString(3, comment);
+            ps.setInt(4, parentId);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

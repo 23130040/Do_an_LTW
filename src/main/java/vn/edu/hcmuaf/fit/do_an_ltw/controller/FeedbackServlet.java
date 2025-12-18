@@ -13,6 +13,7 @@ import java.util.List;
 public class FeedbackServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String rate = request.getParameter("rating");
         String type = request.getParameter("type");
         String keyword = request.getParameter("search");
@@ -28,8 +29,24 @@ public class FeedbackServlet extends HttpServlet {
 
         FeedbackDAO dao = new FeedbackDAO();
         List<Feedback> list = dao.applyFilterAndSearch(rate, type, keyword);
+        int totalReviews = list.size();
+
+        double avgRating = 0;
+        if (!list.isEmpty()) {
+            int sum = 0;
+            for (Feedback f : list) {
+                sum += f.getRating();
+            }
+            avgRating = (double) sum / list.size();
+
+            // làm tròn 1 chữ số thập phân cho đẹp
+            avgRating = Math.round(avgRating * 10.0) / 10.0;
+        }
+
 
         request.setAttribute("feedbackList", list);
+        request.setAttribute("totalReviews", totalReviews);
+        request.setAttribute("avgRating", avgRating);
         request.setAttribute("selectedRate", rate);
         request.setAttribute("selectedType", type);
         request.setAttribute("keyword", keyword);
