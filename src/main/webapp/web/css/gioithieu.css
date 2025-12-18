@@ -1,0 +1,199 @@
+/* ===== RESET CƠ BẢN ===== */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===== NỘI DUNG CHÍNH ===== */
+main {
+    width: 100%;
+    margin: auto;
+    min-height: 100vh;
+}
+
+/* ======= HERO SECTION ======= */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 10% 40px;
+    background-color: #fff6f0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 45%;
+}
+
+.hero-text h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #d10000;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.hero-text p {
+    color: #333;
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.order-btn {
+    background: white;
+    border: 2px solid #d0011b;
+    color: #d0011b;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 12px 36px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.order-btn:hover {
+    background: #d0011b;
+    color: white;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 500px;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* ======= PRODUCT INTRO ======= */
+.product-intro {
+    background-color: #fff6f0;
+    padding: 30px 10% 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.product-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.product-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.product-image img {
+    width: 100%;
+    max-width: 500px;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.product-text {
+    flex: 1;
+    max-width: 45%;
+}
+
+.product-text h2 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #d10000;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.product-text p {
+    color: #333;
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.discount-btn {
+    background: white;
+    border: 2px solid #d0011b;
+    color: #d0011b;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 12px 36px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.discount-btn:hover {
+    background: #d0011b;
+    color: white;
+}
+
+/* ======= QUY TRÌNH THỊT SẠCH ======= */
+.quytrinh-section {
+    text-align: center;
+    padding: 80px 20px;
+    background-color: #fff8f6;
+}
+
+.quytrinh-section .title {
+    font-size: 36px;
+    color: #d10000;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.quytrinh-section .subtitle {
+    font-size: 18px;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    line-height: 1.6;
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.step {
+    background-color: #DA5353;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    width: 300px;
+    text-align: center;
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    background-color: #e45c5c;
+}
+
+.icon {
+    font-size: 50px;
+    color: #fff;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,165 @@
+main {
+    padding-top: 0px;
+}
+
+#menubar {
+    height: 70px;
+    background-color: #343A40;
+    font-size: 18px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+#menubar .sixteen.column {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#menubar .left {
+    width: 10%;
+}
+
+#menubar .left img {
+    width: 95px;
+    height: auto;
+    margin-left: 30px;
+    transition: transform 0.25s;
+}
+
+#menubar .center {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transform: translateX(calc(50% + 50px));
+}
+
+#menubar .center ul {
+    display: flex;
+    gap: 22px;
+}
+
+#menubar .center li {
+    list-style: none;
+}
+
+#menubar .center li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 22px 10px;
+    transition: 0.25s;
+    font-weight: 500;
+}
+
+#menubar .center li a:hover {
+    color: #e00000;
+}
+
+/* ===== RIGHT ICON MENU ===== */
+#menubar .menu-right {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: auto;
+}
+
+#menubar .menuitem-right {
+    list-style: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+    padding: 30px 15px;
+}
+#shopping-cart a{
+    color: white;
+}
+#open-searchBar:hover, #close-searchBar.active:hover, #shopping-cart a:hover, #user-setting:hover .user i {
+    color: #e00000 !important;
+    transition: color 0.25s;
+}
+
+#searchBar {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+#input-searchBar,
+#close-searchBar {
+    display: none;
+    transition: all 0.25s;
+}
+
+#input-searchBar.active {
+    display: block;
+    width: 200px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+#close-searchBar.active {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+}
+/* ===== USER MENU ===== */
+.user-menu-wrapper{
+    position: relative;
+}
+
+.user-menu-wrapper .user{
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
+
+.user-menu{
+    position: absolute;
+    top: 80%;
+    right: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px 0;
+    width: 210px;
+    display: none;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.user-menu li{
+    list-style: none;
+}
+
+.user-menu a{
+    color: #333 !important;
+    text-decoration: none;
+    display: block;
+    padding: 12px 18px;
+    transition: 0.25s;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+}
+
+.user-menu li:last-child a{
+    border-bottom: none;
+}
+
+.user-menu a:hover{
+    background-color: #5a0002;
+    color: white !important;
+}
+
+.user-menu-wrapper:hover .user-menu{
+    display: block;
+}
