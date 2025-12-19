@@ -31,7 +31,7 @@ public class HomeServlet extends HttpServlet {
         }
 
 
-        req.getRequestDispatcher("/web/view/layout.jsp")
+        req.getRequestDispatcher("/web/view/base.jsp")
                 .forward(req, resp);
     }
 }

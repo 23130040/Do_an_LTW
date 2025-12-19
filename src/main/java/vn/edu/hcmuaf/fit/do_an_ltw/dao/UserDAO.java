@@ -9,50 +9,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserDAO extends BaseDAO<User>{
+public class UserDAO extends BaseDAO<User> {
     private static final int RECORDS_PER_PAGE = 9;
-    public static Map<Integer,User> users = new HashMap<Integer,User>();
-
+    public static Map<Integer, User> users = new HashMap<Integer, User>();
 
     public UserDAO() {
-        String sql = "select * from user ORDER BY id ASC";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
         try {
-            conn = getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String password = rs.getString("password");
-                String phone = rs.getString("phone");
-                String gender = rs.getString("gender");
-                Date bd = rs.getDate("birthday");
-                LocalDate birthday = (bd != null) ? bd.toLocalDate() : null;
-                String role = rs.getString("role");
-                String avatar = rs.getString("avatar");
-                boolean status = rs.getBoolean("status");
-                Date createdDate = rs.getDate("created_at");
-                LocalDate created_at = (createdDate != null) ? createdDate.toLocalDate() : null;
+            String sql = "select * from user ORDER BY id ASC";
 
-                Date updatedDate = rs.getDate("updated_at");
-                LocalDate updated_at = (updatedDate != null) ? updatedDate.toLocalDate() : null;
-
-                User user = new User(id, name, email, password, phone, gender, birthday, role, avatar, status, created_at, updated_at);
-                users.put(id, user);
-            }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
             try {
-                closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {}
+                ResultSet rs = selectData(sql);
+                while (rs.next()) {
+                    User user = mapResultSetToEntity(rs);
+                    users.put(user.getId(), user);
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -81,7 +58,6 @@ public class UserDAO extends BaseDAO<User>{
         return new User(id, name, email, password, phone, gender,
                 birthday, role, avatar, status, createdAt, updatedAt);
     }
-
 
     @Override
     public boolean insert(User user) throws SQLException, ClassNotFoundException {
@@ -167,22 +143,22 @@ public class UserDAO extends BaseDAO<User>{
             ps = conn.prepareStatement(sql);
 
 
-                ps.setString(1, user.getName());
-                ps.setString(2, user.getEmail());
-                ps.setString(3, user.getPassword());
-                ps.setString(4, user.getPhone());
-                ps.setString(5, user.getGender());
-                ps.setDate(6, user.getBirthday() != null ? Date.valueOf(user.getBirthday()) : null);
-                ps.setString(7, user.getRole());
-                ps.setString(8, user.getAvatar());
-                ps.setBoolean(9, user.isStatus());
-                ps.setInt(10, id);
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getGender());
+            ps.setDate(6, user.getBirthday() != null ? Date.valueOf(user.getBirthday()) : null);
+            ps.setString(7, user.getRole());
+            ps.setString(8, user.getAvatar());
+            ps.setBoolean(9, user.isStatus());
+            ps.setInt(10, id);
 
-                if (ps.executeUpdate() > 0) {
-                    users.put(id, user);
-                    return true;
-                }
-                return false;
+            if (ps.executeUpdate() > 0) {
+                users.put(id, user);
+                return true;
+            }
+            return false;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,7 +166,8 @@ public class UserDAO extends BaseDAO<User>{
         } finally {
             try {
                 closeResource(conn, ps, null);
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
         }
     }
 
@@ -213,7 +190,8 @@ public class UserDAO extends BaseDAO<User>{
         } finally {
             try {
                 closeResource(conn, ps, null);
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
         }
     }
 
@@ -242,7 +220,8 @@ public class UserDAO extends BaseDAO<User>{
         } finally {
             try {
                 closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
         }
     }
 
@@ -269,10 +248,12 @@ public class UserDAO extends BaseDAO<User>{
 
             try {
                 closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
         }
         return list;
     }
+
     public int getNoOfRecords() {
         String sql = "SELECT COUNT(id) FROM user";
         int count = 0;
@@ -293,7 +274,8 @@ public class UserDAO extends BaseDAO<User>{
         } finally {
             try {
                 closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
         }
         return count;
     }
@@ -379,9 +361,29 @@ public class UserDAO extends BaseDAO<User>{
         } finally {
             try {
                 closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
         }
         return list;
+    }
+
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM user WHERE email = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToEntity(rs);
+            }
+
+            return null;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

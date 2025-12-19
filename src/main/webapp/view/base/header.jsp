@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!-- ===== HEADER ===== -->
@@ -13,7 +14,7 @@
         <div class="three-fifths column center">
             <ul class="menu-center">
                 <li class="menuitem">
-                    <a href="${pageContext.request.contextPath}/home">Trang chủ</a>
+                    <a href="${pageContext.request.contextPath}/trang-chu">Trang chủ</a>
                 </li>
                 <li class="menuitem">
                     <a href="${pageContext.request.contextPath}/sanpham">Sản phẩm</a>
@@ -50,24 +51,29 @@
 
                 <!-- USER -->
                 <li class="menuitem-right user-menu-wrapper" id="user-setting">
-                    <div class="user">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <ul class="user-menu">
-                        <li class="user-menuitem">
-                            <a href="${pageContext.request.contextPath}/taikhoan">Tài khoản của tôi</a>
-                        </li>
-                        <li class="user-menuitem">
-                            <a href="${pageContext.request.contextPath}/donhang">Đơn hàng của tôi</a>
-                        </li>
-                        <li class="user-menuitem">
-                            <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
-                        </li>
-                    </ul>
+                    <c:choose>
+                        <c:when test="${empty sessionScope.user}">
+                            <a href="${pageContext.request.contextPath}/dangnhap" class="login-link">Đăng nhập</a>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="user">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <ul class="user-menu">
+                                <li class="user-menuitem">
+                                    <a href="${pageContext.request.contextPath}/taikhoan">Tài khoản của tôi</a>
+                                </li>
+                                <li class="user-menuitem">
+                                    <a href="${pageContext.request.contextPath}/donhang">Đơn hàng của tôi</a>
+                                </li>
+                                <li class="user-menuitem">
+                                    <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </c:otherwise>
+                    </c:choose>
                 </li>
-
             </ul>
         </div>
-
     </div>
 </nav>

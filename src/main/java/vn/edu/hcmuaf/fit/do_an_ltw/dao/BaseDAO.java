@@ -22,10 +22,8 @@ public abstract class BaseDAO<T> {
         Connection conn = null;
         try {
             conn = getConnection();
-
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.executeUpdate();
-
                 conn.commit();
             }
         } catch (SQLException e) {
