@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!-- ===== HEADER ===== -->
-<nav id="menubar">
+<nav class="menubar">
     <div class="sixteen column">
 
         <!-- LOGO -->

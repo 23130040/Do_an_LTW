@@ -1,4 +1,4 @@
-body{
+body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -10,7 +10,7 @@ a {
     font-size: 18px;
 }
 
-main{
+main {
     width: 100%;
     margin: auto;
     min-height: 100vh;
@@ -29,6 +29,7 @@ main{
     position: relative;
     z-index: 1;
 }
+
 .banner-img {
     position: absolute;
     top: 0;
@@ -46,7 +47,7 @@ main{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
 }
 
@@ -54,6 +55,96 @@ main{
     margin-top: 10px;
     text-align: center;
 }
+
+/* ===== HEADER HOME ===== */
+
+/* ===== NAVBAR ===== */
+.home {
+    position: relative;
+}
+
+.home .menubar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 10;
+    background: transparent;
+}
+
+.home .menubar .sixteen.column {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    grid-template-rows: 50% 50%;
+    align-items: center;
+}
+
+/* ===== LOGO ===== */
+.home .menubar .left {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.home .menubar .left img {
+    width: 70px;
+    height: auto;
+}
+
+/* ===== MENU CENTER ===== */
+.home .column.center {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: static;
+    transform: translateX(0);
+    width: 100%;
+}
+
+.home .menu-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+}
+
+.home .menu-center li {
+    white-space: nowrap;
+}
+
+/* ===== MENU RIGHT ===== */
+.home .menubar .column.right {
+    padding: 0;
+    margin-right: 0;
+    grid-column: 3;
+    grid-row: 1;
+    width: 100%;
+}
+
+.home .menu-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.home .menuitem-right i {
+    font-size: 18px;
+}
+
 /************************* MAIN *******************************/
 
 /************************* SẢN PHẨM NỐI BẬT **********************/
@@ -103,6 +194,7 @@ main{
     transform: rotate(3deg);
     z-index: 10;
 }
+
 .buy-now-btn {
     display: inline-block;
     margin-top: 10px;
@@ -175,28 +267,33 @@ main{
     margin: 0 10px;
     flex-shrink: 0; /* Ngăn thu nhỏ khi cuộn */
 }
+
 .product-item img {
     width: 100%;
     height: 200px;
     object-fit: contain;
     margin-bottom: 10px;
 }
+
 .product-item:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 4px 10px #00000033;
     cursor: pointer;
 }
+
 /* Nút thêm vào giỏ */
 .product-item button {
     border: 1.5px solid #e00000;
     background-color: #fff;
-    color: #e00000;font-weight: 600;
+    color: #e00000;
+    font-weight: 600;
     border-radius: 25px;
     padding: 7px 18px;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 .product-item button:hover {
     background-color: #e00000;
     border-color: #e00000;
@@ -210,6 +307,7 @@ main{
     font-weight: bold;
     font-size: 16px;
 }
+
 .view-all-item {
     display: flex;
     flex-direction: column;
@@ -268,13 +366,16 @@ main{
     transform: translateY(-50%);
     z-index: 10;
 }
+
 .arrow:hover {
     background-color: #e00000;
     transform: translateY(-50%) scale(1.1);
 }
+
 .arrow.left {
     left: 90px;
 }
+
 .arrow.right {
     right: 80px;
 }

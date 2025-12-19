@@ -4,7 +4,6 @@
 
     <div class="banner">
         <img src="${pageContext.request.contextPath}/images/banner.jpg" alt="Banner background" class="banner-img">
-
         <div class="gretting">
             <h1 id="greet-title">Chào Mừng Đến Với CleanMeat</h1>
             <p id="greet-desc">Vì sức khỏe, vì gia đình, và vì chính bạn. Chúng tôi mong mỗi bữa ăn đều là một niềm hạnh
