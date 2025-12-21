@@ -16,7 +16,7 @@
     <div id="wrapper">
         <img src="${pageContext.request.contextPath}/images/logoCleanmeat.png" alt="logo">
         <h1>ĐĂNG NHẬP</h1>
-        <form method="post" action="dangnhap">
+        <form method="post" action="dang-nhap">
             <div class="block user-name">
                 <i class="fa-regular fa-user"></i>
                 <input type="text" class="form-input" name='email' placeholder="Nhập email" required>

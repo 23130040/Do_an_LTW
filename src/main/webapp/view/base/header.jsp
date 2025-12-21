@@ -17,16 +17,16 @@
                     <a href="${pageContext.request.contextPath}/trang-chu">Trang chủ</a>
                 </li>
                 <li class="menuitem">
-                    <a href="${pageContext.request.contextPath}/sanpham">Sản phẩm</a>
+                    <a href="${pageContext.request.contextPath}/san-pham">Sản phẩm</a>
                 </li>
                 <li class="menuitem">
-                    <a href="${pageContext.request.contextPath}/gioithieu">Giới thiệu</a>
+                    <a href="${pageContext.request.contextPath}/gioi-thieu">Giới thiệu</a>
                 </li>
                 <li class="menuitem">
-                    <a href="${pageContext.request.contextPath}/tintuc">Tin tức</a>
+                    <a href="${pageContext.request.contextPath}/tin-tuc">Tin tức</a>
                 </li>
                 <li class="menuitem">
-                    <a href="${pageContext.request.contextPath}/chinhsachdoitra">Chính sách đổi trả</a>
+                    <a href="${pageContext.request.contextPath}/chinh-sach-doi-tra">Chính sách đổi trả</a>
                 </li>
             </ul>
         </div>
@@ -46,14 +46,14 @@
 
                 <!-- CART -->
                 <li class="menuitem-right" id="shopping-cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
                 </li>
 
                 <!-- USER -->
                 <li class="menuitem-right user-menu-wrapper" id="user-setting">
                     <c:choose>
                         <c:when test="${empty sessionScope.user}">
-                            <a href="${pageContext.request.contextPath}/dangnhap" class="login-link">Đăng nhập</a>
+                            <a href="${pageContext.request.contextPath}/dang-nhap" class="login-link">Đăng nhập</a>
                         </c:when>
                         <c:otherwise>
                             <div class="user">
@@ -61,13 +61,13 @@
                             </div>
                             <ul class="user-menu">
                                 <li class="user-menuitem">
-                                    <a href="${pageContext.request.contextPath}/taikhoan">Tài khoản của tôi</a>
+                                    <a href="${pageContext.request.contextPath}/tai-khoan">Tài khoản của tôi</a>
                                 </li>
                                 <li class="user-menuitem">
-                                    <a href="${pageContext.request.contextPath}/donhang">Đơn hàng của tôi</a>
+                                    <a href="${pageContext.request.contextPath}/don-hang">Đơn hàng của tôi</a>
                                 </li>
                                 <li class="user-menuitem">
-                                    <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                                    <a href="${pageContext.request.contextPath}/dang-xuat">Đăng xuất</a>
                                 </li>
                             </ul>
                         </c:otherwise>

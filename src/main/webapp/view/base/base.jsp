@@ -8,7 +8,7 @@
 
     <title>
         Clean Meat -
-        <c:out value="${requestScope.pageTitle}" />
+        <c:out value="${requestScope.pageTitle}"/>
     </title>
 
     <!-- ===== CSS HEADER ===== -->
@@ -55,7 +55,7 @@
 </footer>
 
 <!-- ===== JS ===== -->
-<script src="${pageContext.request.contextPath}${pageScope.pageJS}"></script>
-
+<script src="${pageContext.request.contextPath}${requestScope.pageJS}"></script>
+<script src="${pageContext.request.contextPath}/js/main.js"></script>
 </body>
 </html>

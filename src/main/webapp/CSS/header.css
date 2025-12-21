@@ -90,7 +90,7 @@ main {
 
 #searchBar {
     display: flex;
-    gap: 5px;
+    gap: 2px;
     align-items: center;
 }
 
@@ -155,8 +155,8 @@ main {
     border-bottom: none;
 }
 
-.user-menu a:hover{
-    background-color: #5a0002;
+.user-menuitem a:hover{
+    background-color: #e00000;
     color: white !important;
 }
 

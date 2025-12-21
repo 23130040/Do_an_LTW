@@ -8,12 +8,10 @@ import vn.edu.hcmuaf.fit.do_an_ltw.services.UserService;
 
 import java.io.IOException;
 
-@WebServlet(name = "dangnhap", value = "/dangnhap")
+@WebServlet(name = "dang-nhap", value = "/dang-nhap")
 public class DangNhap extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         request.getRequestDispatcher("/view/dangnhap.jsp").forward(request, response);
     }
 
