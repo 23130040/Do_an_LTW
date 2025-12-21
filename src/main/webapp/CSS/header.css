@@ -2,7 +2,7 @@ main {
     padding-top: 0px;
 }
 
-#menubar {
+.menubar {
     height: 70px;
     background-color: #343A40;
     font-size: 18px;
@@ -15,25 +15,25 @@ main {
     align-items: center;
 }
 
-#menubar .sixteen.column {
+.menubar .sixteen.column {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-#menubar .left {
+.menubar .left {
     width: 10%;
 }
 
-#menubar .left img {
+.menubar .left img {
     width: 95px;
     height: auto;
     margin-left: 30px;
     transition: transform 0.25s;
 }
 
-#menubar .center {
+.menubar .center {
     width: auto;
     display: flex;
     align-items: center;
@@ -42,16 +42,16 @@ main {
     transform: translateX(calc(50% + 50px));
 }
 
-#menubar .center ul {
+.menubar .center ul {
     display: flex;
     gap: 22px;
 }
 
-#menubar .center li {
+.menubar .center li {
     list-style: none;
 }
 
-#menubar .center li a {
+.menubar .center li a {
     display: block;
     color: white;
     text-decoration: none;
@@ -60,19 +60,19 @@ main {
     font-weight: 500;
 }
 
-#menubar .center li a:hover {
+.menubar .center li a:hover {
     color: #e00000;
 }
 
 /* ===== RIGHT ICON MENU ===== */
-#menubar .menu-right {
+.menubar .menu-right {
     display: flex;
     align-items: center;
     margin-right: 20px;
     width: auto;
 }
 
-#menubar .menuitem-right {
+.menubar .menuitem-right {
     list-style: none;
     color: white;
     font-size: 20px;
@@ -90,7 +90,7 @@ main {
 
 #searchBar {
     display: flex;
-    gap: 5px;
+    gap: 2px;
     align-items: center;
 }
 
@@ -155,8 +155,8 @@ main {
     border-bottom: none;
 }
 
-.user-menu a:hover{
-    background-color: #5a0002;
+.user-menuitem a:hover{
+    background-color: #e00000;
     color: white !important;
 }
 

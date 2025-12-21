@@ -8,33 +8,33 @@
 
     <title>
         Clean Meat -
-        <c:out value="${requestScope.pageTitle}" />
+        <c:out value="${requestScope.pageTitle}"/>
     </title>
 
     <!-- ===== CSS HEADER ===== -->
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/web/css/header.css">
+          href="${pageContext.request.contextPath}/css/header.css">
 
     <!-- ===== CSS NỘI DUNG ===== -->
     <c:if test="${not empty requestScope.pageCss}">
         <link rel="stylesheet"
-              href="${pageContext.request.contextPath}/web/css/${requestScope.pageCss}">
+              href="${pageContext.request.contextPath}${requestScope.pageCss}">
     </c:if>
 
     <!-- ===== CSS FOOTER ===== -->
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/web/css/footer.css">
+          href="${pageContext.request.contextPath}/css/footer.css">
 
     <!-- ===== FONT ICON ===== -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body>
+<body class="${requestScope.pageClass}" id="${requestScope.pageId}">
 
 <!-- ===== HEADER ===== -->
 <header>
-    <jsp:include page="../view/header.jsp"/>
+    <jsp:include page="header.jsp"/>
 </header>
 
 <!-- ===== MAIN ===== -->
@@ -51,11 +51,11 @@
 
 <!-- ===== FOOTER ===== -->
 <footer class="main-footer">
-    <jsp:include page="../view/footer.jsp"/>
+    <jsp:include page="footer.jsp"/>
 </footer>
 
 <!-- ===== JS ===== -->
-<script src="${pageContext.request.contextPath}/web/js/main.js"></script>
-
+<script src="${pageContext.request.contextPath}${requestScope.pageJS}"></script>
+<script src="${pageContext.request.contextPath}/js/main.js"></script>
 </body>
 </html>

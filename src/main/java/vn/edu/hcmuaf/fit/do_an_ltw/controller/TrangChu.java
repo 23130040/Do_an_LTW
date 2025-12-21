@@ -9,12 +9,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "Home", value = "/home")
-public class Home extends HttpServlet {
+@WebServlet(name = "Home", value = "/trang-chu")
+public class TrangChu extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.getRequestDispatcher("trang_chu.jsp").forward(request, response);
+        request.setAttribute("pageTitle", "Trang chủ");
+        request.setAttribute("mainContent", "/view/trang_chu.jsp");
+        request.setAttribute("pageCss", "/css/trang_chu.css");
+        request.setAttribute("pageJS", "/js/trang_chu.js");
+        request.setAttribute("pageClass", "home");
+        request.setAttribute("pageId", "home-menu");
+        request.getRequestDispatcher("/view/base/base.jsp").forward(request, response);
     }
 
     @Override

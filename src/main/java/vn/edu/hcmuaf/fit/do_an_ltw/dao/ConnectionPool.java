@@ -35,7 +35,7 @@ public class ConnectionPool {
         }
     }
 
-    public synchronized Connection getConnection() {
+    public Connection getConnection() {
         synchronized (pool) {
             while (pool.isEmpty()) {
                 try {
@@ -48,14 +48,14 @@ public class ConnectionPool {
         }
     }
 
-    public synchronized void releaseConnection(Connection conn) {
+    public void releaseConnection(Connection conn) {
         synchronized (pool) {
             pool.offer(conn);
             notifyAll();
         }
     }
 
-    public synchronized void closePool() {
+    public void closePool() {
         synchronized (pool) {
             for (Connection conn : pool) {
                 try {
