@@ -1,5 +1,5 @@
-<%@ page import="vn.edu.hcmuaf.fit.do_an_ltw.dao.UserDAO" %>
-<%@ page import="vn.edu.hcmuaf.fit.do_an_ltw.model.User" %>
+<%@ page import="cleanmeat.dao.UserDAO" %>
+<%@ page import="cleanmeat.model.User" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
