@@ -1,0 +1,316 @@
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+
+    background-image: url("https://png.pngtree.com/background/20250423/original/pngtree-raw-meat-and-knife-background-picture-image_16434426.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+a{
+    text-decoration: none;
+    font-size: 17px !important;
+}
+a:hover{
+    text-decoration: underline;
+}
+#container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ================= CARD ================= */
+#wrapper {
+    width: 420px;
+    max-width: 92%;
+    padding: 32px 36px;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+
+    text-align: center;
+}
+
+/* ================= LOGO ================= */
+#wrapper img {
+    width: 40%;
+    height: 70px;
+    margin-bottom: 8px;
+}
+
+/* ================= TITLE ================= */
+#wrapper h1 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+/* ================= FORM ================= */
+.block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+/* ICON */
+.block i {
+    color: #fff;
+    font-size: 18px;
+    width: 26px;
+}
+
+/* INPUT */
+.form-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1.4px solid rgba(255, 255, 255, 0.7);
+
+    padding: 8px 6px;
+    font-size: 17px;
+    color: #fff;
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ================= FORGOT ================= */
+.forgot-password {
+    justify-content: flex-end;
+    margin-top: -10px;
+}
+
+.forgot-password a {
+    color: #fff;
+    font-size: 14px;
+}
+
+.forgot-password a:hover {
+    color: #ff3b3b;
+}
+
+/* ================= BUTTON ================= */
+.form-submit {
+    width: 100%;
+    height: 44px;
+
+    background: #fff;
+    color: #000;
+
+    border: none;
+    border-radius: 10px;
+
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.form-submit:hover {
+    background: #ff3b3b;
+    color: #fff;
+}
+
+/* ================= ERROR ================= */
+.error-message {
+    color: #ff3b3b;
+    font-size: 13px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+/* ================= SEPARATOR ================= */
+.separator-container {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+}
+
+.separator-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.separator-text {
+    padding: 0 12px;
+    font-size: 13px;
+    color: #fff;
+}
+
+/* ================= GOOGLE ================= */
+.social-login {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 18px;
+}
+
+.social-login a {
+    color: #fff;
+    font-size: 14px;
+}
+
+.social-login i {
+    margin-right: 8px;
+}
+
+.social-login:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ================= SIGN UP ================= */
+.block.sign-up {
+    width: 100%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.sign-up .txt {
+    color: #fff;
+}
+
+.sign-up a {
+    color: #ff3b3b;
+}
+
+/* ===== MODAL ===== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 25px 30px;
+    width: 450px;
+    max-width: 90%;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close-btn:hover {
+    color: #e00000;
+}
+
+/* ===== MODAL FORM ===== */
+.modal h3 {
+    margin-bottom: 10px;
+}
+
+.modal .txt {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.modal .block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 10px;
+}
+
+.modal .block i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.modal .form-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+/* ===== MODAL BUTTON ===== */
+.modal .form-submit {
+    background-color: #e00000;
+    color: white;
+}
+
+.modal .form-submit:hover {
+    background-color: #ef0000;
+}
+
+/* ===== CONFIRM MESSAGE ===== */
+.message p {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.message .email {
+    font-weight: bold;
+    color: #e00000;
+}
+
+/* ===== BUTTON GROUP ===== */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group .btn {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #ccc;
+}
+
+.resend-btn {
+    background-color: #e00000;
+    color: white;
+}
+
+.resend-btn:hover {
+    background-color: #ef0000;
+}
