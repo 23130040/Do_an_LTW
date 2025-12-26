@@ -1,7 +1,9 @@
 package cleanmeat.controller;
 
 import cleanmeat.dao.CategoryDAO;
+import cleanmeat.dao.OriginDAO;
 import cleanmeat.model.Category;
+import cleanmeat.model.Origin;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -9,16 +11,15 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "CategoryServlet", value = "/quanlydanhmuc")
-public class CategoryServlet extends HttpServlet {
-    private CategoryDAO categoryDAO = new CategoryDAO();
-
+@WebServlet(name = "OriginServlet", value = "/quanlynguongoc")
+public class OriginServlet extends HttpServlet {
+    private OriginDAO originDAO = new OriginDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null || action.equals("list")) {
-            List<Category> list = categoryDAO.findAll(); // Lấy dữ liệu từ DB
-            request.setAttribute("categories", list); // Đặt tên là "categories" để JSP dùng
+            List<Origin> list = originDAO.findAll(); // Lấy dữ liệu từ DB
+            request.setAttribute("origin", list); // Đặt tên là "categories" để JSP dùng
             request.getRequestDispatcher("/view/admin_quan_ly_danh_muc.jsp").forward(request, response);
         }
     }
@@ -28,16 +29,16 @@ public class CategoryServlet extends HttpServlet {
         String name = request.getParameter("name");
         String desc = request.getParameter("description");
 
-        Category newCat = new Category();
-        newCat.setName(name);
-        newCat.setDescription(desc);
+        Origin newOrg = new Origin();
+        newOrg.setName(name);
+        newOrg.setDescription(desc);
 
         try {
-            if(categoryDAO.insert(newCat)) {
-                response.sendRedirect("admin-category?status=success");
+            if(originDAO.insert(newOrg)) {
+                response.sendRedirect("admin-origin?status=success");
             }
         } catch (Exception e) {
-            response.sendRedirect("admin-category?status=error");
+            response.sendRedirect("admin-origin?status=error");
         }
     }
 }

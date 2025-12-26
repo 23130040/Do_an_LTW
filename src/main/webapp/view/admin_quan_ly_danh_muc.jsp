@@ -51,9 +51,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr><td>DM01</td><td>Thịt Heo</td><td>45</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
-                                <tr><td>DM02</td><td>Thịt Gà</td><td>30</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
-                                <tr><td>DM03</td><td>Thịt Bò</td><td>55</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                <c:forEach var="cat" items="${categories}">
+                                    <tr>
+                                        <td>DM${cat.id}</td>
+                                        <td>${cat.name}</td>
+                                        <td>0</td> <td>
+                                        <button class="btn-edit" onclick="editCategory(${cat.id})"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-delete" onclick="deleteCategory(${cat.id})"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -78,9 +85,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr><td>NG01</td><td>Việt Nam</td><td>100</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
-                                <tr><td>NG02</td><td>Hoa Kỳ (Mỹ)</td><td>30</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
-                                <tr><td>NG03</td><td>Úc</td><td>20</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                <c:forEach var="org" items="${origin}">
+                                    <tr>
+                                        <td>DM${org.id}</td>
+                                        <td>${org.name}</td>
+                                        <td>0</td> <td>
+                                        <button class="btn-edit" onclick="editOrigin(${org.id})"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-delete" onclick="deleteOrigin(${org.id})"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
