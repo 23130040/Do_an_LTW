@@ -68,3 +68,11 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).classList.add("active-tab");
     evt.currentTarget.classList.add("active");
 }
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+        var alert = document.getElementById('success-alert');
+        if (alert) {
+            alert.style.display = 'none';
+        }
+    }, 3000);
+});

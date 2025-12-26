@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class ConnectionPool {
-    private static final int MAX_CONNECTIONS = 10;
+    private static final int MAX_CONNECTIONS = 500;
     private final Queue<Connection> pool = new LinkedList<Connection>();
 
     private static class Holder {
@@ -39,7 +39,7 @@ public class ConnectionPool {
         synchronized (pool) {
             while (pool.isEmpty()) {
                 try {
-                    pool.wait();
+                    pool.wait(5000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
@@ -49,9 +49,18 @@ public class ConnectionPool {
     }
 
     public void releaseConnection(Connection conn) {
-        synchronized (pool) {
-            pool.offer(conn);
-            notifyAll();
+        if (conn == null) return;
+        try {
+            // Đảm bảo kết nối sạch sẽ (reset auto-commit) trước khi trả về pool
+            if (!conn.isClosed()) {
+                conn.setAutoCommit(true);
+                synchronized (pool) {
+                    pool.offer(conn);
+                    pool.notifyAll(); // Đánh thức các thread đang đợi ở getConnection()
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

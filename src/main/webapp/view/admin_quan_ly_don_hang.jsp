@@ -7,18 +7,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản Lý Đơn Hàng</title>
-    <link rel="stylesheet" href="CSS/admin_quan_ly_don_hang.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/admin_quan_ly_don_hang.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp" />
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
-        <jsp:include page="admin_sidebar.jsp">
+        <jsp:include page="base/admin_sidebar.jsp">
             <jsp:param name="active" value="order"/>
         </jsp:include>
         <!------------------- QUẢN LÝ ĐƠN HÀNG ----------------->
@@ -57,7 +57,6 @@
                         <th>Ngày đặt</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái Đơn hàng</th>
-                        <th>Vận chuyển</th>
                         <th>Thao tác</th>
                     </tr>
                     </thead>
@@ -68,7 +67,6 @@
                         <td>20/11/2023</td>
                         <td>350,000đ</td>
                         <td><span class="">Đang giao hàng</span></td>
-                        <td>Tiêu chuẩn</td>
                         <td>
                             <button class="btn-sm btn-action view-detail" title="Xem chi tiết"><i
                                     class="fas fa-eye"></i></button>
@@ -82,7 +80,6 @@
                         <td>19/11/2025</td>
                         <td>780,000đ</td>
                         <td><span class="">Đang giao hàng</span></td>
-                        <td>Nhanh</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
                             <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
@@ -95,7 +92,6 @@
                         <td>15/11/2025</td>
                         <td>1,200,000đ</td>
                         <td><span class="">Đã giao hàng</span></td>
-                        <td>Tiêu chuẩn</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
                             <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
@@ -108,7 +104,6 @@
                         <td>10/11/2025</td>
                         <td>450,000đ</td>
                         <td><span class="">Đã hủy</span></td>
-                        <td>Tiêu chuẩn</td>
                         <td>
                             <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
                         </td>
@@ -166,7 +161,6 @@
                     <p><strong>Điện thoại:</strong> <span id="modalCustomerPhone">0901xxxx89</span></p>
                     <p><strong>Địa chỉ Giao hàng:</strong> <span id="modalShippingAddress">123 Đường ABC, Phường X, Quận Y, TP.HCM</span>
                     </p>
-                    <p><strong>Phương thức vận chuyển:</strong> <span id="modalShippingMethod">Tiêu chuẩn</span></p>
                 </div>
             </div>
 
@@ -199,8 +193,6 @@
             </div>
 
             <div class="total-summary">
-                <p>Phụ phí (Shipping): <span>0đ</span></p>
-                <p>Mã giảm giá (Discount): <span>-0đ</span></p>
                 <h4 class="grand-total">Tổng thanh toán: <span id="modalGrandTotal">350,000đ</span></h4>
             </div>
         </div>
@@ -210,6 +202,6 @@
         </div>
     </div>
 </div>
-<script src="JS/admin_quan_ly_don_hang.js"></script>
+<script src="${pageContext.request.contextPath}/JS/admin_quan_ly_don_hang.js"></script>
 </body>
 </html>

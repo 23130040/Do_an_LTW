@@ -97,7 +97,7 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("searchKeyword", searchKeyword);
             request.setAttribute("filterRole", filterRole);
 
-            request.getRequestDispatcher("admin_quan_ly_user.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/admin_quan_ly_user.jsp").forward(request, response);
         }
     }
 

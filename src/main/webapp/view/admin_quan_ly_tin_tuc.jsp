@@ -6,28 +6,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý khuyến mãi</title>
+    <title>Quản lý tin tức</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="CSS/admin_quan_ly_tin_tuc.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/admin_quan_ly_tin_tuc.css">
 </head>
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp" />
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
-        <jsp:include page="admin_sidebar.jsp">
+        <jsp:include page="base/admin_sidebar.jsp">
             <jsp:param name="active" value="news"/>
         </jsp:include>
 
         <!---------------- QUẢN LÝ KHUYẾN MÃI ------------------->
         <main class="content">
             <h2 class="page-title">Quản Lý Tin Tức</h2>
-
-
-
-
             <div id="content">
                 <div class="content-section">
                     <div class="control-panel">
@@ -91,68 +87,6 @@
         </div>
     </div>
 
-    <div id="promo-modal" class="modal">
-        <div class="modal-content large-modal">
-            <span class="close-btn" onclick="closeModal('promo-modal')">&times;</span>
-            <h3><span id="modal-title-promo">Thêm</span> Khuyến Mãi/Mã Giảm Giá</h3>
-            <form class="promo-form">
-                <div class="form-section full-col">
-                    <label>Tên Chương trình:</label>
-                    <input type="text" placeholder="Ví dụ: Giảm 10% cho đơn hàng đầu tiên" required>
-
-                    <label>Loại Khuyến mãi:</label>
-                    <select required>
-                        <option value="">Chọn loại</option>
-                        <option value="code">Mã giảm giá (Voucher Code)</option>
-                        <option value="sale">Chương trình khuyến mãi (Flash Sale, Giảm giá trực tiếp)</option>
-                    </select>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Mã Voucher (Nếu có):</label>
-                            <input type="text" placeholder="CLEANNEW10">
-                        </div>
-                        <div class="form-group">
-                            <label>Giá trị giảm:</label>
-                            <input type="text" placeholder="10% hoặc 50.000 VND" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Thời gian áp dụng:</label>
-                            <input type="datetime-local" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Thời gian kết thúc:</label>
-                            <input type="datetime-local">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Số lượng áp dụng (Voucher):</label>
-                            <input type="number" placeholder="1000">
-                        </div>
-                        <div class="form-group">
-                            <label>Đơn hàng tối thiểu:</label>
-                            <input type="number" placeholder="500000 (VND)">
-                        </div>
-                    </div>
-
-                    <label>Áp dụng cho sản phẩm:</label>
-                    <select multiple>
-                        <option value="all">Tất cả sản phẩm</option>
-                        <option value="beef">Thịt Bò</option>
-                        <option value="pork">Thịt Heo</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary submit-btn">Lưu Khuyến Mãi</button>
-            </form>
-        </div>
-    </div>
-
     <div id="article-modal" class="modal">
         <div class="modal-content large-modal">
             <span class="close-btn" onclick="closeModal('article-modal')">&times;</span>
@@ -172,7 +106,7 @@
                     </div>
 
                     <label>Nội dung chi tiết:</label>
-                    <textarea rows="10" placeholder="Nhập nội dung bài viết chi tiết... (Nên dùng Rich Editor)" required></textarea>
+                    <textarea rows="10" placeholder="Nhập nội dung bài viết chi tiết..." required></textarea>
 
                     <label>Trạng thái:</label>
                     <select required>
@@ -186,6 +120,6 @@
         </div>
     </div>
 </div>
-<script src="JS/admin_quan_ly_tin_tuc.js"></script>
+<script src="${pageContext.request.contextPath}/JS/admin_quan_ly_tin_tuc.js"></script>
 </body>
 </html>

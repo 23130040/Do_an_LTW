@@ -8,17 +8,17 @@
     <meta charset="UTF-8">
     <title>Quản lý kho</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="CSS/admin_quan_ly_kho.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/admin_quan_ly_kho.css">
 
 </head>
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp" />
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
-        <jsp:include page="admin_sidebar.jsp">
+        <jsp:include page="base/admin_sidebar.jsp">
             <jsp:param name="active" value="warehouse"/>
         </jsp:include>
 
@@ -62,6 +62,7 @@
                             <th>Sản phẩm</th>
                             <th>Nguồn gốc</th>
                             <th>Loại</th>
+                            <th>Khối lượng</th>
                             <th>Số lượng</th>
                             <th>Người tạo</th>
                         </tr>
@@ -74,6 +75,7 @@
                             <td>Thịt Bò Thăn Nội (Mỹ)</td>
                             <td>Mỹ</td>
                             <td><span class="type-badge type-input">Nhập hàng</span></td>
+                            <td>250g</td>
                             <td>+10 kg</td>
                             <td>Admin A</td>
                         </tr>
@@ -113,6 +115,7 @@
                             <th>Sản phẩm</th>
                             <th>Nguồn gốc</th>
                             <th>Loại</th>
+                            <th>Khối lượng</th>
                             <th>Số lượng</th>
                             <th>Người tạo</th>
                         </tr>
@@ -125,6 +128,7 @@
                             <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
                             <td>Việt Nam</td>
                             <td><span class="type-badge type-output">Xuất hủy</span></td>
+                            <td>250g</td>
                             <td>-5 kg</td>
                             <td>Admin B</td>
                         </tr>
@@ -208,6 +212,6 @@
         </div>
     </div>
 </div>
-<script src="JS/admin_quan_ly_kho.js"></script>
+<script src="${pageContext.request.contextPath}/JS/admin_quan_ly_kho.js"></script>
 </body>
 </html>
