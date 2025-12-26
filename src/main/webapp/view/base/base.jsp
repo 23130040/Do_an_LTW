@@ -13,7 +13,7 @@
 
     <!-- ===== CSS HEADER ===== -->
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/css/header.css">
+          href="${pageContext.request.contextPath}/CSS/header.css">
 
     <!-- ===== CSS NỘI DUNG ===== -->
     <c:if test="${not empty requestScope.pageCss}">
@@ -23,7 +23,7 @@
 
     <!-- ===== CSS FOOTER ===== -->
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/css/footer.css">
+          href="${pageContext.request.contextPath}/CSS/footer.css">
 
     <!-- ===== FONT ICON ===== -->
     <link rel="stylesheet"
@@ -56,6 +56,6 @@
 
 <!-- ===== JS ===== -->
 <script src="${pageContext.request.contextPath}${requestScope.pageJS}"></script>
-<script src="${pageContext.request.contextPath}/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/JS/main.js"></script>
 </body>
 </html>

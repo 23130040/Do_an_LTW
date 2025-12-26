@@ -20,19 +20,20 @@ public abstract class BaseDAO<T> {
     //thực thi các câu lệnh update, insert, delete
     protected void executeSQL(String sql) throws ClassNotFoundException, SQLException {
         Connection conn = null;
+        PreparedStatement ps = null;
         try {
             conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.executeUpdate();
-                conn.commit();
-            }
+            // Tắt AutoCommit nếu bạn muốn tự rollback/commit
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(sql);
+            ps.executeUpdate();
+            conn.commit();
         } catch (SQLException e) {
-            if (conn != null) {
-                conn.rollback();
-            }
+            if (conn != null) conn.rollback();
             throw e;
         } finally {
-            closeResource(conn, null, null);
+            // Luôn trả kết nối về pool tại đây
+            closeResource(conn, ps, null);
         }
     }
 

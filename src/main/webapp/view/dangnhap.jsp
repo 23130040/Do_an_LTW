@@ -9,7 +9,7 @@
           integrity="sha512-...paste-the-integrity-if-needed..."
           crossorigin="anonymous"
           referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dangnhap.css?v=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/dangnhap.css?v=2">
 </head>
 <body>
 <div id="container">

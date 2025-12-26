@@ -1,7 +1,7 @@
-package vn.edu.hcmuaf.fit.do_an_ltw.dao;
+package cleanmeat.dao;
 
-import vn.edu.hcmuaf.fit.do_an_ltw.model.System_config;
-import vn.edu.hcmuaf.fit.do_an_ltw.model.User;
+import cleanmeat.model.System_config;
+import cleanmeat.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;

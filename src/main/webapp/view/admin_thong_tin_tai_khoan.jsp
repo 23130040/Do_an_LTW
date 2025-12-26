@@ -8,16 +8,16 @@
     <meta charset="UTF-8">
     <title>Thông tin tài khoản Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="CSS/admin_thong_tin_tai_khoan.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/admin_thong_tin_tai_khoan.css">
 </head>
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp" />
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
-        <jsp:include page="admin_sidebar.jsp">
+        <jsp:include page="base/admin_sidebar.jsp">
             <jsp:param name="active" value="none"/>
         </jsp:include>
         <main class="content">
@@ -90,6 +90,6 @@
         </div>
     </div>
 </div>
-<script src="JS/admin_thong_tin_tai_khoan.js"></script>
+<script src="${pageContext.request.contextPath}/JS/admin_thong_tin_tai_khoan.js"></script>
 </body>
 </html>

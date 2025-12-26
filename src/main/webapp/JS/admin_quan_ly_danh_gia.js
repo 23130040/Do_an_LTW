@@ -57,11 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
         replyModal.style.display = "block";
     };
 
+    let currentFetchController = null;
+
     function loadChatHistory(userId, customerName) {
+        if (currentFetchController) {
+            currentFetchController.abort();
+        }
+        currentFetchController = new AbortController();
         const historyContainer = document.getElementById("modalReplyHistory");
         historyContainer.innerHTML = "<div class='text-center'>Đang tải lịch sử...</div>";
 
-        fetch(`getFeedbackHistory?userId=${userId}`)
+        fetch(`getFeedbackHistory?userId=${userId}`, { signal: currentFetchController.signal })
             .then(res => res.json())
             .then(data => {
                 historyContainer.innerHTML = "";
@@ -74,17 +80,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     const chatItem = document.createElement("div");
                     chatItem.className = `history-item ${isCustomer ? 'customer-review' : 'admin-reply'}`;
 
+                    // Xử lý hiển thị thời gian đơn giản nếu item.created_at là object
+                    const dateStr = typeof item.created_at === 'object' ?
+                        `${item.created_at.date.day}/${item.created_at.date.month}/${item.created_at.date.year}` :
+                        item.created_at;
+
                     chatItem.innerHTML = `
-                        <p class="history-meta"><strong>${isCustomer ? customerName : 'Bạn'}</strong> - ${item.created_at}</p>
-                        <p class="history-text">${item.comment}</p>
-                    `;
+        <p class="history-meta"><strong>${isCustomer ? customerName : 'Bạn'}</strong> - ${dateStr}</p>
+        <p class="history-text">${item.comment}</p>
+    `;
                     historyContainer.appendChild(chatItem);
                 });
                 historyContainer.scrollTop = historyContainer.scrollHeight;
             })
             .catch(err => {
-                console.error("Lỗi fetch:", err);
-                historyContainer.innerHTML = "<p class='text-center text-danger'>Lỗi tải dữ liệu lịch sử.</p>";
+                if (err.name !== "AbortError") {
+                    historyContainer.innerHTML = "<p class='text-danger'>Lỗi tải dữ liệu</p>";
+                }
             });
     }
 
@@ -128,6 +140,18 @@ document.addEventListener("DOMContentLoaded", () => {
     window.closeReplyModal = function () {
         replyModal.style.display = "none";
         if (replyInput) replyInput.value = "";
+        // reset history
+        const historyContainer = document.getElementById("modalReplyHistory");
+        if (historyContainer) {
+            historyContainer.innerHTML = "";
+        }
+
+        // reset state
+        currentFeedbackData = {
+            id: null,
+            userId: null,
+            customerName: ""
+        };
     };
 
     /* *********** XỬ LÝ XÓA THỰC TẾ **************/
@@ -142,17 +166,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const row = event.target.closest(".highlight-row");
         const isActionZone = event.target.closest("td:last-child");
 
-        if (row && !isActionZone) {
+        if (row && !isActionZone && replyModal.style.display !== "block") {
             const replyBtn = row.querySelector(".reply-btn");
             if (replyBtn) {
                 replyBtn.click();
             }
         }
 
-        if (event.target === replyModal) {
-            closeReplyModal();
-        }
     });
+
+    if (replyModal) {
+        replyModal.addEventListener("click", (e) => {
+            if (e.target === replyModal) {
+                closeReplyModal();
+            }
+        });
+    }
+
 
     /* *********** TÌM KIẾM & LỌC **************/
     const searchInput = document.getElementById('searchInput');

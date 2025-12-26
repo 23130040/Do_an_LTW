@@ -1,10 +1,10 @@
-package vn.edu.hcmuaf.fit.do_an_ltw.controller;
+package cleanmeat.controller;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import vn.edu.hcmuaf.fit.do_an_ltw.dao.FeedbackDAO;
-import vn.edu.hcmuaf.fit.do_an_ltw.model.Feedback;
+import cleanmeat.dao.FeedbackDAO;
+import cleanmeat.model.Feedback;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,7 +51,7 @@ public class FeedbackServlet extends HttpServlet {
         request.setAttribute("selectedType", type);
         request.setAttribute("keyword", keyword);
 
-        request.getRequestDispatcher("admin_quan_ly_danh_gia.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/admin_quan_ly_danh_gia.jsp").forward(request, response);
     }
 
     @Override

@@ -1,7 +1,7 @@
-package vn.edu.hcmuaf.fit.do_an_ltw.dao;
+package cleanmeat.dao;
 
-import vn.edu.hcmuaf.fit.do_an_ltw.model.Feedback;
-import vn.edu.hcmuaf.fit.do_an_ltw.model.User;
+import cleanmeat.model.Feedback;
+import cleanmeat.model.User;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -17,56 +17,36 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     private UserDAO userDAO = new UserDAO();
 
     public FeedbackDAO() {
-        String sql = "SELECT * FROM feedback ORDER BY created_at DESC";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            conn = getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Feedback feedback = mapResultSetToEntity(rs);
-                feedbacks.put(feedback.getId(), feedback);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {}
-        }
     }
 
     @Override
-    protected Feedback mapResultSetToEntity(ResultSet rs) throws SQLException {
-        int id = rs.getInt("id");
-        int response_id = rs.getInt("response_id");
-        int user_id = rs.getInt("user_id");
-        int item_id = rs.getInt("item_id");
-        int rating = rs.getInt("rating");
-        String comment = rs.getString("comment");
+        protected Feedback mapResultSetToEntity(ResultSet rs) throws SQLException {
+            int id = rs.getInt("id");
+            int response_id = rs.getInt("response_id");
+            int user_id = rs.getInt("user_id");
+            int item_id = rs.getInt("item_id");
+            int rating = rs.getInt("rating");
+            String comment = rs.getString("comment");
 
-        LocalDateTime created_at = rs.getTimestamp("created_at") != null
-                ? rs.getTimestamp("created_at").toLocalDateTime()
-                : null;
+            LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                    ? rs.getTimestamp("created_at").toLocalDateTime()
+                    : null;
 
-        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
-                ? rs.getTimestamp("updated_at").toLocalDateTime()
-                : null;
+            LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                    ? rs.getTimestamp("updated_at").toLocalDateTime()
+                    : null;
 
-        User user = userDAO.findById(user_id);
+            User user = userDAO.findById(user_id);
 
-        Feedback feedback = new Feedback(id, response_id, user, item_id, rating, comment, created_at, updated_at);
+            Feedback feedback = new Feedback(id, response_id, user, item_id, rating, comment, created_at, updated_at);
 
-        try {
-            feedback.setReplied(rs.getInt("is_replied") == 1);
-        } catch (SQLException ignored) {
+            try {
+                feedback.setReplied(rs.getInt("is_replied") == 1);
+            } catch (SQLException ignored) {
+            }
+
+            return feedback;
         }
-
-        return feedback;
-    }
 
     @Override
     public boolean insert(Feedback feedback) throws SQLException, ClassNotFoundException {
@@ -134,22 +114,16 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
         try {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return mapResultSetToEntity(rs);
-            }
+            if (rs.next()) return mapResultSetToEntity(rs);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {}
+            try { closeResource(conn, ps, rs); } catch (SQLException ignored) {}
         }
         return null;
     }
@@ -157,13 +131,11 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     @Override
     public List<Feedback> findAll() {
         List<Feedback> list = new ArrayList<>();
-        String sql = "SELECT f.*, " +
-                "(SELECT EXISTS(SELECT 1 FROM feedback r WHERE r.response_id = f.id)) AS is_replied " +
+        String sql = "SELECT f.*, (SELECT EXISTS(SELECT 1 FROM feedback r WHERE r.response_id = f.id)) AS is_replied " +
                 "FROM feedback f WHERE f.response_id = 0";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
         try {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
@@ -174,9 +146,7 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {}
+            try { closeResource(conn, ps, rs); } catch (SQLException ignored) {}
         }
         return list;
     }
@@ -236,43 +206,50 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     }
     public List<Feedback> getChatHistoryByUserId(int userId) {
         List<Feedback> list = new ArrayList<>();
-        String sql = "SELECT * FROM feedback " +
-                "WHERE user_id = ? OR response_id IN (SELECT id FROM feedback WHERE user_id = ?) " +
-                "ORDER BY created_at ASC";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        // JOIN với bảng users để lấy luôn tên, không cần gọi UserDAO nữa
+        String sql = "SELECT f.*, u.username, u.full_name FROM feedback f " +
+                "LEFT JOIN users u ON f.user_id = u.id " +
+                "WHERE f.user_id = ? OR f.response_id IN (SELECT id FROM feedback WHERE user_id = ?) " +
+                "ORDER BY f.created_at ASC";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection(); // Lấy từ pool của bạn
+            ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
             ps.setInt(2, userId);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(mapResultSetToEntity(rs));
+                list.add(mapResultSetToEntity(rs)); // Hàm này giờ không gọi UserDAO nữa
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            // TRẢ VỀ POOL Ở ĐÂY - KHÔNG DÙNG try-with-resources cho Connection
+            try { closeResource(conn, ps, rs); } catch (SQLException ignored) {}
         }
         return list;
     }
     public boolean insertReply(int parentId, int adminId, String comment) {
-        String sql = """
-        INSERT INTO feedback (response_id, user_id, item_id, rating, comment, created_at)
-        SELECT ?, ?, item_id, rating, ?, NOW()
-        FROM feedback
-        WHERE id = ?
-    """;
-
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        String sql = "INSERT INTO feedback (response_id, user_id, item_id, rating, comment, created_at) " +
+                "SELECT ?, ?, item_id, rating, ?, NOW() FROM feedback WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
             ps.setInt(1, parentId);
             ps.setInt(2, adminId);
             ps.setString(3, comment);
             ps.setInt(4, parentId);
-
             return ps.executeUpdate() > 0;
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        } finally {
+            try { closeResource(conn, ps, null); } catch (SQLException ignored) {}
         }
     }
 }

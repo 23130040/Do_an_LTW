@@ -1,10 +1,10 @@
-package vn.edu.hcmuaf.fit.do_an_ltw.controller;
+package cleanmeat.controller;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import vn.edu.hcmuaf.fit.do_an_ltw.dao.ConfigDAO;
-import vn.edu.hcmuaf.fit.do_an_ltw.model.System_config;
+import cleanmeat.dao.ConfigDAO;
+import cleanmeat.model.System_config;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class ConfigServlet extends HttpServlet {
         System_config config = configDAO.getSystemConfig();
 
         request.setAttribute("config", config);
-        request.getRequestDispatcher("admin_cau_hinh_he_thong.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/admin_cau_hinh_he_thong.jsp").forward(request, response);
     }
 
     @Override

@@ -15,8 +15,8 @@ public class TrangChu extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("pageTitle", "Trang chủ");
         request.setAttribute("mainContent", "/view/trang_chu.jsp");
-        request.setAttribute("pageCss", "/css/trang_chu.css");
-        request.setAttribute("pageJS", "/js/trang_chu.js");
+        request.setAttribute("pageCss", "/CSS/trang_chu.css");
+        request.setAttribute("pageJS", "/JS/trang_chu.js");
         request.setAttribute("pageClass", "home");
         request.setAttribute("pageId", "home-menu");
         request.getRequestDispatcher("/view/base/base.jsp").forward(request, response);
