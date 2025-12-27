@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     const chatItem = document.createElement("div");
                     chatItem.className = `history-item ${isCustomer ? 'customer-review' : 'admin-reply'}`;
 
-                    // Xử lý hiển thị thời gian đơn giản nếu item.created_at là object
                     const dateStr = typeof item.created_at === 'object' ?
                         `${item.created_at.date.day}/${item.created_at.date.month}/${item.created_at.date.year}` :
                         item.created_at;
@@ -146,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
             historyContainer.innerHTML = "";
         }
 
-        // reset state
+
         currentFeedbackData = {
             id: null,
             userId: null,

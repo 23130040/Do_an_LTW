@@ -1,144 +1,93 @@
-// Hàm User Menu
 function toggleUserMenu() {
-    document.getElementById("userMenuContent").classList.toggle("show");
+    const menu = document.getElementById("userMenuContent");
+    if (menu) menu.classList.toggle("show");
 }
-// Hàm cho Notification Menu
+
 function toggleNotificationMenu() {
     const userDropdown = document.getElementById("userMenuContent");
     const notificationPanel = document.getElementById("notification-panel");
 
-    // 1. Đóng User Menu nếu nó đang mở
-    if (userDropdown) {
+    if (userDropdown) userDropdown.classList.remove("show");
+    if (notificationPanel) notificationPanel.classList.toggle("show-panel");
+}
+
+// Đóng menu khi click ra ngoài
+window.addEventListener('click', function(event) {
+    const userDropdown = document.getElementById("userMenuContent");
+    const notificationPanel = document.getElementById("notification-panel");
+
+    if (userDropdown && !event.target.closest('.user-dropdown') && !event.target.matches('.user-logo')) {
         userDropdown.classList.remove("show");
     }
 
-    // 2. Bật/Tắt Notification Panel
-    if (notificationPanel) {
-        notificationPanel.classList.toggle("show-panel");
+    if (notificationPanel && !event.target.closest('#notification-panel') && !event.target.matches('.notification-icon')) {
+        notificationPanel.classList.remove("show-panel");
     }
-}
+});
 
-
-// Xử lý đóng cả hai menu khi người dùng click ra ngoài
-window.onclick = function(event) {
-    const userDropdown = document.getElementById("userMenuContent");
-    const notificationPanel = document.getElementById("notification-panel");
-    const notificationIcon = document.querySelector('.notification-icon');
-
-    if (
-        !event.target.matches('.user-logo') &&
-        userDropdown && userDropdown.classList.contains('show') &&
-        !event.target.closest('.user-dropdown')
-    ) {
-        userDropdown.classList.remove('show');
-    }
-
-    if (
-        notificationPanel &&
-        notificationPanel.classList.contains('show-panel') &&
-        !event.target.matches('.notification-icon') &&
-        !event.target.closest('#notification-panel')
-    ) {
-        notificationPanel.classList.remove('show-panel');
-    }
-}
-
-const totalPages = 2; // Tổng số trang cố định
-let currentPage = 1;
-
-// Hàm chuyển trang: Ẩn/hiện các hàng (<tr>) dựa trên class 'page-X'
-window.changePage = function(direction) {
-    const newPage = currentPage + direction;
-
-    if (newPage >= 1 && newPage <= totalPages) {
-        // Ẩn tất cả các hàng hiện tại
-        document.querySelectorAll('.pagination-row').forEach(row => {
-            row.style.display = 'none';
-        });
-
-        currentPage = newPage;
-
-        // Hiển thị các hàng của trang mới
-        document.querySelectorAll(`.page-${currentPage}`).forEach(row => {
-            row.style.display = 'table-row'; // Hiển thị dưới dạng hàng bảng
-        });
-
-        // Cập nhật thông tin trang và trạng thái nút
-        document.getElementById('currentPageInfo').textContent = `Trang ${currentPage} / ${totalPages}`;
-        document.getElementById('prevPageBtn').classList.toggle('disabled', currentPage === 1);
-        document.getElementById('nextPageBtn').classList.toggle('disabled', currentPage === totalPages);
-    }
-};
-
-// Hàm chuyển đổi Tab (Đảm bảo logic phân trang được khởi động lại)
 function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-
-    // Ẩn tất cả tab content
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
+    const tabcontent = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
         tabcontent[i].classList.remove("active");
     }
 
-    // Loại bỏ class 'active' khỏi tất cả tab links
-    tablinks = document.getElementsByClassName("tab-link");
-    for (i = 0; i < tablinks.length; i++) {
+    const tablinks = document.getElementsByClassName("tab-link");
+    for (let i = 0; i < tablinks.length; i++) {
         tablinks[i].classList.remove("active");
     }
 
-    // Hiển thị tab hiện tại và thêm class 'active' cho nút bấm
-    document.getElementById(tabName).style.display = "block";
-    document.getElementById(tabName).classList.add("active");
-    evt.currentTarget.classList.add("active");
+    const activeTab = document.getElementById(tabName);
+    if (activeTab) {
+        activeTab.style.display = "block";
+        activeTab.classList.add("active");
+    }
 
-    // Nếu chuyển đến tab Quản lý Nguồn gốc, đảm bảo Trang 1 hiển thị
-    if (tabName === 'QuanLyNguonGoc') {
-        currentPage = 1;
-        // Gọi changePage(0) để áp dụng trạng thái Trang 1
-        changePage(0);
+    if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add("active");
+    } else {
+        // Trường hợp gọi từ URL (không có sự kiện click)
+        for (let link of tablinks) {
+            if (link.getAttribute("onclick").includes(tabName)) {
+                link.classList.add("active");
+            }
+        }
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", function() {
-    // Khởi tạo Tab đầu tiên
-    if(document.getElementById("QuanLyDanhMuc")) {
-        document.getElementById("QuanLyDanhMuc").style.display = "block";
-        document.getElementById("QuanLyDanhMuc").classList.add("active");
-        var firstTabLink = document.querySelector(".tab-links .tab-link");
-        if(firstTabLink) {
-            firstTabLink.classList.add("active");
-        }
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+
+    if (tabParam) {
+        openTab(null, tabParam);
+    } else {
+        openTab(null, "QuanLyDanhMuc");
     }
 
-    window.toggleNotificationMenu = function() {
-        var panel = document.getElementById("notification-panel");
-        panel.classList.toggle("show-panel");
-    };
-
-    window.toggleUserMenu = function() {
-        var menu = document.getElementById("userMenuContent");
-        menu.classList.toggle("show");
-    };
-
-    if(document.getElementById('QuanLyNguonGoc').style.display === 'block' || document.getElementById('QuanLyNguonGoc').classList.contains('active')) {
+    if (tabParam === 'QuanLyNguonGoc' && typeof changePage === "function") {
         changePage(0);
     }
 });
-// Hàm mở Modal
+
 window.openModal = function(modalId) {
-    document.getElementById(modalId).style.display = 'flex';
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'flex';
 };
 
-// Hàm đóng Modal
 window.closeModal = function(modalId) {
-    document.getElementById(modalId).style.display = 'none';
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'none';
 };
+function deleteCategory(id) {
+    if (confirm("Bạn có chắc chắn muốn xóa danh mục này?")) {
+        window.location.href = "quanlydanhmuc?action=delete&id=" + id;
+    }
+}
 
-// Đóng Modal khi click bên ngoài hộp thoại
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = "none";
+function deleteOrigin(id) {
+    if (confirm("Bạn có chắc chắn muốn xóa nguồn gốc này?")) {
+        // Gọi đến OriginServlet
+        window.location.href = "quanlynguongoc?action=delete&id=" + id;
     }
 }

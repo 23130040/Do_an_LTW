@@ -51,12 +51,11 @@ public class ConnectionPool {
     public void releaseConnection(Connection conn) {
         if (conn == null) return;
         try {
-            // Đảm bảo kết nối sạch sẽ (reset auto-commit) trước khi trả về pool
             if (!conn.isClosed()) {
                 conn.setAutoCommit(true);
                 synchronized (pool) {
                     pool.offer(conn);
-                    pool.notifyAll(); // Đánh thức các thread đang đợi ở getConnection()
+                    pool.notifyAll();
                 }
             }
         } catch (SQLException e) {

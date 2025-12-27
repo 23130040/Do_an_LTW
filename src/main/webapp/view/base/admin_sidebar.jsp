@@ -12,7 +12,7 @@
             </li>
 
             <li class="${param.active == 'category' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/view/admin_quan_ly_danh_muc.jsp">Quản lý danh mục và nguồn gốc</a>
+                <a href="${pageContext.request.contextPath}/quanlydanhmuc">Quản lý danh mục và nguồn gốc</a>
             </li>
 
             <li class="${param.active == 'product' ? 'active' : ''}">

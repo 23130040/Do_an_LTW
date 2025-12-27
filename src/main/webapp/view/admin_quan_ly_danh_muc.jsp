@@ -26,15 +26,18 @@
 
             <div class="tab-container">
                 <div class="tab-links">
-                    <button class="tab-link active" onclick="openTab(event, 'QuanLyDanhMuc')">
+                    <button class="tab-link ${activeTab == 'QuanLyDanhMuc' ? 'active' : ''}"
+                            onclick="openTab(event, 'QuanLyDanhMuc')">
                         <i class="fas fa-tags"></i> Quản lý Danh mục
                     </button>
-                    <button class="tab-link" onclick="openTab(event, 'QuanLyNguonGoc')">
+                    <button class="tab-link ${activeTab == 'QuanLyNguonGoc' ? 'active' : ''}"
+                            onclick="openTab(event, 'QuanLyNguonGoc')">
                         <i class="fas fa-globe-asia"></i> Quản lý Nguồn gốc
                     </button>
                 </div>
 
-                <div id="QuanLyDanhMuc" class="tab-content active">
+                <div id="QuanLyDanhMuc" class="tab-content ${activeTab == 'QuanLyDanhMuc' ? 'active' : ''}"
+                     style="display: ${activeTab == 'QuanLyDanhMuc' ? 'block' : 'none'}">
                     <div class="card">
                         <div class="card-header">
                             <h3>Danh mục sản phẩm (Thịt heo, Thịt bò,...)</h3>
@@ -51,9 +54,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr><td>DM01</td><td>Thịt Heo</td><td>45</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
-                                <tr><td>DM02</td><td>Thịt Gà</td><td>30</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
-                                <tr><td>DM03</td><td>Thịt Bò</td><td>55</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                <c:forEach var="cat" items="${categories}">
+                                    <tr>
+                                        <td>${cat.id}</td>
+                                        <td>${cat.name}</td>
+                                        <td>0</td> <td>
+                                        <button class="btn-delete" onclick="deleteCategory(${cat.id})"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -61,10 +70,11 @@
 
                 </div>
 
-                <div id="QuanLyNguonGoc" class="tab-content">
+                <div id="QuanLyNguonGoc" class="tab-content ${activeTab == 'QuanLyNguonGoc' ? 'active' : ''}"
+                     style="display: ${activeTab == 'QuanLyNguonGoc' ? 'block' : 'none'}">
                     <div class="card">
                         <div class="card-header">
-                            <h3>Nguồn gốc sản phẩm (Việt Nam, Mỹ, Úc,...)</h3>
+                            <h3>Nguồn gốc sản phẩm </h3>
                             <button class="btn-add" onclick="openModal('addOriginModal')"><i class="fas fa-plus"></i> Thêm Nguồn gốc</button>
                         </div>
                         <div class="card-body">
@@ -78,15 +88,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr><td>NG01</td><td>Việt Nam</td><td>100</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
-                                <tr><td>NG02</td><td>Hoa Kỳ (Mỹ)</td><td>30</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
-                                <tr><td>NG03</td><td>Úc</td><td>20</td><td><button class="btn-edit"><i class="fas fa-edit"></i></button> <button class="btn-delete"><i class="fas fa-trash"></i></button></td></tr>
+                                <c:forEach var="org" items="${origin}">
+                                    <tr>
+                                        <td>${org.id}</td>
+                                        <td>${org.name}</td>
+                                        <td>0</td> <td>
+                                        <button class="btn-delete" onclick="deleteOrigin(${org.id})"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </main>
@@ -123,14 +137,14 @@
             <span class="close-btn" onclick="closeModal('addCategoryModal')">&times;</span>
         </div>
         <div class="modal-body">
-            <form>
+            <form action="quanlydanhmuc" method="POST">
                 <div class="form-group">
                     <label for="categoryName">Tên Danh mục:</label>
-                    <input type="text" id="categoryName" name="categoryName" required placeholder="Ví dụ: Thịt Heo Tươi">
+                    <input type="text" id="categoryName" name="name" required placeholder="Ví dụ: Thịt Heo Tươi">
                 </div>
                 <div class="form-group">
                     <label for="categoryDescription">Mô tả (Tùy chọn):</label>
-                    <textarea id="categoryDescription" name="categoryDescription" rows="3" placeholder="Mô tả ngắn về danh mục này"></textarea>
+                    <textarea id="categoryDescription" name="description" rows="3" placeholder="Mô tả ngắn về danh mục này"></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-save"><i class="fas fa-plus"></i> Thêm mới</button>
@@ -148,7 +162,7 @@
             <span class="close-btn" onclick="closeModal('addOriginModal')">&times;</span>
         </div>
         <div class="modal-body">
-            <form>
+            <form action="quanlynguongoc" method="POST">
                 <div class="form-group">
                     <label for="originName">Tên Nguồn gốc:</label>
                     <input type="text" id="originName" name="originName" required placeholder="Ví dụ: Việt Nam">
