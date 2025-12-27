@@ -85,7 +85,7 @@
                     <p class="price">70.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
-                <div class="product-item view-all-item" onclick="window.location.href='san_pham.jsp'">
+                <div class="product-item view-all-item" onclick="window.location.href='tat_ca_san_pham.jsp.jsp'">
                     <i class="fa-solid fa-arrow-right" style="font-size: 50px; margin-bottom: 10px;"></i>
                     <h3>Xem tất cả</h3>
                     <p>Khám phá toàn bộ sản phẩm</p>
