@@ -24,7 +24,13 @@ public class OriginDAO  extends BaseDAO<Origin> {
 
     @Override
     public boolean insert(Origin origin) throws SQLException, ClassNotFoundException {
-        return false;
+        String sql = "INSERT INTO origin (name, description, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, origin.getName());
+            ps.setString(2, origin.getDescription());
+            return ps.executeUpdate() > 0;
+        }
     }
 
     @Override
@@ -33,7 +39,15 @@ public class OriginDAO  extends BaseDAO<Origin> {
     }
 
     @Override
-    protected boolean delete(Origin origin, int id) {
+    public boolean delete(Origin origin, int id) {
+        String sql = "DELETE FROM origin WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

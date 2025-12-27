@@ -11,25 +11,24 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "CategoryServlet", value = "/quanlydanhmuc")
-public class CategoryServlet extends HttpServlet {
-    private CategoryDAO categoryDAO = new CategoryDAO();
-
+@WebServlet(name = "OriginServlet", value = "/quanlynguongoc")
+public class OriginServlet extends HttpServlet {
+    OriginDAO originDAO = new OriginDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("delete".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
-            categoryDAO.delete(null, id);
-            response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=deleted");
+            originDAO.delete(null, id);
+            response.sendRedirect("quanlydanhmuc?tab=QuanLyNguonGoc&status=deleted");
             return;
         }
         request.setAttribute("categories", new CategoryDAO().findAll());
         request.setAttribute("origin", new OriginDAO().findAll());
 
         String activeTab = request.getParameter("tab");
-        if (activeTab == null) activeTab = "QuanLyDanhMuc";
+        if (activeTab == null) activeTab = "QuanLyNguonGoc";
         request.setAttribute("activeTab", activeTab);
 
         request.getRequestDispatcher("/view/admin_quan_ly_danh_muc.jsp").forward(request, response);
@@ -38,18 +37,22 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String name = request.getParameter("name");
-        String desc = request.getParameter("description");
 
-        Category newCat = new Category(name, desc);
+        String name = request.getParameter("originName");
+        String code = request.getParameter("originCode");
+
+        Origin newOrg = new Origin();
+        newOrg.setName(name);
+        newOrg.setDescription(code);
+
         try {
-            if(categoryDAO.insert(newCat)) {
-                response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=success");
+            if(originDAO.insert(newOrg)) {
+                response.sendRedirect("quanlydanhmuc?tab=QuanLyNguonGoc&status=success");
             } else {
-                response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=fail");
+                response.sendRedirect("quanlydanhmuc?tab=QuanLyNguonGoc&status=fail");
             }
         } catch (Exception e) {
-            response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=error");
+            response.sendRedirect("quanlydanhmuc?tab=QuanLyNguonGoc&status=error");
         }
     }
 }

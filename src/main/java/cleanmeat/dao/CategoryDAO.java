@@ -24,12 +24,19 @@ public class CategoryDAO extends BaseDAO<Category>{
 
     @Override
     public boolean insert(Category category) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO categories (name, description, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
+        String sql = "INSERT INTO category (name, description, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
+
             ps.setString(1, category.getName());
             ps.setString(2, category.getDescription());
-            return ps.executeUpdate() > 0;
+
+            int rowAffected = ps.executeUpdate();
+            return rowAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -39,7 +46,15 @@ public class CategoryDAO extends BaseDAO<Category>{
     }
 
     @Override
-    protected boolean delete(Category category, int id) {
+    public boolean delete(Category category, int id) {
+        String sql = "DELETE FROM category WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
