@@ -75,7 +75,7 @@ function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
 
     // Ẩn tất cả tab content
-    tabcontent = document.getElementsByClassName("tab-content");
+    window.location.href = "quanlydanhmuc?tab=" + tabName;
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
         tabcontent[i].classList.remove("active");

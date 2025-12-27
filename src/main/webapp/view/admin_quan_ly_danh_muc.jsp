@@ -26,15 +26,18 @@
 
             <div class="tab-container">
                 <div class="tab-links">
-                    <button class="tab-link active" onclick="openTab(event, 'QuanLyDanhMuc')">
+                    <button class="tab-link ${activeTab == 'QuanLyDanhMuc' ? 'active' : ''}"
+                            onclick="openTab(event, 'QuanLyDanhMuc')">
                         <i class="fas fa-tags"></i> Quản lý Danh mục
                     </button>
-                    <button class="tab-link" onclick="openTab(event, 'QuanLyNguonGoc')">
+                    <button class="tab-link ${activeTab == 'QuanLyNguonGoc' ? 'active' : ''}"
+                            onclick="openTab(event, 'QuanLyNguonGoc')">
                         <i class="fas fa-globe-asia"></i> Quản lý Nguồn gốc
                     </button>
                 </div>
 
-                <div id="QuanLyDanhMuc" class="tab-content active">
+                <div id="QuanLyDanhMuc" class="tab-content ${activeTab == 'QuanLyDanhMuc' ? 'active' : ''}"
+                     style="display: ${activeTab == 'QuanLyDanhMuc' ? 'block' : 'none'}">
                     <div class="card">
                         <div class="card-header">
                             <h3>Danh mục sản phẩm (Thịt heo, Thịt bò,...)</h3>
@@ -68,7 +71,8 @@
 
                 </div>
 
-                <div id="QuanLyNguonGoc" class="tab-content">
+                <div id="QuanLyNguonGoc" class="tab-content ${activeTab == 'QuanLyNguonGoc' ? 'active' : ''}"
+                     style="display: ${activeTab == 'QuanLyNguonGoc' ? 'block' : 'none'}">
                     <div class="card">
                         <div class="card-header">
                             <h3>Nguồn gốc sản phẩm (Việt Nam, Mỹ, Úc,...)</h3>

@@ -1,7 +1,9 @@
 package cleanmeat.controller;
 
 import cleanmeat.dao.CategoryDAO;
+import cleanmeat.dao.OriginDAO;
 import cleanmeat.model.Category;
+import cleanmeat.model.Origin;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -15,12 +17,18 @@ public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if (action == null || action.equals("list")) {
-            List<Category> list = categoryDAO.findAll(); // Lấy dữ liệu từ DB
-            request.setAttribute("categories", list); // Đặt tên là "categories" để JSP dùng
-            request.getRequestDispatcher("/view/admin_quan_ly_danh_muc.jsp").forward(request, response);
-        }
+        List<Category> categoryList = categoryDAO.findAll();
+        request.setAttribute("categories", categoryList);
+
+        OriginDAO originDAO = new OriginDAO();
+        List<Origin> originList = originDAO.findAll();
+        request.setAttribute("origin", originList);
+
+        String activeTab = request.getParameter("tab");
+        if (activeTab == null) activeTab = "QuanLyDanhMuc";
+        request.setAttribute("activeTab", activeTab);
+
+        request.getRequestDispatcher("/view/admin_quan_ly_danh_muc.jsp").forward(request, response);
     }
 
     @Override
