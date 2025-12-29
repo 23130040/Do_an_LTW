@@ -156,11 +156,11 @@
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <div style="flex-grow: 1;">
                         <label>Khối lượng:</label>
-                        <select id="weightSelect" required style="width: 100%; padding: 5px;">
+                        <select id="weightSelect" name="unitId" required style="width: 100%; padding: 5px;">
                             <option value="">Chọn khối lượng</option>
-                            <option value="beef">250g</option>
-                            <option value="pork">500g</option>
-                            <option value="chicken">1kg</option>
+                            <c:forEach var="u" items="${unitList}">
+                                <option value="${u.id}">${u.name}</option>
+                            </c:forEach>
                         </select>
                     </div>
 
@@ -171,7 +171,7 @@
                 </div>
 
                 <div style="margin-top: 15px;">
-                    <input type="text" id="newWeight" placeholder="Nhập khối lượng mới (vd: 2kg)">
+                    <input type="number" id="newWeight" placeholder="Nhập số gram (vd: 2000)">
                     <button type="button" onclick="addNewWeight()">Thêm mới</button>
                 </div>
                 <label>Giá bán (VND):</label>

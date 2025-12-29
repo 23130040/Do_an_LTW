@@ -7,12 +7,12 @@ function toggleNotificationMenu() {
     const userDropdown = document.getElementById("userMenuContent");
     const notificationPanel = document.getElementById("notification-panel");
 
-    // 1. Đóng User Menu nếu nó đang mở
+    // Đóng User Menu nếu nó đang mở
     if (userDropdown) {
         userDropdown.classList.remove("show");
     }
 
-    // 2. Bật/Tắt Notification Panel
+    // Bật/Tắt Notification Panel
     if (notificationPanel) {
         notificationPanel.classList.toggle("show-panel");
     }
@@ -70,7 +70,6 @@ function removeSelectedWeight() {
     const select = document.getElementById("weightSelect");
     const selectedIndex = select.selectedIndex;
 
-    // Không cho phép xóa option mặc định "Chọn khối lượng" (index 0)
     if (selectedIndex <= 0) {
         alert("Vui lòng chọn một khối lượng cụ thể để xóa!");
         return;
@@ -79,27 +78,48 @@ function removeSelectedWeight() {
     const val = select.options[selectedIndex].text;
     if (confirm(`Bạn có chắc muốn xóa khối lượng: ${val}?`)) {
         select.remove(selectedIndex);
-        // Lưu ý: Nếu muốn xóa vĩnh viễn trong Database, bạn cần gọi API tại đây
     }
 }
 
-// Hàm Thêm option mới vào select
-function addNewWeight() {
-    const input = document.getElementById("newWeight");
-    const weightValue = input.value.trim();
-    const select = document.getElementById("weightSelect");
+window.addNewWeight = function() {
+    const newWeightInput = document.getElementById('newWeight');
+    const val = newWeightInput.value.trim();
 
-    if (weightValue === "") {
+    if (val === "") {
         alert("Vui lòng nhập khối lượng!");
         return;
     }
 
-    // Tạo một option mới
-    const newOption = document.createElement("option");
-    newOption.text = weightValue;
-    newOption.value = weightValue.toLowerCase().replace(/\s+/g, ''); // tạo value đơn giản
+    if (isNaN(val) || parseFloat(val) <= 0) {
+        alert("Vui lòng nhập một con số gram hợp lệ!");
+        return;
+    }
 
-    select.add(newOption);
-    input.value = ""; // Xóa trống input sau khi thêm
-}
+    const params = new URLSearchParams();
+    params.append('action', 'addUnit');
+    params.append('name', val);
 
+    fetch('quanlysanpham', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString()
+    })
+        .then(response => {
+            if (response.ok) return response.text();
+            throw new Error('Lỗi mạng hoặc server');
+        })
+        .then(data => {
+            if (data.trim() === "success") {
+                alert("Thêm khối lượng thành công!");
+                window.location.reload();
+            } else {
+                alert("Phản hồi từ server: " + data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Lỗi: " + error.message);
+        });
+};
