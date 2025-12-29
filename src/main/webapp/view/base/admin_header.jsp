@@ -15,8 +15,8 @@
             <i class="fas fa-user-circle user-logo" onclick="toggleUserMenu()"></i>
 
             <div id="userMenuContent" class="dropdown-content">
-                <a href="../admin_thong_tin_tai_khoan.jsp"> Thông tin tài khoản</a>
-                <a href="../admin_doi_mat_khau.jsp"> Đổi mật khẩu</a>
+                <a href="${pageContext.request.contextPath}/view/admin_thong_tin_tai_khoan.jsp"> Thông tin tài khoản</a>
+                <a href="${pageContext.request.contextPath}/view/admin_doi_mat_khau.jsp"> Đổi mật khẩu</a>
                 <div class="dropdown-divider"></div>
                 <a href="trang_chu_chua_login.jsp" class="logout-link"> Đăng xuất</a>
             </div>

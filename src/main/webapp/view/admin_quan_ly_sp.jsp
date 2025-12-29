@@ -31,17 +31,17 @@
             <div class="control-panel">
                 <div class="filters">
                     <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input">
-                    <select name="category" class="filter-select">
-                        <option value="">-- Danh mục --</option>
-                        <option value="beef">Thịt Bò</option>
-                        <option value="pork">Thịt Heo</option>
-                        <option value="chicken">Thịt Gà</option>
+                    <select name="category" class="filter-select" required>
+                        <option value="">Chọn loại thịt</option>
+                        <c:forEach var="cat" items="${categories}">
+                            <option value="${cat.id}">${cat.name}</option>
+                        </c:forEach>
                     </select>
-                    <select name="origin" class="filter-select">
-                        <option value="">-- Nguồn gốc --</option>
-                        <option value="vn">Việt Nam</option>
-                        <option value="us">Mỹ</option>
-                        <option value="au">Úc</option>
+                    <select name="origin" class="filter-select" required>
+                        <option value="">Chọn nguồn gốc</option>
+                        <c:forEach var="org" items="${origin}">
+                            <option value="${org.id}">${org.name}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <button class="btn btn-primary" onclick="openProductModal()">
@@ -136,30 +136,44 @@
                 <textarea rows="5" placeholder="Mô tả chi tiết "></textarea>
 
                 <label>Danh mục:</label>
-                <select required>
+                <select name="category" required>
                     <option value="">Chọn loại thịt</option>
-                    <option value="beef">Thịt Bò</option>
-                    <option value="pork">Thịt Heo</option>
-                    <option value="chicken">Thịt Gà</option>
+                    <c:forEach var="cat" items="${categories}">
+                        <option value="${cat.id}">${cat.name}</option>
+                    </c:forEach>
                 </select>
 
                 <label>Nguồn gốc:</label>
-                <select required>
+                <select name="origin" required>
                     <option value="">Chọn nguồn gốc</option>
-                    <option value="vn">Việt Nam</option>
-                    <option value="my">Mỹ</option>
-                    <option value="uc">Úc</option>
+                    <c:forEach var="org" items="${origin}">
+                        <option value="${org.id}">${org.name}</option>
+                    </c:forEach>
                 </select>
             </div>
 
             <div class="form-section right-col">
-                <label>Khối lượng:</label>
-                <select required>
-                    <option value="">Chọn khối lượng</option>
-                    <option value="beef">250g</option>
-                    <option value="pork">500g</option>
-                    <option value="chicken">1kg</option>
-                </select>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="flex-grow: 1;">
+                        <label>Khối lượng:</label>
+                        <select id="weightSelect" required style="width: 100%; padding: 5px;">
+                            <option value="">Chọn khối lượng</option>
+                            <option value="beef">250g</option>
+                            <option value="pork">500g</option>
+                            <option value="chicken">1kg</option>
+                        </select>
+                    </div>
+
+                    <button type="button" onclick="removeSelectedWeight()"
+                            style="margin-top: 20px; background: none; cursor: pointer; padding: 4px 8px;">
+                        <i class="fas fa-trash"></i> Xóa mục này
+                    </button>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <input type="text" id="newWeight" placeholder="Nhập khối lượng mới (vd: 2kg)">
+                    <button type="button" onclick="addNewWeight()">Thêm mới</button>
+                </div>
                 <label>Giá bán (VND):</label>
                 <input type="number" placeholder="250000" required>
 

@@ -104,7 +104,8 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
 
     @Override
     public boolean delete(Feedback feedback, int id) {
-        String sql = "DELETE FROM feedback WHERE id = ?";
+        // Xóa bản ghi chính VÀ các bản ghi phản hồi (nếu response_id = id)
+        String sql = "DELETE FROM feedback WHERE id = ? OR response_id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -112,8 +113,10 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+            ps.setInt(2, id);
 
-            if (ps.executeUpdate() > 0) {
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
                 feedbacks.remove(id);
                 return true;
             }

@@ -8,8 +8,15 @@ import cleanmeat.model.System_config;
 
 import java.io.IOException;
 
-@WebServlet(name = "ConfigServlet", value = "/cauhinhhethong")
+@WebServlet(name = "ConfigServlet", value = "/cauhinhhethong", loadOnStartup = 1)
 public class ConfigServlet extends HttpServlet {
+    private ConfigDAO configDAO = new ConfigDAO();
+
+    @Override
+    public void init() throws ServletException {
+        System_config config = configDAO.getSystemConfig();
+        getServletContext().setAttribute("globalConfig", config);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,6 +39,7 @@ public class ConfigServlet extends HttpServlet {
         String facebook = request.getParameter("facebook");
         String instagram = request.getParameter("instagram");
         String address = request.getParameter("address");
+        String logo_url = request.getParameter("logoUrl");
 
         System_config config = new System_config(0, name, email, hotline, tax_code, facebook, instagram, address, "");
 

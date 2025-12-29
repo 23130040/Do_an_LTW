@@ -66,4 +66,40 @@ function openProductModal(isEdit = false) {
 function closeProductModal() {
     document.getElementById('product-modal').style.display = 'none';
 }
+function removeSelectedWeight() {
+    const select = document.getElementById("weightSelect");
+    const selectedIndex = select.selectedIndex;
+
+    // Không cho phép xóa option mặc định "Chọn khối lượng" (index 0)
+    if (selectedIndex <= 0) {
+        alert("Vui lòng chọn một khối lượng cụ thể để xóa!");
+        return;
+    }
+
+    const val = select.options[selectedIndex].text;
+    if (confirm(`Bạn có chắc muốn xóa khối lượng: ${val}?`)) {
+        select.remove(selectedIndex);
+        // Lưu ý: Nếu muốn xóa vĩnh viễn trong Database, bạn cần gọi API tại đây
+    }
+}
+
+// Hàm Thêm option mới vào select
+function addNewWeight() {
+    const input = document.getElementById("newWeight");
+    const weightValue = input.value.trim();
+    const select = document.getElementById("weightSelect");
+
+    if (weightValue === "") {
+        alert("Vui lòng nhập khối lượng!");
+        return;
+    }
+
+    // Tạo một option mới
+    const newOption = document.createElement("option");
+    newOption.text = weightValue;
+    newOption.value = weightValue.toLowerCase().replace(/\s+/g, ''); // tạo value đơn giản
+
+    select.add(newOption);
+    input.value = ""; // Xóa trống input sau khi thêm
+}
 
