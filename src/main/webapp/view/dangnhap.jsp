@@ -46,7 +46,7 @@
         </div>
         <div class="block sign-up">
             <span class="txt">Bạn chưa có tài khoản?</span>
-            <a href="#" class="link sign-up">Đăng ký ngay</a>
+            <a href="dang-ky" class="link sign-up">Đăng ký ngay</a>
         </div>
     </div>
 </div>

@@ -28,6 +28,7 @@ a:hover {
     text-decoration: underline;
 }
 
+/* ===== CONTAINER ===== */
 #container {
     width: 100%;
     display: flex;
@@ -44,6 +45,7 @@ a:hover {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
 }
 
+/* ===== LOGO ===== */
 #wrapper img {
     display: block;
     margin: 0 auto 10px;
@@ -56,6 +58,7 @@ a:hover {
     margin-bottom: 25px;
     letter-spacing: 2px;
 }
+
 /* ================= FORM ================= */
 .block {
     position: relative;
@@ -65,7 +68,7 @@ a:hover {
 .block i {
     position: absolute;
     top: 50%;
-    left: 14px;
+    left: 0;
     transform: translateY(-50%);
     color: #ccc;
     font-size: 16px;
@@ -73,12 +76,12 @@ a:hover {
 
 /* INPUT */
 .form-input {
-    flex: 1;
+    width: 100%;
     background: transparent;
     border: none;
     border-bottom: 1.4px solid rgba(255, 255, 255, 0.7);
 
-    padding: 8px 6px;
+    padding: 8px 6px 8px 26px;
     font-size: 17px;
     color: #fff;
     outline: none;
@@ -92,19 +95,12 @@ a:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* ================= FORGOT ================= */
-.forgot-password {
-    justify-content: flex-end;
-    margin-top: -10px;
-}
-
-.forgot-password a {
-    color: #fff;
-    font-size: 14px;
-}
-
-.forgot-password a:hover {
+/* ================= ERROR ================= */
+.error-message {
     color: #ff3b3b;
+    font-size: 13px;
+    text-align: left;
+    margin-bottom: 10px;
 }
 
 /* ================= BUTTON ================= */
@@ -129,14 +125,6 @@ a:hover {
 .form-submit:hover {
     background: #ff3b3b;
     color: #fff;
-}
-
-/* ================= ERROR ================= */
-.error-message {
-    color: #ff3b3b;
-    font-size: 13px;
-    text-align: left;
-    margin-bottom: 10px;
 }
 
 /* ================= SEPARATOR ================= */
@@ -164,6 +152,7 @@ a:hover {
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 18px;
+    text-align: center;
 }
 
 .social-login a {
@@ -179,7 +168,7 @@ a:hover {
     background: rgba(255, 255, 255, 0.15);
 }
 
-/* ================= SIGN UP ================= */
+/* ================= SIGN IN ================= */
 .block.sign-up {
     width: 100%;
     font-size: 14px;
@@ -195,120 +184,4 @@ a:hover {
 
 .sign-up a {
     color: #ff3b3b;
-}
-
-/* ===== MODAL ===== */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-}
-
-.modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 25px 30px;
-    width: 450px;
-    max-width: 90%;
-    border-radius: 10px;
-    position: relative;
-}
-
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 28px;
-    cursor: pointer;
-    color: #aaa;
-}
-
-.close-btn:hover {
-    color: #e00000;
-}
-
-/* ===== MODAL FORM ===== */
-.modal h3 {
-    margin-bottom: 10px;
-}
-
-.modal .txt {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.modal .block {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 8px 10px;
-}
-
-.modal .block i {
-    margin-right: 10px;
-    font-size: 18px;
-    color: #333;
-}
-
-.modal .form-input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 16px;
-}
-
-/* ===== MODAL BUTTON ===== */
-.modal .form-submit {
-    background-color: #e00000;
-    color: white;
-}
-
-.modal .form-submit:hover {
-    background-color: #ef0000;
-}
-
-/* ===== CONFIRM MESSAGE ===== */
-.message p {
-    font-size: 15px;
-    margin-bottom: 10px;
-}
-
-.message .email {
-    font-weight: bold;
-    color: #e00000;
-}
-
-/* ===== BUTTON GROUP ===== */
-.button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.button-group .btn {
-    flex: 1;
-    padding: 10px 0;
-    font-size: 15px;
-    font-weight: bold;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-}
-
-.cancel-btn {
-    background-color: #ccc;
-}
-
-.resend-btn {
-    background-color: #e00000;
-    color: white;
-}
-
-.resend-btn:hover {
-    background-color: #ef0000;
 }

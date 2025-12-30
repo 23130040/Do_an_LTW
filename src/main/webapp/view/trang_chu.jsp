@@ -23,7 +23,7 @@
             </div>
 
             <div class="product-item featured-item">
-                <img src="../images/thitTC3.png" alt="Thịt bò tươi nổi bật">
+                <img src="${pageContext.request.contextPath}/images/thitTC3.png" alt="Thịt bò tươi nổi bật">
                 <h3>Thịt bò tươi</h3>
                 <p class="price">350.000 ₫ / KG</p>
                 <div class="badge-new">Nổi Bật</div>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="product-item featured-item">
-                <img src="../images/thitTC1.png" alt="Thịt thăn heo nổi bật">
+                <img src="${pageContext.request.contextPath}/images/thitTC1.png" alt="Thịt thăn heo nổi bật">
                 <h3>Thịt thăn heo</h3>
                 <p class="price">89.000 ₫ / KG</p>
                 <div class="badge-new">Bán Chạy</div>
@@ -39,7 +39,7 @@
             </div>
 
             <div class="product-item featured-item">
-                <img src="../images/thitTC2.png" alt="Thịt đùi gà nổi bật">
+                <img src="${pageContext.request.contextPath}/images/thitTC2.png" alt="Thịt đùi gà nổi bật">
                 <h3>Thịt đùi gà</h3>
                 <p class="price">69.000 ₫ / KG</p>
                 <div class="badge-new">Giá Tốt</div>
@@ -56,31 +56,31 @@
 
             <div class="product-list scrollable">
                 <div class="product-item">
-                    <img src="../images/thitTC2.png" alt="Thịt đùi gà">
+                    <img src="${pageContext.request.contextPath}/images/thitTC2.png" alt="Thịt đùi gà">
                     <h3>Thịt đùi gà</h3>
                     <p class="price">69.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/thitTC1.png" alt="Thịt thăn heo">
+                    <img src="${pageContext.request.contextPath}/images/thitTC1.png" alt="Thịt thăn heo">
                     <h3>Thịt thăn heo</h3>
                     <p class="price">89.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/thitTC3.png" alt="Thịt bò tươi">
+                    <img src="${pageContext.request.contextPath}/images/thitTC3.png" alt="Thịt bò tươi">
                     <h3>Thịt bò tươi</h3>
                     <p class="price">350.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/thitTC4.png" alt="Thịt nọng heo">
+                    <img src="${pageContext.request.contextPath}/images/thitTC4.png" alt="Thịt nọng heo">
                     <h3>Thịt nọng heo</h3>
                     <p class="price">330.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>
                 </div>
                 <div class="product-item">
-                    <img src="../images/thitTC5.png" alt="Thịt ức gà">
+                    <img src="${pageContext.request.contextPath}/images/thitTC5.png" alt="Thịt ức gà">
                     <h3>Thịt ức gà</h3>
                     <p class="price">70.000 ₫ / KG</p>
                     <button>THÊM VÀO GIỎ</button>

@@ -3,7 +3,7 @@
 <footer>
     <div class="footer-container">
         <div class="footer-col about-us">
-            <img src="${pageContext.request.contextPath}./images/logoCleanmeat.png" alt="Logo">
+            <img src="${pageContext.request.contextPath}/images/logoCleanmeat.png" alt="Logo">
             <p>CleanMeat - Nguồn thịt tươi sạch, đảm bảo an toàn và chất lượng cho mọi gia đình Việt.</p>
         </div>
 

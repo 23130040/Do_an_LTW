@@ -20,8 +20,8 @@ public class ChiTietSanPham extends HttpServlet {
 
         request.setAttribute("pageTitle", "Chi tiết sản phẩm");
         request.setAttribute("mainContent", "/view/chi_tiet_san_pham.jsp");
-        request.setAttribute("pageCss", "/css/chi_tiet_san_pham.css");
-        request.setAttribute("pageJS", "/js/chi_tiet_san_pham.js");
+        request.setAttribute("pageCss", "/CSS/chi_tiet_san_pham.css");
+        request.setAttribute("pageJS", "/JS/chi_tiet_san_pham.js");
 
         request.getRequestDispatcher("/view/base/base.jsp")
                 .forward(request, response);

@@ -5,12 +5,10 @@
 <nav class="menubar">
     <div class="sixteen column">
 
-        <!-- LOGO -->
         <div class="one-fifth column left">
             <img src="${pageContext.request.contextPath}/images/logoCleanmeat.png" alt="CleanMeat Logo">
         </div>
 
-        <!-- MENU GIỮA -->
         <div class="three-fifths column center">
             <ul class="menu-center">
                 <li class="menuitem">
