@@ -21,7 +21,6 @@ public class SendOtpServlet extends HttpServlet {
             throws IOException {
 
         response.setContentType("text/plain; charset=UTF-8");
-
         String email = request.getParameter("email");
 
         if (email == null || email.isEmpty()) {
@@ -29,13 +28,12 @@ public class SendOtpServlet extends HttpServlet {
             return;
         }
 
-//        if (UserService.isEmailRegistered(email)) {
-//            response.getWriter().write("EMAIL_NOT_FOUND");
-//            return;
-//        }
+        if (UserService.isEmailRegistered(email)) {
+            response.getWriter().write("EMAIL_EXISTS");
+            return;
+        }
 
         HttpSession session = request.getSession();
-
         String otp = OTPUtil.generateOTP();
 
         session.setAttribute("OTP_CODE", otp);

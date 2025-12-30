@@ -154,12 +154,11 @@ public class UserServlet extends HttpServlet {
             if (emailVerified == null || !emailVerified || verifiedEmail == null
                     || !email.equalsIgnoreCase(verifiedEmail)) {
 
-                response.sendError(HttpServletResponse.SC_FORBIDDEN,
-                        "Vui lòng xác thực email trước khi thêm người dùng");
+                response.setContentType("text/plain; charset=UTF-8");
+                response.getWriter().write("EMAIL_NOT_VERIFIED");
                 return;
             }
 
-            // ===== Tạo user =====
             User newUser = new User();
             newUser.setName(request.getParameter("userName"));
             newUser.setEmail(email);
@@ -172,11 +171,12 @@ public class UserServlet extends HttpServlet {
             newUser.setAvatar("");
 
             if (userDAO.insert(newUser)) {
-                // dọn session sau khi dùng
                 session.removeAttribute("EMAIL_VERIFIED");
                 session.removeAttribute("OTP_EMAIL");
 
-                response.sendRedirect(request.getContextPath() + "/quanlyuser");
+                response.setContentType("text/plain;charset=UTF-8");
+                response.getWriter().write("SUCCESS");
+                return;
             } else {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                         "Không thể thêm người dùng");

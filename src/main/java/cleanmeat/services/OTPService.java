@@ -19,8 +19,6 @@ public class OTPService {
 
         if (match) {
             session.setAttribute("EMAIL_VERIFIED", true);
-            // QUAN TRỌNG: Phải giữ OTP_EMAIL lại để UserServlet đối chiếu
-            // session.removeAttribute("OTP_CODE");
             session.removeAttribute("OTP_EXPIRE");
         }
         return match;

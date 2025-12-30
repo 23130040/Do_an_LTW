@@ -281,7 +281,7 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     public boolean existsByEmail(String email) {
-        String sql = "SELECT 1 FROM users WHERE email = ? LIMIT 1";
+        String sql = "SELECT 1 FROM user WHERE email = ? LIMIT 1";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

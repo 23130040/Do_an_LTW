@@ -4,10 +4,10 @@ import cleanmeat.dao.UserDAO;
 import cleanmeat.model.User;
 
 public class UserService {
-    private static UserDAO userDAO;
+    private static UserDAO userDAO = new UserDAO();
 
     public UserService() {
-        this.userDAO = new UserDAO();
+
     }
     public User login(String email, String password) {
         if (email == null || password == null)
@@ -20,6 +20,9 @@ public class UserService {
         return user;
     }
     public static boolean isEmailRegistered(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return false;
+        }
         return userDAO.existsByEmail(email);
     }
 }

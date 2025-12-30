@@ -169,7 +169,7 @@
 
                 <label for="userEmail">Email:</label>
                 <div class="input-group-custom">
-                    <input type="email" id="userEmail" name="email" placeholder="example@email.com" required>
+                    <input type="email" id="userEmail" name="userEmail" placeholder="example@email.com" required>
                     <button type="button" id="btnSendOTP" class="btn-inline btn-send">Gửi mã</button>
                 </div>
 
