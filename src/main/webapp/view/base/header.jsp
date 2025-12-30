@@ -62,7 +62,7 @@
                                     <a href="${pageContext.request.contextPath}//tai-khoan-cua-toi">Tài khoản của tôi</a>
                                 </li>
                                 <li class="user-menuitem">
-                                    <a href="${pageContext.request.contextPath}/don-hang">Đơn hàng của tôi</a>
+                                    <a href="${pageContext.request.contextPath}/don-hang-cua-toi">Đơn hàng của tôi</a>
                                 </li>
                                 <li class="user-menuitem">
                                     <a href="${pageContext.request.contextPath}/dang-xuat">Đăng xuất</a>
