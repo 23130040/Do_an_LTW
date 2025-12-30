@@ -28,14 +28,22 @@ public class ConfigDAO extends BaseDAO<System_config> {
 
     public System_config getSystemConfig() {
         String sql = "SELECT * FROM system_config LIMIT 1";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return mapResultSetToEntity(rs);
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToEntity(rs);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
         return null;
     }
@@ -43,22 +51,30 @@ public class ConfigDAO extends BaseDAO<System_config> {
     @Override
     public boolean update(System_config config, int id) {
         String sql = "UPDATE system_config SET name=?, email=?, hotline=?, tax_code=?, facebook=?, instagram=?, address=?, logo_url=? WHERE id=?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, config.getName());
-            ps.setString(2, config.getEmail());
-            ps.setString(3, config.getHotline());
-            ps.setString(4, config.getTax_code());
-            ps.setString(5, config.getFacebook());
-            ps.setString(6, config.getInstagram());
-            ps.setString(7, config.getAddress());
-            ps.setString(8, config.getLogo_url());
-            ps.setInt(9, id);
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (
+                    PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, config.getName());
+                ps.setString(2, config.getEmail());
+                ps.setString(3, config.getHotline());
+                ps.setString(4, config.getTax_code());
+                ps.setString(5, config.getFacebook());
+                ps.setString(6, config.getInstagram());
+                ps.setString(7, config.getAddress());
+                ps.setString(8, config.getLogo_url());
+                ps.setInt(9, id);
 
-            return ps.executeUpdate() > 0;
+                return ps.executeUpdate() > 0;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
     }
 
@@ -66,34 +82,66 @@ public class ConfigDAO extends BaseDAO<System_config> {
     public boolean insert(System_config config) throws SQLException {
         String sql = "INSERT INTO system_config (name, email, hotline, tax_code, facebook, instagram, address, logo_url, created_by)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, config.getName());
-            ps.setString(2, config.getEmail());
-            ps.setString(3, config.getHotline());
-            ps.setString(4, config.getTax_code());
-            ps.setString(5, config.getFacebook());
-            ps.setString(6, config.getInstagram());
-            ps.setString(7, config.getAddress());
-            ps.setString(8, config.getLogo_url());
-            ps.setInt(9, 1);
-            return ps.executeUpdate() > 0;
+        Connection conn = null;
+
+        try {
+            conn = getConnection();
+            try (
+                    PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, config.getName());
+                ps.setString(2, config.getEmail());
+                ps.setString(3, config.getHotline());
+                ps.setString(4, config.getTax_code());
+                ps.setString(5, config.getFacebook());
+                ps.setString(6, config.getInstagram());
+                ps.setString(7, config.getAddress());
+                ps.setString(8, config.getLogo_url());
+                ps.setInt(9, 1);
+                return ps.executeUpdate() > 0;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
     }
 
     public boolean hasConfig() {
         String sql = "SELECT COUNT(*) FROM system_config";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) return rs.getInt(1) > 0;
-        } catch (Exception e) { e.printStackTrace(); }
+        Connection conn = null;
+
+        try {
+            conn = getConnection();
+            try (
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
         return false;
     }
-    @Override protected boolean delete(System_config sc, int id) { return false; }
-    @Override protected System_config findById(int id) { return getSystemConfig(); }
-    @Override protected List<System_config> findAll() { return new ArrayList<>(); }
+
+    @Override
+    protected boolean delete(System_config sc, int id) {
+        return false;
+    }
+
+    @Override
+    protected System_config findById(int id) {
+        return getSystemConfig();
+    }
+
+    @Override
+    protected List<System_config> findAll() {
+        return new ArrayList<>();
+    }
 }

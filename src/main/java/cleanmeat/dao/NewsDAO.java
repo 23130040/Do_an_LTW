@@ -52,24 +52,24 @@ public class NewsDAO extends BaseDAO<News> {
         List<News> list = new ArrayList<>();
         String sql = "SELECT * FROM news";
         Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
 
         try {
             conn = getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(mapResultSetToEntity(rs));
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                closeResource(conn, ps, rs);
-            } catch (SQLException ignored) {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
             }
         }
         return list;
     }
+
 }

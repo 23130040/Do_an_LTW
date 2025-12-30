@@ -184,8 +184,6 @@
                 <input type="text" placeholder="1001">
 
                 <div class="inventory-group">
-                    <label>Tồn kho hiện tại:</label>
-                    <input type="number" placeholder="Số lượng (kg/gói)" required>
                     <label>Ngưỡng cảnh báo:</label>
                     <input type="number" placeholder="5 (Cảnh báo khi <= 5)">
                 </div>

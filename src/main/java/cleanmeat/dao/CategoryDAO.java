@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO extends BaseDAO<Category>{
+public class CategoryDAO extends BaseDAO<Category> {
     @Override
     protected Category mapResultSetToEntity(ResultSet rs) throws SQLException {
         return new Category(
@@ -25,18 +25,28 @@ public class CategoryDAO extends BaseDAO<Category>{
     @Override
     public boolean insert(Category category) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO category (name, description, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        Connection conn = null;
+        try {
+            conn = getConnection();
 
 
-            ps.setString(1, category.getName());
-            ps.setString(2, category.getDescription());
+            try (
+                    PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            int rowAffected = ps.executeUpdate();
-            return rowAffected > 0;
+
+                ps.setString(1, category.getName());
+                ps.setString(2, category.getDescription());
+
+                int rowAffected = ps.executeUpdate();
+                return rowAffected > 0;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
     }
 
@@ -48,12 +58,20 @@ public class CategoryDAO extends BaseDAO<Category>{
     @Override
     public boolean delete(Category category, int id) {
         String sql = "DELETE FROM category WHERE id = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            return ps.executeUpdate() > 0;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (
+                    PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                return ps.executeUpdate() > 0;
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
         return false;
     }
@@ -67,14 +85,22 @@ public class CategoryDAO extends BaseDAO<Category>{
     public List<Category> findAll() {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM category";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                list.add(mapResultSetToEntity(rs));
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
         return list;
     }

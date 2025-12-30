@@ -41,7 +41,7 @@ public class Unit {
         this.name = name;
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 

@@ -10,11 +10,18 @@ import java.io.IOException;
 public class DangXuat extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session != null && session.getAttribute("user") != null) {
+        String from = request.getParameter("from");
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
             session.invalidate();
         }
-        response.sendRedirect(request.getContextPath() + "/trang-chu");
+
+        if ("admin".equals(from)) {
+            response.sendRedirect(request.getContextPath() + "/dang-nhap");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/trang-chu");
+        }
     }
 
     @Override
