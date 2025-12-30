@@ -490,6 +490,70 @@ a {
 input:checked + .small-switch .slider:before {
     transform: translateX(15px);
 }
+.input-group-custom {
+    display: flex;
+    gap: 8px; /* Khoảng cách giữa ô nhập và nút */
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+/* Loại bỏ margin bottom mặc định của input bên trong group này */
+.input-group-custom input {
+    flex: 1; /* Để input chiếm hết không gian còn lại */
+    margin-bottom: 0 !important;
+    height: 40px; /* Chiều cao cố định bằng với thiết kế của bạn */
+    border: 1px solid #ddd;
+    padding: 0 10px;
+    border-radius: 4px;
+}
+
+/* Style chung cho nút nằm cùng hàng */
+.btn-inline {
+    height: 40px;
+    padding: 0 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    white-space: nowrap; /* Không cho chữ xuống dòng */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Màu sắc nút Gửi mã (Nhẹ nhàng hơn) */
+.btn-send {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.btn-send:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+/* Màu sắc nút Xác nhận (Đồng bộ với nút Lưu Người Dùng) */
+.btn-verify {
+    background-color: #8b2d39; /* Cùng tông màu đỏ nâu của nút Lưu */
+    color: white;
+}
+
+.btn-verify:hover {
+    background-color: #6d232d;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Hiệu ứng khi nút bị vô hiệu hóa (Disabled) */
+.btn-inline:disabled {
+    background-color: #eee;
+    color: #999;
+    cursor: not-allowed;
+    border: 1px solid #ddd;
+}
+
 .status-text {
     font-size: 0.9em;
     color: #666;
