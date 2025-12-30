@@ -139,35 +139,55 @@ public class UserServlet extends HttpServlet {
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            HttpSession session = request.getSession(false);
 
-            String name = request.getParameter("userName");
+            Boolean emailVerified = (session != null)
+                    ? (Boolean) session.getAttribute("EMAIL_VERIFIED")
+                    : null;
+
+            String verifiedEmail = (session != null)
+                    ? (String) session.getAttribute("OTP_EMAIL")
+                    : null;
+
             String email = request.getParameter("userEmail");
-            String password = request.getParameter("userPassword");
-            String phone = request.getParameter("userPhone");
-            String role = request.getParameter("userRole");
 
+            if (emailVerified == null || !emailVerified || verifiedEmail == null
+                    || !email.equalsIgnoreCase(verifiedEmail)) {
+
+                response.sendError(HttpServletResponse.SC_FORBIDDEN,
+                        "Vui lòng xác thực email trước khi thêm người dùng");
+                return;
+            }
+
+            // ===== Tạo user =====
             User newUser = new User();
-            newUser.setName(name);
+            newUser.setName(request.getParameter("userName"));
             newUser.setEmail(email);
-            newUser.setPassword(password);
-            newUser.setPhone(phone);
-            newUser.setRole(role);
+            newUser.setPassword(request.getParameter("userPassword"));
+            newUser.setPhone(request.getParameter("userPhone"));
+            newUser.setRole(request.getParameter("userRole"));
+            newUser.setStatus(true);
             newUser.setGender("");
             newUser.setBirthday(null);
             newUser.setAvatar("");
 
-            newUser.setStatus(true);
-
             if (userDAO.insert(newUser)) {
+                // dọn session sau khi dùng
+                session.removeAttribute("EMAIL_VERIFIED");
+                session.removeAttribute("OTP_EMAIL");
+
                 response.sendRedirect(request.getContextPath() + "/quanlyuser");
             } else {
-                response.getWriter().write("Lỗi: Không thể thêm người dùng vào database.");
-                return;
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        "Không thể thêm người dùng");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi khi thêm người dùng: " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    "Lỗi khi thêm người dùng");
         }
+        
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {

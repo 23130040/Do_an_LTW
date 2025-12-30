@@ -215,5 +215,73 @@ document.addEventListener("DOMContentLoaded", () => {
             applyFilterAndSearch();
         }
     });
+    document.getElementById("btnSendOTP").addEventListener("click", function () {
+        const email = document.getElementById("userEmail").value.trim();
+
+        if (!email) {
+            alert("Vui lòng nhập email");
+            return;
+        }
+
+        fetch("send-otp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "email=" + encodeURIComponent(email)
+        })
+            .then(res => res.text())
+            .then(data => {
+                alert("Mã OTP đã được gửi tới email");
+            })
+            .catch(err => {
+                alert("Gửi OTP thất bại");
+                console.error(err);
+            });
+    });
+
+    let emailVerified = false;
+
+    document.getElementById("btnVerifyOTP").addEventListener("click", function () {
+        const otp = document.getElementById("userOTP").value.trim();
+
+        if (!otp) {
+            alert("Vui lòng nhập mã OTP");
+            return;
+        }
+
+        fetch("verify-otp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "otp=" + encodeURIComponent(otp)
+        })
+            .then(res => res.text())
+            .then(data => {
+                if (data === "OK") {
+                    alert("Xác thực thành công");
+                } else {
+                    alert("OTP sai hoặc đã hết hạn");
+                }
+            })
+            .catch(err => {
+                alert("Xác thực thất bại");
+                console.error(err);
+            });
+    });
+    if (data === "OK") {
+        alert("Xác thực thành công");
+        emailVerified = true;
+
+        document.getElementById("userEmail").readOnly = true;
+    }
+    userForm.addEventListener("submit", function (e) {
+        if (!emailVerified) {
+            e.preventDefault();
+            alert("Vui lòng xác thực email trước khi thêm người dùng");
+        }
+    });
+
 
 });

@@ -168,7 +168,16 @@
                 <input type="text" id="userName" name="userName" placeholder="Nguyễn Văn A" required>
 
                 <label for="userEmail">Email:</label>
-                <input type="email" id="userEmail" name="userEmail" placeholder="example@email.com" required>
+                <div class="input-group-custom">
+                    <input type="email" id="userEmail" name="email" placeholder="example@email.com" required>
+                    <button type="button" id="btnSendOTP" class="btn-inline btn-send">Gửi mã</button>
+                </div>
+
+                <label for="userOTP">Mã xác thực OTP:</label>
+                <div class="input-group-custom">
+                    <input type="text" id="userOTP" name="userOTP" placeholder="Nhập mã OTP">
+                    <button type="button" id="btnVerifyOTP" class="btn-inline btn-verify">Xác nhận</button>
+                </div>
 
                 <label for="userPhone">Số điện thoại:</label>
                 <input type="tel" id="userPhone" name="userPhone" placeholder="0123456789"
