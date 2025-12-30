@@ -44,7 +44,7 @@
 
                 <!-- CART -->
                 <li class="menuitem-right" id="shopping-cart">
-                    <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="${pageContext.request.contextPath}/gio-hang"><i class="fa-solid fa-cart-shopping"></i></a>
                 </li>
 
                 <!-- USER -->
