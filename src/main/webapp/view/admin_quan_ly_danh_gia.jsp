@@ -132,6 +132,9 @@
                                         onclick="openReplyModal(${f.id}, ${f.user.id}, '${f.user.name}', '${f.item_id_raw}', ${f.rating}, '${createdAt.format(dateFmt)}')">
                                         ${isReplied ? '<i class="fa-solid fa-eye"></i> Xem' : '<i class="fas fa-reply"></i> Trả lời'}
                                 </button>
+                                <button class="btn-icon delete-btn" onclick="deleteFeedback(${f.id})">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </td>
                         </tr>
                     </c:forEach>

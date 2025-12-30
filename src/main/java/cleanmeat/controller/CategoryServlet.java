@@ -14,6 +14,7 @@ import java.util.List;
 @WebServlet(name = "CategoryServlet", value = "/quanlydanhmuc")
 public class CategoryServlet extends HttpServlet {
     private CategoryDAO categoryDAO = new CategoryDAO();
+    private OriginDAO originDAO = new OriginDAO();
 
 
     @Override
@@ -25,8 +26,8 @@ public class CategoryServlet extends HttpServlet {
             response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=deleted");
             return;
         }
-        request.setAttribute("categories", new CategoryDAO().findAll());
-        request.setAttribute("origin", new OriginDAO().findAll());
+        request.setAttribute("categories", categoryDAO.findAll());
+        request.setAttribute("origin", originDAO.findAll());
 
         String activeTab = request.getParameter("tab");
         if (activeTab == null) activeTab = "QuanLyDanhMuc";

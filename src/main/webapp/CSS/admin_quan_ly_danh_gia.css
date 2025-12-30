@@ -415,8 +415,16 @@ a {
 .btn-success { background-color: #28a745; }
 .btn-info { background-color: #17a2b8; }
 .btn-danger { background-color: #dc3545; }
-.btn-warning { background-color: var(--warning-color); color: #333;} /* Ẩn */
+.btn-warning { background-color: var(--warning-color); color: #333;}
 .btn-action { background-color: #6c757d; }
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 1.1em;
+}
+.delete-btn { color: var(--main-red); }
 
 /* Badge Trạng thái */
 .status-badge {
