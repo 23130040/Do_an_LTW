@@ -17,6 +17,9 @@ public class FeedbackServlet extends HttpServlet {
         String rate = request.getParameter("rating");
         String type = request.getParameter("type");
         String keyword = request.getParameter("search");
+        String action = request.getParameter("action");
+
+        FeedbackDAO dao = new FeedbackDAO();
 
         rate = (rate == null) ? "" : rate;
         type = (type == null) ? "" : type;
@@ -27,7 +30,18 @@ public class FeedbackServlet extends HttpServlet {
         request.setAttribute("localTimeFmt", timeFmt);
         request.setAttribute("localDateFmt", dateFmt);
 
-        FeedbackDAO dao = new FeedbackDAO();
+
+        if ("delete".equals(action)) {
+            try {
+                int id = Integer.parseInt(request.getParameter("id"));
+                dao.delete(null, id);
+                response.sendRedirect("quanlydanhgia");
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         List<Feedback> list = dao.applyFilterAndSearch(rate, type, keyword);
         int totalReviews = list.size();
 
@@ -39,7 +53,6 @@ public class FeedbackServlet extends HttpServlet {
             }
             avgRating = (double) sum / list.size();
 
-            // làm tròn 1 chữ số thập phân cho đẹp
             avgRating = Math.round(avgRating * 10.0) / 10.0;
         }
 

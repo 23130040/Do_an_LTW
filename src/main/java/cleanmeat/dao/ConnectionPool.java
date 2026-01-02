@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class ConnectionPool {
-    private static final int MAX_CONNECTIONS = 500;
+    private static final int MAX_CONNECTIONS = 10;
     private final Queue<Connection> pool = new LinkedList<Connection>();
 
     private static class Holder {

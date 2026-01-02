@@ -65,7 +65,7 @@
                                     <a href="${pageContext.request.contextPath}/don-hang-cua-toi">Đơn hàng của tôi</a>
                                 </li>
                                 <li class="user-menuitem">
-                                    <a href="${pageContext.request.contextPath}/dang-xuat">Đăng xuất</a>
+                                    <a href="${pageContext.request.contextPath}/dang-xuat?from=user">Đăng xuất</a>
                                 </li>
                             </ul>
                         </c:otherwise>

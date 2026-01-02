@@ -46,17 +46,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Lợi ích của thịt bò Úc nhập khẩu</td>
-                            <td>Admin</td>
-                            <td>01/11/2023</td>
-                            <td>1250</td>
-                            <td><span class="status-badge status-active">Đã đăng</span></td>
-                            <td>
-                                <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="btn-icon delete-btn"><i class="fas fa-trash-alt"></i></button>
+                        <c:forEach var="news" items="${newsList}">
+                            <tr>
+                                <td>${news.title}</td>
+                                <td>${news.author}</td>
+                                <td>${news.created_at}</td>
+                                <td>1250</td> <td>
+                <span class="status-badge ${news.status == 'Đã đăng' ? 'status-active' : 'status-draft'}">
+                        ${news.status}
+                </span>
                             </td>
-                        </tr>
+                                <td>
+                                    <a href="edit-news?id=${news.id}" class="btn-icon edit-btn"><i class="fas fa-edit"></i></a>
+                                    <a href="delete-news?id=${news.id}" class="btn-icon delete-btn" onclick="return confirm('Are you sure?')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

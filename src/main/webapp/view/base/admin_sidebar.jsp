@@ -16,7 +16,7 @@
             </li>
 
             <li class="${param.active == 'product' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/view/admin_quan_ly_sp.jsp">Quản lý sản phẩm</a>
+                <a href="${pageContext.request.contextPath}/quanlysanpham">Quản lý sản phẩm</a>
             </li>
 
             <li class="${param.active == 'user' ? 'active' : ''}">
@@ -28,7 +28,7 @@
             </li>
 
             <li class="${param.active == 'news' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/view/admin_quan_ly_tin_tuc.jsp">Quản lý tin tức</a>
+                <a href="${pageContext.request.contextPath}/quanlytintuc">Quản lý tin tức</a>
             </li>
 
             <li class="${param.active == 'feedback' ? 'active' : ''}">

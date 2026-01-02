@@ -7,12 +7,12 @@ function toggleNotificationMenu() {
     const userDropdown = document.getElementById("userMenuContent");
     const notificationPanel = document.getElementById("notification-panel");
 
-    // 1. Đóng User Menu nếu nó đang mở
+    // Đóng User Menu nếu nó đang mở
     if (userDropdown) {
         userDropdown.classList.remove("show");
     }
 
-    // 2. Bật/Tắt Notification Panel
+    // Bật/Tắt Notification Panel
     if (notificationPanel) {
         notificationPanel.classList.toggle("show-panel");
     }
@@ -66,4 +66,60 @@ function openProductModal(isEdit = false) {
 function closeProductModal() {
     document.getElementById('product-modal').style.display = 'none';
 }
+function removeSelectedWeight() {
+    const select = document.getElementById("weightSelect");
+    const selectedIndex = select.selectedIndex;
 
+    if (selectedIndex <= 0) {
+        alert("Vui lòng chọn một khối lượng cụ thể để xóa!");
+        return;
+    }
+
+    const val = select.options[selectedIndex].text;
+    if (confirm(`Bạn có chắc muốn xóa khối lượng: ${val}?`)) {
+        select.remove(selectedIndex);
+    }
+}
+
+window.addNewWeight = function() {
+    const newWeightInput = document.getElementById('newWeight');
+    const val = newWeightInput.value.trim();
+
+    if (val === "") {
+        alert("Vui lòng nhập khối lượng!");
+        return;
+    }
+
+    if (isNaN(val) || parseFloat(val) <= 0) {
+        alert("Vui lòng nhập một con số gram hợp lệ!");
+        return;
+    }
+
+    const params = new URLSearchParams();
+    params.append('action', 'addUnit');
+    params.append('name', val);
+
+    fetch('quanlysanpham', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString()
+    })
+        .then(response => {
+            if (response.ok) return response.text();
+            throw new Error('Lỗi mạng hoặc server');
+        })
+        .then(data => {
+            if (data.trim() === "success") {
+                alert("Thêm khối lượng thành công!");
+                window.location.reload();
+            } else {
+                alert("Phản hồi từ server: " + data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Lỗi: " + error.message);
+        });
+};
