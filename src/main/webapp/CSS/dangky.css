@@ -159,11 +159,9 @@ a:hover {
     color: #fff;
     font-size: 14px;
 }
-
-.social-login i {
-    margin-right: 8px;
+.social-login i{
+    margin-left: 15%;
 }
-
 .social-login:hover {
     background: rgba(255, 255, 255, 0.15);
 }

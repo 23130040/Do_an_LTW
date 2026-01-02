@@ -35,7 +35,7 @@
 
             <div class="block confirm_password">
                 <i class="fa-solid fa-lock"></i>
-                <input type="password" class="form-input" name="confirm-password" placeholder="Nhập lại mật khẩu"
+                <input type="password" class="form-input" name="confirmPassword" placeholder="Nhập lại mật khẩu"
                        required>
             </div>
             <div id="signup-error" class="error-message"></div>

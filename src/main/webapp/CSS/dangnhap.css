@@ -50,7 +50,7 @@ a:hover {
     width: 70px;
 }
 
-.heading-title {
+h1 {
     text-align: center;
     color: #fff;
     margin-bottom: 25px;
@@ -65,7 +65,7 @@ a:hover {
 .block i {
     position: absolute;
     top: 50%;
-    left: 14px;
+    left: 0;
     transform: translateY(-50%);
     color: #ccc;
     font-size: 16px;
@@ -73,12 +73,12 @@ a:hover {
 
 /* INPUT */
 .form-input {
-    flex: 1;
+    width: 100%;
     background: transparent;
     border: none;
     border-bottom: 1.4px solid rgba(255, 255, 255, 0.7);
 
-    padding: 8px 6px;
+    padding: 8px 6px 8px 26px;
     font-size: 17px;
     color: #fff;
     outline: none;
@@ -94,6 +94,8 @@ a:hover {
 
 /* ================= FORGOT ================= */
 .forgot-password {
+    display: flex;
+    align-items: center;
     justify-content: flex-end;
     margin-top: -10px;
 }
@@ -164,20 +166,20 @@ a:hover {
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 18px;
+    text-align: center;
 }
 
 .social-login a {
     color: #fff;
     font-size: 14px;
 }
-
-.social-login i {
-    margin-right: 8px;
+.social-login i{
+    margin-left: 15%;
 }
-
 .social-login:hover {
     background: rgba(255, 255, 255, 0.15);
 }
+
 
 /* ================= SIGN UP ================= */
 .block.sign-up {
