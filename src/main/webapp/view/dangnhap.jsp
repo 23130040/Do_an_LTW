@@ -26,11 +26,12 @@
                 <input type="password" class="form-input" name='password' placeholder="Nhập mật khẩu" required>
             </div>
             <div class="block forgot-password">
-                <a href="${pageContext.request.contextPath}#forgotPasswordModal" class="link forgot" id="open-forgot-modal-btn">Quên mật khẩu?</a>
+                <a href="${pageContext.request.contextPath}#forgotPasswordModal" class="link forgot"
+                   id="open-forgot-modal-btn">Quên mật khẩu?</a>
             </div>
             <div id="login-error" class="error-message"></div>
             <div class="block submit">
-                <button type="submit" href="#" class="home link form-submit" id="login-submit-btn">ĐĂNG NHẬP</button>
+                <button type="submit" class="home link form-submit" id="login-submit-btn">ĐĂNG NHẬP</button>
             </div>
         </form>
         <div class="separator-container">
@@ -46,7 +47,7 @@
         </div>
         <div class="block sign-up">
             <span class="txt">Bạn chưa có tài khoản?</span>
-            <a href="#" class="link sign-up">Đăng ký ngay</a>
+            <a href="dang-ky" class="link sign-up">Đăng ký ngay</a>
         </div>
     </div>
 </div>

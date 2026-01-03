@@ -34,7 +34,7 @@ public class FeedbackServlet extends HttpServlet {
         if ("delete".equals(action)) {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
-                dao.delete(null, id);
+                dao.delete(id);
                 response.sendRedirect("quanlydanhgia");
                 return;
             } catch (Exception e) {

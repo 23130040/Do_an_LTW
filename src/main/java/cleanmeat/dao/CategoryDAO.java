@@ -1,7 +1,6 @@
 package cleanmeat.dao;
 
 import cleanmeat.model.Category;
-import cleanmeat.model.System_config;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDAO extends BaseDAO<Category> {
+    @Override
+    protected void loadAll() {
+
+    }
+
     @Override
     protected Category mapResultSetToEntity(ResultSet rs) throws SQLException {
         return new Category(
@@ -28,12 +32,7 @@ public class CategoryDAO extends BaseDAO<Category> {
         Connection conn = null;
         try {
             conn = getConnection();
-
-
-            try (
-                    PreparedStatement ps = conn.prepareStatement(sql)) {
-
-
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, category.getName());
                 ps.setString(2, category.getDescription());
 
@@ -51,18 +50,17 @@ public class CategoryDAO extends BaseDAO<Category> {
     }
 
     @Override
-    protected boolean update(Category category, int id) {
+    public boolean update(Category category, int id) {
         return false;
     }
 
     @Override
-    public boolean delete(Category category, int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM category WHERE id = ?";
         Connection conn = null;
         try {
             conn = getConnection();
-            try (
-                    PreparedStatement ps = conn.prepareStatement(sql)) {
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, id);
                 return ps.executeUpdate() > 0;
             }
@@ -77,7 +75,7 @@ public class CategoryDAO extends BaseDAO<Category> {
     }
 
     @Override
-    protected Category findById(int id) {
+    public Category findById(int id) {
         return null;
     }
 

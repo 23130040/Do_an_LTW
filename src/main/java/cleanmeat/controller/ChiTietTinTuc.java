@@ -45,7 +45,7 @@ public class ChiTietTinTuc extends HttpServlet {
 
         request.setAttribute("pageTitle", news.getTitle());
         request.setAttribute("mainContent", "/view/chi_tiet_tin_tuc.jsp");
-        request.setAttribute("pageCss", "/css/chi_tiet_tin_tuc.css");
+        request.setAttribute("pageCss", "/CSS/chi_tiet_tin_tuc.css");
 
         request.getRequestDispatcher("/view/base/base.jsp")
                 .forward(request, response);

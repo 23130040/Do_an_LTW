@@ -11,6 +11,11 @@ import java.util.List;
 public class OriginDAO extends BaseDAO<Origin> {
 
     @Override
+    protected void loadAll() {
+
+    }
+
+    @Override
     protected Origin mapResultSetToEntity(ResultSet rs) throws SQLException {
         return new Origin(
                 rs.getInt("id"),
@@ -43,7 +48,7 @@ public class OriginDAO extends BaseDAO<Origin> {
     }
 
     @Override
-    public boolean delete(Origin origin, int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM origin WHERE id = ?";
         Connection conn = null;
         try {
@@ -86,12 +91,12 @@ public class OriginDAO extends BaseDAO<Origin> {
     }
 
     @Override
-    protected boolean update(Origin origin, int id) {
+    public boolean update(Origin origin, int id) {
         return false;
     }
 
     @Override
-    protected Origin findById(int id) {
+    public Origin findById(int id) {
         String sql = "SELECT * FROM origin WHERE id = ?";
         Connection conn = null;
         try {

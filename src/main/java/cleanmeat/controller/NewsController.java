@@ -32,8 +32,8 @@ public class NewsController extends HttpServlet {
 
         request.setAttribute("pageTitle", "Tin Tức");
         request.setAttribute("mainContent", "/view/tin_tuc.jsp");
-        request.setAttribute("pageCss", "/css/tin_tuc.css");
-        request.setAttribute("pageJS", "/js/tin_tuc.js");
+        request.setAttribute("pageCss", "/CSS/tin_tuc.css");
+        request.setAttribute("pageJS", "/JS/tin_tuc.js");
 
         request.getRequestDispatcher("/view/base/base.jsp")
                 .forward(request, response);

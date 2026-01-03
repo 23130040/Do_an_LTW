@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsDAO extends BaseDAO<News> {
+
+    @Override
+    protected void loadAll() {
+
+    }
+
     @Override
     protected News mapResultSetToEntity(ResultSet rs) throws SQLException {
         News news = new News();

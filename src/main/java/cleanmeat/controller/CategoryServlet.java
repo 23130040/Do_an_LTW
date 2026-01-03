@@ -3,13 +3,11 @@ package cleanmeat.controller;
 import cleanmeat.dao.CategoryDAO;
 import cleanmeat.dao.OriginDAO;
 import cleanmeat.model.Category;
-import cleanmeat.model.Origin;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "CategoryServlet", value = "/quanlydanhmuc")
 public class CategoryServlet extends HttpServlet {
@@ -22,7 +20,7 @@ public class CategoryServlet extends HttpServlet {
         String action = request.getParameter("action");
         if ("delete".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
-            categoryDAO.delete(null, id);
+            categoryDAO.delete(id);
             response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=deleted");
             return;
         }

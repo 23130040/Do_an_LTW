@@ -32,6 +32,11 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     @Override
+    protected void loadAll() {
+
+    }
+
+    @Override
     protected User mapResultSetToEntity(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");
@@ -132,7 +137,7 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     @Override
-    public boolean delete(User user, int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM user WHERE id=?";
         Connection conn = null;
         try {
