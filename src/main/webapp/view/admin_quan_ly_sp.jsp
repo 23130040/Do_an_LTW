@@ -68,34 +68,48 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><img src="https://amp.thucphamsachhd.com/uploads/files/2023/08/15/SP000157-PD00919-WEB_Than-Noi-Bo-My-Cat-Steak-1-.png" alt="Beef" class="product-thumb"></td>
-                        <td>Thịt Bò Thăn Nội Cao Cấp (Mỹ)</td>
-                        <td>Thịt Bò</td>
-                        <td>Mỹ</td>
-                        <td>250g</td>
-                        <td>250.000</td>
-                        <td class="inventory-col low-stock">8 kg</td>
-                        <td>
-                            <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="btn-icon delete-btn"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://binhdienonline.com/thumbs_size/product/2021_01/ba-chi/[550x550-cr]3-chi-53.jpg" alt="Pork" class="product-thumb"></td>
-                        <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
-                        <td>Thịt Heo</td>
-                        <td>Việt Nam</td>
-                        <td>500g</td>
-                        <td>120.000</td>
-                        <td class="inventory-col">150 kg</td>
-                        <td>
-                            <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="btn-icon delete-btn"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    </tr>
+                    <c:forEach var="item" items="${items}">
+                        <tr>
+                            <td>
+                                <img src="${pageContext.request.contextPath}/images/${item.imageUrl}"
+                                     alt="${item.name}" class="product-thumb">
+                            </td>
+                            <td>${item.name}</td>
+                            <td>${item.categoryName}</td>
+                            <td>${item.originName}</td>
+                            <td>${item.unitName}</td>
+                            <td>${item.price}</td>
+                            <td class="inventory-col">
+                                    ${item.current_stock}
+                            </td>
+                            <td>
+                                <a href="/admin/product/edit?id=${item.id}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="/admin/product/delete?id=${item.id}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
+            </div>
+            <div class="pagination">
+                <c:if test="${currentPage > 1}">
+                    <a href="?page=${currentPage - 1}">&laquo; Trước</a>
+                </c:if>
+
+                <c:forEach begin="1" end="${totalPages}" var="i">
+                    <a href="?page=${i}"
+                       class="${i == currentPage ? 'active' : ''}">
+                            ${i}
+                    </a>
+                </c:forEach>
+
+                <c:if test="${currentPage < totalPages}">
+                    <a href="?page=${currentPage + 1}">Sau &raquo;</a>
+                </c:if>
             </div>
         </main>
     </div>

@@ -17,6 +17,10 @@ public class Item {
     private LocalDate created_at;
     private LocalDate updated_at;
     private String imageUrl;
+    private String categoryName;
+    private String originName;
+    private String unitName;
+
 
     public Item(int id, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock, LocalDate created_at, LocalDate updated_at) {
         this.id = id;
@@ -48,6 +52,15 @@ public class Item {
 
     public Item() {
     }
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+
+    public String getOriginName() { return originName; }
+    public void setOriginName(String originName) { this.originName = originName; }
+
+    public String getUnitName() { return unitName; }
+    public void setUnitName(String unitName) { this.unitName = unitName; }
+
 
     public LocalDate getUpdated_at() {
         return updated_at;

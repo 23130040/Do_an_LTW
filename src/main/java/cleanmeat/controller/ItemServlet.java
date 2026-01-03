@@ -1,8 +1,10 @@
 package cleanmeat.controller;
 
 import cleanmeat.dao.CategoryDAO;
+import cleanmeat.dao.ItemDAO;
 import cleanmeat.dao.OriginDAO;
 import cleanmeat.dao.UnitDAO;
+import cleanmeat.model.Item;
 import cleanmeat.model.Unit;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -19,9 +21,29 @@ public class ItemServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        ItemDAO itemDAO = new ItemDAO();
         UnitDAO unitDAO = new UnitDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
         OriginDAO originDAO = new OriginDAO();
+
+        int page = 1;
+        int pageSize = 5;
+
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            try {
+                page = Integer.parseInt(pageParam);
+                if (page < 1) page = 1;
+            } catch (NumberFormatException ignored) {}
+        }
+
+        List<Item> items = itemDAO.findByPage(page, pageSize);
+        int totalItems = itemDAO.countItems();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+        request.setAttribute("items", items);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
 
         request.setAttribute("unitList", unitDAO.findAll());
         request.setAttribute("categories", categoryDAO.findAll());
