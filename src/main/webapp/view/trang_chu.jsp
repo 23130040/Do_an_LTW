@@ -14,34 +14,35 @@
         <h2 class="section-title"> SẢN PHẨM NỔI BẬT </h2>
         <div class="product-list">
             <div class="product-item featured-item">
-                <img src="https://minhchaufood.vn/wp-content/uploads/sites/7/2021/06/shortplateslice_1024x1024_2_625x556-1-600x534.jpg"
-                     alt="Thịt bò tươi nổi bật">
-                <h3>Ba chỉ bò</h3>
-                <p class="price">250.000 ₫ / KG</p>
+                <img src="${pageContext.request.contextPath}/images/${newProduct.imageUrl}"
+                     alt="${newProduct.name}">
+                <h3>${newProduct.name}</h3>
+                <p class="price">${newProduct.price} đ</p>
                 <div class="badge-new">Sản phẩm mới</div>
                 <button>THÊM VÀO GIỎ</button>
             </div>
 
             <div class="product-item featured-item">
-                <img src="../images/thitTC3.png" alt="Thịt bò tươi nổi bật">
-                <h3>Thịt bò tươi</h3>
-                <p class="price">350.000 ₫ / KG</p>
+                <img src="${pageContext.request.contextPath}/images/${featuredProduct.imageUrl}"
+                     alt="${featuredProduct.name}">
+                <h3>${featuredProduct.name}</h3>
+                <p class="price">${featuredProduct.price} đ</p>
                 <div class="badge-new">Nổi Bật</div>
                 <button>THÊM VÀO GIỎ</button>
             </div>
 
             <div class="product-item featured-item">
                 <img src="../images/thitTC1.png" alt="Thịt thăn heo nổi bật">
-                <h3>Thịt thăn heo</h3>
-                <p class="price">89.000 ₫ / KG</p>
+                <h3>${bestSellerProduct.name}</h3>
+                <p class="price">${bestSellerProduct.price} đ</p>
                 <div class="badge-new">Bán Chạy</div>
                 <button>THÊM VÀO GIỎ</button>
             </div>
 
             <div class="product-item featured-item">
                 <img src="../images/thitTC2.png" alt="Thịt đùi gà nổi bật">
-                <h3>Thịt đùi gà</h3>
-                <p class="price">69.000 ₫ / KG</p>
+                <h3>${bestDealProduct.name}</h3>
+                <p class="price">${bestDealProduct.price} đ</p>
                 <div class="badge-new">Giá Tốt</div>
                 <button>THÊM VÀO GIỎ</button>
             </div>

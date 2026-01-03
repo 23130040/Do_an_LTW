@@ -7,17 +7,22 @@ public class Item {
     private String name;
     private String short_description;
     private String long_description;
-    private Category category_id;
-    private Origin origin_id;
-    private Unit unit_id;
+    private int category_id;
+    private int origin_id;
+    private int unit_id;
     private double price;
     private double discount;
-    private double current_stock; // Dùng BigDecimal cho số lượng (kg/lít)
-    private double min_stock;     // Dùng BigDecimal
+    private int current_stock;
+    private int min_stock;
     private LocalDate created_at;
     private LocalDate updated_at;
+    private String imageUrl;
+    private String categoryName;
+    private String originName;
+    private String unitName;
 
-    public Item(int id, String name, String short_description, String long_description, Category category_id, Origin origin_id, Unit unit_id, double price, double discount, double current_stock, double min_stock, LocalDate created_at, LocalDate updated_at) {
+
+    public Item(int id, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock, LocalDate created_at, LocalDate updated_at) {
         this.id = id;
         this.name = name;
         this.short_description = short_description;
@@ -32,7 +37,7 @@ public class Item {
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
-    public Item(String name, String short_description, String long_description, Category category_id, Origin origin_id, Unit unit_id, double price, double discount, double current_stock, double min_stock) {
+    public Item(String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock) {
         this.name = name;
         this.short_description = short_description;
         this.long_description = long_description;
@@ -43,5 +48,129 @@ public class Item {
         this.discount = discount;
         this.current_stock = current_stock;
         this.min_stock = min_stock;
+    }
+
+    public Item() {
+    }
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+
+    public String getOriginName() { return originName; }
+    public void setOriginName(String originName) { this.originName = originName; }
+
+    public String getUnitName() { return unitName; }
+    public void setUnitName(String unitName) { this.unitName = unitName; }
+
+
+    public LocalDate getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(LocalDate updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public LocalDate getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDate created_at) {
+        this.created_at = created_at;
+    }
+
+    public int getMin_stock() {
+        return min_stock;
+    }
+
+    public void setMin_stock(int min_stock) {
+        this.min_stock = min_stock;
+    }
+
+    public int getCurrent_stock() {
+        return current_stock;
+    }
+
+    public void setCurrent_stock(int current_stock) {
+        this.current_stock = current_stock;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getUnit_id() {
+        return unit_id;
+    }
+
+    public void setUnit_id(int unit_id) {
+        this.unit_id = unit_id;
+    }
+
+    public int getOrigin_id() {
+        return origin_id;
+    }
+
+    public void setOrigin_id(int origin_id) {
+        this.origin_id = origin_id;
+    }
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+
+    public String getLong_description() {
+        return long_description;
+    }
+
+    public void setLong_description(String long_description) {
+        this.long_description = long_description;
+    }
+
+    public String getShort_description() {
+        return short_description;
+    }
+
+    public void setShort_description(String short_description) {
+        this.short_description = short_description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
