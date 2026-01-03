@@ -61,6 +61,7 @@
                         <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
                         <th>Nguồn gốc</th>
+                        <th>Khối lượng</th>
                         <th>Giá (VND)</th>
                         <th class="inventory-col">Tồn kho</th>
                         <th>Thao tác</th>
@@ -72,6 +73,7 @@
                         <td>Thịt Bò Thăn Nội Cao Cấp (Mỹ)</td>
                         <td>Thịt Bò</td>
                         <td>Mỹ</td>
+                        <td>250g</td>
                         <td>250.000</td>
                         <td class="inventory-col low-stock">8 kg</td>
                         <td>
@@ -84,6 +86,7 @@
                         <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
                         <td>Thịt Heo</td>
                         <td>Việt Nam</td>
+                        <td>500g</td>
                         <td>120.000</td>
                         <td class="inventory-col">150 kg</td>
                         <td>

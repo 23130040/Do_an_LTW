@@ -1,5 +1,6 @@
 package cleanmeat.controller;
 
+import cleanmeat.dao.ItemDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,6 +20,13 @@ public class TrangChu extends HttpServlet {
         request.setAttribute("pageJS", "/JS/trang_chu.js");
         request.setAttribute("pageClass", "home");
         request.setAttribute("pageId", "home-menu");
+
+        ItemDAO itemDAO = new ItemDAO();
+        request.setAttribute("newProduct", itemDAO.getNewestItem());
+        request.setAttribute("featuredProduct", itemDAO.getFeaturedItem());
+        request.setAttribute("bestSellerProduct", itemDAO.getBestSellerItem());
+        request.setAttribute("bestDealProduct", itemDAO.getBestDealItem());
+
         request.getRequestDispatcher("/view/base/base.jsp").forward(request, response);
     }
 
