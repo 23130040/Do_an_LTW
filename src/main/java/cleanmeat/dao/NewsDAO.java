@@ -43,7 +43,26 @@ public class NewsDAO extends BaseDAO<News> {
     }
 
     @Override
-    protected News findById(int id) {
+    public News findById(int id) {
+        String sql = "SELECT * FROM news WHERE id = ?";
+        Connection conn = null;
+
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return mapResultSetToEntity(rs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
         return null;
     }
 
@@ -72,4 +91,27 @@ public class NewsDAO extends BaseDAO<News> {
         return list;
     }
 
+}
+public List<News> findLatest(int limit) {
+    List<News> list = new ArrayList<>();
+    String sql = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?";
+    Connection conn = null;
+
+    try {
+        conn = getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (conn != null) {
+            ConnectionPool.getInstance().releaseConnection(conn);
+        }
+    }
+    return list;
 }
