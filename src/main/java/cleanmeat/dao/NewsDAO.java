@@ -1,6 +1,5 @@
 package cleanmeat.dao;
 
-import cleanmeat.model.Feedback;
 import cleanmeat.model.News;
 
 import java.sql.Connection;
@@ -11,6 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsDAO extends BaseDAO<News> {
+
+    @Override
+    protected void loadAll() {
+
+    }
+
     @Override
     protected News mapResultSetToEntity(ResultSet rs) throws SQLException {
         News news = new News();
@@ -28,22 +33,22 @@ public class NewsDAO extends BaseDAO<News> {
     }
 
     @Override
-    protected boolean insert(News news) throws SQLException, ClassNotFoundException {
+    public boolean insert(News news) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    protected boolean update(News news, int id) {
+    public boolean update(News news, int id) {
         return false;
     }
 
     @Override
-    protected boolean delete(News news, int id) {
+    public boolean delete(int id) {
         return false;
     }
 
     @Override
-    protected News findById(int id) {
+    public News findById(int id) {
         return null;
     }
 

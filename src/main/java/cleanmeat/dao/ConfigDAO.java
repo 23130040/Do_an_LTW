@@ -1,13 +1,17 @@
 package cleanmeat.dao;
 
 import cleanmeat.model.System_config;
-import cleanmeat.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigDAO extends BaseDAO<System_config> {
+
+    @Override
+    protected void loadAll() {
+
+    }
 
     @Override
     protected System_config mapResultSetToEntity(ResultSet rs) throws SQLException {
@@ -131,17 +135,17 @@ public class ConfigDAO extends BaseDAO<System_config> {
     }
 
     @Override
-    protected boolean delete(System_config sc, int id) {
+    public boolean delete(int id) {
         return false;
     }
 
     @Override
-    protected System_config findById(int id) {
+    public System_config findById(int id) {
         return getSystemConfig();
     }
 
     @Override
-    protected List<System_config> findAll() {
+    public List<System_config> findAll() {
         return new ArrayList<>();
     }
 }

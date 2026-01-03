@@ -47,10 +47,9 @@ public class User {
 
     }
 
-    public User(int id, String name, String role, String email) {
+    public User(int id, String name, String email) {
         this.id = id;
         this.name = name;
-        this.role = role;
         this.email = email;
     }
 

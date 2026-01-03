@@ -119,7 +119,7 @@ public class UserServlet extends HttpServlet {
         try {
             int idToDelete = Integer.parseInt(request.getParameter("id"));
 
-            if (userDAO.delete(null, idToDelete)) {
+            if (userDAO.delete(idToDelete)) {
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.getWriter().write("Xóa người dùng thành công.");
             } else {

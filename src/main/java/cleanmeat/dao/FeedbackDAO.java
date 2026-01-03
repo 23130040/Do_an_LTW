@@ -36,6 +36,11 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     }
 
     @Override
+    protected void loadAll() {
+
+    }
+
+    @Override
     protected Feedback mapResultSetToEntity(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         int response_id = rs.getInt("response_id");
@@ -97,7 +102,7 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     }
 
     @Override
-    public boolean delete(Feedback feedback, int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM feedback WHERE id = ? OR response_id = ?";
         Connection conn = null;
         try {
