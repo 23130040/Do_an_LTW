@@ -31,5 +31,6 @@ public class DangKy extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        response.sendRedirect(request.getContextPath() + "/dang-nhap");
     }
 }
