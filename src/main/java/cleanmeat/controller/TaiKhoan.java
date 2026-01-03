@@ -1,10 +1,12 @@
 package cleanmeat.controller;
 
+import cleanmeat.model.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "tai-khoan", value = "/tai-khoan")
 public class TaiKhoan extends HttpServlet {
@@ -18,6 +20,19 @@ public class TaiKhoan extends HttpServlet {
         if (request.getAttribute("pageContent") == null) {
             request.setAttribute("pageContent", "/view/hoso_taikhoan.jsp");
             request.setAttribute("idContent", "profile-content");
+        }
+
+        HttpSession session = request.getSession(false);
+        User user = (User) session.getAttribute("user");
+
+        if (user != null && user.getBirthday() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            request.setAttribute("birthday", user.getBirthday().format(formatter));
+        }
+
+        if  (user != null) {
+            request.setAttribute("user", user);
         }
 
         request.setAttribute("mainContent", "/view/taikhoan.jsp");

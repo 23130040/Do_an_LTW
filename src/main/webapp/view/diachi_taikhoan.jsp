@@ -30,3 +30,41 @@
         </div>
     </div>
 </div>
+
+<div id="address-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="close-change-address-modal">&times;</span>
+        <div class="address-form">
+            <h2 id="header-address"></h2>
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label for="province">Tỉnh/Thành phố (*)</label>
+                    <select id="province" required>
+                        <option value="">Chọn Tỉnh/Thành phố</option>
+                        <option value="hcm">TP Hồ Chí Minh</option>
+                        <option value="hn">Hà Nội</option>
+                    </select>
+                </div>
+                <div class="form-group half-width">
+                    <label for="district">Quận/Huyện (*)</label>
+                    <select id="district" required>
+                        <option value="">Chọn Quận/Huyện</option>
+                    </select>
+                </div>
+                <div class="form-group half-width">
+                    <label for="ward">Phường/Xã (*)</label>
+                    <select id="ward" required>
+                        <option value="">Chọn Phường/Xã</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="address-detail">Địa chỉ chi tiết (*)</label>
+                    <textarea id="address-detail" rows="3"
+                              placeholder="Ví dụ: 123/45 Đường Quang Trung, gần chợ ABC"
+                              required></textarea>
+                </div>
+            </div>
+            <button type="submit" id="submit-btn">Lưu Địa Chỉ</button>
+        </div>
+    </div>
+</div>
