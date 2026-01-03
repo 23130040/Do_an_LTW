@@ -137,8 +137,18 @@ public class ItemDAO extends BaseDAO<Item> {
     }
 
     public Item getNewestItem() {
-        String sql = "SELECT i.*, img.url AS image_url FROM item i LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1" +
-                " ORDER BY i.created_at ASC LIMIT 1;";
+        String sql = "SELECT i.*, img.url AS image_url," +
+                "       c.name AS category_name," +
+                "       o.name AS origin_name," +
+                "       u.name AS unit_name" +
+                " FROM item i" +
+                " LEFT JOIN item_image img" +
+                "       ON i.id = img.item_id AND img.is_primary = 1" +
+                " LEFT JOIN category c ON i.category_id = c.id" +
+                " LEFT JOIN origin o ON i.origin_id = o.id" +
+                " LEFT JOIN unit u ON i.unit_id = u.id" +
+                " ORDER BY i.created_at DESC" +
+                " LIMIT 1";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -158,12 +168,22 @@ public class ItemDAO extends BaseDAO<Item> {
         return null;
     }
     public Item getFeaturedItem() {
-        String sql = "SELECT i.*, img.url AS image_url FROM item i " +
-                "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
-                "JOIN feedback f ON i.id = f.item_id " +
-                "GROUP BY i.id, i.name, i.short_description, i.price, i.unit_id, i.current_stock, " +
-                "i.min_stock, i.created_at, i.updated_at, img.url " +
-                "ORDER BY AVG(f.rating) DESC LIMIT 1";
+        String sql = "SELECT i.*, img.url AS image_url," +
+                "       c.name AS category_name," +
+                "       o.name AS origin_name," +
+                "       u.name AS unit_name" +
+                " FROM item i" +
+                " JOIN (" +
+                "    SELECT item_id" +
+                "    FROM feedback" +
+                "    GROUP BY item_id" +
+                "    ORDER BY AVG(rating) DESC" +
+                "    LIMIT 1" +
+                " ) f ON i.id = f.item_id" +
+                " LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1" +
+                " LEFT JOIN category c ON i.category_id = c.id" +
+                " LEFT JOIN origin o ON i.origin_id = o.id" +
+                " LEFT JOIN unit u ON i.unit_id = u.id;";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -182,11 +202,20 @@ public class ItemDAO extends BaseDAO<Item> {
     }
 
     public Item getBestSellerItem() {
-        String sql = "SELECT i.* FROM item i " +
-                "LEFT JOIN order_item oi ON i.id = oi.item_id " +
-                "GROUP BY i.id, i.name, i.short_description, i.long_description, i.category_id, " +
-                "i.origin_id, i.price, i.unit_id, i.current_stock, i.min_stock, i.created_at, i.updated_at " +
-                "ORDER BY SUM(oi.quantity) DESC LIMIT 1";
+        String sql = "SELECT i.*, img.url AS image_url," +
+                "       c.name AS category_name," +
+                "       o.name AS origin_name," +
+                "       u.name AS unit_name" +
+                " FROM item i" +
+                " LEFT JOIN order_item oi ON i.id = oi.item_id" +
+                " LEFT JOIN item_image img" +
+                "       ON i.id = img.item_id AND img.is_primary = 1" +
+                " LEFT JOIN category c ON i.category_id = c.id" +
+                " LEFT JOIN origin o ON i.origin_id = o.id" +
+                " LEFT JOIN unit u ON i.unit_id = u.id" +
+                " GROUP BY i.id" +
+                " ORDER BY SUM(oi.quantity) DESC" +
+                " LIMIT 1";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -205,12 +234,21 @@ public class ItemDAO extends BaseDAO<Item> {
     }
 
     public Item getBestDealItem() {
-        String sql = "SELECT i.* FROM item i " +
-                "LEFT JOIN order_item oi ON i.id = oi.item_id " +
-                "JOIN voucher_usage vu ON oi.order_id = vu.order_id " +
-                "GROUP BY i.id, i.name, i.short_description, i.long_description, i.category_id, " +
-                "i.origin_id, i.price, i.unit_id, i.current_stock, i.min_stock, i.created_at, i.updated_at " +
-                "ORDER BY MAX(vu.discount_amount) DESC LIMIT 1";
+        String sql = "SELECT i.*, img.url AS image_url," +
+                "       c.name AS category_name," +
+                "       o.name AS origin_name," +
+                "       u.name AS unit_name" +
+                " FROM item i" +
+                " LEFT JOIN order_item oi ON i.id = oi.item_id" +
+                " JOIN voucher_usage vu ON oi.order_id = vu.order_id" +
+                " LEFT JOIN item_image img" +
+                "       ON i.id = img.item_id AND img.is_primary = 1" +
+                " LEFT JOIN category c ON i.category_id = c.id" +
+                " LEFT JOIN origin o ON i.origin_id = o.id" +
+                " LEFT JOIN unit u ON i.unit_id = u.id" +
+                " GROUP BY i.id" +
+                " ORDER BY MAX(vu.discount_amount) DESC" +
+                " LIMIT 1";
         Connection conn = null;
         try {
             conn = getConnection();

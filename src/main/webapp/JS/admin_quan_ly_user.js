@@ -41,12 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const userIdHidden = document.getElementById("userIdHidden");
 
         userEmail.readOnly = false;
+        const formActionInput = document.getElementById("formAction");
 
         if (isEdit && userData) {
             modalTitle.textContent = "Sửa";
             fillUserForm(userData);
 
-            userForm.action = USER_API_URL + "?action=update";
+            formActionInput.value = "update";
             userPassword.removeAttribute("required");
             userConfirmPassword.removeAttribute("required");
 
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             modalTitle.textContent = "Thêm";
 
-            userForm.action = USER_API_URL + "?action=add";
+            formActionInput.value = "add";
             userPassword.required = true;
             userConfirmPassword.required = true;
             userIdHidden.value = "";
@@ -81,35 +82,32 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.getElementById("userEmail").value.trim();
 
         if (!email) {
-            alert("Vui lòng nhập email");
+            showToast("Vui lòng nhập email", "warning");
             return;
         }
 
         fetch("send-otp", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: "email=" + encodeURIComponent(email)
         })
             .then(res => res.text())
             .then(data => {
                 switch (data) {
                     case "OK":
-                        alert("OTP đã gửi tới email");
-                        break;
-                    case "EMAIL_NOT_FOUND":
-                        alert("Email chưa tồn tại trong hệ thống");
+                        showToast("OTP đã gửi tới email", "success");
                         break;
                     case "INVALID_EMAIL":
-                        alert("Email không hợp lệ");
+                        showToast("Email không hợp lệ", "warning");
                         break;
                     case "EMAIL_EXISTS":
-                        alert("Email đã tồn tại");
+                        showToast("Email đã tồn tại", "danger");
                         break;
                     default:
-                        alert("Không thể gửi OTP");
+                        showToast("Không thể gửi OTP", "danger");
                 }
             })
-            .catch(() => alert("Lỗi kết nối server"));
+            .catch(() => showToast("Lỗi kết nối server", "danger"));
     });
 
     document.getElementById("btnVerifyOTP").addEventListener("click", () => {
@@ -121,17 +119,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         fetch("verify-otp", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: "otp=" + encodeURIComponent(otp)
         })
             .then(res => res.text())
             .then(data => {
                 if (data === "OK") {
-                    alert("Xác thực email thành công");
+                    showToast("Xác thực email thành công", "success");
                     emailVerified = true;
                     document.getElementById("userEmail").readOnly = true;
                 } else {
-                    alert("OTP sai hoặc đã hết hạn");
+                    showToast("OTP sai hoặc đã hết hạn", "danger");
                 }
             });
     });
@@ -141,33 +139,42 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         submitUserForm();
     });
+
     function submitUserForm() {
-        fetch(userForm.action, {
+        const actionInput = document.getElementById("formAction");
+
+        if (!actionInput.value) {
+            actionInput.value = document.getElementById("userIdHidden").value
+                ? "update"
+                : "add";
+        }
+        const formData = new FormData(userForm);
+        const data = new URLSearchParams(formData);
+        fetch(USER_API_URL, {
             method: "POST",
-            body: new FormData(userForm)
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: data
         })
             .then(res => res.text())
             .then(data => {
                 switch (data.trim()) {
-
                     case "EMAIL_NOT_VERIFIED":
-                        alert("⚠Email chưa được xác thực. Vui lòng kiểm tra email và nhập OTP.");
+                        showToast("Email chưa được xác thực", "warning");
                         break;
-
-                    case "EMAIL_EXISTS":
-                        alert("⚠Email đã tồn tại trong hệ thống.");
+                    case "INVALID_ACTION":
+                        showToast("Hành động không hợp lệ", "danger");
                         break;
-
                     case "SUCCESS":
-                        alert("Thêm người dùng thành công");
-                        window.location.reload();
+                        showToast("Thành công", "success");
+                        setTimeout(() => location.reload(), 1000);
                         break;
-
                     default:
-                        alert("Có lỗi xảy ra: " + data);
+                        showToast("Lỗi: " + data, "danger");
                 }
             })
-            .catch(() => alert("Lỗi kết nối server"));
+            .catch(() => showToast("Lỗi kết nối server", "danger"));
     }
 
     window.editUser = function (id) {
@@ -202,5 +209,71 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('userPassword').value = "";
         document.getElementById('userConfirmPassword').value = "";
     }
+
+    function showToast(message, type = "info") {
+        const toastEl = document.getElementById("appToast");
+        const toastBody = document.getElementById("toastMessage");
+
+        toastEl.className = "toast align-items-center border-0";
+
+        const typeClassMap = {
+            success: "text-bg-success",
+            danger: "text-bg-danger",
+            warning: "text-bg-warning",
+            info: "text-bg-primary"
+        };
+
+        toastEl.classList.add(typeClassMap[type] || "text-bg-primary");
+        toastBody.textContent = message;
+
+        const toast = new bootstrap.Toast(toastEl, {delay: 3000});
+        toast.show();
+    }
+    let userIdToDelete = null;
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+
+    window.deleteUser = function (id) {
+        userIdToDelete = id;
+        deleteModal.show();
+    };
+
+    document.getElementById('deleteConfirmModal').addEventListener('hidden.bs.modal', function () {
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(b => b.remove());
+
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+    });
+
+    document.getElementById('btnConfirmDelete').addEventListener('click', () => {
+        if (!userIdToDelete) return;
+
+        const btn = document.getElementById('btnConfirmDelete');
+        btn.disabled = true;
+
+        fetch(`${USER_API_URL}?action=delete&id=${userIdToDelete}`, {
+            method: "DELETE"
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data.includes("thành công")) {
+                    deleteModal.hide();
+                    showToast("Xóa người dùng thành công", "success");
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 500);
+                } else {
+                    showToast("Lỗi: " + data, "danger");
+                    btn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi xóa:', error);
+                deleteModal.hide();
+                btn.disabled = false;
+            });
+    });
 
 });

@@ -11,8 +11,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý người dùng</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/admin_quan_ly_user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/admin_quan_ly_user.css">
+
 
 </head>
 <body>
@@ -152,16 +154,17 @@
     </div>
 </div>
 
-<div id="user-modal" class="modal">
-    <div class="modal-content">
+<div id="user-modal" class="custom-modal-overlay">
+    <div class="custom-modal-content">
         <span class="close-btn" onclick="closeUserModal()">&times;</span>
         <h3><span id="modal-title-user">Thêm</span> Người Dùng</h3>
         <form class="user-form"
               action="${pageContext.request.contextPath}/quanlyuser"
               method="POST">
 
+            <input type="hidden" name="action" id="formAction">
+
             <input type="hidden" id="userIdHidden" name="id" value="">
-            <input type="hidden" name="action" value="add">
 
             <div class="form-section left-col">
                 <label for="userName">Họ và tên:</label>
@@ -209,7 +212,7 @@
     </div>
 </div>
 <div id="historyModal" class="modal">
-    <div class="modal-content large-modal">
+    <div class="custom-modal-content large-modal">
         <div class="modal-header-history">
             <h3 class="modal-title">Lịch Sử Mua Hàng - ID: <span id="historyUserId">#001</span></h3>
             <span class="close-btn history-close-btn">&times;</span>
@@ -339,6 +342,36 @@
         </div>
     </div>
 </div>
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div id="appToast" class="toast align-items-center text-bg-primary border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMessage">
+                <!-- message -->
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa người dùng này không? Hành động này không thể hoàn tác.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmDelete">Xóa ngay</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="${pageContext.request.contextPath}/JS/admin_quan_ly_user.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
