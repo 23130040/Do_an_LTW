@@ -6,11 +6,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAO extends BaseDAO<Item> {
+
+    @Override
+    protected void loadAll() {
+
+    }
+
     @Override
     protected Item mapResultSetToEntity(ResultSet rs) throws SQLException {
         Item item = new Item();
@@ -36,22 +41,22 @@ public class ItemDAO extends BaseDAO<Item> {
     }
 
     @Override
-    protected boolean insert(Item item) throws SQLException, ClassNotFoundException {
+    public boolean insert(Item item) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    protected boolean update(Item item, int id) {
+    public boolean update(Item item, int id) {
         return false;
     }
 
     @Override
-    protected boolean delete(Item item, int id) {
+    public boolean delete(int id) {
         return false;
     }
 
     @Override
-    protected Item findById(int id) {
+    public Item findById(int id) {
         return null;
     }
 

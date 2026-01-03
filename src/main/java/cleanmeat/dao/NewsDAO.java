@@ -1,6 +1,5 @@
 package cleanmeat.dao;
 
-import cleanmeat.model.Feedback;
 import cleanmeat.model.News;
 
 import java.sql.Connection;
@@ -9,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.sql.DriverManager.getConnection;
 
 public class NewsDAO extends BaseDAO<News> {
 
@@ -34,17 +35,17 @@ public class NewsDAO extends BaseDAO<News> {
     }
 
     @Override
-    protected boolean insert(News news) throws SQLException, ClassNotFoundException {
+    public boolean insert(News news) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    protected boolean update(News news, int id) {
+    public boolean update(News news, int id) {
         return false;
     }
 
     @Override
-    protected boolean delete(News news, int id) {
+    public boolean delete(int id) {
         return false;
     }
 
@@ -97,27 +98,27 @@ public class NewsDAO extends BaseDAO<News> {
         return list;
     }
 
-}
-public List<News> findLatest(int limit) {
-    List<News> list = new ArrayList<>();
-    String sql = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?";
-    Connection conn = null;
 
-    try {
-        conn = getConnection();
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, limit);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(mapResultSetToEntity(rs));
+    public List<News> findLatest(int limit) {
+        List<News> list = new ArrayList<>();
+        String sql = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, limit);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
             }
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        if (conn != null) {
-            ConnectionPool.getInstance().releaseConnection(conn);
-        }
+        return list;
     }
-    return list;
 }
