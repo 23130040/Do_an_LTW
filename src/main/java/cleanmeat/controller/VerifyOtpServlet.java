@@ -19,7 +19,8 @@ public class VerifyOtpServlet extends HttpServlet {
             throws IOException {
 
         String inputOtp = request.getParameter("otp");
-        boolean valid = OTPService.verifyOtp(request, inputOtp);
+        String inputEmail = request.getParameter("email");
+        boolean valid = OTPService.verifyOtp(request, inputOtp, inputEmail);
 
         response.setContentType("text/plain");
         response.getWriter().write(valid ? "OK" : "FAIL");

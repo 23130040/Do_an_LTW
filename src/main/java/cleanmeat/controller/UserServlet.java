@@ -147,7 +147,7 @@ public class UserServlet extends HttpServlet {
                     : null;
 
             String verifiedEmail = (session != null)
-                    ? (String) session.getAttribute("OTP_EMAIL")
+                    ? (String) session.getAttribute("VERIFIED_EMAIL")
                     : null;
 
             String email = request.getParameter("userEmail");

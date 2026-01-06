@@ -14,6 +14,11 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "ItemServlet", value = "/quanlysanpham")
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 5 * 1024 * 1024,
+        maxRequestSize = 10 * 1024 * 1024
+)
 public class ItemServlet extends HttpServlet {
 
 
@@ -87,5 +92,72 @@ public class ItemServlet extends HttpServlet {
             }
             return;
         }
+        if ("addItem".equals(action)) {
+            handleAddItem(request, response);
+        }
     }
+    private void handleAddItem(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        try {
+            Item item = new Item();
+
+            item.setName(request.getParameter("name"));
+            item.setShort_description(request.getParameter("shortDescription"));
+            item.setLong_description(request.getParameter("longDescription"));
+
+            item.setCategory_id(Integer.parseInt(request.getParameter("categoryId")));
+            item.setOrigin_id(Integer.parseInt(request.getParameter("originId")));
+            item.setUnit_id(Integer.parseInt(request.getParameter("unitId")));
+
+            double price = Double.parseDouble(request.getParameter("price"));
+
+            String discountRaw = request.getParameter("discount");
+
+            double discount = 0;
+            if (discountRaw != null && !discountRaw.trim().isEmpty()) {
+                discount = Double.parseDouble(discountRaw);
+            }
+
+            if (discount < 0) discount = 0;
+            if (discount > 100) discount = 100;
+
+
+            item.setPrice(price);
+            item.setDiscount(discount);
+
+
+            item.setSku(request.getParameter("sku"));
+            item.setMin_stock(Integer.parseInt(request.getParameter("minStock")));
+            item.setCurrent_stock(0);
+
+            Part imagePart = request.getPart("image");
+            String imageUrl = null;
+
+            if (imagePart != null && imagePart.getSize() > 0) {
+                String fileName = System.currentTimeMillis() + "_" + imagePart.getSubmittedFileName();
+                String uploadPath = getServletContext().getRealPath("/uploads");
+
+                java.io.File uploadDir = new java.io.File(uploadPath);
+                if (!uploadDir.exists()) uploadDir.mkdirs();
+
+                imagePart.write(uploadPath + "/" + fileName);
+                imageUrl = "uploads/" + fileName;
+            }
+
+            ItemDAO itemDAO = new ItemDAO();
+            int itemId = itemDAO.insertAndReturnId(item);
+
+            if (imageUrl != null) {
+                itemDAO.insertImage(itemId, imageUrl);
+            }
+
+            response.sendRedirect("quanlysanpham");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(500, "Lỗi thêm sản phẩm");
+        }
+    }
+
 }

@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
             method: "POST",
             headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: "otp=" + encodeURIComponent(otp)
+                + "&email=" + encodeURIComponent(document.getElementById("userEmail").value)
         })
             .then(res => res.text())
             .then(data => {
@@ -148,6 +149,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? "update"
                 : "add";
         }
+        const password = document.getElementById("userPassword").value;
+        const confirmPassword = document.getElementById("userConfirmPassword").value;
+        const action = document.getElementById("formAction").value;
+
+        if (action === "add" || password || confirmPassword) {
+            if (password !== confirmPassword) {
+                showToast("Mật khẩu chưa trùng khớp", "warning");
+                return;
+            }
+        }
+
         const formData = new FormData(userForm);
         const data = new URLSearchParams(formData);
         fetch(USER_API_URL, {
@@ -275,5 +287,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 btn.disabled = false;
             });
     });
+    function calculateFinalPrice() {
+        const price = parseFloat(document.getElementById("price").value) || 0;
+        const discount = parseFloat(document.getElementById("discount").value) || 0;
+
+        let finalPrice = price * (100 - discount) / 100;
+
+        if (finalPrice < 0) finalPrice = 0;
+
+        document.getElementById("finalPrice").value = Math.round(finalPrice);
+    }
+
+    document.getElementById("price").addEventListener("input", calculateFinalPrice);
+    document.getElementById("discount").addEventListener("input", calculateFinalPrice);
 
 });

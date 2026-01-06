@@ -3,24 +3,37 @@ package cleanmeat.services;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Map;
+
 public class OTPService {
-    public static boolean verifyOtp(HttpServletRequest request, String inputOtp) {
+    public static boolean verifyOtp(HttpServletRequest request,
+                                    String inputOtp,
+                                    String inputEmail) {
+
         HttpSession session = request.getSession(false);
         if (session == null) return false;
 
-        String otp = (String) session.getAttribute("OTP_CODE");
-        String emailInSession = (String) session.getAttribute("OTP_EMAIL");
-        Long expire = (Long) session.getAttribute("OTP_EXPIRE");
+        Map<String, OtpData> otpMap =
+                (Map<String, OtpData>) session.getAttribute("OTP_MAP");
 
-        if (otp == null || expire == null) return false;
-        if (System.currentTimeMillis() > expire) return false;
+        if (otpMap == null) return false;
 
-        boolean match = otp.equals(inputOtp);
+        OtpData data = otpMap.get(inputEmail);
+        if (data == null) return false;
 
-        if (match) {
-            session.setAttribute("EMAIL_VERIFIED", true);
-            session.removeAttribute("OTP_EXPIRE");
+        if (data.isExpired()) {
+            otpMap.remove(inputEmail);
+            return false;
         }
-        return match;
+
+        if (!data.getOtp().equals(inputOtp)) return false;
+
+        session.setAttribute("EMAIL_VERIFIED", true);
+        session.setAttribute("VERIFIED_EMAIL", inputEmail);
+
+        otpMap.remove(inputEmail);
+
+        return true;
     }
+
 }

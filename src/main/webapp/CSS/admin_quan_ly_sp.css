@@ -331,12 +331,12 @@ a {
     transition: background-color 0.2s;
 }
 
-.btn-primary {
+.button-primary {
     background-color: var(--main-red);
     color: #fff;
 }
 
-.btn-primary:hover {
+.button-primary:hover {
     background-color: var(--main-red);
 }
 

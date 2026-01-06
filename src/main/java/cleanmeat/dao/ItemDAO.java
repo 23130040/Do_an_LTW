@@ -288,5 +288,62 @@ public class ItemDAO extends BaseDAO<Item> {
         }
         return 0;
     }
+    public int insertAndReturnId(Item item)
+            throws SQLException, ClassNotFoundException {
+
+        String sql = """
+        INSERT INTO item (
+         sku,
+         name, short_description, long_description,
+         category_id, origin_id, unit_id,
+         price, discount,
+         current_stock, min_stock, created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+    """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps =
+                     conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, item.getSku());
+            ps.setString(2, item.getName());
+            ps.setString(3, item.getShort_description());
+            ps.setString(4, item.getLong_description());
+            ps.setInt(5, item.getCategory_id());
+            ps.setInt(6, item.getOrigin_id());
+            ps.setInt(7, item.getUnit_id());
+            ps.setDouble(8, item.getPrice());
+            ps.setDouble(9, item.getDiscount());
+            ps.setInt(10, item.getCurrent_stock());
+            ps.setInt(11, item.getMin_stock());
+
+
+
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        }
+        return -1;
+    }
+    public void insertImage(int itemId, String url)
+            throws SQLException, ClassNotFoundException {
+
+        String sql = """
+        INSERT INTO item_image (item_id, url, is_primary)
+        VALUES (?, ?, 1)
+    """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, itemId);
+            ps.setString(2, url);
+            ps.executeUpdate();
+        }
+    }
+
 
 }
