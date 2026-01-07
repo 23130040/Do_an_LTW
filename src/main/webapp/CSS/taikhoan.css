@@ -241,21 +241,14 @@ a {
     background: none;
     border: none;
 }
-.address.default .trash i{
-    color: #b8b8b8;
-}
-.address.default .trash i:hover{
-    cursor: not-allowed;
-    color: #b8b8b8;
-}
-.address .default-btn {
+.address .set-default-btn {
     padding: 6px 12px;
     border-radius: 5px;
     border: none;
     background: #f0f0f0;
     cursor: pointer;
 }
-.address .default-btn:hover {
+.address .set-default-btn:hover {
     background: #dcdcdc;
 }
 .address i {
@@ -275,6 +268,7 @@ a {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
+    border: none;
 }
 /* ============================
     PASSWORD SECTION

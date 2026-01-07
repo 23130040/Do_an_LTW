@@ -6,7 +6,7 @@
         <h1 class="txt big">ĐỊA CHỈ CỦA TÔI</h1>
     </div>
     <div class="header-right">
-        <button class="add-address-button" id="open-add-address-modal">+ Thêm địa chỉ mới</button>
+        <button type="button" class="add-address-button" id="open-add-address-modal">+ Thêm địa chỉ mới</button>
     </div>
 </div>
 <div class="address-content body">
@@ -21,19 +21,24 @@
                             </p>
                             <c:if test="${!addr.defaultAddress}">
                                 <input type="hidden" name="addressId" value="${addr.id}"/>
-                                <button class="default-btn"
+
+                                <button class="set-default-btn"
                                         type="submit"
                                         name="action"
                                         value="setDefault">
                                     Đặt mặc định
                                 </button>
+
+                                <button type="submit" class="trash" name="action" value="delete"><i
+                                        class="fa-solid fa-trash"></i>
+                                </button>
                             </c:if>
                             <c:if test="${addr.defaultAddress}">
-                                <button class="default-btn disabled" disabled>Mặc định</button>
+                                <button class="set-default-btn default-btn disabled" disabled>Mặc định</button>
+                                <button class="trash default-btn disabled" disabled><i
+                                        class="fa-solid fa-trash"></i>
+                                </button>
                             </c:if>
-                            <button class="trash" aria-label="Xóa địa chỉ" data-id="${addr.id}"><i
-                                    class="fa-solid fa-trash"></i>
-                            </button>
                             <button class="edit open-change-address-modal" aria-label="Sửa địa chỉ"
                                     data-id="${addr.id}"><i
                                     class="fa-solid fa-pen-to-square"></i>

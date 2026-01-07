@@ -117,7 +117,7 @@ public class AddressDAO extends BaseDAO<Address> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int addressId) {
         String sql = """
                 DELETE FROM address
                 WHERE id = ?
@@ -125,15 +125,33 @@ public class AddressDAO extends BaseDAO<Address> {
         Connection conn = null;
         try {
             conn = getConnection();
+            conn.setAutoCommit(false);
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, addressId);
+
                 if (ps.executeUpdate() == 0) return false;
-                addressMap.remove(id);
+
+                addressMap.remove(addressId);
                 return true;
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             throw new RuntimeException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(conn);
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
     }
 

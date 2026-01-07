@@ -83,6 +83,9 @@ public class TaiKhoan extends HttpServlet {
             } else if ("setDefault".equals(action)) {
                 int addressId = Integer.parseInt(request.getParameter("addressId"));
                 addressService.setAddressDefault(user.getId(), addressId);
+            } else if ("delete".equals(action)) {
+                int addressId = Integer.parseInt(request.getParameter("addressId"));
+                addressService.deleteAddress(addressId, user.getId());
             }
             response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
         } catch (SQLException e) {
