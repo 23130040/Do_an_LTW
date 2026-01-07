@@ -43,24 +43,20 @@ window.onclick = function(event) {
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".edit-btn").forEach(btn => {
-        btn.addEventListener("click", () => openProductModal(true));
-    });
-
     document.getElementById("add-product-btn")
         ?.addEventListener("click", () => openProductModal(false));
 });
 
-function openProductModal(isEdit = false) {
+function openProductModal() {
     const modal = document.getElementById('product-modal');
-    const modalTitleSpan = document.getElementById('modal-title-product');
-    const editButtons = document.querySelectorAll('.product-table .edit-btn');
-    editButtons.forEach(button => {
-        button.addEventListener('click', () => openProductModal(true));
-    });
+    const title = document.getElementById('modal-title-product');
+    const actionInput = document.getElementById('formAction');
+    const form = document.querySelector('.product-form');
 
-
-    modal.style.display = 'flex';
+    if (title) title.innerText = "Thêm";
+    if (actionInput) actionInput.value = "addItem";
+    if (form) form.reset();
+    if (modal) modal.style.display = 'flex';
 }
 
 function closeProductModal() {
@@ -123,3 +119,57 @@ window.addNewWeight = function() {
             alert("Lỗi: " + error.message);
         });
 };
+function editProduct(id) {
+    console.log("Đang lấy dữ liệu cho sản phẩm ID:", id);
+
+    fetch(`quanlysanpham?action=getEditData&id=${id}`)
+        .then(res => {
+            if (!res.ok) throw new Error("Lỗi mạng");
+            return res.json();
+        })
+        .then(item => {
+            console.log("Dữ liệu nhận được:", item);
+
+            document.getElementById('modal-title-product').innerText = "Chỉnh Sửa";
+            document.getElementById('formAction').value = "updateItem";
+            document.getElementById('productId').value = item.id;
+
+            const form = document.querySelector('.product-form');
+
+            form.name.value = item.name || "";
+            form['shortDescription'].value = item.short_description || "";
+            form['longDescription'].value = item.long_description || "";
+            form.categoryId.value = item.category_id;
+            form.originId.value = item.origin_id;
+            form.unitId.value = item.unit_id;
+            form.price.value = item.price;
+            form.discount.value = item.discount;
+            form.sku.value = item.sku || "";
+            form.minStock.value = item.min_stock;
+
+            const price = parseFloat(item.price) || 0;
+            const discount = parseFloat(item.discount) || 0;
+            document.getElementById('finalPrice').value = Math.round(price * (1 - discount / 100));
+
+            document.getElementById('product-modal').style.display = 'flex';
+        })
+        .catch(err => {
+            console.error("Lỗi khi mở modal chỉnh sửa:", err);
+            alert("Không thể tải dữ liệu sản phẩm!");
+        });
+}
+document.addEventListener("DOMContentLoaded", () => {
+    const priceInput = document.getElementById('price');
+    const discountInput = document.getElementById('discount');
+    const finalPriceInput = document.getElementById('finalPrice');
+
+    function calculateFinalPrice() {
+        const price = parseFloat(priceInput.value) || 0;
+        const discount = parseFloat(discountInput.value) || 0;
+        const finalPrice = price * (1 - discount / 100);
+        finalPriceInput.value = Math.round(finalPrice);
+    }
+
+    priceInput.addEventListener('input', calculateFinalPrice);
+    discountInput.addEventListener('input', calculateFinalPrice);
+});

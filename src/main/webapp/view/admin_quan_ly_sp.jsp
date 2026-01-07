@@ -57,6 +57,7 @@
                 <table class="product-table">
                     <thead>
                     <tr>
+                        <th>SKU</th>
                         <th>Ảnh</th>
                         <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
@@ -70,6 +71,7 @@
                     <tbody>
                     <c:forEach var="item" items="${items}">
                         <tr>
+                            <td>${item.sku}</td>
                             <td>
                                 <img src="${pageContext.request.contextPath}/images/${item.imageUrl}"
                                      alt="${item.name}" class="product-thumb">
@@ -83,9 +85,9 @@
                                     ${item.current_stock}
                             </td>
                             <td>
-                                <a href="/admin/product/edit?id=${item.id}">
+                                <button type="button" class="btn-icon edit-btn" onclick="editProduct(${item.id})">
                                     <i class="fas fa-edit"></i>
-                                </a>
+                                </button>
                                 <a href="/admin/product/delete?id=${item.id}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
@@ -145,7 +147,8 @@
               action="quanlysanpham"
               method="post"
               enctype="multipart/form-data">
-            <input type="hidden" name="action" value="addItem">
+            <input type="hidden" name="action" id="formAction" value="addItem">
+            <input type="hidden" name="productId" id="productId">
             <div class="form-section left-col">
                 <label>Tên sản phẩm:</label>
                 <input type="text" name="name"  placeholder="Tên sản phẩm" required>
@@ -210,7 +213,7 @@
                        placeholder="Tự động tính">
 
 
-                <label>Mã sản phẩm:</label>
+                <label>Mã sản phẩm(SKU):</label>
                 <input type="text" placeholder="1001" name="sku">
 
                 <div class="inventory-group">

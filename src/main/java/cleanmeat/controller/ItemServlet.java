@@ -6,11 +6,16 @@ import cleanmeat.dao.OriginDAO;
 import cleanmeat.dao.UnitDAO;
 import cleanmeat.model.Item;
 import cleanmeat.model.Unit;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @WebServlet(name = "ItemServlet", value = "/quanlysanpham")
@@ -25,8 +30,32 @@ public class ItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         ItemDAO itemDAO = new ItemDAO();
+        String action = request.getParameter("action");
+        if ("getEditData".equals(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Item item = itemDAO.findById(id);
+
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(
+                            LocalDate.class,
+                            (JsonSerializer<LocalDate>) (src, typeOfSrc, context) ->
+                                    new JsonPrimitive(src.toString())
+                    )
+                    .serializeNulls()
+                    .create();
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            String json = gson.toJson(item);
+            response.getWriter().write(json);
+            response.getWriter().flush();
+            return;
+        }
+
+
+
         UnitDAO unitDAO = new UnitDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
         OriginDAO originDAO = new OriginDAO();
@@ -95,6 +124,9 @@ public class ItemServlet extends HttpServlet {
         if ("addItem".equals(action)) {
             handleAddItem(request, response);
         }
+        if ("updateItem".equals(action)) {
+            handleUpdateItem(request, response);
+        }
     }
     private void handleAddItem(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -157,6 +189,40 @@ public class ItemServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(500, "Lỗi thêm sản phẩm");
+        }
+    }
+    private void handleUpdateItem(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        try {
+            int id = Integer.parseInt(request.getParameter("productId"));
+            ItemDAO itemDAO = new ItemDAO();
+            Item item = itemDAO.findById(id);
+
+            item.setSku(request.getParameter("sku"));
+            item.setName(request.getParameter("name"));
+            item.setShort_description(request.getParameter("shortDescription"));
+            item.setLong_description(request.getParameter("longDescription"));
+            item.setCategory_id(Integer.parseInt(request.getParameter("categoryId")));
+            item.setOrigin_id(Integer.parseInt(request.getParameter("originId")));
+            item.setUnit_id(Integer.parseInt(request.getParameter("unitId")));
+            item.setPrice(Double.parseDouble(request.getParameter("price")));
+            item.setDiscount(Double.parseDouble(request.getParameter("discount")));
+            item.setMin_stock(Integer.parseInt(request.getParameter("minStock")));
+
+            Part imagePart = request.getPart("image");
+            if (imagePart != null && imagePart.getSize() > 0) {
+                String fileName = System.currentTimeMillis() + "_" + imagePart.getSubmittedFileName();
+                String uploadPath = getServletContext().getRealPath("/uploads");
+                imagePart.write(uploadPath + "/" + fileName);
+                String imageUrl = "uploads/" + fileName;
+                itemDAO.updatePrimaryImage(id, imageUrl);
+            }
+
+            itemDAO.update(item, id);
+            response.sendRedirect("quanlysanpham");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(500, "Lỗi cập nhật sản phẩm");
         }
     }
 
