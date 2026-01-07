@@ -8,16 +8,15 @@
             <h3 class="username">Nguyễn Văn A</h3>
         </div>
         <div class="sidebar menu">
-            <a href="${pageContext.request.contextPath}/ho-so" class="default-link">Hồ sơ</a>
-            <a href="${pageContext.request.contextPath}/dia-chi">Địa chỉ</a>
-            <a href="${pageContext.request.contextPath}/doi-mat-khau">Đổi mật khẩu</a>
-            <a href="${pageContext.request.contextPath}/cai-dat">Những thiết lập riêng tư</a>
+            <a href="?tab=ho-so" data-tab="profile" class="default-link">Hồ sơ</a>
+            <a href="?tab=dia-chi" data-tab="address">Địa chỉ</a>
+            <a href="?tab=doi-mat-khau" data-tab="password">Đổi mật khẩu</a>
+            <a href="?tab=cai-dat" data-tab="setting">Những thiết lập riêng tư</a>
         </div>
     </div>
-
     <div class="main-content">
         <div id="${requestScope.idContent}">
-            <c:import url="${requestScope.pageContent}" />
+            <c:import url="${requestScope.pageContent}"/>
         </div>
     </div>
 </div>

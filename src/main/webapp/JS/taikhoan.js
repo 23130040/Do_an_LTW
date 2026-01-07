@@ -1,20 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const currentPath = window.location.pathname;
-    let hasLinkActive = false;
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get("tab") || "ho-so";
 
-    document.querySelectorAll("#sidebar .menu a").forEach(link => {
-        const linkPath = new URL(link.href).pathname;
+    document
+        .querySelectorAll("#sidebar .menu a")
+        .forEach(a => a.classList.remove("active-link"));
 
-        if (currentPath === linkPath) {
-            link.classList.add("active-link");
-            hasLinkActive = true;
-        }
-    });
-
-    if (!hasLinkActive) {
-        const defaultLink = document.querySelector("#sidebar .menu .default-link");
-        if (defaultLink) {
-            defaultLink.classList.add("active-link");
-        }
-    }
+    document
+        .querySelector(`#sidebar .menu a[href*="tab=${tab}"]`)
+        ?.classList.add("active-link");
 });

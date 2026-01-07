@@ -1,11 +1,14 @@
 package cleanmeat.controller;
 
+import cleanmeat.model.Address;
 import cleanmeat.model.User;
+import cleanmeat.services.AddressService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "tai-khoan", value = "/tai-khoan")
@@ -17,7 +20,17 @@ public class TaiKhoan extends HttpServlet {
         request.setAttribute("pageCss", "/CSS/taikhoan.css");
         request.setAttribute("pageJS", "/JS/taikhoan.js");
 
-        if (request.getAttribute("pageContent") == null) {
+        String tab = request.getParameter("tab");
+        if ("dia-chi".equals(tab)) {
+            request.setAttribute("pageContent", "/view/diachi_taikhoan.jsp");
+            request.setAttribute("idContent", "address-content");
+        } else if ("doi-mat-khau".equals(tab)) {
+            request.setAttribute("pageContent", "/view/matkhau_taikhoan.jsp");
+            request.setAttribute("idContent", "password-content");
+        } else if ("cai-dat".equals(tab)){
+            request.setAttribute("pageContent", "/view/caidat_taikhoan.jsp");
+            request.setAttribute("idContent", "setting-content");
+        } else {
             request.setAttribute("pageContent", "/view/hoso_taikhoan.jsp");
             request.setAttribute("idContent", "profile-content");
         }
@@ -31,7 +44,9 @@ public class TaiKhoan extends HttpServlet {
             request.setAttribute("birthday", user.getBirthday().format(formatter));
         }
 
-        if  (user != null) {
+        if (user != null) {
+            AddressService addressService = new AddressService();
+            request.setAttribute("addresses", addressService.getUserAddresses(user.getId()));
             request.setAttribute("user", user);
         }
 
@@ -41,6 +56,46 @@ public class TaiKhoan extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        String action = request.getParameter("action");
+
+        String province = request.getParameter("province");
+        String district = request.getParameter("district");
+        String ward = request.getParameter("ward");
+        String detailAddress = request.getParameter("detailAddress");
+
+        if (province == null || district == null || ward == null || detailAddress == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
+        String fullAddress = detailAddress + ", " + ward + ", " + district + ", " + province;
+        AddressService addressService = new AddressService();
+
+        try {
+            if ("add".equals(action)) {
+                Address address = new Address(user, fullAddress, false);
+                addressService.addAddress(address);
+            }
+            response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

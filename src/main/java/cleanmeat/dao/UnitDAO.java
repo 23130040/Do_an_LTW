@@ -94,7 +94,7 @@ public class UnitDAO extends BaseDAO<Unit> {
     }
 
     @Override
-    protected boolean update(Unit unit, int id) {
+    public boolean update(Unit unit, int id) {
         String sql = "UPDATE unit SET name = ?, amount = ? WHERE id = ?";
         Connection conn = null;
         try {
@@ -116,7 +116,7 @@ public class UnitDAO extends BaseDAO<Unit> {
     }
 
     @Override
-    protected boolean delete(int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM unit WHERE id = ?";
         Connection conn = null;
         try {

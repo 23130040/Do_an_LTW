@@ -11,7 +11,6 @@ import java.util.Date;
 public class AddressDAO extends BaseDAO<Address> {
 
     private Map<Integer, Address> addressMap;
-    private UserDAO userDAO = new UserDAO();
 
     public AddressDAO() {
         addressMap = new HashMap<Integer, Address>();
@@ -40,14 +39,16 @@ public class AddressDAO extends BaseDAO<Address> {
 
     @Override
     protected Address mapResultSetToEntity(ResultSet rs) throws SQLException {
-        User user = new User(rs.getInt("user_id"), rs.getString("user_name"), rs.getString("user_email"));
+        User user = new User(rs.getInt("user_id"),
+                rs.getString("user_name"),
+                rs.getString("user_email"));
         int id = rs.getInt("id");
         String address = rs.getString("address");
         boolean is_Default = rs.getBoolean("is_default");
-        Date ca = rs.getDate("created_at");
-        LocalDate created_at = (ca != null) ? ((java.sql.Date) ca).toLocalDate() : null;
-        Date ua = rs.getTimestamp("updated_at");
-        LocalDate updated_at = (ua != null) ? ((java.sql.Date) ua).toLocalDate() : null;
+        Timestamp ca = rs.getTimestamp("created_at");
+        LocalDate created_at = (ca != null) ? ca.toLocalDateTime().toLocalDate() : null;
+        Timestamp ua = rs.getTimestamp("updated_at");
+        LocalDate updated_at = (ua != null) ? ua.toLocalDateTime().toLocalDate() : null;
         return new Address(id, user, address, is_Default, created_at, updated_at);
     }
 
@@ -60,12 +61,13 @@ public class AddressDAO extends BaseDAO<Address> {
         Connection conn = null;
         try {
             conn = getConnection();
+            conn.setAutoCommit(false);
             try (PreparedStatement ps =
                          conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
                 ps.setInt(1, address.getUser().getId());
                 ps.setString(2, address.getAddress());
-                ps.setBoolean(3, address.is_Default());
+                ps.setBoolean(3, address.isDefaultAddress());
 
                 if (ps.executeUpdate() == 0) return false;
 
@@ -77,10 +79,14 @@ public class AddressDAO extends BaseDAO<Address> {
                 }
                 return true;
             }
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
+            if (conn != null) conn.rollback();
             throw new RuntimeException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(conn);
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
     }
 
@@ -97,11 +103,9 @@ public class AddressDAO extends BaseDAO<Address> {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, address.getAddress());
-                ps.setBoolean(2, address.is_Default());
+                ps.setBoolean(2, address.isDefaultAddress());
                 ps.setInt(3, id);
-
                 if (ps.executeUpdate() == 0) return false;
-
                 addressMap.put(id, address);
                 return true;
             }
@@ -133,35 +137,72 @@ public class AddressDAO extends BaseDAO<Address> {
         }
     }
 
-    public List<Address> findAllByUser(User user) {
+    public List<Address> findAllByUserId(int userId) {
         String sql = """
-                SELECT a.address, a.is_default FROM address as a
-                WHERE user_id = ?
+                    SELECT a.*, 
+                           u.id AS user_id,
+                           u.name AS user_name,
+                           u.email AS user_email
+                    FROM address a
+                    JOIN user u ON a.user_id = u.id
+                    WHERE u.id = ?
+                    ORDER BY a.is_default DESC, a.id DESC
                 """;
-        List<Address> addresses = new ArrayList<>();
+        List<Address> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, user.getId());
+            ps.setInt(1, userId);
             rs = ps.executeQuery();
+
             while (rs.next()) {
-                Address address = mapResultSetToEntity(rs);
-                addresses.add(address);
+                list.add(mapResultSetToEntity(rs));
             }
-            return addresses;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             close(rs, ps, conn);
         }
+        return list;
     }
 
     @Override
     public Address findById(int id) {
-        return null;
+        String sql = """
+                SELECT a.*, 
+                       u.id   AS user_id,
+                       u.name AS user_name,
+                       u.email AS user_email
+                FROM address a
+                JOIN user u ON a.user_id = u.id
+                WHERE a.id = ?
+                """;
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToEntity(rs);
+                }
+                return null;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void clearDefaultByUser(int userId) {
+        String sql = "UPDATE address SET is_default = false WHERE user_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

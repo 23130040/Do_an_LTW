@@ -6,11 +6,12 @@ import cleanmeat.model.User;
 import java.sql.SQLException;
 
 public class UserService {
-    private static UserDAO userDAO = new UserDAO();
+    private static UserDAO userDAO;
     private String error;
 
     public UserService() {
-
+        userDAO = new UserDAO();
+        this.error = "";
     }
 
     public User login(String email, String password) {
@@ -25,7 +26,6 @@ public class UserService {
     }
 
     public boolean signup(String name, String email, String password, String confirmPassword) throws SQLException, ClassNotFoundException {
-
         if (userDAO.findByEmail(email) == null) {
             if (name == null || email == null || password == null || confirmPassword == null)
                 return false;
@@ -38,7 +38,6 @@ public class UserService {
             error = "Email này đã được liên kết với một tài khoản.";
         }
         return false;
-
     }
 
     public static boolean isEmailRegistered(String email) {

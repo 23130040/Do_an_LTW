@@ -26,15 +26,15 @@ public abstract class BaseDAO<T> {
     public void close(ResultSet rs, PreparedStatement ps, Connection conn) {
         try {
             if (rs != null) rs.close();
-        } catch (SQLException ignored) {
-        }
+        } catch (SQLException ignored) {}
 
         try {
             if (ps != null) ps.close();
-        } catch (SQLException ignored) {
-        }
+        } catch (SQLException ignored) {}
 
-        ConnectionPool.getInstance().releaseConnection(conn);
+        if (conn != null) {
+            ConnectionPool.getInstance().releaseConnection(conn);
+        }
     }
 }
 
