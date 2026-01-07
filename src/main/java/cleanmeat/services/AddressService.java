@@ -27,7 +27,7 @@ public class AddressService {
     }
 
     public void updateAddress(Address address, int addressId, int userId) {
-        Address old = addressDAO.findById(address.getId());
+        Address old = addressDAO.findById(addressId);
         if (old == null || old.getUser().getId() != userId) {
             throw new RuntimeException("Không có quyền sửa địa chỉ này");
         }
@@ -43,5 +43,9 @@ public class AddressService {
             throw new RuntimeException("Không thể xóa địa chỉ mặc định");
         }
         addressDAO.delete(addressId);
+    }
+
+    public Address getAddressById(int addressId) {
+        return addressDAO.findById(addressId);
     }
 }

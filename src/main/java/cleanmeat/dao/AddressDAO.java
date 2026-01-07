@@ -94,25 +94,39 @@ public class AddressDAO extends BaseDAO<Address> {
     public boolean update(Address address, int id) {
         String sql = """
                 UPDATE address
-                SET address = ?, is_default = ?
+                SET address = ?
                 WHERE id = ?
                 """;
 
         Connection conn = null;
         try {
             conn = getConnection();
+            conn.setAutoCommit(false);
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, address.getAddress());
-                ps.setBoolean(2, address.isDefaultAddress());
-                ps.setInt(3, id);
+                ps.setInt(2, id);
                 if (ps.executeUpdate() == 0) return false;
                 addressMap.put(id, address);
                 return true;
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             throw new RuntimeException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(conn);
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
     }
 
@@ -175,7 +189,6 @@ public class AddressDAO extends BaseDAO<Address> {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
             rs = ps.executeQuery();
-
             while (rs.next()) {
                 list.add(mapResultSetToEntity(rs));
             }

@@ -86,6 +86,14 @@ public class TaiKhoan extends HttpServlet {
             } else if ("delete".equals(action)) {
                 int addressId = Integer.parseInt(request.getParameter("addressId"));
                 addressService.deleteAddress(addressId, user.getId());
+            } else if ("update".equals(action)) {
+                int addressId = Integer.parseInt(request.getParameter("addressId"));
+                Address oldAddress = addressService.getAddressById(addressId);
+                boolean isDefault = oldAddress.isDefaultAddress();
+                String addressDetail = request.getParameter("address");
+                Address newAddress = new Address(user, addressDetail, isDefault);
+                addressService.updateAddress(newAddress, addressId, user.getId());
+
             }
             response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
         } catch (SQLException e) {

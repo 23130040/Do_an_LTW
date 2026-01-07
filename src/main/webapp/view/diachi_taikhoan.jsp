@@ -39,9 +39,8 @@
                                         class="fa-solid fa-trash"></i>
                                 </button>
                             </c:if>
-                            <button class="edit open-change-address-modal" aria-label="Sửa địa chỉ"
-                                    data-id="${addr.id}"><i
-                                    class="fa-solid fa-pen-to-square"></i>
+                            <button type="button" class="edit-btn" data-id="${addr.id}" data-address="${addr.address}">
+                                <i class="fa-solid fa-pen-to-square"></i>
                             </button>
                         </div>
                     </form>
@@ -68,36 +67,48 @@
                               required></textarea>
                 </div>
             </div>
-            <button type="submit" id="submit-btn" name="action" value="add">Lưu Địa Chỉ</button>
+            <input type="hidden" name="action" id="address-action">
+            <input type="hidden" name="addressId" id="modal-address-id">
+            <button type="submit" id="submit-btn">Lưu Địa Chỉ</button>
         </form>
     </div>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const openBtn = document.getElementById("open-add-address-modal");
-        const closeBtn = document.getElementById("close-change-address-modal");
         const modal = document.getElementById("address-modal");
         const textarea = document.getElementById("address-detail");
+        const header = document.getElementById("header-address");
+        const submitBtn = document.getElementById("submit-btn");
+        const actionInput = document.getElementById("address-action");
+        const addressIdInput = document.getElementById("modal-address-id");
 
-        openBtn.addEventListener("click", () => {
-            document.getElementById("header-address").textContent = "Thêm địa chỉ mới";
+        document.getElementById("open-add-address-modal").addEventListener("click", () => {
+            header.textContent = "Thêm địa chỉ mới";
+            submitBtn.textContent = "Lưu địa chỉ";
+            actionInput.value = "add";
+            addressIdInput.value = "";
+            textarea.value = "";
             openModal();
         });
 
-        closeBtn.addEventListener("click", closeModal);
-
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
+        document.querySelectorAll(".edit-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                header.textContent = "Cập nhật địa chỉ";
+                submitBtn.textContent = "Cập nhật";
+                actionInput.value = "update";
+                addressIdInput.value = btn.dataset.id;
+                textarea.value = btn.dataset.address;
+                openModal();
+            });
         });
+
+        document.getElementById("close-change-address-modal")
+            .addEventListener("click", closeModal);
 
         function openModal() {
             modal.style.display = "block";
-            setTimeout(() => {
-                textarea.focus();
-            }, 0);
+            textarea.focus();
         }
 
         function closeModal() {

@@ -237,7 +237,7 @@ a {
 .address p {
     flex: 1;
 }
-.address .trash, .address .edit{
+.address .trash, .address .edit-btn{
     background: none;
     border: none;
 }
