@@ -27,7 +27,7 @@ public class TaiKhoan extends HttpServlet {
         } else if ("doi-mat-khau".equals(tab)) {
             request.setAttribute("pageContent", "/view/matkhau_taikhoan.jsp");
             request.setAttribute("idContent", "password-content");
-        } else if ("cai-dat".equals(tab)){
+        } else if ("cai-dat".equals(tab)) {
             request.setAttribute("pageContent", "/view/caidat_taikhoan.jsp");
             request.setAttribute("idContent", "setting-content");
         } else {
@@ -74,24 +74,15 @@ public class TaiKhoan extends HttpServlet {
         }
 
         String action = request.getParameter("action");
-
-        String province = request.getParameter("province");
-        String district = request.getParameter("district");
-        String ward = request.getParameter("ward");
-        String detailAddress = request.getParameter("detailAddress");
-
-        if (province == null || district == null || ward == null || detailAddress == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        String fullAddress = detailAddress + ", " + ward + ", " + district + ", " + province;
         AddressService addressService = new AddressService();
-
         try {
             if ("add".equals(action)) {
-                Address address = new Address(user, fullAddress, false);
+                String addressDetail = request.getParameter("address");
+                Address address = new Address(user, addressDetail, false);
                 addressService.addAddress(address);
+            } else if ("setDefault".equals(action)) {
+                int addressId = Integer.parseInt(request.getParameter("addressId"));
+                addressService.setAddressDefault(user.getId(), addressId);
             }
             response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
         } catch (SQLException e) {

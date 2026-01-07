@@ -194,14 +194,36 @@ public class AddressDAO extends BaseDAO<Address> {
         }
     }
 
-    public void clearDefaultByUser(int userId) {
-        String sql = "UPDATE address SET is_default = false WHERE user_id = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, userId);
-            ps.executeUpdate();
+    public void setDefaultByUser(int userId, int addressId) {
+        String clearSql = "UPDATE address SET is_default = false WHERE user_id = ?";
+        String setSql   = "UPDATE address SET is_default = true WHERE id = ?";
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement ps1 = conn.prepareStatement(clearSql);
+                 PreparedStatement ps2 = conn.prepareStatement(setSql)) {
+
+                ps1.setInt(1, userId);
+                ps1.executeUpdate();
+
+                ps2.setInt(1, addressId);
+                ps2.executeUpdate();
+            }
+
+            conn.commit();
         } catch (Exception e) {
+            try {
+                if (conn != null) conn.rollback();
+            } catch (SQLException ignored) {}
             throw new RuntimeException(e);
+        } finally {
+            try {
+                if (conn != null) conn.setAutoCommit(true);
+            } catch (SQLException ignored) {}
+            ConnectionPool.getInstance().releaseConnection(conn);
         }
     }
 

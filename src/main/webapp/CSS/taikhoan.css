@@ -237,14 +237,6 @@ a {
 .address p {
     flex: 1;
 }
-.address.default .default-btn {
-    background-color: #f6f6f6;
-    color: #b8b8b8;
-}
-.address.default .default-btn:hover {
-    cursor: not-allowed;
-    background-color: #f6f6f6;
-}
 .address .trash, .address .edit{
     background: none;
     border: none;
@@ -278,6 +270,11 @@ a {
     text-align: center;
     color: #dfdfdf;
     font-style: italic;
+}
+.address .default-btn.disabled, .default-btn:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 /* ============================
     PASSWORD SECTION

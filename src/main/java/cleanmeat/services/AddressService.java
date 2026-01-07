@@ -14,22 +14,22 @@ public class AddressService {
     }
 
     public void addAddress(Address address) throws SQLException {
-        if (address.isDefaultAddress()) {
-            addressDAO.clearDefaultByUser(address.getUser().getId());
+        int userId = address.getUser().getId();
+        boolean isFirst = getUserAddresses(userId).isEmpty();
+        addressDAO.insert(address);
+        if (isFirst) {
+            addressDAO.setDefaultByUser(userId, address.getId());
         }
-        boolean success = addressDAO.insert(address);
-        if (!success) {
-            throw new RuntimeException("Failed to insert address");
-        }
+    }
+
+    public void setAddressDefault(int userId, int addressId) {
+        addressDAO.setDefaultByUser(userId, addressId);
     }
 
     public void updateAddress(Address address, int addressId, int userId) {
         Address old = addressDAO.findById(address.getId());
         if (old == null || old.getUser().getId() != userId) {
             throw new RuntimeException("Không có quyền sửa địa chỉ này");
-        }
-        if (address.isDefaultAddress()) {
-            addressDAO.clearDefaultByUser(userId);
         }
         addressDAO.update(address, addressId);
     }
