@@ -24,7 +24,6 @@ public class AddressDAO extends BaseDAO<Address> {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql);
                  ResultSet rs = ps.executeQuery()) {
-
                 while (rs.next()) {
                     Address a = mapResultSetToEntity(rs);
                     addressMap.put(a.getId(), a);
@@ -62,15 +61,11 @@ public class AddressDAO extends BaseDAO<Address> {
         try {
             conn = getConnection();
             conn.setAutoCommit(false);
-            try (PreparedStatement ps =
-                         conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
+            try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setInt(1, address.getUser().getId());
                 ps.setString(2, address.getAddress());
                 ps.setBoolean(3, address.isDefaultAddress());
-
                 if (ps.executeUpdate() == 0) return false;
-
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
                         address.setId(rs.getInt(1));
@@ -97,7 +92,6 @@ public class AddressDAO extends BaseDAO<Address> {
                 SET address = ?
                 WHERE id = ?
                 """;
-
         Connection conn = null;
         try {
             conn = getConnection();
@@ -227,33 +221,31 @@ public class AddressDAO extends BaseDAO<Address> {
 
     public void setDefaultByUser(int userId, int addressId) {
         String clearSql = "UPDATE address SET is_default = false WHERE user_id = ?";
-        String setSql   = "UPDATE address SET is_default = true WHERE id = ?";
+        String setSql = "UPDATE address SET is_default = true WHERE id = ?";
 
         Connection conn = null;
         try {
             conn = getConnection();
             conn.setAutoCommit(false);
-
             try (PreparedStatement ps1 = conn.prepareStatement(clearSql);
                  PreparedStatement ps2 = conn.prepareStatement(setSql)) {
-
                 ps1.setInt(1, userId);
                 ps1.executeUpdate();
-
                 ps2.setInt(1, addressId);
                 ps2.executeUpdate();
             }
-
             conn.commit();
         } catch (Exception e) {
             try {
                 if (conn != null) conn.rollback();
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
             throw new RuntimeException(e);
         } finally {
             try {
                 if (conn != null) conn.setAutoCommit(true);
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
             ConnectionPool.getInstance().releaseConnection(conn);
         }
     }

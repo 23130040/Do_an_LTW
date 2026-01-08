@@ -3,6 +3,7 @@ package cleanmeat.controller;
 import cleanmeat.model.Address;
 import cleanmeat.model.User;
 import cleanmeat.services.AddressService;
+import cleanmeat.services.UserService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -16,7 +17,6 @@ public class TaiKhoan extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("pageTitle", "Tài khoản của tôi");
-
         request.setAttribute("pageCss", "/CSS/taikhoan.css");
         request.setAttribute("pageJS", "/JS/taikhoan.js");
 
@@ -40,7 +40,6 @@ public class TaiKhoan extends HttpServlet {
 
         if (user != null && user.getBirthday() != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
             request.setAttribute("birthday", user.getBirthday().format(formatter));
         }
 
@@ -67,12 +66,12 @@ public class TaiKhoan extends HttpServlet {
         }
 
         User user = (User) session.getAttribute("user");
-
         if (user == null) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
+        //chức năng thêm, xóa, chỉnh sửa địa chỉ
         String action = request.getParameter("action");
         AddressService addressService = new AddressService();
         try {
@@ -80,12 +79,15 @@ public class TaiKhoan extends HttpServlet {
                 String addressDetail = request.getParameter("address");
                 Address address = new Address(user, addressDetail, false);
                 addressService.addAddress(address);
+                response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
             } else if ("setDefault".equals(action)) {
                 int addressId = Integer.parseInt(request.getParameter("addressId"));
                 addressService.setAddressDefault(user.getId(), addressId);
+                response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
             } else if ("delete".equals(action)) {
                 int addressId = Integer.parseInt(request.getParameter("addressId"));
                 addressService.deleteAddress(addressId, user.getId());
+                response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
             } else if ("update".equals(action)) {
                 int addressId = Integer.parseInt(request.getParameter("addressId"));
                 Address oldAddress = addressService.getAddressById(addressId);
@@ -93,11 +95,18 @@ public class TaiKhoan extends HttpServlet {
                 String addressDetail = request.getParameter("address");
                 Address newAddress = new Address(user, addressDetail, isDefault);
                 addressService.updateAddress(newAddress, addressId, user.getId());
-
+                response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
+            } else if ("changePassword".equals(action)) {
+                String oldPassword = request.getParameter("currentPassword");
+                String newPassword = request.getParameter("newPassword");
+                String confirmPassword = request.getParameter("confirmPassword");
+                UserService userService = new UserService();
+                userService.changePassword(user.getId(), oldPassword, newPassword, confirmPassword);
+                response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=doi-mat-khau");
             }
-            response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=dia-chi");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

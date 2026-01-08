@@ -7,7 +7,7 @@
     </h1>
 </div>
 <div class="password-content body">
-    <form class="password-form">
+    <form class="password-form" action="${pageContext.request.contextPath}/tai-khoan?tab=doi-mat-khau" method="post">
         <div class="profile-form group">
             <label for="current-password" class="profile-form label">Mật khẩu hiện tại</label>
             <input type="password" id="current-password" name="currentPassword"
@@ -19,17 +19,17 @@
             <input type="password" id="new-password" name="newPassword" class="profile-form input-field"
                    placeholder="Nhập mật khẩu mới">
         </div>
-
         <div class="profile-form group">
             <label for="confirm-password" class="profile-form label">Xác nhận mật khẩu mới</label>
             <input type="password" id="confirm-password" name="confirmPassword"
                    class="profile-form input-field" placeholder="Nhập lại mật khẩu mới">
         </div>
+        <div class="profile-form submit-row">
+            <button type="submit" class="profile-form submit-btn" id="save-password-btn" name="action"
+                    value="changePassword">Lưu Mật Khẩu
+            </button>
+        </div>
     </form>
-    <div class="profile-form submit-row">
-        <button type="submit" class="profile-form submit-btn" id="save-password-btn">Lưu Mật Khẩu
-        </button>
-    </div>
 </div>
 
 <!--Modal xác nhận đổi mật khẩu-->

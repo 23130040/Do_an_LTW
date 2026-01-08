@@ -1,6 +1,7 @@
 package cleanmeat.dao;
 
 import cleanmeat.model.User;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserDAO extends BaseDAO<User> {
-    private static final int RECORDS_PER_PAGE = 9;
     public static Map<Integer, User> users = new ConcurrentHashMap<>();
 
     public UserDAO() {
@@ -241,7 +241,9 @@ public class UserDAO extends BaseDAO<User> {
         if (keyword != null && !keyword.trim().isEmpty()) {
             sql.append(" AND (name COLLATE utf8mb4_bin LIKE ? OR email COLLATE utf8mb4_bin LIKE ? OR phone COLLATE utf8mb4_bin LIKE ?)");
             String likeValue = "%" + keyword.trim() + "%";
-            params.add(likeValue); params.add(likeValue); params.add(likeValue);
+            params.add(likeValue);
+            params.add(likeValue);
+            params.add(likeValue);
         }
         if (role != null && !role.trim().isEmpty()) {
             sql.append(" AND role = ?");
@@ -287,17 +289,52 @@ public class UserDAO extends BaseDAO<User> {
 
     public boolean existsByEmail(String email) {
         String sql = "SELECT 1 FROM user WHERE email = ? LIMIT 1";
-
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean changePassword(int userId, String newPassword) {
+        String sql = "UPDATE user SET password = ? WHERE id = ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, newPassword);
+                ps.setInt(2, userId);
+                if (ps.executeUpdate() == 0) {
+                    conn.rollback();
+                    return false;
+                }
+                User user = users.get(userId);
+                if (user != null) user.setPassword(newPassword);
+                return true;
+            }
+        } catch (Exception e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
     }
 }

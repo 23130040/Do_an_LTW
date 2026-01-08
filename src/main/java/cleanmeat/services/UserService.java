@@ -6,13 +6,7 @@ import cleanmeat.model.User;
 import java.sql.SQLException;
 
 public class UserService {
-    private static UserDAO userDAO;
-    private String error;
-
-    public UserService() {
-        userDAO = new UserDAO();
-        this.error = "";
-    }
+    private final UserDAO userDAO = new UserDAO();
 
     public User login(String email, String password) {
         if (email == null || password == null)
@@ -31,20 +25,30 @@ public class UserService {
                 return false;
             if (confirmPassword.equals(password)) {
                 return userDAO.insert(new User(name, email, password, null, null, null, "user", null));
-            }else{
-                error = "Mật khẩu xác nhận không khớp.";
+            } else {
+                throw new RuntimeException("Mật khẩu xác nhận không khớp.");
             }
-        }else{
-            error = "Email này đã được liên kết với một tài khoản.";
+        } else {
+            throw new RuntimeException("Email này đã được liên kết với một tài khoản.");
         }
-        return false;
     }
 
-    public static boolean isEmailRegistered(String email) {
+    public boolean isEmailRegistered(String email) {
         if (email == null || email.trim().isEmpty()) {
             return false;
         }
         return userDAO.existsByEmail(email);
+    }
+
+    public boolean changePassword(int userId, String oldPassword, String newPassword, String confirmPassword) {
+        User user = userDAO.findById(userId);
+        if (user == null)
+            return false;
+        if (!user.getPassword().equals(oldPassword))
+            return false;
+        if (!newPassword.equals(confirmPassword))
+            return false;
+        return userDAO.changePassword(userId, newPassword);
     }
 
 }
