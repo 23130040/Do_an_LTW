@@ -31,7 +31,8 @@ public class SendOtpServlet extends HttpServlet {
             return;
         }
 
-        if (UserService.isEmailRegistered(email)) {
+        UserService userService = new UserService();
+        if (userService.isEmailRegistered(email)) {
             response.getWriter().write("EMAIL_EXISTS");
             return;
         }

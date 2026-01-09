@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<div id="address-content" class="tab-content hidden">--%>
 <div class="address-content header">
@@ -5,66 +6,113 @@
         <h1 class="txt big">ĐỊA CHỈ CỦA TÔI</h1>
     </div>
     <div class="header-right">
-        <button class="add-address-button" id="open-add-address-modal">+ Thêm địa chỉ mới</button>
+        <button type="button" class="add-address-button" id="open-add-address-modal">+ Thêm địa chỉ mới</button>
     </div>
 </div>
 <div class="address-content body">
     <div class="address-content content">
-        <div class="address default">
-            <p class="address-detail">
-                56/12/34 Đường Võ Văn Kiệt, Phường 2, Quận 5, TP. Hồ Chí Minh, Việt Nam
-            </p>
-            <button id="setDefaultBtn1">Đặt mặc định</button>
-            <span class="trash"><i class="fa-solid fa-trash"></i></span>
-            <span class="edit open-change-address-modal"><i
-                    class="fa-solid fa-pen-to-square"></i></span>
-        </div>
-        <div class="address">
-            <p class="address-detail">
-                108 Đường Nguyễn Văn Bá, Phường Trường Thọ, Thủ Đức, TP. Hồ Chí Minh, Việt Nam
-            </p>
-            <button id="setDefaultBtn2">Đặt mặc định</button>
-            <span class="trash"><i class="fa-solid fa-trash"></i></span>
-            <span class="edit open-change-address-modal"><i
-                    class="fa-solid fa-pen-to-square"></i></span>
-        </div>
+        <c:choose>
+            <c:when test="${not empty addresses}">
+                <c:forEach var="addr" items="${addresses}">
+                    <form action="${pageContext.request.contextPath}/tai-khoan" method="post">
+                        <div class="address ${addr.defaultAddress ? 'default' : ''}">
+                            <p class="address-detail">
+                                    ${addr.address}
+                            </p>
+                            <c:if test="${!addr.defaultAddress}">
+                                <input type="hidden" name="addressId" value="${addr.id}"/>
+
+                                <button class="set-default-btn"
+                                        type="submit"
+                                        name="action"
+                                        value="setDefault">
+                                    Đặt mặc định
+                                </button>
+
+                                <button type="submit" class="trash" name="action" value="delete"><i
+                                        class="fa-solid fa-trash"></i>
+                                </button>
+                            </c:if>
+                            <c:if test="${addr.defaultAddress}">
+                                <button class="set-default-btn default-btn disabled" disabled>Mặc định</button>
+                                <button class="trash default-btn disabled" disabled><i
+                                        class="fa-solid fa-trash"></i>
+                                </button>
+                            </c:if>
+                            <button type="button" class="edit-btn" data-id="${addr.id}" data-address="${addr.address}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </div>
+                    </form>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <p class="empty-classes">
+                    Chưa có địa chỉ nào. Hãy thêm địa chỉ mới.
+                </p>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
-
 <div id="address-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="close-change-address-modal">&times;</span>
-        <div class="address-form">
+        <form class="address-form" action="${pageContext.request.contextPath}/tai-khoan" method="post">
             <h2 id="header-address"></h2>
             <div class="form-row">
-                <div class="form-group half-width">
-                    <label for="province">Tỉnh/Thành phố (*)</label>
-                    <select id="province" required>
-                        <option value="">Chọn Tỉnh/Thành phố</option>
-                        <option value="hcm">TP Hồ Chí Minh</option>
-                        <option value="hn">Hà Nội</option>
-                    </select>
-                </div>
-                <div class="form-group half-width">
-                    <label for="district">Quận/Huyện (*)</label>
-                    <select id="district" required>
-                        <option value="">Chọn Quận/Huyện</option>
-                    </select>
-                </div>
-                <div class="form-group half-width">
-                    <label for="ward">Phường/Xã (*)</label>
-                    <select id="ward" required>
-                        <option value="">Chọn Phường/Xã</option>
-                    </select>
-                </div>
                 <div class="form-group">
-                    <label for="address-detail">Địa chỉ chi tiết (*)</label>
-                    <textarea id="address-detail" rows="3"
-                              placeholder="Ví dụ: 123/45 Đường Quang Trung, gần chợ ABC"
+                    <label for="address-detail">Địa chỉ mới (*)</label>
+                    <textarea name="address" id="address-detail" rows="3"
+                              placeholder="Ví dụ: 123/45 Đường Quang Trung, gần chợ A, phường B, huyện C, tỉnh D..."
                               required></textarea>
                 </div>
             </div>
+            <input type="hidden" name="action" id="address-action">
+            <input type="hidden" name="addressId" id="modal-address-id">
             <button type="submit" id="submit-btn">Lưu Địa Chỉ</button>
-        </div>
+        </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("address-modal");
+        const textarea = document.getElementById("address-detail");
+        const header = document.getElementById("header-address");
+        const submitBtn = document.getElementById("submit-btn");
+        const actionInput = document.getElementById("address-action");
+        const addressIdInput = document.getElementById("modal-address-id");
+
+        document.getElementById("open-add-address-modal").addEventListener("click", () => {
+            header.textContent = "Thêm địa chỉ mới";
+            submitBtn.textContent = "Lưu địa chỉ";
+            actionInput.value = "add";
+            addressIdInput.value = "";
+            textarea.value = "";
+            openModal();
+        });
+
+        document.querySelectorAll(".edit-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                header.textContent = "Cập nhật địa chỉ";
+                submitBtn.textContent = "Cập nhật";
+                actionInput.value = "update";
+                addressIdInput.value = btn.dataset.id;
+                textarea.value = btn.dataset.address;
+                openModal();
+            });
+        });
+
+        document.getElementById("close-change-address-modal")
+            .addEventListener("click", closeModal);
+
+        function openModal() {
+            modal.style.display = "block";
+            textarea.focus();
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+    });
+</script>

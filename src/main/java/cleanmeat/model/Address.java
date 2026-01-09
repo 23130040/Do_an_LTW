@@ -6,21 +6,21 @@ public class Address {
     private int id;
     private User user;
     private String address;
-    private boolean is_Default;
+    private boolean isDefault;
     private LocalDate created_at;
     private LocalDate updated_at;
 
-    public Address(User user, String address, boolean is_Default) {
+    public Address(User user, String address, boolean isDefault) {
         this.user = user;
         this.address = address;
-        this.is_Default = is_Default;
+        this.isDefault = isDefault;
     }
 
-    public Address(int id, User user, String address, boolean is_Default, LocalDate created_at, LocalDate updated_at) {
+    public Address(int id, User user, String address, boolean isDefault, LocalDate created_at, LocalDate updated_at) {
         this.id = id;
         this.user = user;
         this.address = address;
-        this.is_Default = is_Default;
+        this.isDefault = isDefault;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -49,12 +49,12 @@ public class Address {
         this.address = address;
     }
 
-    public boolean is_Default() {
-        return is_Default;
+    public boolean isDefaultAddress() {
+        return isDefault;
     }
 
-    public void set_Default(boolean is_Default) {
-        this.is_Default = is_Default;
+    public void setDefaultAddress(boolean aDefault) {
+        isDefault = aDefault;
     }
 
     public LocalDate getCreated_at() {

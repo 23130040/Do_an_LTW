@@ -224,7 +224,6 @@ a {
 .address-content.body {
     margin-top: 25px;
 }
-
 .address {
     border: 1px solid #ddd;
     padding: 18px;
@@ -232,36 +231,24 @@ a {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
+    justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-
 .address p {
     flex: 1;
 }
-.address.default BUTTON {
-    background-color: #f6f6f6;
-    color: #b8b8b8;
+.address .trash, .address .edit-btn{
+    background: none;
+    border: none;
 }
-.address.default BUTTON:hover {
-    cursor: not-allowed;
-    background-color: #f6f6f6;
-}
-.address.default .trash i{
-    color: #b8b8b8;
-}
-.address.default .trash i:hover{
-    cursor: not-allowed;
-    color: #b8b8b8;
-}
-.address button {
+.address .set-default-btn {
     padding: 6px 12px;
     border-radius: 5px;
     border: none;
     background: #f0f0f0;
     cursor: pointer;
 }
-
-.address button:hover {
+.address .set-default-btn:hover {
     background: #dcdcdc;
 }
 .address i {
@@ -269,11 +256,20 @@ a {
     cursor: pointer;
     padding-left: 12px;
 }
-
 .address i:hover {
     color: #e00000;
 }
-
+.address-content p.empty-classes{
+    text-align: center;
+    color: #dfdfdf;
+    font-style: italic;
+}
+.address .default-btn.disabled, .default-btn:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    border: none;
+}
 /* ============================
     PASSWORD SECTION
 =============================== */

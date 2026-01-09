@@ -2,6 +2,7 @@ package cleanmeat.model;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class News {
@@ -28,6 +29,7 @@ public class News {
                 updated_at.atStartOfDay(ZoneId.systemDefault()).toInstant()
         );
     }
+
     public News(int id, String title, String author, String content, String status, LocalDate created_at, LocalDate updated_at, User created_by) {
         this.id = id;
         this.title = title;
@@ -120,5 +122,12 @@ public class News {
 
     public void setCreated_by(User created_by) {
         this.created_by = created_by;
+    }
+
+    public String setFormattedDate(java.sql.Date date) {
+        String formattedDate;
+        if (date == null) formattedDate = "";
+        formattedDate = date.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return formattedDate;
     }
 }

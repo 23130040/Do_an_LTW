@@ -6,12 +6,7 @@ import cleanmeat.model.User;
 import java.sql.SQLException;
 
 public class UserService {
-    private static UserDAO userDAO = new UserDAO();
-    private String error;
-
-    public UserService() {
-
-    }
+    private final UserDAO userDAO = new UserDAO();
 
     public User login(String email, String password) {
         if (email == null || password == null)
@@ -25,27 +20,43 @@ public class UserService {
     }
 
     public boolean signup(String name, String email, String password, String confirmPassword) throws SQLException, ClassNotFoundException {
-
         if (userDAO.findByEmail(email) == null) {
             if (name == null || email == null || password == null || confirmPassword == null)
                 return false;
             if (confirmPassword.equals(password)) {
                 return userDAO.insert(new User(name, email, password, null, null, null, "user", null));
-            }else{
-                error = "Mật khẩu xác nhận không khớp.";
+            } else {
+                throw new RuntimeException("Mật khẩu xác nhận không khớp.");
             }
-        }else{
-            error = "Email này đã được liên kết với một tài khoản.";
+        } else {
+            throw new RuntimeException("Email này đã được liên kết với một tài khoản.");
         }
-        return false;
-
     }
 
-    public static boolean isEmailRegistered(String email) {
+    public boolean isEmailRegistered(String email) {
         if (email == null || email.trim().isEmpty()) {
             return false;
         }
         return userDAO.existsByEmail(email);
     }
 
+    public boolean changePassword(int userId, String oldPassword, String newPassword, String confirmPassword) {
+        User user = userDAO.findById(userId);
+        if (user == null)
+            return false;
+        if (!user.getPassword().equals(oldPassword))
+            return false;
+        if (!newPassword.equals(confirmPassword))
+            return false;
+        return userDAO.changePassword(userId, newPassword);
+    }
+
+    public boolean deleteAccount(int id, String password) {
+        User user = userDAO.findById(id);
+        if (user == null)
+            return false;
+        if (!user.getPassword().equals(password))
+            return false;
+        return userDAO.delete(id);
+    }
 }
