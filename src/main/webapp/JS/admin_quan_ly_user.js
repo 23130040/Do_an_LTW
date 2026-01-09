@@ -302,3 +302,44 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("discount").addEventListener("input", calculateFinalPrice);
 
 });
+const searchInput = document.getElementById('searchInput');
+const roleFilter = document.getElementById('roleFilter');
+
+function applyFilterAndSearch() {
+    const keyword = searchInput.value;
+    const role = roleFilter.value;
+
+    let url = 'quanlyuser?';
+
+    if (keyword) {
+        url += 'search=' + encodeURIComponent(keyword) + '&';
+    }
+
+    url += 'role=' + encodeURIComponent(role) + '&';
+
+
+    if (url.endsWith('&')) {
+        url = url.slice(0, -1);
+    }
+
+    window.location.href = url;
+}
+
+searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+
+    searchTimeout = setTimeout(applyFilterAndSearch, 500);
+});
+
+roleFilter.addEventListener('change', applyFilterAndSearch);
+searchInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+
+        if (typeof searchTimeout !== 'undefined') {
+            clearTimeout(searchTimeout);
+        }
+
+        applyFilterAndSearch();
+    }
+});
