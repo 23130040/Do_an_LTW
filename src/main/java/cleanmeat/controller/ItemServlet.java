@@ -16,13 +16,14 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @WebServlet(name = "ItemServlet", value = "/quanlysanpham")
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 5 * 1024 * 1024,
-        maxRequestSize = 10 * 1024 * 1024
+        maxFileSize = 10 * 1024 * 1024,
+        maxRequestSize = 50 * 1024 * 1024
 )
 public class ItemServlet extends HttpServlet {
 
@@ -53,7 +54,16 @@ public class ItemServlet extends HttpServlet {
             response.getWriter().flush();
             return;
         }
+        if ("delete".equals(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String currentPage = request.getParameter("page");
+            if (currentPage == null) currentPage = "1";
 
+            boolean success = itemDAO.delete(null, id);
+
+            response.sendRedirect("quanlysanpham?page=" + currentPage);
+            return;
+        }
 
 
         UnitDAO unitDAO = new UnitDAO();
@@ -163,25 +173,47 @@ public class ItemServlet extends HttpServlet {
             item.setMin_stock(Integer.parseInt(request.getParameter("minStock")));
             item.setCurrent_stock(0);
 
-            Part imagePart = request.getPart("image");
-            String imageUrl = null;
-
-            if (imagePart != null && imagePart.getSize() > 0) {
-                String fileName = System.currentTimeMillis() + "_" + imagePart.getSubmittedFileName();
-                String uploadPath = getServletContext().getRealPath("/uploads");
-
-                java.io.File uploadDir = new java.io.File(uploadPath);
-                if (!uploadDir.exists()) uploadDir.mkdirs();
-
-                imagePart.write(uploadPath + "/" + fileName);
-                imageUrl = "uploads/" + fileName;
-            }
-
             ItemDAO itemDAO = new ItemDAO();
             int itemId = itemDAO.insertAndReturnId(item);
 
-            if (imageUrl != null) {
-                itemDAO.insertImage(itemId, imageUrl);
+            if (itemId != -1) {
+                // Lấy tất cả các Part từ request
+                Collection<Part> parts = request.getParts();
+                String uploadPath = getServletContext().getRealPath("/images");
+                java.io.File uploadDir = new java.io.File(uploadPath);
+                if (!uploadDir.exists()) uploadDir.mkdirs();
+
+                String baseFileName = ""; // Lưu tên gốc của ảnh chính
+                int photoIndex = 0;
+
+                for (Part part : parts) {
+                    // Kiểm tra part có phải là input file (tên "images") và có dữ liệu không
+                    if (part.getName().equals("images") && part.getSize() > 0) {
+                        String originalFileName = part.getSubmittedFileName();
+                        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                        String finalFileName;
+                        int isPrimary = 0;
+
+                        if (photoIndex == 0) {
+                            // ẢNH ĐẦU TIÊN (PRIMARY)
+                            baseFileName = System.currentTimeMillis() + "_main";
+                            finalFileName = baseFileName + extension;
+                            isPrimary = 1;
+                        } else {
+                            // CÁC ẢNH SAU (tên_chính + _n)
+                            finalFileName = baseFileName + "_" + photoIndex + extension;
+                            isPrimary = 0;
+                        }
+
+                        // Lưu file vật lý
+                        part.write(uploadPath + java.io.File.separator + finalFileName);
+
+                        // Lưu thông tin vào DB
+                        itemDAO.insertImage(itemId, finalFileName, isPrimary);
+
+                        photoIndex++;
+                    }
+                }
             }
 
             response.sendRedirect("quanlysanpham");
@@ -198,6 +230,7 @@ public class ItemServlet extends HttpServlet {
             ItemDAO itemDAO = new ItemDAO();
             Item item = itemDAO.findById(id);
 
+            // 1. Cập nhật các thông tin văn bản
             item.setSku(request.getParameter("sku"));
             item.setName(request.getParameter("name"));
             item.setShort_description(request.getParameter("shortDescription"));
@@ -209,20 +242,45 @@ public class ItemServlet extends HttpServlet {
             item.setDiscount(Double.parseDouble(request.getParameter("discount")));
             item.setMin_stock(Integer.parseInt(request.getParameter("minStock")));
 
-            Part imagePart = request.getPart("image");
-            if (imagePart != null && imagePart.getSize() > 0) {
-                String fileName = System.currentTimeMillis() + "_" + imagePart.getSubmittedFileName();
-                String uploadPath = getServletContext().getRealPath("/uploads");
-                imagePart.write(uploadPath + "/" + fileName);
-                String imageUrl = "uploads/" + fileName;
-                itemDAO.updatePrimaryImage(id, imageUrl);
+            // 2. Xử lý Update nhiều ảnh
+            Collection<Part> parts = request.getParts();
+            // Kiểm tra xem người dùng có chọn file mới nào không
+            boolean hasNewImages = parts.stream().anyMatch(p -> p.getName().equals("images") && p.getSize() > 0);
+
+            if (hasNewImages) {
+                itemDAO.deleteAllImagesByItemId(id);
+
+                String uploadPath = getServletContext().getRealPath("/images");
+                String baseFileName = System.currentTimeMillis() + "_main";
+                int photoIndex = 0;
+
+                for (Part part : parts) {
+                    if (part.getName().equals("images") && part.getSize() > 0) {
+                        String originalName = part.getSubmittedFileName();
+                        String extension = originalName.substring(originalName.lastIndexOf("."));
+                        String finalFileName;
+                        int isPrimary = (photoIndex == 0) ? 1 : 0;
+
+                        if (photoIndex == 0) {
+                            finalFileName = baseFileName + extension;
+                        } else {
+                            finalFileName = baseFileName + "_" + photoIndex + extension;
+                        }
+
+                        part.write(uploadPath + java.io.File.separator + finalFileName);
+                        itemDAO.insertImage(id, finalFileName, isPrimary);
+
+                        photoIndex++;
+                    }
+                }
             }
 
             itemDAO.update(item, id);
             response.sendRedirect("quanlysanpham");
+
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendError(500, "Lỗi cập nhật sản phẩm");
+            response.sendError(500, "Lỗi cập nhật sản phẩm và bộ ảnh");
         }
     }
 

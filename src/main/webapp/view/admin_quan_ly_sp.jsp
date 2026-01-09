@@ -88,9 +88,10 @@
                                 <button type="button" class="btn-icon edit-btn" onclick="editProduct(${item.id})">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <a href="/admin/product/delete?id=${item.id}">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
+                                <button type="button" class="btn-icon delete-btn"
+                                        onclick="deleteAndKeepPage(${item.id}, ${currentPage})">
+                                    <i class="fas fa-trash-alt" ></i>
+                                </button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -223,10 +224,15 @@
 
 
                 <label>Hình ảnh sản phẩm:</label>
-                <div class="image-upload-box">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Kéo thả ảnh hoặc **Nhấn để chọn**</p>
-                    <input type="file" name="image" accept="image/*">
+                <div class="image-upload-container">
+                    <label>Hình ảnh sản phẩm:</label>
+                    <div class="image-upload-box" onclick="document.getElementById('imageInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Nhấn để chọn nhiều ảnh (Ảnh đầu là ảnh chính)</p>
+                        <input type="file" id="imageInput" name="images" accept="image/*" multiple
+                               style="display: none;" onchange="previewImages(this)">
+                    </div>
+                    <div id="imagePreviewContainer" class="image-preview-wrapper"></div>
                 </div>
             </div>
 

@@ -173,3 +173,39 @@ document.addEventListener("DOMContentLoaded", () => {
     priceInput.addEventListener('input', calculateFinalPrice);
     discountInput.addEventListener('input', calculateFinalPrice);
 });
+function deleteProduct(button, id) {
+    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
+        window.location.href = `quanlysanpham?action=delete&id=${id}`;
+    }
+}
+function deleteAndKeepPage(id, page) {
+    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
+        window.location.href = `quanlysanpham?action=delete&id=${id}&page=${page}`;
+    }
+}
+function previewImages(input) {
+    const container = document.getElementById('imagePreviewContainer');
+    container.innerHTML = '';
+
+    if (input.files) {
+        Array.from(input.files).forEach((file, index) => {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+
+                const badge = index === 0 ? '<span class="main-badge">Ảnh chính</span>' : '';
+
+                div.innerHTML = `
+                    ${badge}
+                    <img src="${e.target.result}" class="img-thumbnail">
+                    <div class="file-name">${file.name}</div>
+                `;
+                container.appendChild(div);
+            }
+
+            reader.readAsDataURL(file);
+        });
+    }
+}

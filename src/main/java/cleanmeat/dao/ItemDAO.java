@@ -83,8 +83,9 @@ public class ItemDAO extends BaseDAO<Item> {
                 ps.setString(1, url);
                 ps.setInt(2, itemId);
                 int rows = ps.executeUpdate();
+
                 if (rows == 0) {
-                    insertImage(itemId, url);
+                    insertImage(itemId, url, 1);
                 }
             }
         } catch (Exception e) {
@@ -303,14 +304,15 @@ public class ItemDAO extends BaseDAO<Item> {
         return -1;
     }
 
-    public void insertImage(int itemId, String url) {
-        String sql = "INSERT INTO item_image (item_id, url, is_primary) VALUES (?, ?, 1)";
+    public void insertImage(int itemId, String url, int isPrimary) {
+        String sql = "INSERT INTO item_image (item_id, url, is_primary) VALUES (?, ?, ?)";
         Connection conn = null;
         try {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, itemId);
                 ps.setString(2, url);
+                ps.setInt(3, isPrimary);
                 ps.executeUpdate();
             }
         } catch (Exception e) {
@@ -319,9 +321,50 @@ public class ItemDAO extends BaseDAO<Item> {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
     }
-
     @Override
-    protected boolean delete(Item item, int id) {
+    public boolean delete(Item item, int id) {
+        String sqlDeleteImage = "DELETE FROM item_image WHERE item_id = ?";
+        String sqlDeleteItem = "DELETE FROM item WHERE id = ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement psImg = conn.prepareStatement(sqlDeleteImage);
+                 PreparedStatement psItem = conn.prepareStatement(sqlDeleteItem)) {
+
+                psImg.setInt(1, id);
+                psImg.executeUpdate();
+
+                psItem.setInt(1, id);
+                int result = psItem.executeUpdate();
+
+                conn.commit();
+                return result > 0;
+            } catch (SQLException e) {
+                if (conn != null) conn.rollback();
+                throw e;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
         return false;
+    }
+    public void deleteAllImagesByItemId(int itemId) {
+        String sql = "DELETE FROM item_image WHERE item_id = ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, itemId);
+                ps.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
     }
 }
