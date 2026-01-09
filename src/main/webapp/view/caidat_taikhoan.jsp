@@ -32,7 +32,7 @@
 <div id="input-password-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="close-input-password-modal">&times;</span>
-        <div class="password-form">
+        <form class="password-form" action="${pageContext.request.contextPath}/tai-khoan?tab=cai-dat" method="post">
             <h2>Vui lòng nhập mật khẩu</h2>
             <div class="form-input">
                 <label for="password" class="profile-form label"><i class="fa-solid fa-key"></i></label>
@@ -41,9 +41,9 @@
             </div>
             <div class="btn-group">
                 <button type="button" class="cancle-btn" id="cancle-confirm-password-btn">Hủy</button>
-                <button type="submit" class="confirm-btn" id="confirm-delete-btn">Xóa tài khoản</button>
+                <button type="button" class="confirm-btn" id="confirm-delete-btn">Xóa tài khoản</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -74,6 +74,7 @@
 
         const confirmDeleteBtn = document.getElementById("confirm-delete-account-btn");
         confirmDeleteBtn.addEventListener("click", () => {
+            closeModal("delete-account-modal");
             openModal("input-password-modal");
         });
 
@@ -88,15 +89,15 @@
         });
 
         window.addEventListener("click", (e) => {
-            if (e.target === "delete-account-modal") closeModal("delete-account-modal");
-            if (e.target === "input-password-modal") closeModal("input-password-modal");
+            if (e.target.id === "delete-account-modal") closeModal("delete-account-modal");
+            if (e.target.id === "input-password-modal") closeModal("input-password-modal");
         });
 
         //dùng AJAX để điều hướng các hành động khi chọn xác nhận xóa tài khoản
         document.getElementById("confirm-delete-btn").addEventListener("click", () => {
             const password = document.getElementById("password").value;
 
-            fetch("/tai-khoan?action=delete-account", {
+            fetch("${pageContext.request.contextPath}/tai-khoan?action=delete-account", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -107,7 +108,9 @@
                     closeModal("input-password-modal");
 
                     const message = document.getElementById("message");
+                    message.innerHTML = "";
                     const btn = document.getElementById("btn");
+                    btn.innerHTML = "";
 
                     if (data.success) {
                         let countdown = 5;

@@ -51,4 +51,12 @@ public class UserService {
         return userDAO.changePassword(userId, newPassword);
     }
 
+    public boolean deleteAccount(int id, String password) {
+        User user = userDAO.findById(id);
+        if (user == null)
+            return false;
+        if (!user.getPassword().equals(password))
+            return false;
+        return userDAO.delete(id);
+    }
 }

@@ -4,11 +4,14 @@ import cleanmeat.model.Address;
 import cleanmeat.model.User;
 import cleanmeat.services.AddressService;
 import cleanmeat.services.UserService;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
@@ -72,9 +75,10 @@ public class TaiKhoan extends HttpServlet {
             return;
         }
 
-        //chức năng thêm, xóa, chỉnh sửa địa chỉ
         String action = request.getParameter("action");
         AddressService addressService = new AddressService();
+        UserService userService = new UserService();
+
         try {
             if ("add".equals(action)) {
                 String addressDetail = request.getParameter("address");
@@ -101,9 +105,26 @@ public class TaiKhoan extends HttpServlet {
                 String oldPassword = request.getParameter("currentPassword");
                 String newPassword = request.getParameter("newPassword");
                 String confirmPassword = request.getParameter("confirmPassword");
-                UserService userService = new UserService();
                 userService.changePassword(user.getId(), oldPassword, newPassword, confirmPassword);
                 response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=doi-mat-khau");
+            } else if ("delete-account".equals(action)) {
+                String json = request.getReader().lines().reduce("", (acc, line) -> acc + line);
+                JsonObject body = JsonParser.parseString(json).getAsJsonObject();
+                String password = body.get("password").getAsString();
+
+                try {
+                    boolean success = userService.deleteAccount(user.getId(), password);
+                    var writer = response.getWriter();
+                    if (success) {
+                        session.invalidate();
+                        writer.write("{\"success\": true}");
+                    } else {
+                        writer.write("{\"success\": false, \"message\": \"Mật khẩu không đúng\"}");
+                    }
+                } catch (Exception e) {
+                    response.getWriter().write("{\"success\": false, \"message\": \"Lỗi hệ thống\"}");
+                }
+                return;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
