@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserDAO extends BaseDAO<User> {
+    private static final int RECORDS_PER_PAGE = 9;
     public static Map<Integer, User> users = new ConcurrentHashMap<>();
 
     public UserDAO() {
@@ -289,52 +290,21 @@ public class UserDAO extends BaseDAO<User> {
 
     public boolean existsByEmail(String email) {
         String sql = "SELECT 1 FROM user WHERE email = ? LIMIT 1";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean changePassword(int userId, String newPassword) {
-        String sql = "UPDATE user SET password = ? WHERE id = ?";
         Connection conn = null;
         try {
             conn = getConnection();
-            conn.setAutoCommit(false);
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, newPassword);
-                ps.setInt(2, userId);
-                if (ps.executeUpdate() == 0) {
-                    conn.rollback();
-                    return false;
-                }
-                User user = users.get(userId);
-                if (user != null) user.setPassword(newPassword);
-                return true;
+            try (
+                    PreparedStatement ps = conn.prepareStatement(sql)) {
+
+                ps.setString(1, email);
+                ResultSet rs = ps.executeQuery();
+                return rs.next();
             }
         } catch (Exception e) {
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } finally {
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
+        return false;
     }
 }

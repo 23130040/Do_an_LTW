@@ -61,8 +61,8 @@
                             <th>Danh mục</th>
                             <th>Sản phẩm</th>
                             <th>Nguồn gốc</th>
-                            <th>Loại</th>
                             <th>Khối lượng</th>
+                            <th>Loại</th>
                             <th>Số lượng</th>
                             <th>Người tạo</th>
                         </tr>
@@ -74,8 +74,8 @@
                             <td>Thịt Bò</td>
                             <td>Thịt Bò Thăn Nội (Mỹ)</td>
                             <td>Mỹ</td>
-                            <td><span class="type-badge type-input">Nhập hàng</span></td>
                             <td>250g</td>
+                            <td><span class="type-badge type-input">Nhập</span></td>
                             <td>+10 kg</td>
                             <td>Admin A</td>
                         </tr>
@@ -114,8 +114,8 @@
                             <th>Danh mục</th>
                             <th>Sản phẩm</th>
                             <th>Nguồn gốc</th>
-                            <th>Loại</th>
                             <th>Khối lượng</th>
+                            <th>Loại</th>
                             <th>Số lượng</th>
                             <th>Người tạo</th>
                         </tr>
@@ -127,8 +127,8 @@
                             <td>Thịt Bò</td>
                             <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
                             <td>Việt Nam</td>
-                            <td><span class="type-badge type-output">Xuất hủy</span></td>
                             <td>250g</td>
+                            <td><span class="type-badge type-output">Xuất</span></td>
                             <td>-5 kg</td>
                             <td>Admin B</td>
                         </tr>
