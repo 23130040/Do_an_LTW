@@ -70,6 +70,10 @@ public class ItemServlet extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         OriginDAO originDAO = new OriginDAO();
 
+        String search = request.getParameter("search");
+        String category = request.getParameter("category");
+        String origin = request.getParameter("origin");
+
         int page = 1;
         int pageSize = 5;
 
@@ -81,13 +85,17 @@ public class ItemServlet extends HttpServlet {
             } catch (NumberFormatException ignored) {}
         }
 
-        List<Item> items = itemDAO.findByPage(page, pageSize);
-        int totalItems = itemDAO.countItems();
+        List<Item> items = itemDAO.searchAndFilter(search, category, origin, page, pageSize);
+        int totalItems = itemDAO.countFilteredItems(search, category, origin);
         int totalPages = (int) Math.ceil((double) totalItems / pageSize);
 
         request.setAttribute("items", items);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
+
+        request.setAttribute("selectedSearch", search);
+        request.setAttribute("selectedCat", category);
+        request.setAttribute("selectedOrg", origin);
 
         request.setAttribute("unitList", unitDAO.findAll());
         request.setAttribute("categories", categoryDAO.findAll());
@@ -177,17 +185,15 @@ public class ItemServlet extends HttpServlet {
             int itemId = itemDAO.insertAndReturnId(item);
 
             if (itemId != -1) {
-                // Lấy tất cả các Part từ request
                 Collection<Part> parts = request.getParts();
                 String uploadPath = getServletContext().getRealPath("/images");
                 java.io.File uploadDir = new java.io.File(uploadPath);
                 if (!uploadDir.exists()) uploadDir.mkdirs();
 
-                String baseFileName = ""; // Lưu tên gốc của ảnh chính
+                String baseFileName = "";
                 int photoIndex = 0;
 
                 for (Part part : parts) {
-                    // Kiểm tra part có phải là input file (tên "images") và có dữ liệu không
                     if (part.getName().equals("images") && part.getSize() > 0) {
                         String originalFileName = part.getSubmittedFileName();
                         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -195,20 +201,16 @@ public class ItemServlet extends HttpServlet {
                         int isPrimary = 0;
 
                         if (photoIndex == 0) {
-                            // ẢNH ĐẦU TIÊN (PRIMARY)
                             baseFileName = System.currentTimeMillis() + "_main";
                             finalFileName = baseFileName + extension;
                             isPrimary = 1;
                         } else {
-                            // CÁC ẢNH SAU (tên_chính + _n)
                             finalFileName = baseFileName + "_" + photoIndex + extension;
                             isPrimary = 0;
                         }
 
-                        // Lưu file vật lý
                         part.write(uploadPath + java.io.File.separator + finalFileName);
 
-                        // Lưu thông tin vào DB
                         itemDAO.insertImage(itemId, finalFileName, isPrimary);
 
                         photoIndex++;
@@ -230,7 +232,6 @@ public class ItemServlet extends HttpServlet {
             ItemDAO itemDAO = new ItemDAO();
             Item item = itemDAO.findById(id);
 
-            // 1. Cập nhật các thông tin văn bản
             item.setSku(request.getParameter("sku"));
             item.setName(request.getParameter("name"));
             item.setShort_description(request.getParameter("shortDescription"));
@@ -242,9 +243,7 @@ public class ItemServlet extends HttpServlet {
             item.setDiscount(Double.parseDouble(request.getParameter("discount")));
             item.setMin_stock(Integer.parseInt(request.getParameter("minStock")));
 
-            // 2. Xử lý Update nhiều ảnh
             Collection<Part> parts = request.getParts();
-            // Kiểm tra xem người dùng có chọn file mới nào không
             boolean hasNewImages = parts.stream().anyMatch(p -> p.getName().equals("images") && p.getSize() > 0);
 
             if (hasNewImages) {

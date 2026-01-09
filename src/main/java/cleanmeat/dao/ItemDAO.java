@@ -1,6 +1,8 @@
 package cleanmeat.dao;
 
 import cleanmeat.model.Item;
+import cleanmeat.model.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -366,5 +368,97 @@ public class ItemDAO extends BaseDAO<Item> {
         } finally {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
+    }
+    public List<Item> searchAndFilter(String keyword, String category, String origin, int page, int pageSize) {
+        List<Item> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(
+                "SELECT i.*, img.url AS image_url, c.name AS category_name, o.name AS origin_name, u.name AS unit_name " +
+                        "FROM item i " +
+                        "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
+                        "LEFT JOIN category c ON i.category_id = c.id " +
+                        "LEFT JOIN origin o ON i.origin_id = o.id " +
+                        "LEFT JOIN unit u ON i.unit_id = u.id WHERE 1=1"
+        );
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (i.name LIKE ? OR i.sku LIKE ?)");
+            String val = "%" + keyword.trim() + "%";
+            params.add(val); params.add(val);
+        }
+        if (category != null && !category.isEmpty()) {
+            sql.append(" AND i.category_id = ?");
+            params.add(category);
+        }
+        if (origin != null && !origin.isEmpty()) {
+            sql.append(" AND i.origin_id = ?");
+            params.add(origin);
+        }
+
+        sql.append(" ORDER BY i.created_at DESC LIMIT ? OFFSET ?");
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        list.add(mapResultSetToEntity(rs));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+        return list;
+    }
+    public int countFilteredItems(String keyword, String category, String origin) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM item WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (name LIKE ? OR sku LIKE ?)");
+            String val = "%" + keyword.trim() + "%";
+            params.add(val); params.add(val);
+        }
+        if (category != null && !category.isEmpty()) {
+            sql.append(" AND category_id = ?");
+            params.add(category);
+        }
+        if (origin != null && !origin.isEmpty()) {
+            sql.append(" AND origin_id = ?");
+            params.add(origin);
+        }
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+        return 0;
     }
 }

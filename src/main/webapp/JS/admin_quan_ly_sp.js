@@ -209,3 +209,44 @@ function previewImages(input) {
         });
     }
 }
+let searchTimeout;
+
+const searchInput = document.getElementById('searchInput');
+const categoryFilter = document.getElementById('categoryFilter');
+const originFilter = document.getElementById('originFilter');
+
+function applyFilterAndSearch() {
+    const keyword = searchInput.value.trim();
+    const category = categoryFilter.value;
+    const origin = originFilter.value;
+
+    const params = new URLSearchParams();
+
+    if (keyword) params.append('search', keyword);
+    if (category) params.append('category', category);
+    if (origin) params.append('origin', origin);
+
+    params.append('page', '1');
+
+    window.location.href = 'quanlysanpham?' + params.toString();
+}
+
+searchInput.addEventListener('input', () => {
+    if (typeof searchTimeout !== 'undefined') {
+        clearTimeout(searchTimeout);
+    }
+    searchTimeout = setTimeout(applyFilterAndSearch, 500);
+});
+
+categoryFilter.addEventListener('change', applyFilterAndSearch);
+originFilter.addEventListener('change', applyFilterAndSearch);
+
+searchInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        if (typeof searchTimeout !== 'undefined') {
+            clearTimeout(searchTimeout);
+        }
+        applyFilterAndSearch();
+    }
+});

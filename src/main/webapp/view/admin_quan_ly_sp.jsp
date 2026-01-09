@@ -30,17 +30,24 @@
 
             <div class="control-panel">
                 <div class="filters">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input">
-                    <select name="category" class="filter-select" required>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input" id="searchInput"
+                           value="${selectedSearch}">
+
+                    <select name="category" class="filter-select" id="categoryFilter">
                         <option value="">Chọn loại thịt</option>
                         <c:forEach var="cat" items="${categories}">
-                            <option value="${cat.id}">${cat.name}</option>
+                            <option value="${cat.id}" ${cat.id == selectedCat ? 'selected' : ''}>
+                                    ${cat.name}
+                            </option>
                         </c:forEach>
                     </select>
-                    <select name="origin" class="filter-select" required>
+
+                    <select name="origin" class="filter-select" id="originFilter">
                         <option value="">Chọn nguồn gốc</option>
                         <c:forEach var="org" items="${origin}">
-                            <option value="${org.id}">${org.name}</option>
+                            <option value="${org.id}" ${org.id == selectedOrg ? 'selected' : ''}>
+                                    ${org.name}
+                            </option>
                         </c:forEach>
                     </select>
                 </div>
