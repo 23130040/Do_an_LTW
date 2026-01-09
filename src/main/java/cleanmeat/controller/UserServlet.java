@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+@MultipartConfig
 @WebServlet(name = "UserServlet", value = "/quanlyuser")
 public class UserServlet extends HttpServlet {
     private final UserDAO userDAO = new UserDAO();
@@ -146,7 +147,7 @@ public class UserServlet extends HttpServlet {
                     : null;
 
             String verifiedEmail = (session != null)
-                    ? (String) session.getAttribute("OTP_EMAIL")
+                    ? (String) session.getAttribute("VERIFIED_EMAIL")
                     : null;
 
             String email = request.getParameter("userEmail");
@@ -187,11 +188,16 @@ public class UserServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                     "Lỗi khi thêm người dùng");
         }
-        
+
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            String idStr = request.getParameter("id");
+            if (idStr == null || idStr.isEmpty()) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu ID người dùng.");
+                return;
+            }
             int id = Integer.parseInt(request.getParameter("id"));
             String name = request.getParameter("userName");
             String email = request.getParameter("userEmail");
@@ -215,7 +221,7 @@ public class UserServlet extends HttpServlet {
                 }
 
                 if (userDAO.update(existingUser, id)) {
-                    response.sendRedirect(request.getContextPath() + "/quanlyuser");
+                    response.getWriter().write("SUCCESS");
                 } else {
                     response.getWriter().write("Lỗi: Không thể cập nhật người dùng.");
                 }

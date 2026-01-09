@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Item {
     private int id;
+    private String sku;
     private String name;
     private String short_description;
     private String long_description;
@@ -22,8 +23,9 @@ public class Item {
     private String unitName;
 
 
-    public Item(int id, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock, LocalDate created_at, LocalDate updated_at) {
+    public Item(int id, String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock, LocalDate created_at, LocalDate updated_at) {
         this.id = id;
+        this.sku = sku;
         this.name = name;
         this.short_description = short_description;
         this.long_description = long_description;
@@ -37,8 +39,9 @@ public class Item {
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
-    public Item(String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock) {
+    public Item(String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock) {
         this.name = name;
+        this.sku = sku;
         this.short_description = short_description;
         this.long_description = long_description;
         this.category_id = category_id;
@@ -159,7 +162,7 @@ public class Item {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -173,4 +176,16 @@ public class Item {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+    public double getFinalPrice() {
+        return price * (100 - discount) / 100;
+    }
+
 }

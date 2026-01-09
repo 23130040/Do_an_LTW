@@ -1,6 +1,7 @@
 package cleanmeat.dao;
 
 import cleanmeat.model.User;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -241,7 +242,9 @@ public class UserDAO extends BaseDAO<User> {
         if (keyword != null && !keyword.trim().isEmpty()) {
             sql.append(" AND (name COLLATE utf8mb4_bin LIKE ? OR email COLLATE utf8mb4_bin LIKE ? OR phone COLLATE utf8mb4_bin LIKE ?)");
             String likeValue = "%" + keyword.trim() + "%";
-            params.add(likeValue); params.add(likeValue); params.add(likeValue);
+            params.add(likeValue);
+            params.add(likeValue);
+            params.add(likeValue);
         }
         if (role != null && !role.trim().isEmpty()) {
             sql.append(" AND role = ?");
@@ -287,16 +290,20 @@ public class UserDAO extends BaseDAO<User> {
 
     public boolean existsByEmail(String email) {
         String sql = "SELECT 1 FROM user WHERE email = ? LIMIT 1";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (
+                    PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
-
+                ps.setString(1, email);
+                ResultSet rs = ps.executeQuery();
+                return rs.next();
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
         return false;
     }

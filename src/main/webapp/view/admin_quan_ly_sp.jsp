@@ -30,21 +30,28 @@
 
             <div class="control-panel">
                 <div class="filters">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input">
-                    <select name="category" class="filter-select" required>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input" id="searchInput"
+                           value="${selectedSearch}">
+
+                    <select name="category" class="filter-select" id="categoryFilter">
                         <option value="">Chọn loại thịt</option>
                         <c:forEach var="cat" items="${categories}">
-                            <option value="${cat.id}">${cat.name}</option>
+                            <option value="${cat.id}" ${cat.id == selectedCat ? 'selected' : ''}>
+                                    ${cat.name}
+                            </option>
                         </c:forEach>
                     </select>
-                    <select name="origin" class="filter-select" required>
+
+                    <select name="origin" class="filter-select" id="originFilter">
                         <option value="">Chọn nguồn gốc</option>
                         <c:forEach var="org" items="${origin}">
-                            <option value="${org.id}">${org.name}</option>
+                            <option value="${org.id}" ${org.id == selectedOrg ? 'selected' : ''}>
+                                    ${org.name}
+                            </option>
                         </c:forEach>
                     </select>
                 </div>
-                <button class="btn btn-primary" onclick="openProductModal()">
+                <button class="btn button-primary" onclick="openProductModal()">
                     <i class="fas fa-plus"></i> Thêm Sản phẩm Mới
                 </button>
             </div>
@@ -57,6 +64,7 @@
                 <table class="product-table">
                     <thead>
                     <tr>
+                        <th>SKU</th>
                         <th>Ảnh</th>
                         <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
@@ -70,6 +78,7 @@
                     <tbody>
                     <c:forEach var="item" items="${items}">
                         <tr>
+                            <td>${item.sku}</td>
                             <td>
                                 <img src="${pageContext.request.contextPath}/images/${item.imageUrl}"
                                      alt="${item.name}" class="product-thumb">
@@ -83,12 +92,13 @@
                                     ${item.current_stock}
                             </td>
                             <td>
-                                <a href="/admin/product/edit?id=${item.id}">
+                                <button type="button" class="btn-icon edit-btn" onclick="editProduct(${item.id})">
                                     <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="/admin/product/delete?id=${item.id}">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
+                                </button>
+                                <button type="button" class="btn-icon delete-btn"
+                                        onclick="deleteAndKeepPage(${item.id}, ${currentPage})">
+                                    <i class="fas fa-trash-alt" ></i>
+                                </button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -141,19 +151,24 @@
     <div class="modal-content">
         <span class="close-btn" onclick="closeProductModal()">&times;</span>
         <h3><span id="modal-title-product">Thêm</span> Sản Phẩm</h3>
-        <form class="product-form">
+        <form class="product-form"
+              action="quanlysanpham"
+              method="post"
+              enctype="multipart/form-data">
+            <input type="hidden" name="action" id="formAction" value="addItem">
+            <input type="hidden" name="productId" id="productId">
             <div class="form-section left-col">
                 <label>Tên sản phẩm:</label>
-                <input type="text" placeholder="Tên sản phẩm" required>
+                <input type="text" name="name"  placeholder="Tên sản phẩm" required>
 
                 <label>Mô tả ngắn:</label>
-                <textarea rows="3" placeholder="Mô tả ngắn gọn"></textarea>
+                <textarea name="shortDescription" rows="3" placeholder="Mô tả ngắn gọn"></textarea>
 
                 <label>Mô tả chi tiết:</label>
-                <textarea rows="5" placeholder="Mô tả chi tiết "></textarea>
+                <textarea name="longDescription" rows="5" placeholder="Mô tả chi tiết "></textarea>
 
                 <label>Danh mục:</label>
-                <select name="category" required>
+                <select name="categoryId" required>
                     <option value="">Chọn loại thịt</option>
                     <c:forEach var="cat" items="${categories}">
                         <option value="${cat.id}">${cat.name}</option>
@@ -161,7 +176,7 @@
                 </select>
 
                 <label>Nguồn gốc:</label>
-                <select name="origin" required>
+                <select name="originId" required>
                     <option value="">Chọn nguồn gốc</option>
                     <c:forEach var="org" items="${origin}">
                         <option value="${org.id}">${org.name}</option>
@@ -191,29 +206,44 @@
                     <input type="number" id="newWeight" placeholder="Nhập số gram (vd: 2000)">
                     <button type="button" onclick="addNewWeight()">Thêm mới</button>
                 </div>
+
+                <label>Giá gốc (VND):</label>
+                <input type="number" name="price" id="price" placeholder="50000" required>
+
+                <label>Giảm giá (%):</label>
+                <input type="number" name="discount" id="discount" placeholder="20" value="0">
+
                 <label>Giá bán (VND):</label>
-                <input type="number" placeholder="250000" required>
+                <input type="number"
+                       name="finalPrice"
+                       id="finalPrice"
+                       readonly
+                       placeholder="Tự động tính">
 
-                <label>Giá gốc :</label>
-                <input type="number" placeholder="50000">
 
-                <label>Mã sản phẩm:</label>
-                <input type="text" placeholder="1001">
+                <label>Mã sản phẩm(SKU):</label>
+                <input type="text" placeholder="1001" name="sku">
 
                 <div class="inventory-group">
                     <label>Ngưỡng cảnh báo:</label>
-                    <input type="number" placeholder="5 (Cảnh báo khi <= 5)">
+                    <input type="number" placeholder="5 (Cảnh báo khi <= 5)" name="minStock">
                 </div>
 
 
                 <label>Hình ảnh sản phẩm:</label>
-                <div class="image-upload-box">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Kéo thả ảnh hoặc **Nhấn để chọn**</p>
+                <div class="image-upload-container">
+                    <label>Hình ảnh sản phẩm:</label>
+                    <div class="image-upload-box" onclick="document.getElementById('imageInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Nhấn để chọn nhiều ảnh (Ảnh đầu là ảnh chính)</p>
+                        <input type="file" id="imageInput" name="images" accept="image/*" multiple
+                               style="display: none;" onchange="previewImages(this)">
+                    </div>
+                    <div id="imagePreviewContainer" class="image-preview-wrapper"></div>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary submit-btn">Lưu Sản Phẩm</button>
+            <button type="submit" class="btn button-primary submit-btn">Lưu Sản Phẩm</button>
         </form>
     </div>
 </div>
