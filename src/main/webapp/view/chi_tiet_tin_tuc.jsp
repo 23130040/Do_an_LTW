@@ -52,7 +52,7 @@
                     </a>
                     <p>
                         <i class="fa-regular fa-calendar"></i>
-                        <fmt:formatDate value="${n.formattedDate}" pattern="dd/MM/yyyy"/>
+                            ${n.created_at}
                     </p>
                 </div>
             </div>
