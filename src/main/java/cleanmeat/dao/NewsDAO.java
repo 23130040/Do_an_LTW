@@ -121,4 +121,50 @@ public class NewsDAO extends BaseDAO<News> {
         }
         return list;
     }
+    public List<News> findByPage(int page) {
+        List<News> list = new ArrayList<>();
+
+        int pageSize = 4;
+        int offset = (page - 1) * pageSize;
+
+        String sql =
+                "SELECT * FROM news " +
+                        "ORDER BY created_at DESC " +
+                        "LIMIT ? OFFSET ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, pageSize);
+            ps.setInt(2, offset);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public int countPages() {
+        int pageSize = 4;
+        String sql = "SELECT COUNT(*) FROM news";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                return (int) Math.ceil(total * 1.0 / pageSize);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
 }

@@ -1,12 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 
-<!-- ===== PHẦN TIN TỨC ===== -->
 <section class="tin-tuc-layout">
 
-    <!-- ===== CỘT TRÁI: DANH SÁCH TIN ===== -->
     <section class="tin-tuc-container">
-
         <div class="tin-tuc-grid">
 
             <c:forEach items="${newsList}" var="n">
@@ -24,7 +23,14 @@
                         </div>
 
                         <p class="tin-desc">
-                            <c:out value="${n.content}" escapeXml="true"/>
+                            <c:choose>
+                                <c:when test="${fn:length(n.content) > 250}">
+                                    ${fn:substring(n.content, 0, 250)}...
+                                </c:when>
+                                <c:otherwise>
+                                    ${n.content}
+                                </c:otherwise>
+                            </c:choose>
                         </p>
 
                         <a href="chi-tiet-tin-tuc?id=${n.id}" class="tin-link">
@@ -35,10 +41,9 @@
             </c:forEach>
 
         </div>
-
     </section>
 
-    <!-- ===== CỘT PHẢI: TIN MỚI ===== -->
+    <!-- CỘT PHẢI -->
     <aside class="tin-moi">
         <h2>Bài viết mới nhất</h2>
 
@@ -60,11 +65,28 @@
     </aside>
 
 </section>
-
-<!-- ===== PHÂN TRANG ===== -->
 <div class="pagination">
-    <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
-    <a class="page active" data-page="1">1</a>
-    <a class="page" data-page="2">2</a>
-    <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
+
+    <c:if test="${currentPage > 1}">
+        <a href="${ctx}/tin-tuc?page=${currentPage - 1}">
+            &laquo;
+        </a>
+    </c:if>
+
+    <c:forEach begin="1" end="${totalPages}" var="i">
+        <a href="${ctx}/tin-tuc?page=${i}"
+           class="page ${i == currentPage ? 'active' : ''}">
+                ${i}
+        </a>
+    </c:forEach>
+
+    <c:if test="${currentPage < totalPages}">
+        <a href="${ctx}/tin-tuc?page=${currentPage + 1}">
+            &raquo;
+        </a>
+    </c:if>
+
+</div>
+
+
 </div>
