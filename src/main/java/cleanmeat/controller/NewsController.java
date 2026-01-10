@@ -9,39 +9,32 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "news", value = "/tin-tuc")
+@WebServlet("/tin-tuc")
 public class NewsController extends HttpServlet {
+
+    private NewsDAO newsDAO = new NewsDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        NewsDAO newsDAO = new NewsDAO();
-
-        // ===== PHÂN TRANG =====
         int page = 1;
         String pageParam = request.getParameter("page");
         if (pageParam != null) {
             try {
                 page = Integer.parseInt(pageParam);
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 page = 1;
             }
         }
 
-        List<News> newsList = newsDAO.findByPage(page);
         int totalPages = newsDAO.countPages();
 
-        // Format date
-        for (News n : newsList) {
-            if (n.getCreated_at() != null) {
-                n.setFormattedDate(
-                        java.sql.Date.valueOf(n.getCreated_at())
-                );
-            }
-        }
+        if (page < 1) page = 1;
+        if (page > totalPages) page = totalPages;
 
-        // ===== SET ATTRIBUTE =====
+        List<News> newsList = newsDAO.findByPage(page);
+
         request.setAttribute("newsList", newsList);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
@@ -49,9 +42,9 @@ public class NewsController extends HttpServlet {
         request.setAttribute("pageTitle", "Tin Tức");
         request.setAttribute("mainContent", "/view/tin_tuc.jsp");
         request.setAttribute("pageCss", "/CSS/tin_tuc.css");
-        request.setAttribute("pageJS", "/JS/tin_tuc.js");
 
         request.getRequestDispatcher("/view/base/base.jsp")
                 .forward(request, response);
+
     }
 }
