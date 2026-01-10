@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <section class="tin-tuc-layout">
 
@@ -64,3 +65,28 @@
     </aside>
 
 </section>
+<div class="pagination">
+
+    <c:if test="${currentPage > 1}">
+        <a href="${ctx}/tin-tuc?page=${currentPage - 1}">
+            &laquo;
+        </a>
+    </c:if>
+
+    <c:forEach begin="1" end="${totalPages}" var="i">
+        <a href="${ctx}/tin-tuc?page=${i}"
+           class="page ${i == currentPage ? 'active' : ''}">
+                ${i}
+        </a>
+    </c:forEach>
+
+    <c:if test="${currentPage < totalPages}">
+        <a href="${ctx}/tin-tuc?page=${currentPage + 1}">
+            &raquo;
+        </a>
+    </c:if>
+
+</div>
+
+
+</div>

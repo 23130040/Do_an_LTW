@@ -12,7 +12,8 @@
 
         <div class="date-view">
             <i class="fa fa-calendar"></i>
-            <fmt:formatDate value="${createdDate}" pattern="dd/MM/yyyy"/>
+            <!-- LocalDate -> hiển thị trực tiếp -->
+            ${news.created_at}
         </div>
 
         <div class="detail-content">
@@ -33,7 +34,7 @@
             </strong>
         </p>
 
-        <a href="tin-tuc" class="back-link">
+        <a href="<c:url value='/tin-tuc'/>" class="back-link">
             &larr; Quay lại tin tức
         </a>
 
@@ -45,11 +46,15 @@
 
         <c:forEach items="${latestNews}" var="n">
             <div class="tin-moi-item">
-                <img src="${n.picture_url}" alt="${n.title}">
+
+                <img src="<c:url value='/images/${n.picture_url}'/>"
+                     alt="${n.title}">
+
                 <div>
-                    <a href="chi-tiet-tin-tuc?id=${n.id}">
+                    <a href="<c:url value='/chi-tiet-tin-tuc?id=${n.id}'/>">
                             ${n.title}
                     </a>
+
                     <p>
                         <i class="fa-regular fa-calendar"></i>
                             ${n.created_at}

@@ -7,7 +7,6 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.List;
 
 @WebServlet(name = "news", value = "/tin-tuc")
@@ -18,17 +17,34 @@ public class NewsController extends HttpServlet {
             throws ServletException, IOException {
 
         NewsDAO newsDAO = new NewsDAO();
-        List<News> newsList = newsDAO.findAll();
 
+        // ===== PHÂN TRANG =====
+        int page = 1;
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            try {
+                page = Integer.parseInt(pageParam);
+            } catch (NumberFormatException e) {
+                page = 1;
+            }
+        }
+
+        List<News> newsList = newsDAO.findByPage(page);
+        int totalPages = newsDAO.countPages();
+
+        // Format date
         for (News n : newsList) {
             if (n.getCreated_at() != null) {
                 n.setFormattedDate(
-                        Date.valueOf(n.getCreated_at())
+                        java.sql.Date.valueOf(n.getCreated_at())
                 );
             }
         }
 
+        // ===== SET ATTRIBUTE =====
         request.setAttribute("newsList", newsList);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
 
         request.setAttribute("pageTitle", "Tin Tức");
         request.setAttribute("mainContent", "/view/tin_tuc.jsp");
