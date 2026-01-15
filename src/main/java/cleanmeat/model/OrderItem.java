@@ -17,10 +17,41 @@ public class OrderItem {
         this.creates_at = creates_at;
     }
 
-    public OrderItem(Order order, Item item, double price, double quantity) {
-        this.order = order;
+    public OrderItem(Item item, double price, double quantity) {
         this.item = item;
         this.price = price;
+        this.quantity = quantity;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 }
