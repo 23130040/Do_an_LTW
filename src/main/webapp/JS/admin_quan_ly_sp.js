@@ -209,7 +209,6 @@ function previewImages(input) {
         });
     }
 }
-let searchTimeout;
 
 const searchInput = document.getElementById('searchInput');
 const categoryFilter = document.getElementById('categoryFilter');
@@ -231,12 +230,6 @@ function applyFilterAndSearch() {
     window.location.href = 'quanlysanpham?' + params.toString();
 }
 
-searchInput.addEventListener('input', () => {
-    if (typeof searchTimeout !== 'undefined') {
-        clearTimeout(searchTimeout);
-    }
-    searchTimeout = setTimeout(applyFilterAndSearch, 500);
-});
 
 categoryFilter.addEventListener('change', applyFilterAndSearch);
 originFilter.addEventListener('change', applyFilterAndSearch);

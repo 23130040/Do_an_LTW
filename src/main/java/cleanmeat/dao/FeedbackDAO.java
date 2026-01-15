@@ -16,8 +16,9 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     private UserDAO userDAO = new UserDAO();
 
     public FeedbackDAO() {
-        String sql = "SELECT f.*, u.name AS user_name FROM feedback f " +
-                "LEFT JOIN user u ON f.user_id = u.id ORDER BY f.created_at DESC";
+        String sql = "SELECT f.*, u.name AS user_name, i.name AS item_name FROM feedback f " +
+                "LEFT JOIN user u ON f.user_id = u.id " +
+                "LEFT JOIN item i ON f.item_id = i.id ORDER BY f.created_at DESC";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -54,7 +55,6 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
         LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
                 ? rs.getTimestamp("updated_at").toLocalDateTime() : null;
 
-        // Ưu tiên lấy từ JOIN để tiết kiệm Connection
         User user = null;
         try {
             String userName = rs.getString("user_name");
@@ -64,11 +64,14 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
                 user.setName(userName);
             }
         } catch (SQLException e) {
-            // Chỉ fallback về DAO nếu SQL không có JOIN (hạn chế dùng)
             user = userDAO.findById(user_id);
         }
 
         Feedback feedback = new Feedback(id, response_id, user, item_id, rating, comment, created_at, updated_at);
+        try {
+            String itemName = rs.getString("item_name");
+            feedback.setItem_name(itemName);
+        } catch (SQLException ignored) {}
         try {
             feedback.setReplied(rs.getInt("is_replied") == 1);
         } catch (SQLException ignored) {}
@@ -125,8 +128,10 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
 
     @Override
     public Feedback findById(int id) {
-        String sql = "SELECT f.*, u.name AS user_name FROM feedback f " +
-                "LEFT JOIN user u ON f.user_id = u.id WHERE f.id = ?";
+        String sql = "SELECT f.*, u.name AS user_name, i.name AS item_name \n" +
+                "FROM feedback f \n" +
+                "LEFT JOIN user u ON f.user_id = u.id \n" +
+                "LEFT JOIN item i ON f.item_id = i.id WHERE f.id = ?";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -147,9 +152,12 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
     @Override
     public List<Feedback> findAll() {
         List<Feedback> list = new ArrayList<>();
-        String sql = "SELECT f.*, u.name AS user_name, " +
+        String sql = "SELECT f.*, u.name AS user_name, i.name AS item_name, " +
                 "(SELECT EXISTS(SELECT 1 FROM feedback r WHERE r.response_id = f.id)) AS is_replied " +
-                "FROM feedback f LEFT JOIN user u ON f.user_id = u.id WHERE f.response_id = 0";
+                "FROM feedback f " +
+                "LEFT JOIN user u ON f.user_id = u.id " +
+                "LEFT JOIN item i ON f.item_id = i.id " +
+                "WHERE f.response_id = 0";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -169,15 +177,18 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
 
     public List<Feedback> applyFilterAndSearch(String rate, String type, String keyword) {
         List<Feedback> list = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT f.*, u.name AS user_name, " +
+        StringBuilder sql = new StringBuilder("SELECT f.*, u.name AS user_name, i.name AS item_name, " +
                 "(SELECT EXISTS(SELECT 1 FROM feedback r WHERE r.response_id = f.id)) AS is_replied " +
-                "FROM feedback f LEFT JOIN user u ON f.user_id = u.id WHERE f.response_id = 0");
+                "FROM feedback f " +
+                "LEFT JOIN user u ON f.user_id = u.id " +
+                "LEFT JOIN item i ON f.item_id = i.id " +
+                "WHERE f.response_id = 0");
         List<Object> params = new ArrayList<>();
 
         if (rate != null && !rate.trim().isEmpty()) {
             try {
                 int ratingValue = Integer.parseInt(rate.trim());
-                sql.append(" AND rating = ?");
+                sql.append(" AND f.rating = ?");
                 params.add(ratingValue);
             } catch (NumberFormatException ignored) {}
         }
@@ -189,7 +200,7 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
         }
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            sql.append(" AND comment LIKE ?");
+            sql.append(" AND f.comment LIKE ?");
             params.add("%" + keyword.trim() + "%");
         }
 
@@ -214,8 +225,9 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
 
     public List<Feedback> getChatHistoryByUserId(int userId) {
         List<Feedback> list = new ArrayList<>();
-        String sql = "SELECT f.*, u.name AS user_name FROM feedback f " +
+        String sql = "SELECT f.*, u.name AS user_name, i.name AS item_name FROM feedback f " +
                 "LEFT JOIN user u ON f.user_id = u.id " +
+                "LEFT JOIN item i ON f.item_id = i.id " +
                 "WHERE f.user_id = ? OR f.response_id IN (SELECT id FROM feedback WHERE user_id = ?) " +
                 "ORDER BY f.created_at ASC";
         Connection conn = null;

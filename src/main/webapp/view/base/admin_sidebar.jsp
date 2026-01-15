@@ -8,7 +8,7 @@
             </li>
 
             <li class="${param.active == 'warehouse' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/view/admin_quan_ly_kho.jsp">Quản lý kho</a>
+                <a href="${pageContext.request.contextPath}/quanlykho">Quản lý kho</a>
             </li>
 
             <li class="${param.active == 'category' ? 'active' : ''}">

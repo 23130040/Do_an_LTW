@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,7 +13,7 @@
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="base/admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp"/>
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
@@ -26,40 +25,49 @@
             <h2 class="page-title">Quản Lý Kho</h2>
 
             <div class="tab-nav">
-                <button class="tab-link" onclick="openTab(event, 'input_history')">Lịch Sử Nhập Kho</button>
-                <button class="tab-link" onclick="openTab(event, 'output_history')">Lịch Sử Xuất Kho</button>
+                <a href="?tab=input_history&page=1" class="tab-link ${activeTab == 'input_history' ? 'active' : ''}">Lịch Sử Nhập Kho</a>
+                <a href="?tab=output_history&page=1" class="tab-link ${activeTab == 'output_history' ? 'active' : ''}">Lịch Sử Xuất Kho</a>
             </div>
 
-            <div id="input_history" class="tab-content" style="display: none;">
+            <div id="input_history" class="tab-content"
+                 style="display: ${activeTab == 'input_history' ? 'block' : 'none'};">
                 <div class="control-panel history-panel">
                     <div class="filters">
-                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input" style="width: 300px;">
-                        <select name="category" class="filter-select">
+                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Tên SP, Người tạo..." class="search-input" id="searchInput"
+                               value="${selectedSearch}">
+
+                        <select name="category" class="filter-select" id="categoryFilter">
                             <option value="">-- Danh mục --</option>
-                            <option value="ThitBo">Thịt Bò</option>
-                            <option value="ThitHeo">Thịt Heo</option>
-                            <option value="ThitGa">Thịt Gà</option>
+                            <c:forEach var="cat" items="${categories}">
+                                <option value="${cat.id}" ${cat.id == selectedCat ? 'selected' : ''}>
+                                        ${cat.name}
+                                </option>
+                            </c:forEach>
                         </select>
-                        <select name="origin" class="filter-select">
+
+                        <select name="origin" class="filter-select" id="originFilter">
                             <option value="">-- Nguồn gốc --</option>
-                            <option value="VietNam">Việt Nam</option>
-                            <option value="My">Mỹ</option>
-                            <option value="Uc">Úc</option>
+                            <c:forEach var="org" items="${origin}">
+                                <option value="${org.id}" ${org.id == selectedOrg ? 'selected' : ''}>
+                                        ${org.name}
+                                </option>
+                            </c:forEach>
                         </select>
                     </div>
                     <button class="btn btn-primary" onclick="openStockModal('input')">
                         <i class="fas fa-plus-circle"></i> Tạo Phiếu Nhập
                     </button>
-
                 </div>
+
                 <div class="history-table-container">
                     <table class="history-table">
                         <thead>
                         <tr>
                             <th>Mã Phiếu</th>
                             <th>Thời gian</th>
-                            <th>Danh mục</th>
+                            <th>SKU</th>
                             <th>Sản phẩm</th>
+                            <th>Danh mục</th>
                             <th>Nguồn gốc</th>
                             <th>Khối lượng</th>
                             <th>Loại</th>
@@ -68,51 +76,82 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>#IN001</td>
-                            <td>20/11/2025 09:30</td>
-                            <td>Thịt Bò</td>
-                            <td>Thịt Bò Thăn Nội (Mỹ)</td>
-                            <td>Mỹ</td>
-                            <td>250g</td>
-                            <td><span class="type-badge type-input">Nhập</span></td>
-                            <td>+10 kg</td>
-                            <td>Admin A</td>
-                        </tr>
+                        <c:forEach var="s" items="${stockList}">
+                                <tr>
+                                    <td>${s.id}</td>
+                                    <td>${s.created_at}</td>
+                                    <td>${s.item.sku}</td>
+                                    <td>${s.item.name}</td>
+                                    <td>${s.item.categoryName}</td>
+                                    <td>${s.item.originName}</td>
+                                    <td>${s.item.unitName}</td>
+                                    <td><span class="type-badge type-input">
+                                            ${s.type == 'Nhap' ? 'Nhập' : s.type}
+                                    </span></td>
+                                    <td>+${s.quantity}</td>
+                                    <td>${s.created_by.name}</td>
+                                </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
+                <div class="pagination">
+                    <c:if test="${currentPage > 1}">
+                        <a href="?page=${currentPage - 1}&tab=${activeTab}">&laquo; Trước</a>
+                    </c:if>
+
+                    <c:forEach begin="1" end="${totalPages}" var="i">
+                        <a href="?page=${i}&tab=${activeTab}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}"
+                           class="${i == currentPage ? 'active' : ''}">
+                                ${i}
+                        </a>
+                    </c:forEach>
+
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="?page=${currentPage + 1}&tab=${activeTab}">Sau &raquo;</a>
+                    </c:if>
+                </div>
             </div>
 
-            <div id="output_history" class="tab-content" style="display: none;">
+            <div id="output_history" class="tab-content"
+                 style="display: ${activeTab == 'output_history' ? 'block' : 'none'};">
                 <div class="control-panel history-panel">
                     <div class="filters">
-                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input" style="width: 300px;">
-                        <select name="category" class="filter-select">
+                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Tên SP, Người tạo..." class="search-input" id="searchInputOutput"
+                               value="${selectedSearch}">
+
+                        <select name="category" class="filter-select" id="categoryFilterOutput">
                             <option value="">-- Danh mục --</option>
-                            <option value="ThitBo">Thịt Bò</option>
-                            <option value="ThitHeo">Thịt Heo</option>
-                            <option value="ThitGa">Thịt Gà</option>
+                            <c:forEach var="cat" items="${categories}">
+                                <option value="${cat.id}" ${cat.id == selectedCat ? 'selected' : ''}>
+                                        ${cat.name}
+                                </option>
+                            </c:forEach>
                         </select>
-                        <select name="origin" class="filter-select">
+
+                        <select name="origin" class="filter-select" id="originFilterOutput">
                             <option value="">-- Nguồn gốc --</option>
-                            <option value="VietNam">Việt Nam</option>
-                            <option value="My">Mỹ</option>
-                            <option value="Uc">Úc</option>
+                            <c:forEach var="org" items="${origin}">
+                                <option value="${org.id}" ${org.id == selectedOrg ? 'selected' : ''}>
+                                        ${org.name}
+                                </option>
+                            </c:forEach>
                         </select>
                     </div>
                     <button class="btn btn-primary btn-secondary" onclick="openStockModal('output')">
                         <i class="fas fa-minus-circle"></i> Tạo Phiếu Xuất
                     </button>
                 </div>
+
                 <div class="history-table-container">
                     <table class="history-table">
                         <thead>
                         <tr>
                             <th>Mã Phiếu</th>
                             <th>Thời gian</th>
-                            <th>Danh mục</th>
+                            <th>SKU</th>
                             <th>Sản phẩm</th>
+                            <th>Danh mục</th>
                             <th>Nguồn gốc</th>
                             <th>Khối lượng</th>
                             <th>Loại</th>
@@ -121,21 +160,43 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>#OUT001</td>
-                            <td>19/11/2025 14:00</td>
-                            <td>Thịt Bò</td>
-                            <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
-                            <td>Việt Nam</td>
-                            <td>250g</td>
-                            <td><span class="type-badge type-output">Xuất</span></td>
-                            <td>-5 kg</td>
-                            <td>Admin B</td>
-                        </tr>
+                        <c:forEach var="s" items="${stockList}">
+                                <tr>
+                                    <td>${s.id}</td>
+                                    <td>${s.created_at}</td>
+                                    <td>${s.item.sku}</td>
+                                    <td>${s.item.name}</td>
+                                    <td>${s.item.categoryName}</td>
+                                    <td>${s.item.originName}</td>
+                                    <td>${s.item.unitName}</td>
+                                    <td><span class="type-badge type-output">
+                                            ${s.type == 'Xuat' ? 'Xuất' : s.type}
+                                    </span></td>
+                                    <td>-${s.quantity}</td>
+                                    <td>${s.created_by.name}</td>
+                                </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
+                <div class="pagination">
+                    <c:if test="${currentPage > 1}">
+                        <a href="?page=${currentPage - 1}&tab=${activeTab}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">&laquo; Trước</a>
+                    </c:if>
+
+                    <c:forEach begin="1" end="${totalPages}" var="i">
+                        <a href="?page=${i}&tab=${activeTab}"
+                           class="${i == currentPage ? 'active' : ''}">
+                                ${i}
+                        </a>
+                    </c:forEach>
+
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="?page=${currentPage + 1}&tab=${activeTab}">Sau &raquo;</a>
+                    </c:if>
+                </div>
             </div>
+
         </main>
 
     </div>
@@ -169,42 +230,38 @@
         </div>
 
         <div class="modal-body">
-            <form id="stockForm">
+            <form id="stockForm" action="quanlykho" method="post">
                 <div class="form-group">
                     <label for="product_id">Sản phẩm:</label>
-                    <select id="product_id" required>
-                        <option value="">-- Chọn Sản phẩm --</option>
-                        <option value="1">Thịt Bò Thăn Nội Cao Cấp (Mỹ) - Tồn: 8 kg</option>
-                        <option value="2">Thịt Heo Ba Chỉ Thảo Mộc - Tồn: 150 kg</option>
+                    <select name="item" id="item_id" class="filter-select select2-enable" required>
+                        <option value="">-- Tìm theo SKU hoặc Tên sản phẩm --</option>
+                        <c:forEach var="it" items="${items}">
+                            <option value="${it.id}">
+                                    ${it.sku} - ${it.name} (${it.originName}) - Khối lượng : ${it.unitName} - Tồn: ${it.current_stock}
+                            </option>
+                        </c:forEach>
                     </select>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group half-width">
                         <label for="type">Loại giao dịch :</label>
-                        <select id="type" required>
+                        <select name ="type" id="type" required>
                             <option value="">-- Chọn loại --</option>
-                            <option value="input">Nhập Hàng (Tăng kho)</option>
-                            <option value="output">Xuất Hủy (Giảm kho)</option>
-                            <option value="adjustment_plus">Điều chỉnh (+)</option>
-                            <option value="adjustment_minus">Điều chỉnh (-)</option>
+                            <option value="Nhap">Nhập Hàng (Tăng kho)</option>
+                            <option value="Xuat">Xuất Hủy (Giảm kho)</option>
                         </select>
                     </div>
 
                     <div class="form-group half-width">
                         <label for="quantity">Số lượng :</label>
-                        <input type="number" id="quantity" step="0.01" placeholder="Nhập số lượng" required min="0.01">
+                        <input name="quantity" type="number" id="quantity" placeholder="Nhập số lượng" required min="1">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="notes">Ghi chú/Lý do:</label>
-                    <textarea id="notes" rows="3" placeholder="Ghi rõ lý do Nhập/Xuất/Điều chỉnh"></textarea>
-                </div>
-
-                <div class="form-group">
                     <label for="created_by">Người thực hiện:</label>
-                    <input type="text" id="created_by" value="Admin A" readonly>
+                    <input type="text" id="created_by" value="${sessionScope.user.name}" readonly>
                 </div>
 
                 <button type="submit" class="btn btn-primary submit-btn">Lưu Phiếu</button>
@@ -212,6 +269,19 @@
         </div>
     </div>
 </div>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="${pageContext.request.contextPath}/JS/admin_quan_ly_kho.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2-enable').select2({
+            placeholder: "-- Gõ mã SKU hoặc tên sản phẩm --",
+            allowClear: true,
+            width: '100%',
+            dropdownParent: $('#stockAdjustmentModal')
+        });
+    });
+</script>
 </body>
 </html>

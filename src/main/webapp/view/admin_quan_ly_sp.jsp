@@ -34,7 +34,7 @@
                            value="${selectedSearch}">
 
                     <select name="category" class="filter-select" id="categoryFilter">
-                        <option value="">Chọn loại thịt</option>
+                        <option value="">-- Danh mục --</option>
                         <c:forEach var="cat" items="${categories}">
                             <option value="${cat.id}" ${cat.id == selectedCat ? 'selected' : ''}>
                                     ${cat.name}
@@ -43,7 +43,7 @@
                     </select>
 
                     <select name="origin" class="filter-select" id="originFilter">
-                        <option value="">Chọn nguồn gốc</option>
+                        <option value="">-- Nguồn gốc --</option>
                         <c:forEach var="org" items="${origin}">
                             <option value="${org.id}" ${org.id == selectedOrg ? 'selected' : ''}>
                                     ${org.name}

@@ -102,7 +102,7 @@
                                 <%  } %>
                             </td>
 
-                            <td> ${f.item_id_raw}</td>
+                            <td> ${f.item_name}</td>
 
                             <td>
                                 <c:choose>
@@ -129,7 +129,7 @@
                             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                             <td>
                                 <button class="btn-sm btn-info reply-btn"
-                                        onclick="openReplyModal(${f.id}, ${f.user.id}, '${f.user.name}', '${f.item_id_raw}', ${f.rating}, '${createdAt.format(dateFmt)}')">
+                                        onclick="openReplyModal(${f.id}, ${f.user.id}, '${f.user.name}', '${f.item_name}', ${f.rating}, '${createdAt.format(dateFmt)}')">
                                         ${isReplied ? '<i class="fa-solid fa-eye"></i> Xem' : '<i class="fas fa-reply"></i> Trả lời'}
                                 </button>
                                 <button class="btn-icon delete-btn" onclick="deleteFeedback(${f.id})">
