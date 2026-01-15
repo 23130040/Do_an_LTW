@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,7 +13,7 @@
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="base/admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp"/>
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
@@ -30,10 +29,11 @@
                 <button class="tab-link" onclick="openTab(event, 'output_history')">Lịch Sử Xuất Kho</button>
             </div>
 
-            <div id="input_history" class="tab-content" style="display: none;">
+            <div id="input_history" class="tab-content" style="display: block;">
                 <div class="control-panel history-panel">
                     <div class="filters">
-                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input" style="width: 300px;">
+                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input"
+                               style="width: 300px;">
                         <select name="category" class="filter-select">
                             <option value="">-- Danh mục --</option>
                             <option value="ThitBo">Thịt Bò</option>
@@ -50,44 +50,59 @@
                     <button class="btn btn-primary" onclick="openStockModal('input')">
                         <i class="fas fa-plus-circle"></i> Tạo Phiếu Nhập
                     </button>
-
                 </div>
+
                 <div class="history-table-container">
                     <table class="history-table">
                         <thead>
                         <tr>
-                            <th>Mã Phiếu</th>
-                            <th>Thời gian</th>
-                            <th>Danh mục</th>
-                            <th>Sản phẩm</th>
-                            <th>Nguồn gốc</th>
-                            <th>Khối lượng</th>
-                            <th>Loại</th>
-                            <th>Số lượng</th>
-                            <th>Người tạo</th>
+                            <th>Mã Phiếu</th><th>Thời gian</th><th>Danh mục</th>
+                            <th>Sản phẩm</th><th>Nguồn gốc</th><th>Khối lượng</th>
+                            <th>Loại</th><th>Số lượng</th><th>Người tạo</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>#IN001</td>
-                            <td>20/11/2025 09:30</td>
-                            <td>Thịt Bò</td>
-                            <td>Thịt Bò Thăn Nội (Mỹ)</td>
-                            <td>Mỹ</td>
-                            <td>250g</td>
-                            <td><span class="type-badge type-input">Nhập</span></td>
-                            <td>+10 kg</td>
-                            <td>Admin A</td>
-                        </tr>
+                        <c:forEach var="s" items="${stockList}">
+                            <c:if test="${s.type == 'Nhap'}">
+                                <tr>
+                                    <td>${s.id}</td>
+                                    <td>${s.created_at}</td>
+                                    <td>${s.item.categoryName}</td>
+                                    <td>${s.item.name}</td>
+                                    <td>${s.item.originName}</td>
+                                    <td>${s.item.unitName}</td>
+                                    <td><span class="type-badge type-input">${s.type}</span></td>
+                                    <td>+${s.quantity}</td>
+                                    <td>${s.created_by.name}</td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
                         </tbody>
                     </table>
+                </div>
+                <div class="pagination">
+                    <c:if test="${currentPage > 1}">
+                        <a href="?page=${currentPage - 1}">&laquo; Trước</a>
+                    </c:if>
+
+                    <c:forEach begin="1" end="${totalPages}" var="i">
+                        <a href="?page=${i}"
+                           class="${i == currentPage ? 'active' : ''}">
+                                ${i}
+                        </a>
+                    </c:forEach>
+
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="?page=${currentPage + 1}">Sau &raquo;</a>
+                    </c:if>
                 </div>
             </div>
 
             <div id="output_history" class="tab-content" style="display: none;">
                 <div class="control-panel history-panel">
                     <div class="filters">
-                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input" style="width: 300px;">
+                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input"
+                               style="width: 300px;">
                         <select name="category" class="filter-select">
                             <option value="">-- Danh mục --</option>
                             <option value="ThitBo">Thịt Bò</option>
@@ -105,37 +120,53 @@
                         <i class="fas fa-minus-circle"></i> Tạo Phiếu Xuất
                     </button>
                 </div>
+
                 <div class="history-table-container">
                     <table class="history-table">
                         <thead>
                         <tr>
-                            <th>Mã Phiếu</th>
-                            <th>Thời gian</th>
-                            <th>Danh mục</th>
-                            <th>Sản phẩm</th>
-                            <th>Nguồn gốc</th>
-                            <th>Khối lượng</th>
-                            <th>Loại</th>
-                            <th>Số lượng</th>
-                            <th>Người tạo</th>
+                            <th>Mã Phiếu</th><th>Thời gian</th><th>Danh mục</th>
+                            <th>Sản phẩm</th><th>Nguồn gốc</th><th>Khối lượng</th>
+                            <th>Loại</th><th>Số lượng</th><th>Người tạo</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>#OUT001</td>
-                            <td>19/11/2025 14:00</td>
-                            <td>Thịt Bò</td>
-                            <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
-                            <td>Việt Nam</td>
-                            <td>250g</td>
-                            <td><span class="type-badge type-output">Xuất</span></td>
-                            <td>-5 kg</td>
-                            <td>Admin B</td>
-                        </tr>
+                        <c:forEach var="s" items="${stockList}">
+                            <c:if test="${s.type == 'Xuat'}">
+                                <tr>
+                                    <td>${s.id}</td>
+                                    <td>${s.created_at}</td>
+                                    <td>${s.item.categoryName}</td>
+                                    <td>${s.item.name}</td>
+                                    <td>${s.item.originName}</td>
+                                    <td>${s.item.unitName}</td>
+                                    <td><span class="type-badge type-output">${s.type}</span></td>
+                                    <td>-${s.quantity}</td>
+                                    <td>${s.created_by.name}</td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
+                <div class="pagination">
+                    <c:if test="${currentPage > 1}">
+                        <a href="?page=${currentPage - 1}">&laquo; Trước</a>
+                    </c:if>
+
+                    <c:forEach begin="1" end="${totalPages}" var="i">
+                        <a href="?page=${i}"
+                           class="${i == currentPage ? 'active' : ''}">
+                                ${i}
+                        </a>
+                    </c:forEach>
+
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="?page=${currentPage + 1}">Sau &raquo;</a>
+                    </c:if>
+                </div>
             </div>
+
         </main>
 
     </div>
@@ -172,10 +203,14 @@
             <form id="stockForm">
                 <div class="form-group">
                     <label for="product_id">Sản phẩm:</label>
-                    <select id="product_id" required>
-                        <option value="">-- Chọn Sản phẩm --</option>
-                        <option value="1">Thịt Bò Thăn Nội Cao Cấp (Mỹ) - Tồn: 8 kg</option>
-                        <option value="2">Thịt Heo Ba Chỉ Thảo Mộc - Tồn: 150 kg</option>
+                    <select name="item" id="item_id" class="filter-select" required>
+                        <option value="">-- Chọn sản phẩm --</option>
+                        <c:forEach var="it" items="${items}">
+                            <option value="${it.id}" ${it.id == selectedItem ? 'selected' : ''}>
+                                    <%-- Sửa 'it.origin' thành 'it.originName' và 'it.unit' thành 'it.unitName' --%>
+                                    ${it.name} (${it.originName}) - Khối lượng : ${it.unitName} - Tồn: ${it.current_stock}
+                            </option>
+                        </c:forEach>
                     </select>
                 </div>
 
@@ -184,10 +219,8 @@
                         <label for="type">Loại giao dịch :</label>
                         <select id="type" required>
                             <option value="">-- Chọn loại --</option>
-                            <option value="input">Nhập Hàng (Tăng kho)</option>
-                            <option value="output">Xuất Hủy (Giảm kho)</option>
-                            <option value="adjustment_plus">Điều chỉnh (+)</option>
-                            <option value="adjustment_minus">Điều chỉnh (-)</option>
+                            <option value="Nhap">Nhập Hàng (Tăng kho)</option>
+                            <option value="Xuat">Xuất Hủy (Giảm kho)</option>
                         </select>
                     </div>
 
@@ -195,11 +228,6 @@
                         <label for="quantity">Số lượng :</label>
                         <input type="number" id="quantity" step="0.01" placeholder="Nhập số lượng" required min="0.01">
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="notes">Ghi chú/Lý do:</label>
-                    <textarea id="notes" rows="3" placeholder="Ghi rõ lý do Nhập/Xuất/Điều chỉnh"></textarea>
                 </div>
 
                 <div class="form-group">

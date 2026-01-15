@@ -6,7 +6,8 @@ public class Feedback {
     private int id;
     private int response_id;
     private User user;
-    private int item_id_raw;
+    private int item_id;
+    private String item_name;
     private int rating;
     private String comment;
     private LocalDateTime created_at;
@@ -18,7 +19,7 @@ public class Feedback {
         this.id = id;
         this.response_id = response_id;
         this.user = user;
-        this.item_id_raw = item_id;
+        this.item_id = item_id;
         this.rating = rating;
         this.comment = comment;
         this.created_at = created_at;
@@ -26,7 +27,7 @@ public class Feedback {
     }
 
     public int getId() { return id; }
-    public int getItem_id_raw() { return item_id_raw; }
+    public int getItem_id() { return item_id; }
     public User getUser() { return user; }
     public String getComment() { return comment; }
     public int getRating() { return rating; }
@@ -35,10 +36,11 @@ public class Feedback {
     public boolean isReplied() {
         return isReplied;
     }
-
     public void setReplied(boolean replied) {
         isReplied = replied;
     }
+    public String getItem_name() { return item_name; }
+    public void setItem_name(String item_name) { this.item_name = item_name; }
 
 }
 

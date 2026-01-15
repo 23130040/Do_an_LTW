@@ -1,88 +1,101 @@
-// Hàm User Menu
 function toggleUserMenu() {
-    document.getElementById("userMenuContent").classList.toggle("show");
+    const userMenu = document.getElementById("userMenuContent");
+    if (userMenu) {
+        userMenu.classList.toggle("show");
+    }
 }
-// Hàm cho Notification Menu
+
 function toggleNotificationMenu() {
-    const userDropdown = document.getElementById("userMenuContent");
+    const userMenu = document.getElementById("userMenuContent");
     const notificationPanel = document.getElementById("notification-panel");
 
-    // 1. Đóng User Menu nếu nó đang mở
-    if (userDropdown) {
-        userDropdown.classList.remove("show");
+    if (userMenu) {
+        userMenu.classList.remove("show");
     }
 
-    // 2. Bật/Tắt Notification Panel
     if (notificationPanel) {
         notificationPanel.classList.toggle("show-panel");
     }
 }
 
-
-// Xử lý đóng cả hai menu khi người dùng click ra ngoài
-window.onclick = function(event) {
-    const userDropdown = document.getElementById("userMenuContent");
-    const notificationPanel = document.getElementById("notification-panel");
-    const notificationIcon = document.querySelector('.notification-icon');
-
-    if (
-        !event.target.matches('.user-logo') &&
-        userDropdown && userDropdown.classList.contains('show') &&
-        !event.target.closest('.user-dropdown')
-    ) {
-        userDropdown.classList.remove('show');
-    }
-
-    if (
-        notificationPanel &&
-        notificationPanel.classList.contains('show-panel') &&
-        !event.target.matches('.notification-icon') &&
-        !event.target.closest('#notification-panel')
-    ) {
-        notificationPanel.classList.remove('show-panel');
-    }
-}
-// Hàm mở Tab
 function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+    const tabContents = document.getElementsByClassName("tab-content");
+    const tabLinks = document.getElementsByClassName("tab-link");
+
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = "none";
     }
-    tablinks = document.getElementsByClassName("tab-link");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+
+    for (let i = 0; i < tabLinks.length; i++) {
+        tabLinks[i].classList.remove("active");
     }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
+
+    const targetTab = document.getElementById(tabName);
+    if (targetTab) {
+        targetTab.style.display = "block";
+    }
+
+    if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add("active");
+    }
 }
 
-// Mở tab 'Tồn Kho Hiện Tại' khi tải trang
-document.addEventListener("DOMContentLoaded", function() {
-    // Kích hoạt tab đầu tiên
-    if (document.querySelector('.tab-link')) {
-        document.querySelector('.tab-link').click();
-    }
-});
-
-// Hàm mở Modal Nhập/Xuất Kho
 function openStockModal(type) {
-    const modal = document.getElementById('stockAdjustmentModal');
-    const title = document.getElementById('stockModalTitle');
-    const typeSelect = document.getElementById('type');
+    const modal = document.getElementById("stockAdjustmentModal");
+    const title = document.getElementById("stockModalTitle");
+    const typeSelect = document.getElementById("type");
+
+    if (!modal) return;
+
+    if (title) {
+        title.innerText = type === "input" ? "Tạo Phiếu Nhập Kho" : "Tạo Phiếu Xuất Kho";
+    }
+
+    if (typeSelect) {
+        typeSelect.value = type === "input" ? "Nhap" : "Xuat";
+    }
 
     modal.style.display = "block";
 }
 
-// Hàm đóng Modal
 function closeStockModal() {
-    document.getElementById('stockAdjustmentModal').style.display = "none";
-}
-
-// Đóng modal khi click ra ngoài
-window.onclick = function(event) {
-    const modal = document.getElementById('stockAdjustmentModal');
-    if (event.target === modal) {
-        closeStockModal();
+    const modal = document.getElementById("stockAdjustmentModal");
+    if (modal) {
+        modal.style.display = "none";
     }
 }
+
+window.addEventListener("click", function (event) {
+    const userMenu = document.getElementById("userMenuContent");
+    const notificationPanel = document.getElementById("notification-panel");
+    const modal = document.getElementById("stockAdjustmentModal");
+
+    if (
+        userMenu &&
+        userMenu.classList.contains("show") &&
+        !event.target.closest(".user-dropdown") &&
+        !event.target.matches(".user-logo")
+    ) {
+        userMenu.classList.remove("show");
+    }
+
+    if (
+        notificationPanel &&
+        notificationPanel.classList.contains("show-panel") &&
+        !event.target.closest("#notification-panel") &&
+        !event.target.matches(".notification-icon")
+    ) {
+        notificationPanel.classList.remove("show-panel");
+    }
+
+    if (modal && event.target === modal) {
+        closeStockModal();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const firstTab = document.querySelector(".tab-link");
+    if (firstTab) {
+        firstTab.click();
+    }
+});

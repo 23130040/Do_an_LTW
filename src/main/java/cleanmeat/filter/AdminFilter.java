@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-// Cấu hình Filter lọc tất cả các URL bắt đầu bằng quản lý hoặc nằm trong thư mục view/admin
-@WebFilter(urlPatterns = {"/quanlysanpham", "/quanlyuser", "/quanlydanhmuc", "/quanlytintuc", "/quanlydanhgia", "/cauhinhhethong"})
+@WebFilter(urlPatterns = {"/quanlysanpham", "/quanlyuser", "/quanlydanhmuc", "/quanlytintuc", "/quanlydanhgia", "/cauhinhhethong",
+        "/quanlykho"})
 public class AdminFilter implements Filter {
 
     @Override
@@ -26,12 +26,10 @@ public class AdminFilter implements Filter {
         if (user != null && "admin".equalsIgnoreCase(user.getRole())) {
             chain.doFilter(request, response);
         } else {
-            // Lấy URL mà người dùng đang cố gắng truy cập
             String requestURI = httpRequest.getRequestURI();
             String queryString = httpRequest.getQueryString();
             String targetURL = requestURI + (queryString != null ? "?" + queryString : "");
 
-            // Lưu URL này vào session với tên "redirect_url"
             session.setAttribute("redirect_url", targetURL);
 
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/dang-nhap");
