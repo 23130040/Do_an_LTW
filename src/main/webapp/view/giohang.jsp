@@ -41,61 +41,6 @@
                     <i class="fa-solid fa-trash"></i>
                 </td>
             </tr>
-            <tr class="order-table-body" id="product2">
-                <td class="order-table-item product">
-                    <div class="product-wrapper">
-                        <img src="https://phamgiafood.com.vn/wp-content/uploads/2022/05/ucga-2.jpg" alt="Thịt ức gà">
-                        <span class="detail">Thịt ức gà</span>
-                    </div>
-                </td>
-                <td class="order-table-item price">
-                    <span id="price2">70,000</span>
-                    <span class="detail">đ/Kg</span>
-                </td>
-                <td class="order-table-item amount">
-                    <div class="amount-wrapper">
-                        <button type="button" data-action="decrease" class="quantity-btn" id="decrease2">-</button>
-                        <input type="text" class="quantity-input" value="0.1" id="SP002">
-                        <button type="button" data-action="increase" class="quantity-btn" id="increase2">+</button>
-                        <span class="detail">Kg</span>
-                    </div>
-                </td>
-                <td class="order-table-item sum">
-                    <span class="total" id="sum2"></span>
-                    <span class="detail">đ</span>
-                </td>
-                <td class="order-table-item trash" id="trash2">
-                    <i class="fa-solid fa-trash"></i>
-                </td>
-            </tr>
-            <tr class="order-table-body" id="product3">
-                <td class="order-table-item product">
-                    <div class="product-wrapper">
-                        <img src="https://fohlafood.vn/cdn/shop/articles/1-1683857652-150-width800height550.jpg?v=1732018733"
-                             alt="Thịt bò tươi">
-                        <span class="detail">Thịt bò tươi</span>
-                    </div>
-                </td>
-                <td class="order-table-item price">
-                    <span id="price3">350,000</span>
-                    <span class="detail">đ/Kg</span>
-                </td>
-                <td class="order-table-item amount">
-                    <div class="amount-wrapper">
-                        <button type="button" data-action="decrease" class="quantity-btn" id="decrease3">-</button>
-                        <input type="text" class="quantity-input" value="0.1" id="SP003">
-                        <button type="button" data-action="increase" class="quantity-btn" id="increase3">+</button>
-                        <span class="detail">Kg</span>
-                    </div>
-                </td>
-                <td class="order-table-item sum">
-                    <span class="total" id="sum3"></span>
-                    <span class="detail">đ</span>
-                </td>
-                <td class="order-table-item trash" id="trash3">
-                    <i class="fa-solid fa-trash"></i>
-                </td>
-            </tr>
         </table>
     </div>
     <div class="order summary">
@@ -128,14 +73,6 @@
                         <span class="amount number" id="subtotal"></span>
                     </p>
                 </div>
-            </div>
-            <div class="order-summary voucher">
-                <label for="voucher">Mã giảm giá:</label>
-                <div class="voucher-input">
-                    <input type="text" id="voucher" placeholder="Nhập mã voucher">
-                    <button id="applyVoucher">Áp dụng</button>
-                </div>
-                <p class="voucher-message"></p>
             </div>
             <div class="order-summary footer">
                 <a href="xacnhandathang.html">
