@@ -56,6 +56,13 @@ function openStockModal(type) {
     }
 
     modal.style.display = "block";
+
+    $('.select2-enable').select2({
+        placeholder: "-- Gõ mã SKU hoặc tên sản phẩm --",
+        allowClear: true,
+        width: '100%',
+        dropdownParent: $('#stockAdjustmentModal')
+    });
 }
 
 function closeStockModal() {
@@ -88,14 +95,31 @@ window.addEventListener("click", function (event) {
         notificationPanel.classList.remove("show-panel");
     }
 
-    if (modal && event.target === modal) {
-        closeStockModal();
-    }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const firstTab = document.querySelector(".tab-link");
-    if (firstTab) {
-        firstTab.click();
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+
+    if (tabParam) {
+        if (tabParam === 'input_history') {
+            document.querySelector(".tab-link[onclick*='input_history']").click();
+        } else if (tabParam === 'output_history') {
+            document.querySelector(".tab-link[onclick*='output_history']").click();
+        }
+    } else {
+        const firstTab = document.querySelector(".tab-link");
+        if (firstTab) {
+            firstTab.click();
+        }
+    }
+});
+document.getElementById("stockForm").addEventListener("submit", function(e) {
+    const qty = document.getElementById("quantity").value;
+    const item = document.getElementById("item_id").value;
+
+    if (!item || qty <= 0) {
+        e.preventDefault();
+        alert("Vui lòng nhập đầy đủ thông tin sản phẩm và số lượng hợp lệ!");
     }
 });

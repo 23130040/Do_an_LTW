@@ -543,3 +543,12 @@ a {
     font-weight: bold;
     border-color: #8d2a3a;
 }
+.select2-container .select2-selection--single {
+    height: 40px !important;
+    border: 1px solid #ccc !important;
+    display: flex;
+    align-items: center;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+}

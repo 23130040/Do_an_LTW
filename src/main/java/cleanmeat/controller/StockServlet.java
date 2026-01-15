@@ -4,6 +4,7 @@ import cleanmeat.dao.StockDao;
 import cleanmeat.model.Item;
 import cleanmeat.dao.ItemDAO;
 import cleanmeat.model.Stock_history;
+import cleanmeat.model.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -44,6 +45,37 @@ public class StockServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
 
+        User currentUser = (User) session.getAttribute("user");
+
+
+        try {
+            String itemStr = request.getParameter("item");
+            String type = request.getParameter("type");
+            String quantityStr = request.getParameter("quantity");
+
+            if (itemStr == null || quantityStr == null || type == null) {
+                response.sendRedirect(request.getContextPath() + "/quanlykho?status=error");
+                return;
+            }
+
+            int itemId = Integer.parseInt(itemStr);
+            int quantity = Integer.parseInt(quantityStr);
+
+            int userId = currentUser.getId();
+
+            StockDao stockDao = new StockDao();
+            boolean success = stockDao.createStockTransaction(itemId, type, quantity, userId);
+
+            if (success) {
+                String targetTab = type.equals("Nhap") ? "input_history" : "output_history";
+                response.sendRedirect(request.getContextPath() + "/quanlykho?status=success&tab=" + targetTab);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/quanlykho?status=error");
+            }
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/quanlykho?status=invalid_input");
+        }
     }
 }

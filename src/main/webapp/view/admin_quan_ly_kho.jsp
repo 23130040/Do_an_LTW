@@ -71,7 +71,9 @@
                                     <td>${s.item.name}</td>
                                     <td>${s.item.originName}</td>
                                     <td>${s.item.unitName}</td>
-                                    <td><span class="type-badge type-input">${s.type}</span></td>
+                                    <td><span class="type-badge type-input">
+                                            ${s.type == 'Nhap' ? 'Nhập' : s.type}
+                                    </span></td>
                                     <td>+${s.quantity}</td>
                                     <td>${s.created_by.name}</td>
                                 </tr>
@@ -140,7 +142,9 @@
                                     <td>${s.item.name}</td>
                                     <td>${s.item.originName}</td>
                                     <td>${s.item.unitName}</td>
-                                    <td><span class="type-badge type-output">${s.type}</span></td>
+                                    <td><span class="type-badge type-output">
+                                            ${s.type == 'Xuat' ? 'Xuất' : s.type}
+                                    </span></td>
                                     <td>-${s.quantity}</td>
                                     <td>${s.created_by.name}</td>
                                 </tr>
@@ -200,15 +204,14 @@
         </div>
 
         <div class="modal-body">
-            <form id="stockForm">
+            <form id="stockForm" action="quanlykho" method="post">
                 <div class="form-group">
                     <label for="product_id">Sản phẩm:</label>
-                    <select name="item" id="item_id" class="filter-select" required>
-                        <option value="">-- Chọn sản phẩm --</option>
+                    <select name="item" id="item_id" class="filter-select select2-enable" required>
+                        <option value="">-- Tìm theo SKU hoặc Tên sản phẩm --</option>
                         <c:forEach var="it" items="${items}">
-                            <option value="${it.id}" ${it.id == selectedItem ? 'selected' : ''}>
-                                    <%-- Sửa 'it.origin' thành 'it.originName' và 'it.unit' thành 'it.unitName' --%>
-                                    ${it.name} (${it.originName}) - Khối lượng : ${it.unitName} - Tồn: ${it.current_stock}
+                            <option value="${it.id}">
+                                    ${it.sku} - ${it.name} (${it.originName}) - Khối lượng : ${it.unitName} - Tồn: ${it.current_stock}
                             </option>
                         </c:forEach>
                     </select>
@@ -217,7 +220,7 @@
                 <div class="form-row">
                     <div class="form-group half-width">
                         <label for="type">Loại giao dịch :</label>
-                        <select id="type" required>
+                        <select name ="type" id="type" required>
                             <option value="">-- Chọn loại --</option>
                             <option value="Nhap">Nhập Hàng (Tăng kho)</option>
                             <option value="Xuat">Xuất Hủy (Giảm kho)</option>
@@ -226,13 +229,13 @@
 
                     <div class="form-group half-width">
                         <label for="quantity">Số lượng :</label>
-                        <input type="number" id="quantity" step="0.01" placeholder="Nhập số lượng" required min="0.01">
+                        <input name="quantity" type="number" id="quantity" placeholder="Nhập số lượng" required min="1">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="created_by">Người thực hiện:</label>
-                    <input type="text" id="created_by" value="Admin A" readonly>
+                    <input type="text" id="created_by" value="${sessionScope.user.name}" readonly>
                 </div>
 
                 <button type="submit" class="btn btn-primary submit-btn">Lưu Phiếu</button>
@@ -240,6 +243,19 @@
         </div>
     </div>
 </div>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="${pageContext.request.contextPath}/JS/admin_quan_ly_kho.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2-enable').select2({
+            placeholder: "-- Gõ mã SKU hoặc tên sản phẩm --",
+            allowClear: true,
+            width: '100%',
+            dropdownParent: $('#stockAdjustmentModal')
+        });
+    });
+</script>
 </body>
 </html>

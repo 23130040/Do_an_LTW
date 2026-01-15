@@ -6,11 +6,11 @@ public class Stock_history {
     private int id;
     private Item item;
     private String type;
-    private double quantity;
+    private int quantity;
     private LocalDate created_at;
     private User created_by;
 
-    public Stock_history(int id, Item item, String type, double quantity, LocalDate created_at, User created_by) {
+    public Stock_history(int id, Item item, String type, int quantity, LocalDate created_at, User created_by) {
         this.id = id;
         this.item = item;
         this.type = type;
@@ -19,7 +19,7 @@ public class Stock_history {
         this.created_by = created_by;
     }
 
-    public Stock_history(Item item, String type, double quantity, User created_by) {
+    public Stock_history(Item item, String type, int quantity, User created_by) {
         this.item = item;
         this.type = type;
         this.quantity = quantity;
@@ -50,11 +50,11 @@ public class Stock_history {
         this.type = type;
     }
 
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

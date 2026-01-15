@@ -28,7 +28,7 @@ public class StockDao extends BaseDAO<Stock_history> {
                 rs.getInt("id"),
                 item,
                 rs.getString("type"),
-                rs.getDouble("quantity"),
+                rs.getInt("quantity"),
                 rs.getDate("created_at").toLocalDate(),
                 user
         );
@@ -114,6 +114,41 @@ public class StockDao extends BaseDAO<Stock_history> {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
         return 0;
+    }
+    public boolean createStockTransaction(int itemId, String type, int quantity, int userId) {
+        Connection conn = null;
+        String insertSql = "INSERT INTO stock_history (item_id, type, quantity, created_by, created_at) VALUES (?, ?, ?, ?, NOW())";
+        String updateStockSql = type.equals("Nhap")
+                ? "UPDATE item SET current_stock = current_stock + ? WHERE id = ?"
+                : "UPDATE item SET current_stock = current_stock - ? WHERE id = ?";
+
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement psInsert = conn.prepareStatement(insertSql)) {
+                psInsert.setInt(1, itemId);
+                psInsert.setString(2, type);
+                psInsert.setInt(3, quantity);
+                psInsert.setInt(4, userId);
+                psInsert.executeUpdate();
+            }
+
+            try (PreparedStatement psUpdate = conn.prepareStatement(updateStockSql)) {
+                psUpdate.setInt(1, quantity);
+                psUpdate.setInt(2, itemId);
+                psUpdate.executeUpdate();
+            }
+
+            conn.commit();
+            return true;
+        } catch (Exception e) {
+            if (conn != null) try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
     }
 
 }
