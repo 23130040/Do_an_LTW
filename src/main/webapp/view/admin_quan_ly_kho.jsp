@@ -25,26 +25,33 @@
             <h2 class="page-title">Quản Lý Kho</h2>
 
             <div class="tab-nav">
-                <button class="tab-link" onclick="openTab(event, 'input_history')">Lịch Sử Nhập Kho</button>
-                <button class="tab-link" onclick="openTab(event, 'output_history')">Lịch Sử Xuất Kho</button>
+                <a href="?tab=input_history&page=1" class="tab-link ${activeTab == 'input_history' ? 'active' : ''}">Lịch Sử Nhập Kho</a>
+                <a href="?tab=output_history&page=1" class="tab-link ${activeTab == 'output_history' ? 'active' : ''}">Lịch Sử Xuất Kho</a>
             </div>
 
-            <div id="input_history" class="tab-content" style="display: block;">
+            <div id="input_history" class="tab-content"
+                 style="display: ${activeTab == 'input_history' ? 'block' : 'none'};">
                 <div class="control-panel history-panel">
                     <div class="filters">
-                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input"
-                               style="width: 300px;">
-                        <select name="category" class="filter-select">
+                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Tên SP, Người tạo..." class="search-input" id="searchInput"
+                               value="${selectedSearch}">
+
+                        <select name="category" class="filter-select" id="categoryFilter">
                             <option value="">-- Danh mục --</option>
-                            <option value="ThitBo">Thịt Bò</option>
-                            <option value="ThitHeo">Thịt Heo</option>
-                            <option value="ThitGa">Thịt Gà</option>
+                            <c:forEach var="cat" items="${categories}">
+                                <option value="${cat.id}" ${cat.id == selectedCat ? 'selected' : ''}>
+                                        ${cat.name}
+                                </option>
+                            </c:forEach>
                         </select>
-                        <select name="origin" class="filter-select">
+
+                        <select name="origin" class="filter-select" id="originFilter">
                             <option value="">-- Nguồn gốc --</option>
-                            <option value="VietNam">Việt Nam</option>
-                            <option value="My">Mỹ</option>
-                            <option value="Uc">Úc</option>
+                            <c:forEach var="org" items="${origin}">
+                                <option value="${org.id}" ${org.id == selectedOrg ? 'selected' : ''}>
+                                        ${org.name}
+                                </option>
+                            </c:forEach>
                         </select>
                     </div>
                     <button class="btn btn-primary" onclick="openStockModal('input')">
@@ -56,19 +63,26 @@
                     <table class="history-table">
                         <thead>
                         <tr>
-                            <th>Mã Phiếu</th><th>Thời gian</th><th>Danh mục</th>
-                            <th>Sản phẩm</th><th>Nguồn gốc</th><th>Khối lượng</th>
-                            <th>Loại</th><th>Số lượng</th><th>Người tạo</th>
+                            <th>Mã Phiếu</th>
+                            <th>Thời gian</th>
+                            <th>SKU</th>
+                            <th>Sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Nguồn gốc</th>
+                            <th>Khối lượng</th>
+                            <th>Loại</th>
+                            <th>Số lượng</th>
+                            <th>Người tạo</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="s" items="${stockList}">
-                            <c:if test="${s.type == 'Nhap'}">
                                 <tr>
                                     <td>${s.id}</td>
                                     <td>${s.created_at}</td>
-                                    <td>${s.item.categoryName}</td>
+                                    <td>${s.item.sku}</td>
                                     <td>${s.item.name}</td>
+                                    <td>${s.item.categoryName}</td>
                                     <td>${s.item.originName}</td>
                                     <td>${s.item.unitName}</td>
                                     <td><span class="type-badge type-input">
@@ -77,45 +91,51 @@
                                     <td>+${s.quantity}</td>
                                     <td>${s.created_by.name}</td>
                                 </tr>
-                            </c:if>
                         </c:forEach>
                         </tbody>
                     </table>
                 </div>
                 <div class="pagination">
                     <c:if test="${currentPage > 1}">
-                        <a href="?page=${currentPage - 1}">&laquo; Trước</a>
+                        <a href="?page=${currentPage - 1}&tab=${activeTab}">&laquo; Trước</a>
                     </c:if>
 
                     <c:forEach begin="1" end="${totalPages}" var="i">
-                        <a href="?page=${i}"
+                        <a href="?page=${i}&tab=${activeTab}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}"
                            class="${i == currentPage ? 'active' : ''}">
                                 ${i}
                         </a>
                     </c:forEach>
 
                     <c:if test="${currentPage < totalPages}">
-                        <a href="?page=${currentPage + 1}">Sau &raquo;</a>
+                        <a href="?page=${currentPage + 1}&tab=${activeTab}">Sau &raquo;</a>
                     </c:if>
                 </div>
             </div>
 
-            <div id="output_history" class="tab-content" style="display: none;">
+            <div id="output_history" class="tab-content"
+                 style="display: ${activeTab == 'output_history' ? 'block' : 'none'};">
                 <div class="control-panel history-panel">
                     <div class="filters">
-                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Người tạo..." class="search-input"
-                               style="width: 300px;">
-                        <select name="category" class="filter-select">
+                        <input type="text" placeholder="Tìm kiếm theo Mã SP, Tên SP, Người tạo..." class="search-input" id="searchInputOutput"
+                               value="${selectedSearch}">
+
+                        <select name="category" class="filter-select" id="categoryFilterOutput">
                             <option value="">-- Danh mục --</option>
-                            <option value="ThitBo">Thịt Bò</option>
-                            <option value="ThitHeo">Thịt Heo</option>
-                            <option value="ThitGa">Thịt Gà</option>
+                            <c:forEach var="cat" items="${categories}">
+                                <option value="${cat.id}" ${cat.id == selectedCat ? 'selected' : ''}>
+                                        ${cat.name}
+                                </option>
+                            </c:forEach>
                         </select>
-                        <select name="origin" class="filter-select">
+
+                        <select name="origin" class="filter-select" id="originFilterOutput">
                             <option value="">-- Nguồn gốc --</option>
-                            <option value="VietNam">Việt Nam</option>
-                            <option value="My">Mỹ</option>
-                            <option value="Uc">Úc</option>
+                            <c:forEach var="org" items="${origin}">
+                                <option value="${org.id}" ${org.id == selectedOrg ? 'selected' : ''}>
+                                        ${org.name}
+                                </option>
+                            </c:forEach>
                         </select>
                     </div>
                     <button class="btn btn-primary btn-secondary" onclick="openStockModal('output')">
@@ -127,19 +147,26 @@
                     <table class="history-table">
                         <thead>
                         <tr>
-                            <th>Mã Phiếu</th><th>Thời gian</th><th>Danh mục</th>
-                            <th>Sản phẩm</th><th>Nguồn gốc</th><th>Khối lượng</th>
-                            <th>Loại</th><th>Số lượng</th><th>Người tạo</th>
+                            <th>Mã Phiếu</th>
+                            <th>Thời gian</th>
+                            <th>SKU</th>
+                            <th>Sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Nguồn gốc</th>
+                            <th>Khối lượng</th>
+                            <th>Loại</th>
+                            <th>Số lượng</th>
+                            <th>Người tạo</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="s" items="${stockList}">
-                            <c:if test="${s.type == 'Xuat'}">
                                 <tr>
                                     <td>${s.id}</td>
                                     <td>${s.created_at}</td>
-                                    <td>${s.item.categoryName}</td>
+                                    <td>${s.item.sku}</td>
                                     <td>${s.item.name}</td>
+                                    <td>${s.item.categoryName}</td>
                                     <td>${s.item.originName}</td>
                                     <td>${s.item.unitName}</td>
                                     <td><span class="type-badge type-output">
@@ -148,25 +175,24 @@
                                     <td>-${s.quantity}</td>
                                     <td>${s.created_by.name}</td>
                                 </tr>
-                            </c:if>
                         </c:forEach>
                         </tbody>
                     </table>
                 </div>
                 <div class="pagination">
                     <c:if test="${currentPage > 1}">
-                        <a href="?page=${currentPage - 1}">&laquo; Trước</a>
+                        <a href="?page=${currentPage - 1}&tab=${activeTab}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">&laquo; Trước</a>
                     </c:if>
 
                     <c:forEach begin="1" end="${totalPages}" var="i">
-                        <a href="?page=${i}"
+                        <a href="?page=${i}&tab=${activeTab}"
                            class="${i == currentPage ? 'active' : ''}">
                                 ${i}
                         </a>
                     </c:forEach>
 
                     <c:if test="${currentPage < totalPages}">
-                        <a href="?page=${currentPage + 1}">Sau &raquo;</a>
+                        <a href="?page=${currentPage + 1}&tab=${activeTab}">Sau &raquo;</a>
                     </c:if>
                 </div>
             </div>

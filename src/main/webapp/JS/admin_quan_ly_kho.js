@@ -99,20 +99,22 @@ window.addEventListener("click", function (event) {
 
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
-    const tabParam = urlParams.get('tab');
+    const tabParam = urlParams.get('tab') || 'input_history';
 
-    if (tabParam) {
-        if (tabParam === 'input_history') {
-            document.querySelector(".tab-link[onclick*='input_history']").click();
-        } else if (tabParam === 'output_history') {
-            document.querySelector(".tab-link[onclick*='output_history']").click();
-        }
-    } else {
-        const firstTab = document.querySelector(".tab-link");
-        if (firstTab) {
-            firstTab.click();
-        }
+    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+
+    const activeTab = document.getElementById(tabParam);
+    if (activeTab) {
+        activeTab.style.display = "block";
     }
+
+    document.querySelectorAll(".tab-link").forEach(link => {
+        if (link.href.includes(tabParam)) {
+            link.classList.add("active");
+        } else {
+            link.classList.remove("active");
+        }
+    });
 });
 document.getElementById("stockForm").addEventListener("submit", function(e) {
     const qty = document.getElementById("quantity").value;
@@ -121,5 +123,67 @@ document.getElementById("stockForm").addEventListener("submit", function(e) {
     if (!item || qty <= 0) {
         e.preventDefault();
         alert("Vui lòng nhập đầy đủ thông tin sản phẩm và số lượng hợp lệ!");
+    }
+});
+
+const searchInput = document.getElementById('searchInput');
+const categoryFilter = document.getElementById('categoryFilter');
+const originFilter = document.getElementById('originFilter');
+
+function applyFilterAndSearch() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentTab = urlParams.get('tab') || 'input_history';
+
+    let keyword, category, origin;
+
+    if (currentTab === 'input_history') {
+        keyword = document.getElementById('searchInput')?.value.trim() || "";
+        category = document.getElementById('categoryFilter')?.value || "";
+        origin = document.getElementById('originFilter')?.value || "";
+    } else {
+        keyword = document.getElementById('searchInputOutput')?.value.trim() || "";
+        category = document.getElementById('categoryFilterOutput')?.value || "";
+        origin = document.getElementById('originFilterOutput')?.value || "";
+    }
+
+    const params = new URLSearchParams();
+    params.append('tab', currentTab);
+    if (keyword) params.append('search', keyword);
+    if (category) params.append('category', category);
+    if (origin) params.append('origin', origin);
+    params.append('page', '1');
+
+    window.location.href = 'quanlykho?' + params.toString();
+}
+
+categoryFilter?.addEventListener('change', applyFilterAndSearch);
+originFilter?.addEventListener('change', applyFilterAndSearch);
+searchInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') applyFilterAndSearch(); });
+
+document.getElementById('categoryFilterOutput')?.addEventListener('change', applyFilterAndSearch);
+document.getElementById('originFilterOutput')?.addEventListener('change', applyFilterAndSearch);
+document.getElementById('searchInputOutput')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        applyFilterAndSearch();
+    }
+});
+
+document.getElementById('categoryFilterOutput')?.addEventListener('change', applyFilterAndSearch);
+document.getElementById('originFilterOutput')?.addEventListener('change', applyFilterAndSearch);
+document.getElementById('searchInputOutput')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') applyFilterAndSearch();
+});
+
+categoryFilter.addEventListener('change', applyFilterAndSearch);
+originFilter.addEventListener('change', applyFilterAndSearch);
+
+searchInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        if (typeof searchTimeout !== 'undefined') {
+            clearTimeout(searchTimeout);
+        }
+        applyFilterAndSearch();
     }
 });

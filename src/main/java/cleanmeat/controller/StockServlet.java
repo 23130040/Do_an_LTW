@@ -1,8 +1,6 @@
 package cleanmeat.controller;
 
-import cleanmeat.dao.StockDao;
-import cleanmeat.model.Item;
-import cleanmeat.dao.ItemDAO;
+import cleanmeat.dao.*;
 import cleanmeat.model.Stock_history;
 import cleanmeat.model.User;
 import jakarta.servlet.*;
@@ -20,25 +18,50 @@ public class StockServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int page = 1;
-        String pageParam = request.getParameter("page");
-        if (pageParam != null) {
-            page = Integer.parseInt(pageParam);
+        String currentTab = request.getParameter("tab");
+        if (currentTab == null || (!currentTab.equals("input_history") && !currentTab.equals("output_history"))) {
+            currentTab = "input_history";
         }
 
-        StockDao stockDao = new StockDao();
+        String type = currentTab.equals("input_history") ? "Nhap" : "Xuat";
 
-        List<Stock_history> list = stockDao.findByPage(page, PAGE_SIZE);
-        int totalRecords = stockDao.countAll();
-        int totalPages = (int) Math.ceil((double) totalRecords / PAGE_SIZE);
+        UnitDAO unitDAO = new UnitDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
+        OriginDAO originDAO = new OriginDAO();
+        StockDAO stockDao = new StockDAO();
+
+        String search = request.getParameter("search");
+        String category = request.getParameter("category");
+        String origin = request.getParameter("origin");
+
+        int page = 1;
+        int pageSize = 5;
+
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            try {
+                page = Integer.parseInt(pageParam);
+                if (page < 1) page = 1;
+            } catch (NumberFormatException ignored) {}
+        }
+
+        List<Stock_history> list = stockDao.searchAndFilter(type, search, category, origin, page, pageSize);
+        int totalRecords = stockDao.countSearchFilter(type, search, category, origin);
+        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+
 
         ItemDAO itemDao = new ItemDAO();
-        List<Item> itemList = itemDao.findAll();
-
+        request.setAttribute("selectedSearch", search);
+        request.setAttribute("selectedCat", category);
+        request.setAttribute("selectedOrg", origin);
         request.setAttribute("stockList", list);
-        request.setAttribute("items", itemList);
+        request.setAttribute("items", itemDao.findAll());
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
+        request.setAttribute("activeTab", currentTab);
+        request.setAttribute("categories", categoryDAO.findAll());
+        request.setAttribute("origin", originDAO.findAll());
 
         request.getRequestDispatcher("/view/admin_quan_ly_kho.jsp").forward(request, response);
     }
@@ -65,7 +88,7 @@ public class StockServlet extends HttpServlet {
 
             int userId = currentUser.getId();
 
-            StockDao stockDao = new StockDao();
+            StockDAO stockDao = new StockDAO();
             boolean success = stockDao.createStockTransaction(itemId, type, quantity, userId);
 
             if (success) {
