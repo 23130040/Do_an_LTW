@@ -28,7 +28,7 @@ public class OrderDAO extends BaseDAO<Order> {
 
     @Override
     protected void loadAll() {
-        String sql = "SELECT * FROM order ORDER BY id ASC";
+        String sql = "SELECT * FROM `order` ORDER BY id ASC";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -96,7 +96,7 @@ public class OrderDAO extends BaseDAO<Order> {
     @Override
     public boolean update(Order order, int id) {
         String sql = """
-                update order 
+                update `order` 
                 set status = ?
                 where id = ?
                 """;
@@ -125,7 +125,7 @@ public class OrderDAO extends BaseDAO<Order> {
 
     @Override
     public boolean delete(int id) {
-        String sql = "delete from order where id = ?";
+        String sql = "delete from `order` where id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -159,6 +159,25 @@ public class OrderDAO extends BaseDAO<Order> {
     }
 
     public List<Order> findByUserId(int userId) {
-        return null;
+        List<Order> orders = new ArrayList<>();
+        String sql = """
+                    SELECT *
+                    FROM `order`
+                    WHERE user_id = ?
+                    ORDER BY created_at DESC
+                """;
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Order order = mapResultSetToEntity(rs);
+                order.setListItem(oiDAO.findByOrderId(order.getId()));
+                orders.add(order);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return orders;
     }
 }

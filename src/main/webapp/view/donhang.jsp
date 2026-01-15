@@ -10,39 +10,128 @@
         <div class="tabs">
             <button class="tab active" data-target="all">Tất cả</button>
             <button class="tab" data-target="waiting">Chờ xác nhận</button>
-            <button class="tab" data-target="shipping">Chuẩn bị hàng</button>
+            <button class="tab" data-target="preparing">Chuẩn bị hàng</button>
             <button class="tab" data-target="delivering">Đang giao hàng</button>
             <button class="tab" data-target="done">Đã giao hàng</button>
             <button class="tab" data-target="cancel">Đã hủy</button>
         </div>
 
-        <div class="orders">
+        <form class="orders" method="get" action="${pageContext.request.contextPath}/don-hang-cua-toi">
             <div class="order-group" id="all">
                 <c:choose>
                     <c:when test="${not empty orders}">
                         <c:forEach var="order" items="${orders}">
-                            <div class="order-item">
+                            <div class="order-item" data-status="${order.status}">
+
+                                <!--HEADER-->
                                 <div class="order-header">
                                     <span class="order-id">#${order.id}</span>
                                     <span class="order-status status-waiting">${order.status}</span>
                                 </div>
+
+                                <!--PRODUCT-->
                                 <div class="order-products">
-                                    <c:forEach var="${item}" items="">
+                                    <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="#" alt="">
+                                            <img src="${oi.item.image}" alt="">
                                             <div class="product-info">
-                                                <span class="name"></span>
-                                                <span class="qty"></span>
+                                                <span class="name">${oi.item.name}</span>
+                                                <span class="qty">${oi.quantity}</span>
                                             </div>
-                                            <span class="price">52,000đ</span>
+                                            <span class="price">${oi.price}đ</span>
                                         </div>
                                     </c:forEach>
                                 </div>
 
                                 <div class="order-footer">
-                                    <span class="total">Tổng: ${order.total_price}</span>
-                                    <button class="btn-detail"><a href="${pageContext.request.pageContext}/">Chi
-                                        tiết</a>
+                                    <span class="total">Tổng: ${order.total_price}đ</span>
+                                    <button class="btn-detail"><a
+                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                        Chi tiết</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="none">Không có đơn hàng</div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
+            <div class="order-group hidden" id="waiting">
+                <c:choose>
+                    <c:when test="${not empty orders}">
+                        <c:forEach var="order" items="${orders}">
+                            <div class="order-item" data-status="${order.status}">
+
+                                <!--HEADER-->
+                                <div class="order-header">
+                                    <span class="order-id">#${order.id}</span>
+                                    <span class="order-status status-waiting">${order.status}</span>
+                                </div>
+
+                                <!--PRODUCT-->
+                                <div class="order-products">
+                                    <c:forEach var="oi" items="${order.listItem}">
+                                        <div class="product">
+                                            <img src="${oi.item.image}" alt="">
+                                            <div class="product-info">
+                                                <span class="name">${oi.item.name}</span>
+                                                <span class="qty">${oi.quantity}</span>
+                                            </div>
+                                            <span class="price">${oi.price}đ</span>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+
+                                <div class="order-footer">
+                                    <span class="total">Tổng: ${order.total_price}đ</span>
+                                    <button class="btn-detail"><a
+                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                        Chi tiết</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="none">Không có đơn hàng</div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
+            <div class="order-group hidden" id="preparing">
+                <c:choose>
+                    <c:when test="${not empty orders}">
+                        <c:forEach var="order" items="${orders}">
+                            <div class="order-item" data-status="${order.status}">
+
+                                <!--HEADER-->
+                                <div class="order-header">
+                                    <span class="order-id">#${order.id}</span>
+                                    <span class="order-status status-waiting">${order.status}</span>
+                                </div>
+
+                                <!--PRODUCT-->
+                                <div class="order-products">
+                                    <c:forEach var="oi" items="${order.listItem}">
+                                        <div class="product">
+                                            <img src="${oi.item.image}" alt="">
+                                            <div class="product-info">
+                                                <span class="name">${oi.item.name}</span>
+                                                <span class="qty">${oi.quantity}</span>
+                                            </div>
+                                            <span class="price">${oi.price}đ</span>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+
+                                <div class="order-footer">
+                                    <span class="total">Tổng: ${order.total_price}đ</span>
+                                    <button class="btn-detail"><a
+                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                        Chi tiết</a>
                                     </button>
                                 </div>
                             </div>
@@ -58,28 +147,33 @@
                 <c:choose>
                     <c:when test="${not empty orders}">
                         <c:forEach var="order" items="${orders}">
-                            <div class="order-item">
+                            <div class="order-item" data-status="${order.status}">
+
+                                <!--HEADER-->
                                 <div class="order-header">
                                     <span class="order-id">#${order.id}</span>
                                     <span class="order-status status-waiting">${order.status}</span>
                                 </div>
+
+                                <!--PRODUCT-->
                                 <div class="order-products">
-                                    <c:forEach var="${item}" items="">
+                                    <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="#" alt="">
+                                            <img src="${oi.item.image}" alt="">
                                             <div class="product-info">
-                                                <span class="name"></span>
-                                                <span class="qty"></span>
+                                                <span class="name">${oi.item.name}</span>
+                                                <span class="qty">${oi.quantity}</span>
                                             </div>
-                                            <span class="price">52,000đ</span>
+                                            <span class="price">${oi.price}đ</span>
                                         </div>
                                     </c:forEach>
                                 </div>
 
                                 <div class="order-footer">
-                                    <span class="total">Tổng: ${order.total_price}</span>
-                                    <button class="btn-detail"><a href="${pageContext.request.pageContext}/">Chi
-                                        tiết</a>
+                                    <span class="total">Tổng: ${order.total_price}đ</span>
+                                    <button class="btn-detail"><a
+                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                        Chi tiết</a>
                                     </button>
                                 </div>
                             </div>
@@ -95,28 +189,33 @@
                 <c:choose>
                     <c:when test="${not empty orders}">
                         <c:forEach var="order" items="${orders}">
-                            <div class="order-item">
+                            <div class="order-item" data-status="${order.status}">
+
+                                <!--HEADER-->
                                 <div class="order-header">
                                     <span class="order-id">#${order.id}</span>
                                     <span class="order-status status-waiting">${order.status}</span>
                                 </div>
+
+                                <!--PRODUCT-->
                                 <div class="order-products">
-                                    <c:forEach var="${item}" items="">
+                                    <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="#" alt="">
+                                            <img src="${oi.item.image}" alt="">
                                             <div class="product-info">
-                                                <span class="name"></span>
-                                                <span class="qty"></span>
+                                                <span class="name">${oi.item.name}</span>
+                                                <span class="qty">${oi.quantity}</span>
                                             </div>
-                                            <span class="price">52,000đ</span>
+                                            <span class="price">${oi.price}đ</span>
                                         </div>
                                     </c:forEach>
                                 </div>
 
                                 <div class="order-footer">
-                                    <span class="total">Tổng: ${order.total_price}</span>
-                                    <button class="btn-detail"><a href="${pageContext.request.pageContext}/">Chi
-                                        tiết</a>
+                                    <span class="total">Tổng: ${order.total_price}đ</span>
+                                    <button class="btn-detail"><a
+                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                        Chi tiết</a>
                                     </button>
                                 </div>
                             </div>
@@ -132,28 +231,33 @@
                 <c:choose>
                     <c:when test="${not empty orders}">
                         <c:forEach var="order" items="${orders}">
-                            <div class="order-item">
+                            <div class="order-item" data-status="${order.status}">
+
+                                <!--HEADER-->
                                 <div class="order-header">
                                     <span class="order-id">#${order.id}</span>
                                     <span class="order-status status-waiting">${order.status}</span>
                                 </div>
+
+                                <!--PRODUCT-->
                                 <div class="order-products">
-                                    <c:forEach var="${item}" items="">
+                                    <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="#" alt="">
+                                            <img src="${oi.item.image}" alt="">
                                             <div class="product-info">
-                                                <span class="name"></span>
-                                                <span class="qty"></span>
+                                                <span class="name">${oi.item.name}</span>
+                                                <span class="qty">${oi.quantity}</span>
                                             </div>
-                                            <span class="price">52,000đ</span>
+                                            <span class="price">${oi.price}đ</span>
                                         </div>
                                     </c:forEach>
                                 </div>
 
                                 <div class="order-footer">
-                                    <span class="total">Tổng: ${order.total_price}</span>
-                                    <button class="btn-detail"><a href="${pageContext.request.pageContext}/">Chi
-                                        tiết</a>
+                                    <span class="total">Tổng: ${order.total_price}đ</span>
+                                    <button class="btn-detail"><a
+                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                        Chi tiết</a>
                                     </button>
                                 </div>
                             </div>
@@ -164,7 +268,6 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-
-        </div>
+        </form>
     </div>
 </div>

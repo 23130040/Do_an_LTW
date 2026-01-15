@@ -13,42 +13,33 @@ import java.util.List;
 
 public class OrderItemDAO extends BaseDAO<OrderItem> {
 
-    OrderDAO orderDAO = new OrderDAO();
     ItemDAO itemDAO = new ItemDAO();
 
     public List<OrderItem> findByOrderId(int orderId) {
-        List<OrderItem> orderItems = new ArrayList<>();
+        List<OrderItem> list = new ArrayList<>();
         String sql = """
-                select * from order_item where order_id = ?;
+                    SELECT oi.*, i.*
+                    FROM order_item oi
+                    JOIN item i ON oi.item_id = i.id
+                    WHERE oi.order_id = ?
                 """;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = getConnection();
-            conn.setAutoCommit(false);
-            ps = conn.prepareStatement(sql);
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, orderId);
-            rs = ps.executeQuery();
-            Order order = orderDAO.findById(orderId);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Item item = itemDAO.findById(rs.getInt("item_id"));
-                OrderItem orderItem = new OrderItem(
-                        order,
+                Item item = itemDAO.mapResultSetToEntity(rs);
+                OrderItem oi = new OrderItem(
                         item,
                         rs.getDouble("price"),
-                        rs.getDouble("quantity"),
-                        rs.getDate("creates_at").toLocalDate());
-                orderItems.add(orderItem);
+                        rs.getDouble("quantity")
+                );
+                list.add(oi);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(rs, ps, conn);
         }
-        return orderItems;
+        return list;
     }
 
     @Override

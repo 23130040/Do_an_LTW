@@ -14,6 +14,17 @@ import java.util.List;
 public class DonHang extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/dang-nhap");
+        }
+
+        OrderService orderService = new OrderService();
+        List<Order> orders = orderService.getListOrder(user.getId());
+        request.setAttribute("orders", orders);
+
         request.setAttribute("pageTitle", "Đơn hàng của tôi");
         request.setAttribute("mainContent", "/view/donhang.jsp");
         request.setAttribute("pageCss", "/CSS/donhang.css");
@@ -22,13 +33,5 @@ public class DonHang extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        OrderService orderService = new OrderService();
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        List<Order> orders = orderService.getListOrder(user.getId());
-        request.setAttribute("orders", orders);
-    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 }

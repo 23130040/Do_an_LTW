@@ -3,14 +3,12 @@ package cleanmeat.model;
 import java.time.LocalDate;
 
 public class OrderItem {
-    private Order order;
     private Item item;
     private double price;
     private double quantity;
     private LocalDate creates_at;
 
-    public OrderItem(Order order, Item item, double price, double quantity, LocalDate creates_at) {
-        this.order = order;
+    public OrderItem(Item item, double price, double quantity, LocalDate creates_at) {
         this.item = item;
         this.price = price;
         this.quantity = quantity;
@@ -23,10 +21,6 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
     public Item getItem() {
         return item;
     }
@@ -37,10 +31,6 @@ public class OrderItem {
 
     public double getQuantity() {
         return quantity;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public void setItem(Item item) {
