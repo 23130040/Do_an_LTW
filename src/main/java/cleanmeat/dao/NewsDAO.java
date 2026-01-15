@@ -1,6 +1,5 @@
 package cleanmeat.dao;
 
-import cleanmeat.model.Feedback;
 import cleanmeat.model.News;
 
 import java.sql.Connection;
@@ -10,7 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.sql.DriverManager.getConnection;
+
 public class NewsDAO extends BaseDAO<News> {
+
+    @Override
+    protected void loadAll() {
+
+    }
+
     @Override
     protected News mapResultSetToEntity(ResultSet rs) throws SQLException {
         News news = new News();
@@ -28,22 +35,41 @@ public class NewsDAO extends BaseDAO<News> {
     }
 
     @Override
-    protected boolean insert(News news) throws SQLException, ClassNotFoundException {
+    public boolean insert(News news) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    protected boolean update(News news, int id) {
+    public boolean update(News news, int id) {
         return false;
     }
 
     @Override
-    protected boolean delete(News news, int id) {
+    public boolean delete(int id) {
         return false;
     }
 
     @Override
-    protected News findById(int id) {
+    public News findById(int id) {
+        String sql = "SELECT * FROM news WHERE id = ?";
+        Connection conn = null;
+
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return mapResultSetToEntity(rs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
         return null;
     }
 
@@ -70,6 +96,75 @@ public class NewsDAO extends BaseDAO<News> {
             }
         }
         return list;
+    }
+
+
+    public List<News> findLatest(int limit) {
+        List<News> list = new ArrayList<>();
+        String sql = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, limit);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+        return list;
+    }
+    public List<News> findByPage(int page) {
+        List<News> list = new ArrayList<>();
+
+        int pageSize = 4;
+        int offset = (page - 1) * pageSize;
+
+        String sql =
+                "SELECT * FROM news " +
+                        "ORDER BY created_at DESC " +
+                        "LIMIT ? OFFSET ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, pageSize);
+            ps.setInt(2, offset);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public int countPages() {
+        int pageSize = 4;
+        String sql = "SELECT COUNT(*) FROM news";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                return (int) Math.ceil(total * 1.0 / pageSize);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 
 }

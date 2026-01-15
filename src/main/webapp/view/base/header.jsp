@@ -5,12 +5,10 @@
 <nav class="menubar">
     <div class="sixteen column">
 
-        <!-- LOGO -->
         <div class="one-fifth column left">
             <img src="${pageContext.request.contextPath}/images/logoCleanmeat.png" alt="CleanMeat Logo">
         </div>
 
-        <!-- MENU GIỮA -->
         <div class="three-fifths column center">
             <ul class="menu-center">
                 <li class="menuitem">
@@ -46,7 +44,7 @@
 
                 <!-- CART -->
                 <li class="menuitem-right" id="shopping-cart">
-                    <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="${pageContext.request.contextPath}/gio-hang"><i class="fa-solid fa-cart-shopping"></i></a>
                 </li>
 
                 <!-- USER -->
@@ -64,7 +62,7 @@
                                     <a href="${pageContext.request.contextPath}/tai-khoan">Tài khoản của tôi</a>
                                 </li>
                                 <li class="user-menuitem">
-                                    <a href="${pageContext.request.contextPath}/don-hang">Đơn hàng của tôi</a>
+                                    <a href="${pageContext.request.contextPath}/don-hang-cua-toi">Đơn hàng của tôi</a>
                                 </li>
                                 <li class="user-menuitem">
                                     <a href="${pageContext.request.contextPath}/dang-xuat?from=user">Đăng xuất</a>

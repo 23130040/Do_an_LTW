@@ -10,6 +10,11 @@ import java.util.List;
 
 public class UnitDAO extends BaseDAO<Unit> {
     @Override
+    protected void loadAll() {
+
+    }
+
+    @Override
     protected Unit mapResultSetToEntity(ResultSet rs) throws SQLException {
         Unit unit = new Unit();
         unit.setId(rs.getInt("id"));
@@ -89,7 +94,7 @@ public class UnitDAO extends BaseDAO<Unit> {
     }
 
     @Override
-    protected boolean update(Unit unit, int id) {
+    public boolean update(Unit unit, int id) {
         String sql = "UPDATE unit SET name = ?, amount = ? WHERE id = ?";
         Connection conn = null;
         try {
@@ -111,7 +116,7 @@ public class UnitDAO extends BaseDAO<Unit> {
     }
 
     @Override
-    protected boolean delete(Unit unit, int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM unit WHERE id = ?";
         Connection conn = null;
         try {

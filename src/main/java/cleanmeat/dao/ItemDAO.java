@@ -13,6 +13,11 @@ import java.util.List;
 public class ItemDAO extends BaseDAO<Item> {
 
     @Override
+    protected void loadAll() {
+
+    }
+
+    @Override
     protected Item mapResultSetToEntity(ResultSet rs) throws SQLException {
         Item item = new Item();
         item.setId(rs.getInt("id"));
@@ -42,7 +47,7 @@ public class ItemDAO extends BaseDAO<Item> {
     }
 
     @Override
-    protected boolean insert(Item item) throws SQLException, ClassNotFoundException {
+    public boolean insert(Item item) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -324,7 +329,7 @@ public class ItemDAO extends BaseDAO<Item> {
         }
     }
     @Override
-    public boolean delete(Item item, int id) {
+    public boolean delete(int id) {
         String sqlDeleteImage = "DELETE FROM item_image WHERE item_id = ?";
         String sqlDeleteItem = "DELETE FROM item WHERE id = ?";
         Connection conn = null;

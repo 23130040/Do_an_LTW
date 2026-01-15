@@ -6,14 +6,14 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "gioi-thieu", value = "/gioi-thieu")
-public class GioiThieu extends HttpServlet {
+@WebServlet(name = "gio-hang", value = "/gio-hang")
+public class GioHang extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("pageTitle", "Giới Thiệu");
-        request.setAttribute("mainContent", "/view/gioithieu.jsp");
-        request.setAttribute("pageCss", "/CSS/gioithieu.css");
-        request.setAttribute("pageJS", "/JS/gioithieu.js");
+        request.setAttribute("pageTitle", "Giỏ hàng");
+        request.setAttribute("mainContent", "/view/giohang.jsp");
+        request.setAttribute("pageCss", "/CSS/giohang.css");
+        request.setAttribute("pageJS", "/JS/giohang.js");
         request.getRequestDispatcher("/view/base/base.jsp").forward(request, response);
     }
 

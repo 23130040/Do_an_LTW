@@ -22,7 +22,7 @@ public class TatCaSanPham extends HttpServlet {
 
         request.setAttribute("pageTitle", "Tất cả sản phẩm");
         request.setAttribute("mainContent", "/view/tat_ca_san_pham.jsp");
-        request.setAttribute("pageCss", "/css/tat_ca_san_pham.css");
+        request.setAttribute("pageCss", "/CSS/tat_ca_san_pham.css");
 
         request.getRequestDispatcher("/view/base/base.jsp")
                 .forward(request, response);

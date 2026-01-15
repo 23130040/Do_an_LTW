@@ -59,12 +59,11 @@ public class ItemServlet extends HttpServlet {
             String currentPage = request.getParameter("page");
             if (currentPage == null) currentPage = "1";
 
-            boolean success = itemDAO.delete(null, id);
+            boolean success = itemDAO.delete(id);
 
             response.sendRedirect("quanlysanpham?page=" + currentPage);
             return;
         }
-
 
         UnitDAO unitDAO = new UnitDAO();
         CategoryDAO categoryDAO = new CategoryDAO();

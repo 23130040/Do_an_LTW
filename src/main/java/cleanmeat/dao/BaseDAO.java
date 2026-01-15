@@ -9,71 +9,32 @@ public abstract class BaseDAO<T> {
         return ConnectionPool.getInstance().getConnection();
     }
 
-    //thực thi câu lệnh select
-    protected ResultSet selectData(String sql) throws ClassNotFoundException, SQLException {
-        Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        return rs;
-    }
-
-    //thực thi các câu lệnh update, insert, delete
-    protected void executeSQL(String sql) throws ClassNotFoundException, SQLException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = getConnection();
-            // Tắt AutoCommit nếu bạn muốn tự rollback/commit
-            conn.setAutoCommit(false);
-            ps = conn.prepareStatement(sql);
-            ps.executeUpdate();
-            conn.commit();
-        } catch (SQLException e) {
-            if (conn != null) conn.rollback();
-            throw e;
-        } finally {
-            // Luôn trả kết nối về pool tại đây
-            closeResource(conn, ps, null);
-        }
-    }
+    protected abstract void loadAll();
 
     protected abstract T mapResultSetToEntity(ResultSet rs) throws SQLException;
 
-    protected abstract boolean insert(T t) throws SQLException, ClassNotFoundException;
+    public abstract boolean insert(T t) throws SQLException, ClassNotFoundException;
 
-    protected abstract boolean update(T t, int id);
+    public abstract boolean update(T t, int id);
 
-    protected abstract boolean delete(T t, int id);
+    public abstract boolean delete(int id);
 
-    protected abstract T findById(int id);
+    public abstract T findById(int id);
 
-    protected abstract List<T> findAll();
+    public abstract List<T> findAll();
 
-    protected void closeResource(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
-        if (ps != null) {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
+    public void close(ResultSet rs, PreparedStatement ps, Connection conn) {
+        try {
+            if (rs != null) rs.close();
+        } catch (SQLException ignored) {}
+
+        try {
+            if (ps != null) ps.close();
+        } catch (SQLException ignored) {}
+
         if (conn != null) {
-            try {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-                e.printStackTrace();
-            }
+            ConnectionPool.getInstance().releaseConnection(conn);
         }
     }
-
 }
+

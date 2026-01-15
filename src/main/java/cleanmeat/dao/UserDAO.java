@@ -33,6 +33,11 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     @Override
+    protected void loadAll() {
+
+    }
+
+    @Override
     protected User mapResultSetToEntity(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");
@@ -133,14 +138,17 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     @Override
-    public boolean delete(User user, int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM user WHERE id=?";
         Connection conn = null;
         try {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, id);
-                return ps.executeUpdate() > 0;
+                if (ps.executeUpdate() > 0){
+                    users.remove(id);
+                    return true;
+                };
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -301,5 +309,43 @@ public class UserDAO extends BaseDAO<User> {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
         return false;
+    }
+
+    public boolean changePassword(int userId, String newPassword) {
+        String sql = "UPDATE user SET password = ? WHERE id = ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, newPassword);
+                ps.setInt(2, userId);
+                if (ps.executeUpdate() == 0) {
+                    conn.rollback();
+                    return false;
+                }
+                User user = users.get(userId);
+                if (user != null) user.setPassword(newPassword);
+                return true;
+            }
+        } catch (Exception e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
     }
 }
