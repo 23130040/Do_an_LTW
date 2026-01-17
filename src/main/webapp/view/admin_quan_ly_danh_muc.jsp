@@ -22,7 +22,7 @@
         </jsp:include>
 
         <main class="content-area">
-            <h2><i class="fas fa-sitemap"></i> Quản lý Danh mục và Nguồn gốc</h2>
+            <h2 class="page-title">Quản lý Danh mục và Nguồn gốc</h2>
 
             <div class="tab-container">
                 <div class="tab-links">

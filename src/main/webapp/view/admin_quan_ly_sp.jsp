@@ -229,8 +229,6 @@
                     <input type="number" placeholder="5 (Cảnh báo khi <= 5)" name="minStock">
                 </div>
 
-
-                <label>Hình ảnh sản phẩm:</label>
                 <div class="image-upload-container">
                     <label>Hình ảnh sản phẩm:</label>
                     <div class="image-upload-box" onclick="document.getElementById('imageInput').click()">
