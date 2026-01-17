@@ -257,6 +257,11 @@ CREATE TABLE `order`  (
   INDEX `address_id`(`address_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
+ALTER TABLE `order`
+DROP COLUMN `transport_type`;
+
+ALTER TABLE `order`
+DROP COLUMN `payment_type`;
 -- ----------------------------
 -- Records of order
 -- ----------------------------
