@@ -1,215 +1,173 @@
-
-html, body {
-    width: 100%;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f3ec;
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
 a {
     text-decoration: none;
     color: inherit;
-    font-family: inherit;
-    font-size: 18px;
 }
 
 main {
     width: 100%;
     margin: auto;
-    min-height: 100vh;
-}
-/******************* FLASH SALE *******************/
-.flash-sale {
-    margin-top: 100px;
+    padding-top: 100px;
 }
 
-.flash-header h2 {
-    font-size: 32px;
-    color: #ff0000;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    text-align: center;
+/* ======= FIX LAYOUT CHA (QUAN TRỌNG NHẤT) ======= */
+.product-list-section {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 20px 50px;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
-.flash-products {
-    display: flex;
-    gap: 30px;
-    overflow-x: auto;
-    padding: 10px 5px 20px;
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-    scrollbar-color: #ff0000 transparent;
-}
-
-.flash-products::-webkit-scrollbar {
-    height: 14px;
-}
-
-.flash-products::-webkit-scrollbar-thumb {
-    background-color: #ff5050;
+/* ===== SIDEBAR ===== */
+.sidebar {
+    flex: 0 0 250px;
+    width: 250px;
+    background-color: #f8f8f8;
     border-radius: 10px;
-    border: 3px solid #5a0000;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    text-align: left;
 }
 
-.flash-item {
-    width: 260px;
-    height: 350px;
-    flex: 0 0 auto;
-    border-radius: 12px;
+.sidebar h3 {
+    color: #e00000;
+    font-size: 20px;
+    margin-bottom: 15px;
     text-align: center;
-    padding: 15px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.sidebar ul li {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 6px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.sidebar ul li:hover,
+.sidebar ul li.active {
+    background-color: #8d2a3a;
+    color: #fff;
+}
+
+/* ===== VÙNG BÊN PHẢI ===== */
+.product-wrapper {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    gap: 20px;
+}
+
+/* ===== BỘ LỌC ===== */
+.filter-top {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Dropdown filter */
+.custom-select {
     position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.flash-item:hover {
-    transform: scale(1.03);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-}
-
-.flash-item img {
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-top: 10px;
-}
-
-.flash-item .title {
-    font-size: 15px;
-    margin: 10px 0;
-    line-height: 1.4;
-    height: 38px;
-    overflow: hidden;
-}
-
-.flash-item .price {
-    font-size: 16px;
-    color: #e60000;
-    font-weight: bold;
-}
-
-.flash-item .old {
-    text-decoration: line-through;
-    color: gray;
-    font-size: 13px;
-    margin-left: 5px;
-}
-
-.flash-item button {
-    background-color: white;
-    color: red;
-    border: 1px solid red;
-    border-radius: 20px;
-    padding: 6px 15px;
-    cursor: pointer;
+    width: 170px;
+    user-select: none;
     font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    font-size: 15px;
 }
 
-.flash-item button:hover {
-    background-color: #8d2a3a;
-    color: white;
-    border-color: #8d2a3a;
-    transform: scale(1.05);
-}
-
-.discount {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: red;
-    color: white;
-    padding: 4px 8px;
-    font-size: 13px;
-    border-radius: 4px;
-    font-weight: bold;
-}
-
-/********************** PHẦN DANH MỤC **********************/
-.product-section {
-    text-align: center;
-    padding: 50px 40px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.08);
-    width: 100%;
-    margin: 0 auto;
-}
-
-.category-header {
-    width: 100%;
-    max-width: 1400px;
-    margin: 160px auto 20px;
-    padding: 0 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.right-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.category {
-    background-color: #fff;
+.custom-select .selected {
+    background: white;
     color: #e00000;
-    border: 2px solid #e00000;
+    padding: 10px 15px;
     border-radius: 6px;
-    padding: 8px 18px;
+    border: 2px solid #e00000;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 15px;
-    transition: all 0.3s ease;
+    text-align: center;
 }
 
-.category:hover,
-.category.active {
-    background-color: #8d2a3a;
-    border-color: #8d2a3a;
-    color: #fff;
-    transform: translateY(-2px);
+.custom-select .select-list {
+    background: white;
+    color: #e00000;
+    border: 2px solid #8d2a3a;
+    border-radius: 6px;
+    position: absolute;
+    width: 100%;
+    top: 48px;
+    left: 0;
+    display: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1001;
 }
 
+.custom-select .select-list li {
+    list-style: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.custom-select .select-list li:hover,
+.custom-select .select-list li.active {
+    background: #8d2a3a;
+    color: white;
+}
+
+.custom-select.open .select-list {
+    display: block;
+}
+
+/* ===== LƯỚI SẢN PHẨM ===== */
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    padding: 0 30px;
+    gap: 30px;
+    justify-content: flex-start;
+    width: 100%;
 }
 
+/* ===== THẺ SẢN PHẨM ===== */
 .product-item {
-    width: 240px;
+    position: relative;
+    width: 210px;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    padding: 15px 12px 18px;
+    padding: 12px 10px 15px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 .product-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
 .product-item img {
@@ -230,10 +188,20 @@ main {
 }
 
 .product-item .price {
-    color: #e00000;
-    font-weight: bold;
-    font-size: 15px;
-    margin: 8px 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #d70000;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-item .price .old {
+    font-size: 14px;
+    color: #9f9f9f;
+    margin-left: 5px;
+    text-decoration: line-through;
 }
 
 .product-item button {
@@ -255,94 +223,60 @@ main {
     transform: scale(1.05);
 }
 
-.custom-select {
-    position: relative;
-    width: 170px;
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.custom-select .selected {
-    background: #fff;
-    color: #e00000;
-    padding: 10px 15px;
-    border-radius: 6px;
-    border: 2px solid #e00000;
-    cursor: pointer;
-    text-align: center;
-}
-
-.custom-select .select-list {
-    background: #fff;
-    color: #e00000;
-    border: 2px solid #e00000;
-    border-radius: 6px;
+/* ===== GIẢM GIÁ ===== */
+.product-item .discount {
     position: absolute;
-    width: 100%;
-    top: 48px;
-    left: 0;
-    display: none;
-    padding: 0;
-    margin: 0;
-    z-index: 1000;
-}
-
-.custom-select .select-list li {
-    list-style: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.custom-select .select-list li:hover {
-    background: #8d2a3a;
-    color: white;
-}
-
-.custom-select.open .select-list {
-    display: block;
-}
-
-/* Xem tất cả */
-.view-all {
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-#viewAllBtn {
-    background-color: #fff;
-    color: #e00000;
-    border: 2px solid #e00000;
-    border-radius: 8px;
-    padding: 12px 45px;
-    font-weight: 600;
-    font-size: 15px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-}
-
-#viewAllBtn:hover {
-    background-color: #8d2a3a;
-    border-color: #8d2a3a;
+    top: 10px;
+    left: 10px;
+    background: red;
     color: #fff;
-    transform: translateY(-3px);
+    padding: 3px 7px;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: bold;
 }
-/************************ RESPONSIVE ***************************/
+
+/* ===== HẾT HÀNG ===== */
+.product-item.out-of-stock {
+    overflow: hidden;
+}
+
+.product-item.out-of-stock::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 1;
+}
+
+.product-item.out-of-stock .stock-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #777;
+    color: #fff;
+    font-weight: 600;
+    padding: 4px 10px;
+    font-size: 13px;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.product-item.out-of-stock button {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
-    .product-item { flex: 1 1 calc(25% - 2%); max-width: calc(25% - 2%); }
+    .product-item { width: calc(25% - 30px); }
 }
-
 @media (max-width: 900px) {
-    .product-item { flex: 1 1 calc(33.33% - 2%); max-width: calc(33.33% - 2%); }
+    .product-item { width: calc(33.33% - 30px); }
 }
-
 @media (max-width: 600px) {
-    .product-item { flex: 1 1 calc(50% - 2%); max-width: calc(50% - 2%); }
+    .product-item { width: calc(50% - 30px); }
 }
-
 @media (max-width: 400px) {
-    .product-item { flex: 1 1 100%; max-width: 100%; }
+    .product-item { width: 100%; }
 }
