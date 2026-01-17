@@ -13,6 +13,11 @@ import java.util.List;
 
 public class StockDAO extends BaseDAO<Stock_history> {
     @Override
+    protected void loadAll() {
+
+    }
+
+    @Override
     protected Stock_history mapResultSetToEntity(ResultSet rs) throws SQLException {
         Item item = new Item();
         item.setId(rs.getInt("item_id"));
@@ -35,27 +40,27 @@ public class StockDAO extends BaseDAO<Stock_history> {
     }
 
     @Override
-    protected boolean insert(Stock_history stockHistory) throws SQLException, ClassNotFoundException {
+    public boolean insert(Stock_history stockHistory) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    protected boolean update(Stock_history stockHistory, int id) {
+    public boolean update(Stock_history stockHistory, int id) {
         return false;
     }
 
     @Override
-    protected boolean delete(Stock_history stockHistory, int id) {
+    public boolean delete(int id) {
         return false;
     }
 
     @Override
-    protected Stock_history findById(int id) {
+    public Stock_history findById(int id) {
         return null;
     }
 
     @Override
-    protected List<Stock_history> findAll() {
+    public List<Stock_history> findAll() {
         return List.of();
     }
 

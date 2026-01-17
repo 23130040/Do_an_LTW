@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <header>
@@ -13,34 +14,47 @@
                 <th class="header sum">Thành tiền</th>
                 <th class="header trash"></th>
             </tr>
-            <tr class="order-table-body" id="product1">
-                <td class="order-table-item product">
-                    <div class="product-wrapper">
-                        <img src="https://vietmartjp.com/wp-content/uploads/2024/05/kiotviet_e2ee0a463cd2893e6dbc6d3efb773064.jpg"
-                             alt="Mỡ heo">
-                        <span class="detail">Mỡ heo sạch 330gr</span>
+            <c:choose>
+                <c:when test="${not empty cart.list}">
+                    <c:forEach var="cartItem" items="${cart.list}">
+                        <tr class="order-table-body">
+                            <td class="order-table-item product">
+                                <div class="product-wrapper">
+                                    <img src="${cartItem.item.image}"
+                                         alt="${cartItem.item.name}">
+                                    <span class="detail">cartItem.item.name</span>
+                                </div>
+                            </td>
+                            <td class="order-table-item price">
+                                <span>cartItem.price</span>
+                                <span class="detail">đ/${cartItem.item}</span>
+                            </td>
+                            <td class="order-table-item amount">
+                                <div class="amount-wrapper">
+                                    <button type="button" data-action="decrease" class="quantity-btn" id="decrease1">-
+                                    </button>
+                                    <input type="text" class="quantity-input" value="1" id="SP001">
+                                    <button type="button" data-action="increase" class="quantity-btn" id="increase1">+
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="order-table-item sum">
+                                <span class="total" id="sum1">${cartItem.price * cartItem.quantity}</span>
+                                <span class="detail">đ</span>
+                            </td>
+                            <td class="order-table-item trash" id="trash1">
+                                <i class="fa-solid fa-trash"></i>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <div class="none">
+                        <p>Không có sản phẩm trong giỏ hàng</p>
+                        <button type="button">Mua hàng ngay</button>
                     </div>
-                </td>
-                <td class="order-table-item price">
-                    <span id="price1">52,000</span>
-                    <span class="detail">đ/phần</span>
-                </td>
-                <td class="order-table-item amount">
-                    <div class="amount-wrapper">
-                        <button type="button" data-action="decrease" class="quantity-btn" id="decrease1">-</button>
-                        <input type="text" class="quantity-input" value="1" id="SP001">
-                        <button type="button" data-action="increase" class="quantity-btn" id="increase1">+</button>
-                        <span class="detail">phần</span>
-                    </div>
-                </td>
-                <td class="order-table-item sum">
-                    <span class="total" id="sum1"></span>
-                    <span class="detail">đ</span>
-                </td>
-                <td class="order-table-item trash" id="trash1">
-                    <i class="fa-solid fa-trash"></i>
-                </td>
-            </tr>
+                </c:otherwise>
+            </c:choose>
         </table>
     </div>
     <div class="order summary">
@@ -50,7 +64,7 @@
                 <div class="order-summary total">
                     <p>
                         <span class="total txt">Tổng tiền hàng:</span>
-                        <span class="total number" id="total-order"></span>
+                        <span class="total number">${cart.total}</span>
                     </p>
                 </div>
                 <div class="order-summary discount">
@@ -70,7 +84,7 @@
                 <div class="order-summary amount">
                     <p>
                         <span class="amount txt">Thành tiền:</span>
-                        <span class="amount number" id="subtotal"></span>
+                        <span class="amount number" id="subtotal">${cart.total}</span>
                     </p>
                 </div>
             </div>
