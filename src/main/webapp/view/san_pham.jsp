@@ -2,102 +2,102 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!-- ================= BANNER ================= -->
-<div class="banner">
-    <img src="${pageContext.request.contextPath}/images/bannersp.jpg"
-         alt="Banner background"
-         class="banner-img">
+<!-- MAIN -->
+<main>
+    <section class="product-list-section">
 
-    <div class="gretting">
-        <h1 id="greet-title">
-            Chào Mừng Đến Với ${globalConfig.name}
-        </h1>
-
-        <p id="greet-desc">
-            Vì sức khỏe, vì gia đình, và vì chính bạn.
-            Chúng tôi mong mỗi bữa ăn đều là một niềm hạnh phúc
-        </p>
-    </div>
-</div>
-<!-- ================= FLASH SALE ================= -->
-<section class="flash-sale">
-    <div class="flash-header">
-        <h2><i class="fas fa-fire"></i> Flash Sale</h2>
-    </div>
-
-    <div class="flash-products">
-        <c:forEach items="${flashItems}" var="item">
-            <div class="flash-item">
-                <div class="discount">-${item.discount}%</div>
-
-                <a href="product?id=${item.id}">
-                    <img src="${item.imageUrl}">
-                    <p class="title">${item.name}</p>
-                </a>
-
-                <p class="price">
-                    <fmt:formatNumber value="${item.finalPrice}" type="number"/>đ
-                    <span class="old">
-                        <fmt:formatNumber value="${item.price}" type="number"/>đ
-                    </span>
-                </p>
-
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-        </c:forEach>
-    </div>
-</section>
-
-<!-- ================= DANH MỤC ================= -->
-<div class="category-header">
-    <h2 class="section-title">DANH MỤC SẢN PHẨM</h2>
-
-    <div class="right-controls">
-        <div class="category-buttons">
-            <button class="category active" data-category="heo">Thịt heo</button>
-            <button class="category" data-category="ga">Thịt gà</button>
-            <button class="category" data-category="bo">Thịt bò</button>
-        </div>
-
-        <div class="custom-select">
-            <div class="selected">Mặc định</div>
-            <ul class="select-list">
-                <li data-value="default">Mặc định</li>
-                <li data-value="up">Giá tăng dần</li>
-                <li data-value="down">Giá giảm dần</li>
+        <!-- ===== SIDEBAR DANH MỤC ===== -->
+        <aside class="sidebar">
+            <h3>Danh mục sản phẩm</h3>
+            <ul>
+                <li class="category active" data-category="all">TẤT CẢ</li>
+                <li class="category" data-category="heo">THỊT HEO</li>
+                <li class="category" data-category="ga">THỊT GÀ</li>
+                <li class="category" data-category="bo">THỊT BÒ</li>
             </ul>
+        </aside>
+
+        <!-- ===== DANH SÁCH + SORT ===== -->
+        <div class="product-wrapper">
+
+            <!-- SORT -->
+            <div class="filter-top">
+                <div class="custom-select">
+                    <div class="selected" data-value="default">Mặc định</div>
+                    <ul class="select-list">
+                        <li data-value="default">Mặc định</li>
+                        <li data-value="up">Giá tăng dần</li>
+                        <li data-value="down">Giá giảm dần</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ===== DANH SÁCH SẢN PHẨM ===== -->
+            <div class="product-list">
+
+                <c:forEach items="${items}" var="item">
+
+                    <!-- xác định category -->
+                    <c:set var="cat"
+                           value="${item.category_id == 1 ? 'heo' : (item.category_id == 2 ? 'ga' : 'bo')}" />
+
+                    <!-- CARD SẢN PHẨM -->
+                    <div class="product-item ${item.current_stock == 0 ? 'out-of-stock' : ''}"
+                         data-category="${cat}">
+
+                        <!-- HẾT HÀNG -->
+                        <c:if test="${item.current_stock == 0}">
+                            <div class="stock-label">HẾT HÀNG</div>
+                        </c:if>
+
+                        <!-- GIẢM GIÁ -->
+                        <c:if test="${item.discount > 0}">
+                            <div class="discount">-${item.discount}%</div>
+                        </c:if>
+
+                        <a href="${pageContext.request.contextPath}/product?id=${item.id}">
+
+                            <!-- ẢNH -->
+                            <img src="${pageContext.request.contextPath}/images/${item.imageUrl}"
+                                 alt="${item.name}">
+
+                            <!-- TÊN -->
+                            <h3>${item.name}</h3>
+
+                        </a>
+
+                        <!-- GIÁ -->
+                        <div class="price">
+                            <c:choose>
+                                <c:when test="${item.discount > 0}">
+                                    <span class="new">
+                                        <fmt:formatNumber
+                                                value="${item.price * (100 - item.discount) / 100}"
+                                                type="number"/> ₫ / KG
+                                    </span>
+                                    <span class="old">
+                                        <fmt:formatNumber value="${item.price}" type="number"/> ₫
+                                    </span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="new">
+                                        <fmt:formatNumber value="${item.price}" type="number"/> ₫ / KG
+                                    </span>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+
+                        <!-- NÚT -->
+                        <button type="button"
+                            ${item.current_stock == 0 ? 'disabled' : ''}>
+                            THÊM VÀO GIỎ
+                        </button>
+
+                    </div>
+
+                </c:forEach>
+
+            </div>
         </div>
-
-        <select id="sortSelect" style="display:none;">
-            <option value="default">Mặc định</option>
-            <option value="up">Giá tăng dần</option>
-            <option value="down">Giá giảm dần</option>
-        </select>
-    </div>
-</div>
-
-<!-- ================= SẢN PHẨM ================= -->
-<div class="product-list">
-    <c:forEach items="${items}" var="item">
-
-        <div class="product-item"
-             data-category="${item.category_id == 1 ? 'heo' : item.category_id == 2 ? 'ga' : 'bo'}">
-
-            <a href="product?id=${item.id}">
-                <img src="${item.imageUrl}">
-                <h3>${item.name}</h3>
-            </a>
-
-            <p class="price">
-                <fmt:formatNumber value="${item.price}" type="number"/> ₫ / KG
-            </p>
-
-            <button>THÊM VÀO GIỎ</button>
-        </div>
-
-    </c:forEach>
-</div>
-
-<div class="view-all">
-    <button id="viewAllBtn">Xem tất cả</button>
-</div>
+    </section>
+</main>
