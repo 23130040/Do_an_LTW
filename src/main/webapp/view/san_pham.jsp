@@ -1,72 +1,80 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/san_pham.css">
 
-<!-- MAIN -->
-<main>
+<div class="page-container">
     <section class="product-list-section">
 
-        <!-- ===== SIDEBAR DANH MỤC ===== -->
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <h3>Danh mục sản phẩm</h3>
             <ul>
-                <li class="category active" data-category="all">TẤT CẢ</li>
-                <li class="category" data-category="heo">THỊT HEO</li>
-                <li class="category" data-category="ga">THỊT GÀ</li>
-                <li class="category" data-category="bo">THỊT BÒ</li>
+                <li class="${empty param.category ? 'active' : ''}">
+                    <a href="${pageContext.request.contextPath}/products">
+                        TẤT CẢ
+                    </a>
+                </li>
+
+                <li class="${param.category == 'heo' ? 'active' : ''}">
+                    <a href="${pageContext.request.contextPath}/products?category=heo">
+                        THỊT HEO
+                    </a>
+                </li>
+
+                <li class="${param.category == 'ga' ? 'active' : ''}">
+                    <a href="${pageContext.request.contextPath}/products?category=ga">
+                        THỊT GÀ
+                    </a>
+                </li>
+
+                <li class="${param.category == 'bo' ? 'active' : ''}">
+                    <a href="${pageContext.request.contextPath}/products?category=bo">
+                        THỊT BÒ
+                    </a>
+                </li>
             </ul>
         </aside>
 
-        <!-- ===== DANH SÁCH + SORT ===== -->
+        <!-- BÊN PHẢI -->
         <div class="product-wrapper">
 
             <!-- SORT -->
             <div class="filter-top">
-                <div class="custom-select">
-                    <div class="selected" data-value="default">Mặc định</div>
-                    <ul class="select-list">
-                        <li data-value="default">Mặc định</li>
-                        <li data-value="up">Giá tăng dần</li>
-                        <li data-value="down">Giá giảm dần</li>
-                    </ul>
-                </div>
+                <form method="get" action="${pageContext.request.contextPath}/products">
+                    <input type="hidden" name="category" value="${param.category}"/>
+
+                    <select name="sort" onchange="this.form.submit()">
+                        <option value="">Mặc định</option>
+                        <option value="price_asc" ${param.sort == 'price_asc' ? 'selected' : ''}>
+                            Giá tăng dần
+                        </option>
+                        <option value="price_desc" ${param.sort == 'price_desc' ? 'selected' : ''}>
+                            Giá giảm dần
+                        </option>
+                    </select>
+                </form>
             </div>
 
-            <!-- ===== DANH SÁCH SẢN PHẨM ===== -->
+            <!-- LIST -->
             <div class="product-list">
-
                 <c:forEach items="${items}" var="item">
 
-                    <!-- xác định category -->
-                    <c:set var="cat"
-                           value="${item.category_id == 1 ? 'heo' : (item.category_id == 2 ? 'ga' : 'bo')}" />
+                    <div class="product-item ${item.current_stock == 0 ? 'out-of-stock' : ''}">
 
-                    <!-- CARD SẢN PHẨM -->
-                    <div class="product-item ${item.current_stock == 0 ? 'out-of-stock' : ''}"
-                         data-category="${cat}">
+                        <a href="${pageContext.request.contextPath}/product?id=${item.id}"
+                           class="product-link">
 
-                        <!-- HẾT HÀNG -->
-                        <c:if test="${item.current_stock == 0}">
-                            <div class="stock-label">HẾT HÀNG</div>
-                        </c:if>
+                            <c:if test="${item.discount > 0}">
+                                <div class="discount">-${item.discount}%</div>
+                            </c:if>
 
-                        <!-- GIẢM GIÁ -->
-                        <c:if test="${item.discount > 0}">
-                            <div class="discount">-${item.discount}%</div>
-                        </c:if>
-
-                        <a href="${pageContext.request.contextPath}/product?id=${item.id}">
-
-                            <!-- ẢNH -->
                             <img src="${pageContext.request.contextPath}/images/${item.imageUrl}"
-                                 alt="${item.name}">
+                                 alt="${item.name}"/>
 
-                            <!-- TÊN -->
                             <h3>${item.name}</h3>
-
                         </a>
 
-                        <!-- GIÁ -->
                         <div class="price">
                             <c:choose>
                                 <c:when test="${item.discount > 0}">
@@ -87,9 +95,7 @@
                             </c:choose>
                         </div>
 
-                        <!-- NÚT -->
-                        <button type="button"
-                            ${item.current_stock == 0 ? 'disabled' : ''}>
+                        <button ${item.current_stock == 0 ? "disabled" : ""}>
                             THÊM VÀO GIỎ
                         </button>
 
@@ -97,7 +103,11 @@
 
                 </c:forEach>
 
+                <c:if test="${empty items}">
+                    <p style="padding:20px">Không có sản phẩm.</p>
+                </c:if>
             </div>
+
         </div>
     </section>
-</main>
+</div>

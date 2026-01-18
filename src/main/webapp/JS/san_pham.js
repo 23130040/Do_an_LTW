@@ -1,80 +1,75 @@
-// PHẦN XỬ LÍ DANH MỤC
+
+// =================== XỬ LÍ DANH MỤC & SẮP XẾP CHUNG ===================
 document.addEventListener("DOMContentLoaded", () => {
     const categoryButtons = document.querySelectorAll(".category");
     const products = document.querySelectorAll(".product-item");
-    const viewAllBtn = document.getElementById("viewAllBtn");
     const customSelect = document.querySelector(".custom-select");
     const selected = customSelect.querySelector(".selected");
-    const list = customSelect.querySelector(".select-list");
-    const items = list.querySelectorAll("li");
-    const realSelect = document.getElementById("sortSelect");
+    const selectItems = customSelect.querySelectorAll(".select-list li");
 
-    let currentCategory = "heo";
+    let currentCategory = "all";
+    const originalOrder = Array.from(products);
 
     function getPrice(product) {
-        const text = product.querySelector(".price").textContent;
-        const nums = text.split(/[^0-9]+/).filter(s => s !== "");
-        return parseInt(nums.join(""));
+        const priceText = product.querySelector(".price .new")?.textContent || "0";
+        return parseInt(priceText.replace(/\D/g, ""), 10);
     }
 
     function filterProducts(category) {
+        currentCategory = category;
+
         products.forEach(p => {
-            p.style.display = (p.dataset.category === category) ? "flex" : "none";
+            if (category === "all" || p.dataset.category === category) {
+                p.style.display = "flex";
+            } else {
+                p.style.display = "none";
+            }
         });
+
+        sortProducts(selected.dataset.value);
     }
 
     function sortProducts(sortValue) {
-        const visibleProducts = Array.from(products).filter(p => p.style.display !== "none");
-        visibleProducts.sort((a, b) => {
-            const priceA = getPrice(a);
-            const priceB = getPrice(b);
-            if (sortValue === "up") return priceA - priceB;
-            if (sortValue === "down") return priceB - priceA;
-            return 0;
-        });
-        const parent = visibleProducts[0]?.parentNode;
-        visibleProducts.forEach(p => parent.appendChild(p));
+        const parent = document.querySelector(".product-list");
+        if (!parent) return;
+
+        const available = Array.from(products)
+            .filter(p => p.style.display !== "none" && !p.classList.contains("out-of-stock"));
+        const outOfStock = Array.from(products)
+            .filter(p => p.style.display !== "none" && p.classList.contains("out-of-stock"));
+
+        if (sortValue === "up") {
+            available.sort((a, b) => getPrice(a) - getPrice(b));
+        } else if (sortValue === "down") {
+            available.sort((a, b) => getPrice(b) - getPrice(a));
+        } else if (sortValue === "default") {
+            available.sort((a, b) => originalOrder.indexOf(a) - originalOrder.indexOf(b));
+        }
+
+        available.forEach(p => parent.appendChild(p));
+        outOfStock.forEach(p => parent.appendChild(p));
     }
 
-    // Mặc định
-    filterProducts(currentCategory);
-    sortProducts("default");
-
-    // Nút danh mục
     categoryButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             categoryButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            currentCategory = btn.dataset.category;
-            filterProducts(currentCategory);
-            sortProducts(realSelect.value);
+            filterProducts(btn.dataset.category);
         });
     });
 
-    // Xem tất cả
-    if (viewAllBtn) {
-        viewAllBtn.addEventListener("click", () => {
-            window.location.href = "../HTML/XemTatCa.html";
-        });
-    }
-
-    // Custom select
-    selected.addEventListener("click", () => {
-        customSelect.classList.toggle("open");
-    });
-
-    items.forEach(item => {
+    selected.addEventListener("click", () => customSelect.classList.toggle("open"));
+    selectItems.forEach(item => {
         item.addEventListener("click", () => {
             selected.textContent = item.textContent;
-            realSelect.value = item.dataset.value;
+            selected.dataset.value = item.dataset.value;
             customSelect.classList.remove("open");
-            sortProducts(realSelect.value);
+            sortProducts(item.dataset.value);
         });
     });
-
-    document.addEventListener("click", (e) => {
-        if (!customSelect.contains(e.target)) {
-            customSelect.classList.remove("open");
-        }
+    document.addEventListener("click", e => {
+        if (!customSelect.contains(e.target)) customSelect.classList.remove("open");
     });
+
+    filterProducts("all");
 });
