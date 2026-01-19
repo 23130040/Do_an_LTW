@@ -5,13 +5,13 @@ import cleanmeat.model.User;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserDAO extends BaseDAO<User> {
-    private static final int RECORDS_PER_PAGE = 9;
-    public static Map<Integer, User> users = new ConcurrentHashMap<>();
+    public Map<Integer, User> users = new HashMap<>();
 
     public UserDAO() {
         String sql = "SELECT * FROM user ORDER BY id ASC";
@@ -143,6 +143,7 @@ public class UserDAO extends BaseDAO<User> {
         Connection conn = null;
         try {
             conn = getConnection();
+            conn.setAutoCommit(true);
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, id);
                 if (ps.executeUpdate() > 0){
@@ -296,9 +297,7 @@ public class UserDAO extends BaseDAO<User> {
         Connection conn = null;
         try {
             conn = getConnection();
-            try (
-                    PreparedStatement ps = conn.prepareStatement(sql)) {
-
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, email);
                 ResultSet rs = ps.executeQuery();
                 return rs.next();

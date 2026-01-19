@@ -32,7 +32,7 @@
 <div id="input-password-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="close-input-password-modal">&times;</span>
-        <form class="password-form" action="${pageContext.request.contextPath}/tai-khoan?tab=cai-dat" method="post">
+        <form class="password-form">
             <h2>Vui lòng nhập mật khẩu</h2>
             <div class="form-input">
                 <label for="password" class="profile-form label"><i class="fa-solid fa-key"></i></label>
@@ -93,47 +93,50 @@
             if (e.target.id === "input-password-modal") closeModal("input-password-modal");
         });
 
-        //dùng AJAX để điều hướng các hành động khi chọn xác nhận xóa tài khoản
-        document.getElementById("confirm-delete-btn").addEventListener("click", () => {
-            const password = document.getElementById("password").value;
+        document.getElementById("input-password-modal").addEventListener("submit", (e) => {
+            e.preventDefault();
+            //dùng AJAX để điều hướng các hành động khi chọn xác nhận xóa tài khoản
+            document.getElementById("confirm-delete-btn").addEventListener("click", () => {
+                const password = document.getElementById("password").value;
 
-            fetch("${pageContext.request.contextPath}/tai-khoan?action=delete-account", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({password})
-            }).then(res => res.json())
-                .then(data => {
-                    closeModal("input-password-modal");
+                fetch("${pageContext.request.contextPath}/tai-khoan?action=delete-account", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({password})
+                }).then(res => res.json())
+                    .then(data => {
+                        closeModal("input-password-modal");
 
-                    const message = document.getElementById("message");
-                    message.innerHTML = "";
-                    const btn = document.getElementById("btn");
-                    btn.innerHTML = "";
+                        const message = document.getElementById("message");
+                        message.innerHTML = "";
+                        const btn = document.getElementById("btn");
+                        btn.innerHTML = "";
 
-                    if (data.success) {
-                        let countdown = 5;
-                        message.innerHTML = `<p><i class="fa-solid fa-check"></i>Xóa tài khoản thành công! Chuyển về trang chủ sau <span id="countdown">${countdown}</span></p>`;
-                        openModal("confirm-modal");
-                        let interval = setInterval(() => {
-                            countdown--;
-                            document.getElementById("countdown").textContent = countdown;
-                            if (countdown <= 0) {
-                                clearInterval(interval);
-                                window.location.href = "${pageContext.request.contextPath}/trang-chu";
-                            }
-                        }, 1000);
-                    } else {
-                        message.innerHTML = `<p>Xóa thất bại: ${data.message}</p>`;
-                        btn.innerHTML = `<button type="button" id="ok-btn" class="confirm-btn">OK</button>`;
-                        openModal("confirm-modal");
-                        document.getElementById("ok-btn").addEventListener("click", () => {
-                            closeModal("confirm-modal");
-                            openModal("input-password-modal");
-                        });
-                    }
-                });
+                        if (data.success) {
+                            let countdown = 5;
+                            message.innerHTML = `<p><i class="fa-solid fa-check"></i>Xóa tài khoản thành công! Chuyển về trang chủ sau <span id="countdown">${countdown}</span></p>`;
+                            openModal("confirm-modal");
+                            let interval = setInterval(() => {
+                                countdown--;
+                                document.getElementById("countdown").textContent = countdown;
+                                if (countdown <= 0) {
+                                    clearInterval(interval);
+                                    window.location.href = "${pageContext.request.contextPath}/trang-chu";
+                                }
+                            }, 1000);
+                        } else {
+                            message.innerHTML = `<p>Xóa thất bại: ${data.message}</p>`;
+                            btn.innerHTML = `<button type="button" id="ok-btn" class="confirm-btn">OK</button>`;
+                            openModal("confirm-modal");
+                            document.getElementById("ok-btn").addEventListener("click", () => {
+                                closeModal("confirm-modal");
+                                openModal("input-password-modal");
+                            });
+                        }
+                    });
+            });
         });
     });
 

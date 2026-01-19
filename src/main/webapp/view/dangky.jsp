@@ -14,18 +14,19 @@
 <body>
 <div id="container">
     <div id="wrapper">
-
         <img src="${pageContext.request.contextPath}/images/logoCleanmeat.png" alt="logo">
         <h1 class="heading-title">ĐĂNG KÝ</h1>
-        <form id="signup-form" method="post" action="dang-ky">
+        <form id="signup-form">
             <div class="block user-name">
                 <i class="fa-regular fa-user"></i>
-                <input type="text" class="form-input" name="name" placeholder="Nhập họ và tên" required>
+                <input type="text" class="form-input" name="name" value="${requestScope.name}"
+                       placeholder="Nhập họ và tên" required>
             </div>
 
             <div class="block email">
                 <i class="fa-regular fa-envelope"></i>
-                <input type="text" class="form-input" name="email" placeholder="Nhập email" required>
+                <input type="text" class="form-input" name="email" value="${requestScope.email}"
+                       placeholder="Nhập email" required>
             </div>
 
             <div class="block password">
@@ -60,6 +61,50 @@
         </form>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/JS/dangky.js"></script>
+<div id="confirm-modal" class="modal">
+    <div class="modal-content">
+        <div id="message"></div>
+        <div id="btn" class="btn-group">OK</div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("signup-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const errorDiv = document.getElementById("signup-error");
+            const message = document.getElementById("message");
+            fetch(`${pageContext.request.contextPath}/dang-ky`, {
+                method: "POST",
+                body: formData
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        let countdown = 5;
+                        message.innerHTML = `<p><i class="fa-solid fa-check"></i>Đăng ký tài khoản thành công. Vui lòng đăng nhập lại.</p>
+                                            <p>Hệ thống sẽ tự động chuyển hướng sau<span id="countdown">${countdown}</span>s</p>`;
+                        openModal("confirm-modal");
+                        let interval = setInterval(() => {
+                            countdown--;
+                            document.getElementById("countdown").textContent = countdown;
+                            if (countdown <= 0) {
+                                clearInterval(interval);
+                                window.location.href = "${pageContext.request.contextPath}/dang-nhap";
+                            }
+                        }, 1000);
+                    } else {
+                        errorDiv.textContent = data.message;
+                    }
+                }).catch(err => {
+                message.innerHTML = `<p><i class="fa-solid fa-triangle-exclamation"></i>Có lỗi xảy ra. Vui lòng thử lại!</p>`
+            })
+        });
+    });
+
+    function openModal(id) {
+        document.getElementById(id).style.display = "block";
+    }
+</script>
 </body>
 </html>

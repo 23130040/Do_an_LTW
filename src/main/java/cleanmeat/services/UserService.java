@@ -10,6 +10,10 @@ import java.sql.SQLException;
 public class UserService {
     private final UserDAO userDAO = new UserDAO();
 
+    public User getUser(int id) {
+        return userDAO.findById(id);
+    }
+
     public User login(String email, String password) {
         if (email == null || password == null)
             return null;
@@ -23,16 +27,26 @@ public class UserService {
     }
 
     public boolean signup(String name, String email, String password, String confirmPassword) throws SQLException, ClassNotFoundException {
+        if (name == null || name.trim().isEmpty())
+            throw new RuntimeException("Tên không được để trống");
+        if (email == null || email.trim().isEmpty())
+            throw new RuntimeException("Email không được để trống");
+        if (password == null || password.trim().isEmpty())
+            throw new RuntimeException("Mật khẩu không được để trống");
+        if (confirmPassword == null || confirmPassword.trim().isEmpty())
+            throw new RuntimeException("Mật khẩu xác nhận không được để trống");
+        name = name.trim();
+        email = email.trim();
         if (!isValidEmail(email))
             throw new RuntimeException("Địa chỉ email không hợp lệ.");
-        if (userDAO.findByEmail(email) != null)
+        if (userDAO.existsByEmail(email))
             throw new RuntimeException("Email này đã được liên kết tới một tài khoản khác.");
         if (!isValidPassword(password))
             throw new RuntimeException("Mật khẩu không đủ mạnh.");
         if (!password.equals(confirmPassword))
             throw new RuntimeException("Mật khẩu xác nhận không khớp.");
         String hashedPassword = HashUtil.md5(password);
-        User user = new User(name, email, hashedPassword, null, null, null, "user", null);
+        User user = new User(name, email, hashedPassword, null, null, null, "customer", null);
         return userDAO.insert(user);
     }
 
