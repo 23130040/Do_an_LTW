@@ -3,6 +3,7 @@ package cleanmeat.services;
 import cleanmeat.dao.UserDAO;
 import cleanmeat.model.User;
 import cleanmeat.security.HashUtil;
+import jakarta.mail.internet.InternetAddress;
 
 import java.sql.SQLException;
 
@@ -22,12 +23,14 @@ public class UserService {
     }
 
     public boolean signup(String name, String email, String password, String confirmPassword) throws SQLException, ClassNotFoundException {
+        if (!isValidEmail(email))
+            throw new RuntimeException("Địa chỉ email không hợp lệ.");
         if (userDAO.findByEmail(email) != null)
             throw new RuntimeException("Email này đã được liên kết tới một tài khoản khác.");
-        if (!checkPassword(password))
+        if (!isValidPassword(password))
             throw new RuntimeException("Mật khẩu không đủ mạnh.");
         if (!password.equals(confirmPassword))
-            throw new RuntimeException("Mật khẩu xác nhận không khớp");
+            throw new RuntimeException("Mật khẩu xác nhận không khớp.");
         String hashedPassword = HashUtil.md5(password);
         User user = new User(name, email, hashedPassword, null, null, null, "user", null);
         return userDAO.insert(user);
@@ -64,7 +67,7 @@ public class UserService {
         return userDAO.delete(id);
     }
 
-    public boolean checkPassword(String password) {
+    private boolean isValidPassword(String password) {
         if (password == null || password.trim().isEmpty())
             return false;
         boolean checkLength = password.length() >= 8;
@@ -85,5 +88,15 @@ public class UserService {
             if (checkUpper && checkNumber && checkLower && checkSpecial) break;
         }
         return checkLength && checkUpper && checkNumber && checkLower && checkSpecial;
+    }
+
+    private boolean isValidEmail(String email) {
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

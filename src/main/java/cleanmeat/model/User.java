@@ -149,5 +149,4 @@ public class User {
         this.updated_at = updated_at;
     }
 
-
 }

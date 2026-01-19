@@ -33,9 +33,6 @@ CREATE TABLE `address`
     PRIMARY KEY (`id`) USING BTREE,
     INDEX        `user_id`(`user_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
-ALTER TABLE `address`
-    ADD CONSTRAINT fk1_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE;
 -- ----------------------------
 -- Records of address
 -- ----------------------------
@@ -83,17 +80,13 @@ CREATE TABLE `feedback`
     INDEX         `user_id`(`user_id`) USING BTREE,
     INDEX         `item_id`(`item_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-ALTER TABLE `feedback`
-    ADD CONSTRAINT fk2_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE;
-ALTER TABLE `feedback`
-    ADD CONSTRAINT fk1_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
 -- ----------------------------
 -- Records of feedback
 -- ----------------------------
 INSERT INTO `feedback`
 VALUES (1, 0, 22, 1, 4, 'Sản phẩm tươi ngon, đóng gói cẩn thận', '2025-12-16 21:29:51', '2025-12-18 21:38:11');
 INSERT INTO `feedback`
-VALUES (2, 1, 27, 1, 0, 'Cảm ơn', '2025-12-17 18:35:10', '2025-12-18 21:56:48');
+VALUES (2, 1, 29, 1, 0, 'Cảm ơn', '2025-12-17 18:35:10', '2025-12-18 21:56:48');
 
 -- ----------------------------
 -- Table structure for item
@@ -120,12 +113,6 @@ CREATE TABLE `item`
     INDEX               `origin_id`(`origin_id`) USING BTREE,
     INDEX               `unit_id`(`unit_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 133 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-ALTER TABLE `item`
-    ADD CONSTRAINT fk1_category FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE;
-ALTER TABLE `item`
-    ADD CONSTRAINT fk1_origin FOREIGN KEY (origin_id) REFERENCES origin (id) ON DELETE CASCADE;
-ALTER TABLE `item`
-    ADD CONSTRAINT fk1_unit FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE;
 -- ----------------------------
 -- Records of item
 -- ----------------------------
@@ -219,8 +206,7 @@ CREATE TABLE `item_image`
     PRIMARY KEY (`id`) USING BTREE,
     INDEX        `item_id`(`item_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 59 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-ALTER TABLE `item_image`
-    ADD CONSTRAINT fk2_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
+
 -- ----------------------------
 -- Records of item_image
 -- ----------------------------
@@ -382,8 +368,6 @@ CREATE TABLE `order`
     INDEX            `address_id`(`address_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 ALTER TABLE `order`
-    ADD CONSTRAINT fk3_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE;
-ALTER TABLE `order`
 DROP
 COLUMN `transport_type`;
 
@@ -408,10 +392,6 @@ CREATE TABLE `order_item`
     PRIMARY KEY (`order_id`, `item_id`) USING BTREE,
     INDEX        `item_id`(`item_id`) USING BTREE
 ) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
-ALTER TABLE `order_item`
-    ADD CONSTRAINT fk2_order FOREIGN KEY (order_id) REFERENCES `order` (id) ON DELETE CASCADE;
-ALTER TABLE `order_item`
-    ADD CONSTRAINT fk3_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
 -- ----------------------------
 -- Records of order_item
 -- ----------------------------
@@ -459,8 +439,6 @@ CREATE TABLE `stock_history`
     INDEX        `product_id`(`item_id`) USING BTREE,
     INDEX        `created_by`(`created_by`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-ALTER TABLE `stock_history`
-    ADD CONSTRAINT fk4_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
 -- ----------------------------
 -- Records of stock_history
 -- ----------------------------
@@ -555,3 +533,41 @@ VALUES (22, 'Nguyễn Văn A', 'nmhau2410@gmail.com', '123', '0962967942', '', N
 
 SET
 FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE user ENGINE=InnoDB;
+ALTER TABLE category ENGINE=InnoDB;
+ALTER TABLE origin ENGINE=InnoDB;
+ALTER TABLE unit ENGINE=InnoDB;
+ALTER TABLE system_config ENGINE=InnoDB;
+ALTER TABLE address ENGINE=InnoDB;
+ALTER TABLE item ENGINE=InnoDB;
+ALTER TABLE item_image ENGINE=InnoDB;
+ALTER TABLE feedback ENGINE=InnoDB;
+ALTER TABLE `order` ENGINE=InnoDB;
+ALTER TABLE order_item ROW_FORMAT = DYNAMIC;
+ALTER TABLE order_item ENGINE=InnoDB;
+ALTER TABLE stock_history ENGINE=InnoDB;
+ALTER TABLE notification ENGINE=InnoDB;
+ALTER TABLE news ENGINE=InnoDB;
+
+ALTER TABLE `address`
+    ADD CONSTRAINT fk1_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE;
+ALTER TABLE feedback
+    ADD CONSTRAINT fk2_user Foreign key (user_id) references user (id);
+ALTER TABLE `feedback`
+    ADD CONSTRAINT fk1_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
+ALTER TABLE `item`
+    ADD CONSTRAINT fk1_category FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE;
+ALTER TABLE `item`
+    ADD CONSTRAINT fk1_origin FOREIGN KEY (origin_id) REFERENCES origin (id) ON DELETE CASCADE;
+ALTER TABLE `item`
+    ADD CONSTRAINT fk1_unit FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE;
+ALTER TABLE `item_image`
+    ADD CONSTRAINT fk2_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
+ALTER TABLE `order`
+    ADD CONSTRAINT fk3_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE;
+ALTER TABLE `order_item`
+    ADD CONSTRAINT fk2_order FOREIGN KEY (order_id) REFERENCES `order` (id) ON DELETE CASCADE;
+ALTER TABLE `order_item`
+    ADD CONSTRAINT fk3_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
+ALTER TABLE `stock_history`
+    ADD CONSTRAINT fk4_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
