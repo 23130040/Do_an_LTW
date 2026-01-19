@@ -64,6 +64,7 @@ public class StockDAO extends BaseDAO<Stock_history> {
         return List.of();
     }
 
+
     public List<Stock_history> findByPageAndType(int page, int pageSize, String type) {
         List<Stock_history> list = new ArrayList<>();
         String sql = """

@@ -285,18 +285,13 @@ a {
     background-color: #fff;
     box-shadow: -1px 0 3px rgba(0, 0, 0, 0.05);
 }
-
-.content-area h2 {
+.page-title {
     font-size: 1.8em;
-    color: var(--main-red);
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
+    font-weight: 300;
     margin-bottom: 20px;
-}
-
-.content-area h2 i {
-    margin-right: 10px;
-    font-size: 0.9em;
+    color: var(--text-color);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
 }
 
 /* --- TAB STYLES --- */
