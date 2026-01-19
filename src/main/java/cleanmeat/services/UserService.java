@@ -15,33 +15,22 @@ public class UserService {
         User user = userDAO.findByEmail(email);
         if (user == null)
             return null;
-        if (!user.getPassword().equals(password))
+        String hashedInput = HashUtil.md5(password);
+        if (!user.getPassword().equals(hashedInput))
             return null;
         return user;
     }
 
     public boolean signup(String name, String email, String password, String confirmPassword) throws SQLException, ClassNotFoundException {
-        String hashed = HashUtil.md5(password);
-        userDAO.insert(new User());
-
-        if (userDAO.findByEmail(email) == null) {
-            if (name == null || email == null || password == null || confirmPassword == null)
-                return false;
-            if (!checkPassword(password)) {
-                throw new RuntimeException("* Mật khẩu phải chứa ít nhất 8 ký tự" +
-                        "\n* Mật khẩu phải chứa ít nhất một chữ in hoa" +
-                        "\n* Mật khẩu phải chứa ít nhất một chữ viết thường" +
-                        "\n* Mật khẩu phải chứa ít nhất một ký tự là số" +
-                        "\n* Mật khẩu phải chứa ít nhất một ký tự đặc biệt");
-            }
-            if (confirmPassword.equals(password)) {
-                return userDAO.insert(new User(name, email, password, null, null, null, "user", null));
-            } else {
-                throw new RuntimeException("Mật khẩu xác nhận không khớp.");
-            }
-        } else {
-            throw new RuntimeException("Email này đã được liên kết với một tài khoản.");
-        }
+        if (userDAO.findByEmail(email) != null)
+            throw new RuntimeException("Email này đã được liên kết tới một tài khoản khác.");
+        if (!checkPassword(password))
+            throw new RuntimeException("Mật khẩu không đủ mạnh.");
+        if (!password.equals(confirmPassword))
+            throw new RuntimeException("Mật khẩu xác nhận không khớp");
+        String hashedPassword = HashUtil.md5(password);
+        User user = new User(name, email, hashedPassword, null, null, null, "user", null);
+        return userDAO.insert(user);
     }
 
     public boolean isEmailRegistered(String email) {
@@ -55,18 +44,22 @@ public class UserService {
         User user = userDAO.findById(userId);
         if (user == null)
             return false;
-        if (!user.getPassword().equals(oldPassword))
+        String hashedOld = HashUtil.md5(oldPassword);
+        if (!user.getPassword().equals(hashedOld))
             return false;
-        if (!newPassword.equals(confirmPassword))
+        if (!newPassword.equals(confirmPassword)) {
             return false;
-        return userDAO.changePassword(userId, newPassword);
+        }
+        String hashedNew = HashUtil.md5(newPassword);
+        return userDAO.changePassword(userId, hashedNew);
     }
 
     public boolean deleteAccount(int id, String password) {
         User user = userDAO.findById(id);
         if (user == null)
             return false;
-        if (!user.getPassword().equals(password))
+        String hashed = HashUtil.md5(password);
+        if (!user.getPassword().equals(hashed))
             return false;
         return userDAO.delete(id);
     }
