@@ -2,7 +2,6 @@ package cleanmeat.controller;
 
 import cleanmeat.dao.ItemDAO;
 import cleanmeat.model.Item;
-
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -22,20 +21,29 @@ public class SanPham extends HttpServlet {
         String keyword = request.getParameter("keyword");
         String category = request.getParameter("category");
         String origin = request.getParameter("origin");
+        String sort = request.getParameter("sort");
+
+        if ("heo".equals(category)) {
+            category = "1";
+        } else if ("ga".equals(category)) {
+            category = "2";
+        } else if ("bo".equals(category)) {
+            category = "3";
+        }
 
         int page = 1;
         try {
             page = Integer.parseInt(request.getParameter("page"));
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         List<Item> items = itemDAO.searchAndFilter(
-                keyword, category, origin, page, PAGE_SIZE
+                keyword, category, origin, sort, page, PAGE_SIZE
         );
 
         int totalItems = itemDAO.countFilteredItems(keyword, category, origin);
         int totalPages = (int) Math.ceil((double) totalItems / PAGE_SIZE);
 
-        // Đẩy data sang JSP
         request.setAttribute("items", items);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
@@ -43,10 +51,12 @@ public class SanPham extends HttpServlet {
         request.setAttribute("keyword", keyword);
         request.setAttribute("category", category);
         request.setAttribute("origin", origin);
+        request.setAttribute("sort", sort);
 
         request.setAttribute("pageTitle", "Sản phẩm");
         request.setAttribute("mainContent", "/view/san_pham.jsp");
         request.setAttribute("pageCss", "/CSS/san_pham.css");
+
         request.getRequestDispatcher("/view/base/base.jsp")
                 .forward(request, response);
     }
