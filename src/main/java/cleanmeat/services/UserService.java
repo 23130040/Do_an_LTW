@@ -6,6 +6,7 @@ import cleanmeat.security.HashUtil;
 import jakarta.mail.internet.InternetAddress;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class UserService {
     private final UserDAO userDAO = new UserDAO();
@@ -46,8 +47,14 @@ public class UserService {
         if (!password.equals(confirmPassword))
             throw new RuntimeException("Mật khẩu xác nhận không khớp.");
         String hashedPassword = HashUtil.md5(password);
-        User user = new User(name, email, hashedPassword, null, null, null, "customer", null);
-        return userDAO.insert(user);
+        String token = UUID.randomUUID().toString();
+        User user = new User(name, email, hashedPassword, null, null, null, "customer", null, token);
+        boolean success = userDAO.insert(user);
+        if (success) {
+            String verifyLink = "http://localhost:8080/verify-email?token=" + token;
+            EmailService.sendVerifyEmail(user.getEmail(), user.getName(), verifyLink);
+        }
+        return success;
     }
 
     public boolean isEmailRegistered(String email) {

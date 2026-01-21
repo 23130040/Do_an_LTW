@@ -520,7 +520,10 @@ CREATE TABLE `user`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `email`(`email`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
+ALTER TABLE `user`
+    ADD COLUMN email_verified BOOLEAN DEFAULT FALSE;
+ALTER TABLE `user`
+    ADD COLUMN verify_token VARCHAR(255);
 -- ----------------------------
 -- Records of user
 -- ----------------------------

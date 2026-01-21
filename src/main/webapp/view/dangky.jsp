@@ -82,7 +82,9 @@
                 .then(data => {
                     if (data.status === "success") {
                         let countdown = 5;
-                        message.innerHTML = `<p><i class="fa-solid fa-check"></i>Đăng ký tài khoản thành công. Vui lòng đăng nhập lại.</p>
+                        message.innerHTML = `<p><i class="fa-solid fa-check"></i>Đăng ký tài khoản thành công!</p>
+                                            <p>Vui lòng kiểm tra email và nhấp vào liên kết xác minh để kích hoạt tài khoản.</p>
+                                            <p>Sau khi xác minh, bạn có thể đăng nhập bình thường.</p>
                                             <p>Hệ thống sẽ tự động chuyển hướng sau<span id="countdown">${countdown}</span>s</p>`;
                         openModal("confirm-modal");
                         let interval = setInterval(() => {
