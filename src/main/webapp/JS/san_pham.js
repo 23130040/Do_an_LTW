@@ -1,31 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const customSelect = document.querySelector(".custom-select");
-    if (!customSelect) return;
+    const sortBox = document.querySelector(".sort-box");
+    if (!sortBox) return;
 
-    const selected = customSelect.querySelector(".selected");
-    const items = customSelect.querySelectorAll(".select-list li");
+    const selected = sortBox.querySelector(".sort-selected");
+    const items = sortBox.querySelectorAll(".sort-options li");
 
     selected.addEventListener("click", () => {
-        customSelect.classList.toggle("open");
+        sortBox.classList.toggle("open");
     });
 
     items.forEach(item => {
         item.addEventListener("click", () => {
-            const sortValue = item.dataset.value;
+            let sortValue = "";
+
+            const text = item.textContent.toLowerCase();
+
+            if (text.includes("tăng")) {
+                sortValue = "price_asc";
+            } else if (text.includes("giảm")) {
+                sortValue = "price_desc";
+            }
+
             updateUrlParam("sort", sortValue);
         });
     });
 
-    document.addEventListener("click", e => {
-        if (!customSelect.contains(e.target)) {
-            customSelect.classList.remove("open");
+    document.addEventListener("click", (e) => {
+        if (!sortBox.contains(e.target)) {
+            sortBox.classList.remove("open");
         }
     });
 });
 
 function updateUrlParam(key, value) {
     const url = new URL(window.location.href);
-    url.searchParams.set(key, value);
+
+    if (value === "" || value === null) {
+        url.searchParams.delete(key);
+    } else {
+        url.searchParams.set(key, value);
+    }
+
     url.searchParams.set("page", 1);
+
     window.location.href = url.toString();
 }

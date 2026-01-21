@@ -59,7 +59,7 @@ a {
 }
 
 .sidebar ul li:hover {
-    background-color: #8d2a3a;
+    background-color: #e00000;
     color: #fff;
     transform: translateY(-2px);
 }
@@ -106,7 +106,7 @@ a {
 }
 
 .sort-options li:hover {
-    background: #8d2a3a;
+    background: #e00000;
     color: #fff;
 }
 
@@ -180,7 +180,7 @@ a {
 }
 
 .price .new {
-    color: #d70000;
+    color: #e00000;
 }
 
 .price .old {
@@ -203,7 +203,7 @@ a {
 }
 
 .product-item button:hover {
-    background: #8d2a3a;
+    background: #e00000;
     color: #fff;
 }
 
