@@ -47,7 +47,6 @@ public class SanPham extends HttpServlet {
         request.setAttribute("pageTitle", "Sản phẩm");
         request.setAttribute("mainContent", "/view/san_pham.jsp");
         request.setAttribute("pageCss", "/CSS/san_pham.css");
-
         request.getRequestDispatcher("/view/base/base.jsp")
                 .forward(request, response);
     }
