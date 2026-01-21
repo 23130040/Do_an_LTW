@@ -1,6 +1,7 @@
 package cleanmeat.dao;
 
 import cleanmeat.model.Item;
+import cleanmeat.model.ItemImage;
 import cleanmeat.model.User;
 
 import java.sql.Connection;
@@ -104,27 +105,35 @@ public class ItemDAO extends BaseDAO<Item> {
 
     @Override
     public Item findById(int id) {
-        String sql = "SELECT i.*, img.url AS image_url, c.name AS category_name, o.name AS origin_name, u.name AS unit_name " +
-                "FROM item i " +
-                "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
-                "LEFT JOIN category c ON i.category_id = c.id " +
-                "LEFT JOIN origin o ON i.origin_id = o.id " +
-                "LEFT JOIN unit u ON i.unit_id = u.id WHERE i.id = ?";
+        Item item = null;
         Connection conn = null;
         try {
             conn = getConnection();
+            String sql = "SELECT i.*, img.url AS image_url, c.name AS category_name, o.name AS origin_name, u.name AS unit_name " +
+                    "FROM item i " +
+                    "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
+                    "LEFT JOIN category c ON i.category_id = c.id " +
+                    "LEFT JOIN origin o ON i.origin_id = o.id " +
+                    "LEFT JOIN unit u ON i.unit_id = u.id WHERE i.id = ?";
+
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, id);
                 try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) return mapResultSetToEntity(rs);
+                    if (rs.next()) {
+                        item = mapResultSetToEntity(rs);
+                    }
                 }
+            }
+
+            if (item != null) {
+                item.setImages(findImagesByItemId(id));
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
-        return null;
+        return item;
     }
 
     @Override
@@ -466,4 +475,27 @@ public class ItemDAO extends BaseDAO<Item> {
         }
         return 0;
     }
+    public List<String> findImagesByItemId(int itemId) {
+        List<String> list = new ArrayList<>();
+        String sql = "SELECT url FROM item_image WHERE item_id = ? ORDER BY is_primary DESC, id ASC";
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, itemId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        list.add(rs.getString("url"));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
+        return list;
+    }
+
 }

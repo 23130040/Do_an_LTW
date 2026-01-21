@@ -51,7 +51,7 @@
                         </c:forEach>
                     </select>
                 </div>
-                <button class="btn button-primary" onclick="openProductModal()">
+                <button class="btn button-primary" onclick="openProductModal(false)">
                     <i class="fas fa-plus"></i> Thêm Sản phẩm Mới
                 </button>
             </div>
@@ -77,7 +77,7 @@
                     </thead>
                     <tbody>
                     <c:forEach var="item" items="${items}">
-                        <tr>
+                        <tr data-id="${item.id}" class="product-row">
                             <td>${item.sku}</td>
                             <td>
                                 <img src="${pageContext.request.contextPath}/images/${item.imageUrl}"
@@ -88,20 +88,23 @@
                             <td>${item.originName}</td>
                             <td>${item.unitName}</td>
                             <td>${item.price}</td>
-                            <td class="inventory-col">
-                                    ${item.current_stock}
-                            </td>
+                            <td class="inventory-col">${item.current_stock}</td>
                             <td>
-                                <button type="button" class="btn-icon edit-btn" onclick="editProduct(${item.id})">
+                                <button type="button"
+                                        class="btn-icon edit-btn"
+                                        onclick="editProduct(${item.id})">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn-icon delete-btn"
+
+                                <button type="button"
+                                        class="btn-icon delete-btn"
                                         onclick="deleteAndKeepPage(${item.id}, ${currentPage})">
-                                    <i class="fas fa-trash-alt" ></i>
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
                         </tr>
                     </c:forEach>
+
                     </tbody>
                 </table>
             </div>
@@ -153,8 +156,7 @@
         <h3><span id="modal-title-product">Thêm</span> Sản Phẩm</h3>
         <form class="product-form"
               action="quanlysanpham"
-              method="post"
-              enctype="multipart/form-data">
+              method="post">
             <input type="hidden" name="action" id="formAction" value="addItem">
             <input type="hidden" name="productId" id="productId">
             <div class="form-section left-col">
@@ -229,16 +231,24 @@
                     <input type="number" placeholder="5 (Cảnh báo khi <= 5)" name="minStock">
                 </div>
 
+
                 <div class="image-upload-container">
                     <label>Hình ảnh sản phẩm:</label>
-                    <div class="image-upload-box" onclick="document.getElementById('imageInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Nhấn để chọn nhiều ảnh (Ảnh đầu là ảnh chính)</p>
-                        <input type="file" id="imageInput" name="images" accept="image/*" multiple
-                               style="display: none;" onchange="previewImages(this)">
+
+                    <div id="imagePreviewContainer" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; min-height: 60px;">
                     </div>
-                    <div id="imagePreviewContainer" class="image-preview-wrapper"></div>
+
+                    <input type="hidden" name="selectedImages" id="selectedImages">
+
+                    <button type="button" class="btn button-secondary" onclick="openCKFinder()">
+                        <i class="fas fa-image"></i> Chọn ảnh
+                    </button>
+
+                    <small id="imageFileName" style="display:block;margin-top:6px;color:#666">
+                        Chưa chọn ảnh
+                    </small>
                 </div>
+
             </div>
 
             <button type="submit" class="btn button-primary submit-btn">Lưu Sản Phẩm</button>
@@ -246,8 +256,58 @@
     </div>
 </div>
 
+
 </div>
 </div>
+<script>
+    window.APP_CONTEXT = '${pageContext.request.contextPath}';
+</script>
+<script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 <script src="${pageContext.request.contextPath}/JS/admin_quan_ly_sp.js"></script>
+<script>
+    function openCKFinder() {
+        var finder = new CKFinder();
+
+        finder.basePath = APP_CONTEXT + '/ckfinder/';
+
+        finder.selectMultiple = true;
+
+        finder.selectActionFunction = function (fileUrl, data, allFiles) {
+            const container = document.getElementById("imagePreviewContainer");
+            const selectedInput = document.getElementById("selectedImages");
+            const fileNameLabel = document.getElementById("imageFileName");
+            const currentImage = document.getElementById("currentImage");
+
+            container.innerHTML = "";
+            if (currentImage) currentImage.style.display = "none";
+
+            const names = [];
+            const files = (allFiles && allFiles.length) ? allFiles : [{ url: fileUrl }];
+
+            files.forEach(file => {
+                let fullPath = decodeURIComponent(file.url);
+                let fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
+                fileName = fileName.split('?')[0];
+
+                names.push(fileName);
+
+                const img = document.createElement("img");
+
+                img.src = APP_CONTEXT + "/images/" + fileName;
+
+                img.className = "preview-img";
+                img.style = "width:80px; height:80px; object-fit:cover; border:1px solid #ddd; border-radius:4px;";
+                container.appendChild(img);
+            });
+
+            selectedInput.value = names.join(",");
+            fileNameLabel.innerText = `Đã chọn ${names.length} ảnh: ${names.join(", ")}`;
+        };
+
+        finder.popup();
+    }
+
+
+</script>
 </body>
 </html>
