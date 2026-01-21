@@ -1,6 +1,7 @@
 package cleanmeat.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Item {
     private int id;
@@ -18,6 +19,7 @@ public class Item {
     private LocalDate created_at;
     private LocalDate updated_at;
     private String imageUrl;
+    private List<String> images;
     private String categoryName;
     private String originName;
     private String unitName;
@@ -188,4 +190,11 @@ public class Item {
         return price * (100 - discount) / 100;
     }
 
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
 }
