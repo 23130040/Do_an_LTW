@@ -25,6 +25,9 @@ public class Order {
         this.listItem = new ArrayList<>();
     }
 
+    public Order() {
+    }
+
     public int getId() {
         return id;
     }
@@ -71,5 +74,21 @@ public class Order {
 
     public void setListItem(List<OrderItem> listItem) {
         this.listItem = listItem;
+    }
+
+    public LocalDate getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDate created_at) {
+        this.created_at = created_at;
+    }
+
+    public LocalDate getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(LocalDate updated_at) {
+        this.updated_at = updated_at;
     }
 }

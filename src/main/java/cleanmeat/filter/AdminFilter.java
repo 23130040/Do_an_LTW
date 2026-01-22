@@ -9,8 +9,9 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/quanlysanpham", "/quanlyuser", "/quanlydanhmuc", "/quanlytintuc", "/quanlydanhgia", "/cauhinhhethong",
-        "/quanlykho"})
+@WebFilter(urlPatterns = {})
+//"/quanlysanpham", "/quanlyuser", "/quanlydanhmuc", "/quanlytintuc", "/quanlydanhgia", "/cauhinhhethong",
+//        "/quanlykho"
 public class AdminFilter implements Filter {
 
     @Override

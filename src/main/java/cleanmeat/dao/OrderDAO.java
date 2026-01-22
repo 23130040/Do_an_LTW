@@ -1,9 +1,6 @@
 package cleanmeat.dao;
 
-import cleanmeat.model.Address;
-import cleanmeat.model.Order;
-import cleanmeat.model.OrderItem;
-import cleanmeat.model.User;
+import cleanmeat.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +19,8 @@ public class OrderDAO extends BaseDAO<Order> {
     private Map<Integer, Order> orderMap = new HashMap<>();
 
     public OrderDAO() {
-        orderMap = new HashMap<Integer, Order>();
-        loadAll();
+        //orderMap = new HashMap<Integer, Order>();
+        //loadAll();
     }
 
     @Override
@@ -155,29 +152,72 @@ public class OrderDAO extends BaseDAO<Order> {
 
     @Override
     public List<Order> findAll() {
-        return new ArrayList<Order>(orderMap.values());
-    }
-
-    public List<Order> findByUserId(int userId) {
-        List<Order> orders = new ArrayList<>();
+        List<Order> list = new ArrayList<>();
         String sql = """
-                    SELECT *
-                    FROM `order`
-                    WHERE user_id = ?
-                    ORDER BY created_at DESC
+                SELECT o.*, 
+                       u.name AS user_name, u.phone AS user_phone, u.email AS user_email,
+                       a.address AS detail_address
+                FROM `order` o
+                JOIN user u ON o.user_id = u.id
+                JOIN address a ON o.address_id = a.id
+                ORDER BY o.created_at DESC
                 """;
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Order order = mapResultSetToEntity(rs);
-                order.setListItem(oiDAO.findByOrderId(order.getId()));
-                orders.add(order);
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        User user = new User();
+                        user.setId(rs.getInt("user_id"));
+                        user.setName(rs.getString("user_name"));
+                        user.setPhone(rs.getString("user_phone"));
+
+                        Address addr = new Address();
+                        addr.setId(rs.getInt("address_id"));
+                        addr.setAddress(rs.getString("detail_address"));
+
+                        Order order = new Order(
+                                rs.getInt("id"),
+                                user,
+                                addr,
+                                rs.getDouble("total_price"),
+                                rs.getString("status"),
+                                rs.getDate("created_at").toLocalDate(),
+                                rs.getDate("updated_at").toLocalDate()
+                        );
+                        list.add(order);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            return list;
         }
-        return orders;
+
+        public List<Order> findByUserId ( int userId){
+            List<Order> orders = new ArrayList<>();
+            String sql = """
+                        SELECT *
+                        FROM `order`
+                        WHERE user_id = ?
+                        ORDER BY created_at DESC
+                    """;
+            try (Connection conn = getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Order order = mapResultSetToEntity(rs);
+                    order.setListItem(oiDAO.findByOrderId(order.getId()));
+                    orders.add(order);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return orders;
+        }
     }
-}

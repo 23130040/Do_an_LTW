@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@WebServlet(name = "ItemServlet", value = "/quanlysanpham")
+@WebServlet(name = "ItemServlet", value = "/quan-ly-san-pham")
 public class ItemServlet extends HttpServlet {
 
 

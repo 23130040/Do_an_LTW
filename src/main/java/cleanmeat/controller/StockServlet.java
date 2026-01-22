@@ -10,7 +10,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "StockServlet", value = "/quanlykho")
+@WebServlet(name = "StockServlet", value = "/quan-ly-kho")
 public class StockServlet extends HttpServlet {
     private static final int PAGE_SIZE = 6;
 

@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "OriginServlet", value = "/quanlynguongoc")
+@WebServlet(name = "OriginServlet", value = "/quan-ly-nguon-goc")
 public class OriginServlet extends HttpServlet {
     OriginDAO originDAO = new OriginDAO();
 

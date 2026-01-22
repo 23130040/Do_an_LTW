@@ -25,6 +25,10 @@ public class Address {
         this.updated_at = updated_at;
     }
 
+    public Address() {
+
+    }
+
     public int getId() {
         return id;
     }

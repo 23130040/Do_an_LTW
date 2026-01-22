@@ -5,20 +5,31 @@ import java.time.LocalDate;
 public class OrderItem {
     private Item item;
     private double price;
-    private double quantity;
+    private int quantity;
     private LocalDate creates_at;
 
-    public OrderItem(Item item, double price, double quantity, LocalDate creates_at) {
+    public OrderItem(Item item, double price, int quantity, LocalDate creates_at) {
         this.item = item;
         this.price = price;
         this.quantity = quantity;
         this.creates_at = creates_at;
     }
 
-    public OrderItem(Item item, double price, double quantity) {
+    public OrderItem(Item item, double price, int quantity) {
         this.item = item;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public OrderItem() {
+    }
+
+    public LocalDate getCreates_at() {
+        return creates_at;
+    }
+
+    public void setCreates_at(LocalDate creates_at) {
+        this.creates_at = creates_at;
     }
 
     public Item getItem() {
@@ -41,7 +52,7 @@ public class OrderItem {
         this.price = price;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

@@ -32,7 +32,7 @@ public class OrderItemDAO extends BaseDAO<OrderItem> {
                 OrderItem oi = new OrderItem(
                         item,
                         rs.getDouble("price"),
-                        rs.getDouble("quantity")
+                        rs.getInt("quantity")
                 );
                 list.add(oi);
             }
@@ -75,4 +75,5 @@ public class OrderItemDAO extends BaseDAO<OrderItem> {
     public List<OrderItem> findAll() {
         return List.of();
     }
+
 }

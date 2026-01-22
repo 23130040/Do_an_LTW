@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @MultipartConfig
-@WebServlet(name = "UserServlet", value = "/quanlyuser")
+@WebServlet(name = "UserServlet", value = "/quan-ly-nguoi-dung")
 public class UserServlet extends HttpServlet {
     private final UserDAO userDAO = new UserDAO();
 

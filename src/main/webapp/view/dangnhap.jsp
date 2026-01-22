@@ -113,6 +113,6 @@
         </form>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}js/dangnhap.js"></script>
+<script src="${pageContext.request.contextPath}/JS/dangnhap.js"></script>
 </body>
 </html>

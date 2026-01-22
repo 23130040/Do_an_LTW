@@ -29,13 +29,12 @@
                 <div class="filters">
                     <input type="text" placeholder="Tìm kiếm theo Mã đơn hàng, Tên KH, SĐT..." class="search-input">
 
-                    <select name="status" class="filter-select">
-                        <option value="">-- Trạng thái đơn --</option>
-                        <option value="shipping">Chờ xác nhận</option>
-                        <option value="shipping">Đang chẩn bị</option>
-                        <option value="shipping">Đang giao hàng</option>
-                        <option value="delivered">Đã giao hàng</option>
-                        <option value="cancelled">Đã hủy</option>
+                    <select name="status" class="filter-select" id="statusFilter">
+                        <option value="">-- Tất cả trạng thái --</option>
+                        <option value="Chờ xác nhận" ${selectedStatus == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>
+                        <option value="Đang giao" ${selectedStatus == 'Đang giao' ? 'selected' : ''}>Đang giao hàng</option>
+                        <option value="Đã giao" ${selectedStatus == 'Đã giao' ? 'selected' : ''}>Đã giao hàng</option>
+                        <option value="Đã hủy" ${selectedStatus == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
                     </select>
 
                     <input type="date" class="filter-date" title="Lọc theo ngày đặt hàng">
@@ -61,55 +60,49 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>#101</td>
-                        <td>Nguyễn A<br>0901xxxx89</td>
-                        <td>20/11/2023</td>
-                        <td>350,000đ</td>
-                        <td><span class="">Đang giao hàng</span></td>
-                        <td>
-                            <button class="btn-sm btn-action view-detail" title="Xem chi tiết"><i
-                                    class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
-                                    class="fas fa-print"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#102</td>
-                        <td>Lê Thị B<br>0902xxxx67</td>
-                        <td>19/11/2025</td>
-                        <td>780,000đ</td>
-                        <td><span class="">Đang giao hàng</span></td>
-                        <td>
-                            <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
-                                    class="fas fa-print"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#103</td>
-                        <td>Phạm Văn C<br>0903xxxx45</td>
-                        <td>15/11/2025</td>
-                        <td>1,200,000đ</td>
-                        <td><span class="">Đã giao hàng</span></td>
-                        <td>
-                            <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
-                            <button class="btn-sm btn-info print-invoice" title="In hóa đơn"><i
-                                    class="fas fa-print"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#104</td>
-                        <td>Trần D<br>0904xxxx23</td>
-                        <td>10/11/2025</td>
-                        <td>450,000đ</td>
-                        <td><span class="">Đã hủy</span></td>
-                        <td>
-                            <button class="btn-sm btn-action view-detail"><i class="fas fa-eye"></i></button>
-                        </td>
-                    </tr>
+                    <c:forEach var="o" items="${orders}">
+                        <tr>
+                            <td>#${o.id}</td>
+                            <td>
+                                    ${o.user.name}<br>
+                                <small>${o.user.phone}</small>
+                            </td>
+                            <td>${o.created_at}</td>
+                            <td>
+                                <fmt:formatNumber value="${o.total_price}" type="currency" currencySymbol="đ"/>
+                            </td>
+                            <td>
+                    <span class="badge ${o.status == 'Đã hủy' ? 'bg-danger' : 'bg-info'}">
+                            ${o.status}
+                    </span>
+                            </td>
+                            <td>
+                                <a href="chi-tiet-don-hang?id=${o.id}" class="btn btn-sm btn-light border">
+                                    <i class="fa fa-eye"></i> </a>
+                                <c:if test="${o.status != 'Đã hủy'}">
+                                    <button class="btn btn-sm btn-info"><i class="fa fa-print"></i></button>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
+            </div>
+            <div class="pagination">
+                <c:if test="${currentPage > 1}">
+                    <a href="?page=${currentPage - 1}&status=${selectedStatus}">&laquo; Trước</a>
+                </c:if>
+
+                <c:forEach begin="1" end="${totalPages}" var="i">
+                    <a href="?page=${i}&status=${selectedStatus}"
+                       class="${i == currentPage ? 'active' : ''}">
+                            ${i}
+                    </a>
+                </c:forEach>
+
+                <c:if test="${currentPage < totalPages}">
+                    <a href="?page=${currentPage + 1}&status=${selectedStatus}">Sau &raquo;</a>
+                </c:if>
             </div>
         </main>
     </div>
