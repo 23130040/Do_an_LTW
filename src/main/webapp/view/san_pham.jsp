@@ -34,30 +34,21 @@
             <div class="product-wrapper">
 
                 <!-- SORT -->
-                <form id="sortForm" method="get" action="${pageContext.request.contextPath}/san-pham">
-                    <input type="hidden" name="category" value="${param.category}">
-                    <input type="hidden" name="origin" value="${param.origin}">
-                    <input type="hidden" name="keyword" value="${param.keyword}">
-                    <input type="hidden" name="page" value="1">
-                    <input type="hidden" name="sort" id="sortInput" value="${param.sort}">
-
-                    <div class="sort-box">
-                        <div class="sort-selected" onclick="toggleSort()">
-                            <c:choose>
-                                <c:when test="${param.sort == 'price_asc'}">Giá tăng dần</c:when>
-                                <c:when test="${param.sort == 'price_desc'}">Giá giảm dần</c:when>
-                                <c:otherwise>Mặc định</c:otherwise>
-                            </c:choose>
-                        </div>
-
-                        <ul class="sort-options" id="sortOptions">
-                            <li onclick="selectSort('')">Mặc định</li>
-                            <li onclick="selectSort('price_asc')">Giá tăng dần</li>
-                            <li onclick="selectSort('price_desc')">Giá giảm dần</li>
-                        </ul>
+                <div class="sort-box">
+                    <div class="sort-selected">
+                        <c:choose>
+                            <c:when test="${param.sort == 'price_asc'}">Giá tăng dần</c:when>
+                            <c:when test="${param.sort == 'price_desc'}">Giá giảm dần</c:when>
+                            <c:otherwise>Mặc định</c:otherwise>
+                        </c:choose>
                     </div>
-                </form>
 
+                    <ul class="sort-options">
+                        <li data-sort="default">Mặc định</li>
+                        <li data-sort="price_asc">Giá tăng dần</li>
+                        <li data-sort="price_desc">Giá giảm dần</li>
+                    </ul>
+                </div>
 
                 <!-- ================= DANH SÁCH SẢN PHẨM ================= -->
                 <div class="product-list">

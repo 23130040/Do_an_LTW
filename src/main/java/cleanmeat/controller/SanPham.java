@@ -5,6 +5,7 @@ import cleanmeat.model.Item;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -31,11 +32,14 @@ public class SanPham extends HttpServlet {
             category = "3";
         }
 
+        if (sort == null || sort.isBlank()) {
+            sort = "default";
+        }
+
         int page = 1;
         try {
             page = Integer.parseInt(request.getParameter("page"));
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
 
         List<Item> items = itemDAO.searchAndFilter(
                 keyword, category, origin, sort, page, PAGE_SIZE
@@ -56,6 +60,7 @@ public class SanPham extends HttpServlet {
         request.setAttribute("pageTitle", "Sản phẩm");
         request.setAttribute("mainContent", "/view/san_pham.jsp");
         request.setAttribute("pageCss", "/CSS/san_pham.css");
+        request.setAttribute("pageJS", "/JS/san_pham.js");
 
         request.getRequestDispatcher("/view/base/base.jsp")
                 .forward(request, response);
