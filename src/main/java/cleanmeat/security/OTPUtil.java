@@ -1,4 +1,4 @@
-package cleanmeat.services;
+package cleanmeat.security;
 
 import java.security.SecureRandom;
 

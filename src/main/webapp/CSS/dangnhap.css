@@ -56,6 +56,7 @@ h1 {
     margin-bottom: 25px;
     letter-spacing: 2px;
 }
+
 /* ================= FORM ================= */
 .block {
     position: relative;
@@ -173,9 +174,11 @@ h1 {
     color: #fff;
     font-size: 14px;
 }
-.social-login i{
+
+.social-login i {
     margin-left: 15%;
 }
+
 .social-login:hover {
     background: rgba(255, 255, 255, 0.15);
 }
@@ -234,6 +237,7 @@ h1 {
 /* ===== MODAL FORM ===== */
 .modal h3 {
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .modal .txt {
@@ -252,6 +256,7 @@ h1 {
 }
 
 .modal .block i {
+    margin-left: 10px;
     margin-right: 10px;
     font-size: 18px;
     color: #333;
@@ -262,6 +267,11 @@ h1 {
     border: none;
     outline: none;
     font-size: 16px;
+    color: black;
+}
+
+.modal input::placeholder {
+    color: #bcbcbc;
 }
 
 /* ===== MODAL BUTTON ===== */
@@ -285,6 +295,21 @@ h1 {
     color: #e00000;
 }
 
+.message {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.message .txt {
+    font-size: 14px;
+    color: #555;
+}
+
+.message .note {
+    font-size: 13px;
+    color: #777;
+}
+
 /* ===== BUTTON GROUP ===== */
 .button-group {
     display: flex;
@@ -302,15 +327,57 @@ h1 {
     cursor: pointer;
 }
 
-.cancel-btn {
-    background-color: #ccc;
-}
-
-.resend-btn {
+.confirm-btn {
     background-color: #e00000;
     color: white;
 }
 
-.resend-btn:hover {
+.confirm-btn:hover {
     background-color: #ef0000;
+}
+
+.cancel-btn {
+    background-color: #e5e5e5;
+    color: #333;
+}
+
+.cancel-btn:hover {
+    background-color: #d5d5d5;
+}
+
+.resend-wrapper {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.resend-btn {
+    background: none;
+    border: none;
+    color: #e00000;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.resend-btn:hover {
+    color: #ef0000;
+}
+
+.otp-input {
+    margin-top: 10px;
+}
+
+.otp-input .form-input {
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+.otp-timer {
+    font-size: 14px;
+    color: #555;
+}
+
+.otp-timer strong {
+    color: #e00000;
 }

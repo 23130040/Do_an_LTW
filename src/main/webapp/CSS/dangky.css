@@ -8,12 +8,10 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     min-height: 100vh;
-
     background-image: url("https://png.pngtree.com/background/20250423/original/pngtree-raw-meat-and-knife-background-picture-image_16434426.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -182,4 +180,76 @@ a:hover {
 
 .sign-up a {
     color: #ff3b3b;
+}
+/*===================Modal====================*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.modal-content {
+    background-color: #fff;
+    padding: 28px 32px;
+    width: 460px;
+    max-width: 90%;
+    border-radius: 14px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    animation: modalFade 0.3s ease;
+    margin: 10% auto;
+}
+
+/* ICON */
+.modal-content i {
+    color: #28a745;
+    font-size: 26px;
+    margin-bottom: 6px;
+}
+
+/* MESSAGE TEXT */
+#message {
+    text-align: center;
+    line-height: 1.6;
+}
+
+#message .big-txt {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+#message .small-txt {
+    font-size: 13px;
+    color: #555;
+    font-style: italic;
+}
+
+/* COUNTDOWN */
+#countdown {
+    font-weight: 700;
+    color: #e00000;
+    margin-left: 4px;
+}
+
+/* BUTTON */
+.btn-group {
+    margin-top: 18px;
+    padding: 10px 26px;
+    background: #e00000;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.btn-group:hover {
+    background: #b80000;
+    transform: translateY(-1px);
 }

@@ -1,7 +1,3 @@
-main {
-    padding-top: 0px;
-}
-
 .menubar {
     height: 70px;
     background-color: #343A40;
@@ -162,4 +158,7 @@ main {
 
 .user-menu-wrapper:hover .user-menu{
     display: block;
+}
+main.main-content {
+    padding-top: 70px;
 }

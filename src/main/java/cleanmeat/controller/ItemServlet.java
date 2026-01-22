@@ -70,6 +70,8 @@ public class ItemServlet extends HttpServlet {
         String search = request.getParameter("search");
         String category = request.getParameter("category");
         String origin = request.getParameter("origin");
+        String sort = request.getParameter("sort");
+
 
         int page = 1;
         int pageSize = 5;
@@ -82,7 +84,7 @@ public class ItemServlet extends HttpServlet {
             } catch (NumberFormatException ignored) {}
         }
 
-        List<Item> items = itemDAO.searchAndFilter(search, category, origin, page, pageSize);
+        List<Item> items = itemDAO.searchAndFilter(search, category, origin, sort, page, pageSize);
         int totalItems = itemDAO.countFilteredItems(search, category, origin);
         int totalPages = (int) Math.ceil((double) totalItems / pageSize);
 

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class UserDAO extends BaseDAO<User> {
     public Map<Integer, User> users = new HashMap<>();
@@ -52,21 +51,25 @@ public class UserDAO extends BaseDAO<User> {
         String role = rs.getString("role");
         String avatar = rs.getString("avatar");
         boolean status = rs.getBoolean("status");
-
         Date createdDate = rs.getDate("created_at");
         LocalDate createdAt = (createdDate != null) ? createdDate.toLocalDate() : null;
-
+        boolean email_verified = rs.getBoolean("email_verified");
+        String verify_token = rs.getString("verify_token");
         Date updatedDate = rs.getDate("updated_at");
         LocalDate updatedAt = (updatedDate != null) ? updatedDate.toLocalDate() : null;
 
         return new User(id, name, email, password, phone, gender,
-                birthday, role, avatar, status, createdAt, updatedAt);
+                birthday, role, avatar, status, email_verified, verify_token, createdAt, updatedAt);
     }
 
     @Override
     public boolean insert(User user) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO user (name, email, password, phone, gender, birthday, role, avatar, status, created_at, updated_at) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+        String sql = """
+                INSERT INTO user
+                (name, email, password, phone, gender, birthday, role, avatar,
+                 status, email_verified, verify_token, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                """;
         Connection conn = null;
         try {
             conn = getConnection();
@@ -82,6 +85,8 @@ public class UserDAO extends BaseDAO<User> {
                 ps.setString(7, user.getRole());
                 ps.setString(8, user.getAvatar());
                 ps.setBoolean(9, user.isStatus());
+                ps.setBoolean(10, user.isEmail_verified());
+                ps.setString(11, user.getVerify_token());
 
                 if (ps.executeUpdate() > 0) {
                     try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -146,10 +151,11 @@ public class UserDAO extends BaseDAO<User> {
             conn.setAutoCommit(true);
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, id);
-                if (ps.executeUpdate() > 0){
+                if (ps.executeUpdate() > 0) {
                     users.remove(id);
                     return true;
-                };
+                }
+                ;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -346,5 +352,52 @@ public class UserDAO extends BaseDAO<User> {
                 ConnectionPool.getInstance().releaseConnection(conn);
             }
         }
+    }
+
+    public User findByVerifyToken(String token) {
+        String sql = "SELECT * FROM user WHERE verify_token = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, token);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToEntity(rs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean verifyEmail(String token) {
+        String sql = """
+                    UPDATE user
+                    SET email_verified = 1,
+                        verify_token = NULL,
+                        updated_at = NOW()
+                    WHERE verify_token = ?
+                """;
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, token);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updatePasswordByEmail(String email, String hashedPassword) {
+        String sql = "UPDATE user SET password = ? WHERE email = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, hashedPassword);
+            ps.setString(2, email);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
