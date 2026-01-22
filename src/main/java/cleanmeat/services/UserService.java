@@ -27,7 +27,7 @@ public class UserService {
         return user;
     }
 
-    public boolean signup(String name, String email, String password, String confirmPassword) throws SQLException, ClassNotFoundException {
+    public boolean signup(String name, String email, String password, String confirmPassword, String contextPath) throws SQLException, ClassNotFoundException {
         if (name == null || name.trim().isEmpty())
             throw new RuntimeException("Tên không được để trống");
         if (email == null || email.trim().isEmpty())
@@ -51,7 +51,7 @@ public class UserService {
         User user = new User(name, email, hashedPassword, null, null, null, "customer", null, token);
         boolean success = userDAO.insert(user);
         if (success) {
-            String verifyLink = "http://localhost:8080/verify-email?token=" + token;
+            String verifyLink = "http://localhost:8080" + contextPath + "/xac-thuc-email?token=" + token;
             EmailService.sendVerifyEmail(user.getEmail(), user.getName(), verifyLink);
         }
         return success;
@@ -119,5 +119,12 @@ public class UserService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean verifyEmailByToken(String token) {
+        if (userDAO.findByVerifyToken(token) != null) {
+            return userDAO.verifyEmail(token);
+        }
+        return false;
     }
 }

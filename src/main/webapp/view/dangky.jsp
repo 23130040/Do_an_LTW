@@ -41,7 +41,7 @@
             </div>
             <div id="signup-error" class="error-message"></div>
             <div class="block submit">
-                <button class="home link form-submit" id="register-submit-btn">ĐĂNG KÝ</button>
+                <button type="submit" class="home link form-submit" id="register-submit-btn">ĐĂNG KÝ</button>
             </div>
             <div class="separator-container">
                 <div class="separator-line"></div>
@@ -69,41 +69,51 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+
         document.getElementById("signup-form").addEventListener("submit", (e) => {
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
             const errorDiv = document.getElementById("signup-error");
             const message = document.getElementById("message");
+            errorDiv.textContent = "";
+
             fetch(`${pageContext.request.contextPath}/dang-ky`, {
                 method: "POST",
                 body: formData
             }).then(res => res.json())
                 .then(data => {
+                    let redirectTimer = null;
                     if (data.status === "success") {
                         let countdown = 5;
-                        message.innerHTML = `<p><i class="fa-solid fa-check"></i>Đăng ký tài khoản thành công!</p>
-                                            <p>Vui lòng kiểm tra email và nhấp vào liên kết xác minh để kích hoạt tài khoản.</p>
-                                            <p>Sau khi xác minh, bạn có thể đăng nhập bình thường.</p>
-                                            <p>Hệ thống sẽ tự động chuyển hướng sau<span id="countdown">${countdown}</span>s</p>`;
+                        message.innerHTML = `<p class='big-txt'><i class="fa-solid fa-check"></i> Đăng ký tài khoản thành công!</p>
+                                            <p class='small-txt'>Vui lòng kiểm tra email và nhấp vào liên kết xác minh để kích hoạt tài khoản.</p>
+                                            <p class='small-txt'>Sau khi xác minh, bạn có thể đăng nhập bình thường.</p>
+                                            <p class='small-txt'>Hệ thống sẽ tự động chuyển hướng sau <span id="countdown">${countdown}</span>s</p>`;
                         openModal("confirm-modal");
-                        let interval = setInterval(() => {
+                        redirectTimer = setInterval(() => {
                             countdown--;
                             document.getElementById("countdown").textContent = countdown;
                             if (countdown <= 0) {
-                                clearInterval(interval);
+                                clearInterval(redirectTimer);
                                 window.location.href = "${pageContext.request.contextPath}/dang-nhap";
                             }
                         }, 1000);
                     } else {
                         errorDiv.textContent = data.message;
                     }
+                    document.getElementById("btn").addEventListener("click", () => {
+                        if (redirectTimer) {
+                            clearInterval(redirectTimer);
+                        }
+                        window.location.href = "${pageContext.request.contextPath}/dang-nhap";
+                    })
                 }).catch(err => {
-                message.innerHTML = `<p><i class="fa-solid fa-triangle-exclamation"></i>Có lỗi xảy ra. Vui lòng thử lại!</p>`
-            })
+                message.innerHTML = `<p><i class="fa-solid fa-triangle-exclamation"></i>Có lỗi xảy ra. Vui lòng thử lại!</p>`;
+                openModal("confirm-modal");
+            });
         });
     });
-
     function openModal(id) {
         document.getElementById(id).style.display = "block";
     }
