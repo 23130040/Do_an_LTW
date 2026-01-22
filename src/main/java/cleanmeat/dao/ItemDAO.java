@@ -383,33 +383,65 @@ public class ItemDAO extends BaseDAO<Item> {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
     }
-    public List<Item> searchAndFilter(String keyword, String category, String origin, int page, int pageSize) {
+    public List<Item> searchAndFilter(
+            String keyword,
+            String category,
+            String origin,
+            String sort,
+            int page,
+            int pageSize
+    ) {
         List<Item> list = new ArrayList<>();
+
         StringBuilder sql = new StringBuilder(
-                "SELECT i.*, img.url AS image_url, c.name AS category_name, o.name AS origin_name, u.name AS unit_name " +
+                "SELECT i.*, img.url AS image_url, c.name AS category_name, " +
+                        "o.name AS origin_name, u.name AS unit_name " +
                         "FROM item i " +
                         "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
                         "LEFT JOIN category c ON i.category_id = c.id " +
                         "LEFT JOIN origin o ON i.origin_id = o.id " +
-                        "LEFT JOIN unit u ON i.unit_id = u.id WHERE 1=1"
+                        "LEFT JOIN unit u ON i.unit_id = u.id " +
+                        "WHERE 1=1 "
         );
+
         List<Object> params = new ArrayList<>();
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            sql.append(" AND (i.name LIKE ? OR i.sku LIKE ?)");
+            sql.append(" AND (i.name LIKE ? OR i.sku LIKE ?) ");
             String val = "%" + keyword.trim() + "%";
-            params.add(val); params.add(val);
-        }
-        if (category != null && !category.isEmpty()) {
-            sql.append(" AND i.category_id = ?");
-            params.add(category);
-        }
-        if (origin != null && !origin.isEmpty()) {
-            sql.append(" AND i.origin_id = ?");
-            params.add(origin);
+            params.add(val);
+            params.add(val);
         }
 
-        sql.append(" ORDER BY i.created_at DESC LIMIT ? OFFSET ?");
+        if (category != null && !category.isEmpty()) {
+            sql.append(" AND i.category_id = ? ");
+            params.add(Integer.parseInt(category));
+        }
+
+        if (origin != null && !origin.isEmpty()) {
+            sql.append(" AND i.origin_id = ? ");
+            params.add(Integer.parseInt(origin));
+        }
+
+        if (sort != null && !sort.isEmpty()) {
+            switch (sort) {
+                case "price_asc":
+                    sql.append(" ORDER BY i.price ASC ");
+                    break;
+                case "price_desc":
+                    sql.append(" ORDER BY i.price DESC ");
+                    break;
+                case "newest":
+                    sql.append(" ORDER BY i.created_at DESC ");
+                    break;
+                default:
+                    sql.append(" ORDER BY i.created_at DESC ");
+            }
+        } else {
+            sql.append(" ORDER BY i.created_at DESC ");
+        }
+
+        sql.append(" LIMIT ? OFFSET ? ");
         params.add(pageSize);
         params.add((page - 1) * pageSize);
 
@@ -420,6 +452,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 for (int i = 0; i < params.size(); i++) {
                     ps.setObject(i + 1, params.get(i));
                 }
+
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         list.add(mapResultSetToEntity(rs));
@@ -433,8 +466,10 @@ public class ItemDAO extends BaseDAO<Item> {
                 ConnectionPool.getInstance().releaseConnection(conn);
             }
         }
+
         return list;
     }
+
     public int countFilteredItems(String keyword, String category, String origin) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM item WHERE 1=1");
         List<Object> params = new ArrayList<>();
