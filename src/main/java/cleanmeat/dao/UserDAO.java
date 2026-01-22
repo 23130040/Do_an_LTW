@@ -388,4 +388,16 @@ public class UserDAO extends BaseDAO<User> {
         return false;
     }
 
+    public boolean updatePasswordByEmail(String email, String hashedPassword) {
+        String sql = "UPDATE user SET password = ? WHERE email = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, hashedPassword);
+            ps.setString(2, email);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

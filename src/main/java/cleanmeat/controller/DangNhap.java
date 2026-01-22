@@ -1,5 +1,6 @@
 package cleanmeat.controller;
 
+import cleanmeat.security.HashUtil;
 import cleanmeat.security.OTPUtil;
 import cleanmeat.services.EmailService;
 import jakarta.servlet.*;
@@ -27,28 +28,35 @@ public class DangNhap extends HttpServlet {
         //quên mật khẩu
         if ("quen-mat-khau".equals(action)) {
             String resetEmail = request.getParameter("resetEmail");
-            try {
-                userService.isEmailRegistered(resetEmail);
-                String otp = OTPUtil.generateOTP();
-                session.setAttribute("resetOtp", otp);
-                session.setAttribute("resetEmail", resetEmail);
-                session.setAttribute("otpExpire",
-                        System.currentTimeMillis() + 5 * 60 * 1000); // 5 phút
-                EmailService.sendOTP(resetEmail, otp);
-                response.getWriter().write("""
-                            {
-                              "success": true,
-                              "email": "%s"
-                            }
-                        """.formatted(resetEmail));
-            } catch (Exception e) {
+            if (resetEmail == null || resetEmail.trim().isEmpty()) {
                 response.getWriter().write("""
                             {
                               "success": false,
-                              "message": "%s"
+                              "message": "Email không được để trống"
                             }
-                        """.formatted(e.getMessage()));
+                        """);
+                return;
             }
+            if (!userService.isEmailRegistered(resetEmail)) {
+                response.getWriter().write("""
+                            {
+                              "success": false,
+                              "message": "Email không tồn tại"
+                            }
+                        """);
+                return;
+            }
+            String otp = OTPUtil.generateOTP();
+            session.setAttribute("resetOtp", otp);
+            session.setAttribute("resetEmail", resetEmail);
+            session.setAttribute("otpExpire", System.currentTimeMillis() + 5 * 60 * 1000);
+            EmailService.sendOTP(resetEmail, otp);
+            response.getWriter().write("""
+                        {
+                          "success": true,
+                          "email": "%s"
+                        }
+                    """.formatted(resetEmail));
             return;
         }
         //xác thực otp
@@ -107,6 +115,61 @@ public class DangNhap extends HttpServlet {
                           "message": "Đã gửi lại mã OTP"
                         }
                     """);
+            return;
+        }
+        //đổi mật khẩu
+        if ("doi-mat-khau".equals(action)) {
+            Boolean otpVerified = (Boolean) session.getAttribute("otpVerified");
+            String email = (String) session.getAttribute("resetEmail");
+            String newPassword = request.getParameter("newPassword");
+            String confirmPassword = request.getParameter("confirmNewPassword");
+            if (otpVerified == null || !otpVerified || email == null) {
+                response.getWriter().write("""
+                            {
+                              "success": false,
+                              "message": "Phiên đặt lại mật khẩu không hợp lệ"
+                            }
+                        """);
+                return;
+            }
+            if (newPassword == null || newPassword.isEmpty()) {
+                response.getWriter().write("""
+                            {
+                              "success": false,
+                              "message": "Mật khẩu không được để trống"
+                            }
+                        """);
+                return;
+            }
+            if (!newPassword.equals(confirmPassword)) {
+                response.getWriter().write("""
+                            {
+                              "success": false,
+                              "message": "Mật khẩu xác nhận không khớp"
+                            }
+                        """);
+                return;
+            }
+            String hashedPassword = HashUtil.md5(newPassword);
+            boolean success = userService.resetPasswordByEmail(email, hashedPassword);
+            if (success) {
+                session.removeAttribute("otpVerified");
+                session.removeAttribute("resetEmail");
+                session.removeAttribute("otpExpire");
+                response.getWriter().write("""
+                            {
+                              "success": true,
+                              "message": "Đổi mật khẩu thành công"
+                            }
+                        """);
+            } else {
+                response.getWriter().write("""
+                            {
+                              "success": false,
+                              "message": "Đổi mật khẩu thất bại"
+                            }
+                        """);
+            }
             return;
         }
         //đăng nhập

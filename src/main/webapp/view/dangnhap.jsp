@@ -58,7 +58,7 @@
             <h3>QUÊN MẬT KHẨU</h3>
             <div class="block email_reset">
                 <i class="fa-regular fa-envelope"></i>
-                <input type="email" class="form-input" name='resetEmail' placeholder="Nhập email của bạn" required>
+                <input type="email" class="form-input" name="resetEmail" placeholder="Nhập email của bạn" required>
             </div>
             <div id="email-error" class="error-message"></div>
             <div class="block submit">
@@ -94,18 +94,13 @@
             </div>
             <div id="otp-error" class="error-message"></div>
             <div class="button-group">
-                <button type="button" id="cancel-btn" class="btn cancel-btn">
-                    Hủy bỏ
-                </button>
-                <button type="submit" class="btn confirm-btn">
-                    Xác minh
-                </button>
+                <button type="button" id="cancel-btn" class="btn cancel-btn">Hủy bỏ</button>
+                <button type="submit" class="btn confirm-btn">Xác minh</button>
             </div>
         </form>
         <div class="resend-wrapper">
-            <button id="resend-btn" class="btn resend-btn">
-                Gửi lại mã OTP
-            </button>
+            <span id="otp-timer" class="otp-timer"></span>
+            <button id="resend-btn" class="btn resend-btn" style="display:none">Gửi lại mã OTP</button>
         </div>
     </div>
 </div>
@@ -114,21 +109,21 @@
 <div id="resetpasswordmodal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="close-reset-password-modal">&times;</span>
-        <form id="reset-password-form" method="post" action="">
+        <form id="reset-password-form" method="post"
+              action="${pageContext.request.contextPath}/dang-nhap?action=doi-mat-khau">
             <h3>ĐẶT LẠI MẬT KHẨU</h3>
-            <p class="txt">Nhập mật khẩu mới</p>
             <div class="block password-reset">
                 <i class="fa-solid fa-lock"></i>
-                <input type="password" class="form-input" name='new-password' placeholder="Nhập mật khẩu" required>
+                <input type="password" class="form-input" name='newPassword' placeholder="Nhập mật khẩu mới" required>
             </div>
             <div class="block confirm_password_reset">
                 <i class="fa-solid fa-lock"></i>
-                <input type="password" class="form-input" name='confirm-new-password' placeholder="Nhập lại mật khẩu"
+                <input type="password" class="form-input" name='confirmNewPassword' placeholder="Nhập lại mật khẩu mới"
                        required>
             </div>
             <div id="reset-password-error" class="error-message"></div>
             <div class="block submit">
-                <button type="submit" id="reset-submit-btn"></button>
+                <button type="submit" class="home link form-submit" id="reset-submit-btn">Đổi mật khẩu</button>
             </div>
         </form>
     </div>
@@ -145,25 +140,39 @@
             closeModal("forgotPasswordModal");
         });
 
+        const closeOtpModalbtn = document.getElementById("close-confirmation-modal");
+        closeOtpModalbtn.addEventListener("click", () => {
+            closeModal("confirmation-modal");
+        });
+
+        const cancleBtn = document.getElementById("cancel-btn");
+        cancleBtn.addEventListener("click", () => {
+            closeModal("confirmation-modal");
+        });
         window.addEventListener("click", (e) => {
             if (e.target.id === "forgotPasswordModal") closeModal("forgotPasswordModal");
+            if (e.target.id === "confirmation-modal") closeModal("confirmation-modal");
         });
 
         document.getElementById("forgot-password-form").addEventListener("submit", (e) => {
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
+            const params = new URLSearchParams(formData);
             const errorDiv = document.getElementById("email-error");
             errorDiv.textContent = "";
             fetch(`${pageContext.request.contextPath}/dang-nhap?action=quen-mat-khau`, {
                 method: 'POST',
-                body: formData
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: params
             }).then(res => res.json())
                 .then(data => {
                     if (data.success) {
                         closeModal("forgotPasswordModal");
                         document.getElementById("user-email").textContent = data.email;
                         openModal("confirmation-modal");
+                        clearInterval(otpCountdownInterval);
+                        startOtpCountdown(300);
                     } else {
                         errorDiv.textContent = data.message;
                     }
@@ -203,14 +212,36 @@
 
         //gửi lại otp
         document.getElementById("resend-btn").addEventListener("click", () => {
-            fetch(`${contextPath}/dang-nhap?action=gui-lai-otp`, {
+            fetch(`${pageContext.request.contextPath}/dang-nhap?action=gui-lai-otp`, {
                 method: "POST"
             })
                 .then(res => res.json())
                 .then(data => {
+                    if (data.success) {
+                        clearInterval(otpCountdownInterval);
+                        startOtpCountdown(60);
+                    }
                     alert(data.message);
                 });
         });
+
+        document.getElementById("reset-password-form").addEventListener("submit", e => {
+            e.preventDefault();
+            fetch(e.target.action, {
+                method: "POST",
+                body: new URLSearchParams(new FormData(e.target))
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Đổi mật khẩu thành công");
+                        location.reload();
+                    } else {
+                        document.getElementById("reset-password-error").textContent = data.message;
+                    }
+                });
+        });
+
     });
 
     function openModal(id) {
@@ -219,6 +250,28 @@
 
     function closeModal(id) {
         document.getElementById(id).style.display = "none";
+    }
+
+    let otpCountdownInterval;
+
+    function startOtpCountdown(seconds) {
+        const timerEl = document.getElementById("otp-timer");
+        const resendBtn = document.getElementById("resend-btn");
+        resendBtn.style.display = "none";
+        timerEl.style.display = "block";
+        let remaining = seconds;
+        timerEl.innerHTML = `Mã OTP còn hiệu lực trong <strong>${remaining}s</strong>`;
+        if (otpCountdownInterval) clearInterval(otpCountdownInterval);
+        otpCountdownInterval = setInterval(() => {
+            remaining--;
+            if (remaining <= 0) {
+                clearInterval(otpCountdownInterval);
+                timerEl.style.display = "none";
+                resendBtn.style.display = "inline-block";
+            } else {
+                timerEl.innerHTML = `Mã OTP còn hiệu lực trong <strong>${remaining}s</strong>`;
+            }
+        }, 1000);
     }
 </script>
 </body>

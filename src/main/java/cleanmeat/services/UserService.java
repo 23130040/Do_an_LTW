@@ -60,7 +60,7 @@ public class UserService {
     public boolean isEmailRegistered(String email) {
         if (email == null || email.trim().isEmpty())
             throw new RuntimeException("Email không được để trống");
-        if (isValidEmail(email))
+        if (!isValidEmail(email))
             throw new RuntimeException("Email không hợp lệ");
         return userDAO.existsByEmail(email.trim());
     }
@@ -116,9 +116,9 @@ public class UserService {
         try {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
-            return false;
-        } catch (Exception e) {
             return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -127,5 +127,9 @@ public class UserService {
             return userDAO.verifyEmail(token);
         }
         return false;
+    }
+
+    public boolean resetPasswordByEmail(String email, String hashedPassword) {
+        return userDAO.updatePasswordByEmail(email, hashedPassword);
     }
 }
