@@ -27,7 +27,8 @@ public class DangKy extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         try {
-            userService.signup(name, email, password, confirmPassword);
+            String contextPath = request.getContextPath();
+            userService.signup(name, email, password, confirmPassword, contextPath);
             response.getWriter().write("""
                     {
                         "status": "success",

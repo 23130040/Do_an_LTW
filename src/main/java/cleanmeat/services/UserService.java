@@ -6,27 +6,28 @@ import cleanmeat.security.HashUtil;
 import jakarta.mail.internet.InternetAddress;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class UserService {
     private final UserDAO userDAO = new UserDAO();
 
-    public User getUser(int id) {
-        return userDAO.findById(id);
-    }
-
     public User login(String email, String password) {
-        if (email == null || password == null)
-            return null;
+        if (email == null || email.trim().isEmpty())
+            throw new RuntimeException("Email không được để trống");
+        if (password == null || password.trim().isEmpty())
+            throw new RuntimeException("Mật khẩu không được để trống");
         User user = userDAO.findByEmail(email);
         if (user == null)
-            return null;
+            throw new RuntimeException("Email hoặc mật khẩu không đúng");
         String hashedInput = HashUtil.md5(password);
         if (!user.getPassword().equals(hashedInput))
-            return null;
+            throw new RuntimeException("Email hoặc mật khẩu không đúng");
+        if (!user.isEmail_verified())
+            throw new RuntimeException("Tài khoản chưa được xác thực email");
         return user;
     }
 
-    public boolean signup(String name, String email, String password, String confirmPassword) throws SQLException, ClassNotFoundException {
+    public boolean signup(String name, String email, String password, String confirmPassword, String contextPath) throws SQLException, ClassNotFoundException {
         if (name == null || name.trim().isEmpty())
             throw new RuntimeException("Tên không được để trống");
         if (email == null || email.trim().isEmpty())
@@ -37,7 +38,7 @@ public class UserService {
             throw new RuntimeException("Mật khẩu xác nhận không được để trống");
         name = name.trim();
         email = email.trim();
-        if (!isValidEmail(email))
+        if (isValidEmail(email))
             throw new RuntimeException("Địa chỉ email không hợp lệ.");
         if (userDAO.existsByEmail(email))
             throw new RuntimeException("Email này đã được liên kết tới một tài khoản khác.");
@@ -46,15 +47,22 @@ public class UserService {
         if (!password.equals(confirmPassword))
             throw new RuntimeException("Mật khẩu xác nhận không khớp.");
         String hashedPassword = HashUtil.md5(password);
-        User user = new User(name, email, hashedPassword, null, null, null, "customer", null);
-        return userDAO.insert(user);
+        String token = UUID.randomUUID().toString();
+        User user = new User(name, email, hashedPassword, null, null, null, "customer", null, token);
+        boolean success = userDAO.insert(user);
+        if (success) {
+            String verifyLink = "http://localhost:8080" + contextPath + "/xac-thuc-email?token=" + token;
+            EmailService.sendVerifyEmail(user.getEmail(), user.getName(), verifyLink);
+        }
+        return success;
     }
 
     public boolean isEmailRegistered(String email) {
-        if (email == null || email.trim().isEmpty()) {
-            return false;
-        }
-        return userDAO.existsByEmail(email);
+        if (email == null || email.trim().isEmpty())
+            throw new RuntimeException("Email không được để trống");
+        if (isValidEmail(email))
+            throw new RuntimeException("Email không hợp lệ");
+        return userDAO.existsByEmail(email.trim());
     }
 
     public boolean changePassword(int userId, String oldPassword, String newPassword, String confirmPassword) {
@@ -108,9 +116,16 @@ public class UserService {
         try {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
-            return true;
-        } catch (Exception e) {
             return false;
+        } catch (Exception e) {
+            return true;
         }
+    }
+
+    public boolean verifyEmailByToken(String token) {
+        if (userDAO.findByVerifyToken(token) != null) {
+            return userDAO.verifyEmail(token);
+        }
+        return false;
     }
 }

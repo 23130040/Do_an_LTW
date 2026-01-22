@@ -1,7 +1,7 @@
 package cleanmeat.controller;
 
 import cleanmeat.services.EmailService;
-import cleanmeat.services.OTPUtil;
+import cleanmeat.security.OTPUtil;
 import cleanmeat.services.OtpData;
 import cleanmeat.services.UserService;
 import jakarta.servlet.*;

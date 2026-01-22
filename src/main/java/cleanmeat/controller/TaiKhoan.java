@@ -111,7 +111,6 @@ public class TaiKhoan extends HttpServlet {
                 String json = request.getReader().lines().reduce("", (acc, line) -> acc + line);
                 JsonObject body = JsonParser.parseString(json).getAsJsonObject();
                 String password = body.get("password").getAsString();
-
                 try {
                     boolean success = userService.deleteAccount(user.getId(), password);
                     var writer = response.getWriter();

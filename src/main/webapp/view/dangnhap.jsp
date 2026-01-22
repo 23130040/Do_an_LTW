@@ -16,20 +16,20 @@
     <div id="wrapper">
         <img src="${pageContext.request.contextPath}/images/logoCleanmeat.png" alt="logo">
         <h1>ĐĂNG NHẬP</h1>
-        <form method="post" action="dang-nhap">
+        <form id="signin-form" method="post" action="${pageContext.request.contextPath}/dang-nhap">
             <div class="block user-name">
                 <i class="fa-regular fa-user"></i>
-                <input type="text" class="form-input" name='email' placeholder="Nhập email" required>
+                <input type="email" class="form-input" name='email' placeholder="Nhập email" required>
             </div>
             <div class="block password">
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" class="form-input" name='password' placeholder="Nhập mật khẩu" required>
             </div>
             <div class="block forgot-password">
-                <a href="${pageContext.request.contextPath}#forgotPasswordModal" class="link forgot"
+                <a href="#" class="link forgot"
                    id="open-forgot-modal-btn">Quên mật khẩu?</a>
             </div>
-            <div id="login-error" class="error-message"></div>
+            <div id="login-error" class="error-message">${requestScope.error}</div>
             <div class="block submit">
                 <button type="submit" class="home link form-submit" id="login-submit-btn">ĐĂNG NHẬP</button>
             </div>
@@ -51,16 +51,14 @@
         </div>
     </div>
 </div>
-
 <div id="forgotPasswordModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="closeForgotModal">&times;</span>
         <form id="forgot-password-form">
             <h3>QUÊN MẬT KHẨU</h3>
-            <p class="txt">Nhập email</p>
             <div class="block email_reset">
                 <i class="fa-regular fa-envelope"></i>
-                <input type="email" class="form-input" name='reset_email' placeholder="Nhập email của bạn" required>
+                <input type="email" class="form-input" name='resetEmail' placeholder="Nhập email của bạn" required>
             </div>
             <div id="email-error" class="error-message"></div>
             <div class="block submit">
@@ -76,20 +74,42 @@
         <div class="message">
             <p>
                 <span class="txt">
-                    Hệ thống đã gửi <strong>email xác nhận</strong> đến địa chỉ
+                    Hệ thống đã gửi <strong>mã OTP</strong> đến địa chỉ
                 </span>
                 <span class="email" id="user-email"></span>.
             </p>
             <p class="note">
-                Vui lòng kiểm tra hộp thư đến và thư mục spam. Nếu bạn chưa nhận được email, hãy nhấn “Gửi lại”.
+                Vui lòng kiểm tra hộp thư đến và thư mục spam.
             </p>
         </div>
-        <div class="button-group">
-            <button id="cancel-btn" class="btn cancel-btn">Hủy bỏ</button>
-            <button id="resend-btn" class="btn resend-btn">Gửi lại email</button>
+        <!-- NHẬP OTP -->
+        <form id="otp-verify-form">
+            <div class="block otp-input">
+                <input type="text"
+                       name="otp"
+                       maxlength="6"
+                       placeholder="Nhập mã OTP (6 số)"
+                       required
+                       class="form-input">
+            </div>
+            <div id="otp-error" class="error-message"></div>
+            <div class="button-group">
+                <button type="button" id="cancel-btn" class="btn cancel-btn">
+                    Hủy bỏ
+                </button>
+                <button type="submit" class="btn confirm-btn">
+                    Xác minh
+                </button>
+            </div>
+        </form>
+        <div class="resend-wrapper">
+            <button id="resend-btn" class="btn resend-btn">
+                Gửi lại mã OTP
+            </button>
         </div>
     </div>
 </div>
+
 <!--reset password----->
 <div id="resetpasswordmodal" class="modal">
     <div class="modal-content">
@@ -113,6 +133,93 @@
         </form>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}js/dangnhap.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const openForgetPasswordModalBtn = document.getElementById("open-forgot-modal-btn");
+        openForgetPasswordModalBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openModal("forgotPasswordModal");
+        });
+        const closeForgetPasswordModalBtn = document.getElementById("closeForgotModal");
+        closeForgetPasswordModalBtn.addEventListener("click", () => {
+            closeModal("forgotPasswordModal");
+        });
+
+        window.addEventListener("click", (e) => {
+            if (e.target.id === "forgotPasswordModal") closeModal("forgotPasswordModal");
+        });
+
+        document.getElementById("forgot-password-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const errorDiv = document.getElementById("email-error");
+            errorDiv.textContent = "";
+            fetch(`${pageContext.request.contextPath}/dang-nhap?action=quen-mat-khau`, {
+                method: 'POST',
+                body: formData
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        closeModal("forgotPasswordModal");
+                        document.getElementById("user-email").textContent = data.email;
+                        openModal("confirmation-modal");
+                    } else {
+                        errorDiv.textContent = data.message;
+                    }
+                }).catch(err => {
+                errorDiv.textContent = "Có lỗi xảy ra, vui lòng thử lại";
+                console.error(err);
+            });
+        });
+
+        /*XÁC MINH OTP*/
+        document.getElementById("otp-verify-form").addEventListener("submit", e => {
+            e.preventDefault();
+            const otp = e.target.otp.value;
+            const errorDiv = document.getElementById("otp-error");
+            errorDiv.textContent = "";
+            fetch(`${pageContext.request.contextPath}/dang-nhap?action=xac-minh-otp`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: new URLSearchParams({otp})
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        closeModal("confirmation-modal");
+                        openModal("resetpasswordmodal");
+                    } else {
+                        errorDiv.textContent = data.message;
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    errorDiv.textContent = "OTP không hợp lệ hoặc đã hết hạn";
+                });
+        });
+
+        //gửi lại otp
+        document.getElementById("resend-btn").addEventListener("click", () => {
+            fetch(`${contextPath}/dang-nhap?action=gui-lai-otp`, {
+                method: "POST"
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                });
+        });
+    });
+
+    function openModal(id) {
+        document.getElementById(id).style.display = "block";
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+    }
+</script>
 </body>
 </html>
