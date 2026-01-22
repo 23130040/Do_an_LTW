@@ -109,6 +109,14 @@ a {
     background: #e00000;
     color: #fff;
 }
+.sort-box.open .sort-options {
+    display: block;
+}
+
+.sort-box {
+    position: relative;
+    z-index: 9999;
+}
 
 /* ================= PRODUCT WRAPPER ================= */
 .product-wrapper {

@@ -1,47 +1,40 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
+
     const sortBox = document.querySelector(".sort-box");
     if (!sortBox) return;
 
     const selected = sortBox.querySelector(".sort-selected");
-    const items = sortBox.querySelectorAll(".sort-options li");
+    const options = sortBox.querySelectorAll(".sort-options li");
 
-    selected.addEventListener("click", () => {
+    selected.addEventListener("click", function (e) {
+        e.stopPropagation();
         sortBox.classList.toggle("open");
     });
 
-    items.forEach(item => {
-        item.addEventListener("click", () => {
-            let sortValue = "";
+    options.forEach(option => {
+        option.addEventListener("click", function (e) {
+            e.stopPropagation();
 
-            const text = item.textContent.toLowerCase();
+            const sortValue = option.dataset.sort;
+            const sortText = option.textContent.trim();
 
-            if (text.includes("tăng")) {
-                sortValue = "price_asc";
-            } else if (text.includes("giảm")) {
-                sortValue = "price_desc";
+            selected.textContent = sortText;
+
+            const url = new URL(window.location.href);
+
+            if (!sortValue || sortValue === "default") {
+                url.searchParams.delete("sort");
+            } else {
+                url.searchParams.set("sort", sortValue);
             }
 
-            updateUrlParam("sort", sortValue);
+            url.searchParams.set("page", 1);
+
+            window.location.href = url.toString();
         });
     });
 
-    document.addEventListener("click", (e) => {
-        if (!sortBox.contains(e.target)) {
-            sortBox.classList.remove("open");
-        }
+    document.addEventListener("click", function () {
+        sortBox.classList.remove("open");
     });
 });
-
-function updateUrlParam(key, value) {
-    const url = new URL(window.location.href);
-
-    if (value === "" || value === null) {
-        url.searchParams.delete(key);
-    } else {
-        url.searchParams.set(key, value);
-    }
-
-    url.searchParams.set("page", 1);
-
-    window.location.href = url.toString();
-}
