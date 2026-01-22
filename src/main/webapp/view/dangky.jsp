@@ -22,18 +22,15 @@
                 <input type="text" class="form-input" name="name" value="${requestScope.name}"
                        placeholder="Nhập họ và tên" required>
             </div>
-
             <div class="block email">
                 <i class="fa-regular fa-envelope"></i>
-                <input type="text" class="form-input" name="email" value="${requestScope.email}"
+                <input type="email" class="form-input" name="email" value="${requestScope.email}"
                        placeholder="Nhập email" required>
             </div>
-
             <div class="block password">
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" class="form-input" name="password" placeholder="Tạo mật khẩu" required>
             </div>
-
             <div class="block confirm_password">
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" class="form-input" name="confirmPassword" placeholder="Nhập lại mật khẩu"
@@ -69,7 +66,6 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-
         document.getElementById("signup-form").addEventListener("submit", (e) => {
             e.preventDefault();
             const form = e.target;
@@ -77,7 +73,6 @@
             const errorDiv = document.getElementById("signup-error");
             const message = document.getElementById("message");
             errorDiv.textContent = "";
-
             fetch(`${pageContext.request.contextPath}/dang-ky`, {
                 method: "POST",
                 body: formData
@@ -85,7 +80,7 @@
                 .then(data => {
                     let redirectTimer = null;
                     if (data.status === "success") {
-                        let countdown = 5;
+                        let countdown = 10;
                         message.innerHTML = `<p class='big-txt'><i class="fa-solid fa-check"></i> Đăng ký tài khoản thành công!</p>
                                             <p class='small-txt'>Vui lòng kiểm tra email và nhấp vào liên kết xác minh để kích hoạt tài khoản.</p>
                                             <p class='small-txt'>Sau khi xác minh, bạn có thể đăng nhập bình thường.</p>
