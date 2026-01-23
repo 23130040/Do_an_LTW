@@ -21,19 +21,17 @@
             <jsp:param name="active" value="news"/>
         </jsp:include>
 
-        <!---------------- QUẢN LÝ KHUYẾN MÃI ------------------->
         <main class="content">
             <h2 class="page-title">Quản Lý Tin Tức</h2>
             <div id="content">
                 <div class="content-section">
                     <div class="control-panel">
                         <div class="filters">
-                            <input type="text" placeholder="Tìm kiếm theo tiêu đề" class="search-input">
+                            <input type="text" placeholder="Tìm kiếm theo tiêu đề" class="search-input" id="search">
                             <input type="date" class="filter-date" title="Lọc theo ngày đăng">
                         </div>
                         <button class="btn btn-primary" onclick="openAddArticleModal()"><i class="fas fa-plus"></i> Tạo Bài viết Mới</button>
                     </div>
-
                     <table class="article-table">
                         <thead>
                         <tr>
@@ -57,15 +55,21 @@
                                 </td>
 
                                 <td>1250</td> <td>
-                <span class="status-badge ${news.status == 'Đã đăng' ? 'status-active' : 'status-draft'}">
-                        ${news.status}
+                <span class="status-badge ${news.status == 'published' ? 'status-active' : 'status-draft'}">
+                        ${news.status == 'published' ? 'Đã đăng' : 'Bản nháp'}
                 </span>
                             </td>
                                 <td>
-                                    <a href="edit-news?id=${news.id}" class="btn-icon edit-btn"><i class="fas fa-edit"></i></a>
-                                    <a href="delete-news?id=${news.id}" class="btn-icon delete-btn" onclick="return confirm('Are you sure?')">
+                                    <button type="button"
+                                            class="btn-icon edit-btn"
+                                            onclick="editNews(${news.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button"
+                                            class="btn-icon delete-btn"
+                                            onclick="deleteAndKeepPage(${news.id}, ${currentPage})">
                                         <i class="fas fa-trash-alt"></i>
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -73,14 +77,17 @@
                     </table>
                 </div>
                 <div class="pagination">
+
                     <%-- Nút Trước --%>
                     <c:if test="${currentPage > 1}">
-                        <a href="?page=${currentPage - 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">&laquo; Trước</a>
+                        <a href="?page=${currentPage - 1}&search=${selectedSearch}">
+                            &laquo; Trước
+                        </a>
                     </c:if>
 
-                    <%-- Các số trang --%>
-                    <c:forEach begin="1" end="${totalPages}" var="i">
-                        <a href="?page=${i}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}"
+                    <%-- Các số trang thông minh --%>
+                    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                        <a href="?page=${i}&search=${selectedSearch}"
                            class="${i == currentPage ? 'active' : ''}">
                                 ${i}
                         </a>
@@ -88,8 +95,11 @@
 
                     <%-- Nút Sau --%>
                     <c:if test="${currentPage < totalPages}">
-                        <a href="?page=${currentPage + 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">Sau &raquo;</a>
+                        <a href="?page=${currentPage + 1}&search=${selectedSearch}">
+                            Sau &raquo;
+                        </a>
                     </c:if>
+
                 </div>
             </div>
 
@@ -122,13 +132,14 @@
         <div class="modal-content large-modal">
             <span class="close-btn" onclick="closeModal('article-modal')">&times;</span>
             <h3><span id="modal-title-article">Tạo</span> Bài Viết Mới</h3>
-            <form class="article-form">
+            <form class="article-form" action="quan-ly-tin-tuc?action=save" method="post">
+                <input type="hidden" name="id" id="news-id">
                 <div class="form-section full-col">
                     <label>Tiêu đề bài viết:</label>
-                    <input type="text" placeholder="Ví dụ: Lợi ích của thịt bò Úc nhập khẩu" required>
+                    <input type="text" name="title" id="news-title" required>
 
                     <label>Tác giả:</label>
-                    <input type="text" placeholder="Admin" readonly>
+                    <input type="text" name="author" id="news-author" value="Admin">
 
                     <label>Ảnh đại diện (Thumbnail):</label>
                     <div class="image-upload-box small-upload-box">
@@ -136,16 +147,15 @@
                         <p>Kéo thả ảnh hoặc **Nhấn để chọn**</p>
                     </div>
 
-                    <label>Nội dung chi tiết:</label>
-                    <textarea rows="10" placeholder="Nhập nội dung bài viết chi tiết..." required></textarea>
+                    <label>Nội dung:</label>
+                    <textarea name="content" id="news-content" rows="10" required></textarea>
 
                     <label>Trạng thái:</label>
-                    <select required>
-                        <option value="draft">Bản nháp</option>
+                    <select name="status" id="news-status">
                         <option value="published">Đã đăng</option>
+                        <option value="Bản nháp">Bản nháp</option>
                     </select>
                 </div>
-
                 <button type="submit" class="btn btn-primary submit-btn">Lưu Bài Viết</button>
             </form>
         </div>

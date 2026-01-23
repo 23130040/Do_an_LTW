@@ -110,13 +110,16 @@
                 </table>
             </div>
             <div class="pagination">
+
                 <%-- Nút Trước --%>
                 <c:if test="${currentPage > 1}">
-                    <a href="?page=${currentPage - 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">&laquo; Trước</a>
+                    <a href="?page=${currentPage - 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">
+                        &laquo; Trước
+                    </a>
                 </c:if>
 
-                <%-- Các số trang --%>
-                <c:forEach begin="1" end="${totalPages}" var="i">
+                <%-- Các số trang thông minh --%>
+                <c:forEach var="i" begin="${startPage}" end="${endPage}">
                     <a href="?page=${i}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}"
                        class="${i == currentPage ? 'active' : ''}">
                             ${i}
@@ -125,9 +128,13 @@
 
                 <%-- Nút Sau --%>
                 <c:if test="${currentPage < totalPages}">
-                    <a href="?page=${currentPage + 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">Sau &raquo;</a>
+                    <a href="?page=${currentPage + 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">
+                        Sau &raquo;
+                    </a>
                 </c:if>
+
             </div>
+
         </main>
     </div>
 </div>

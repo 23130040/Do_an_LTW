@@ -101,45 +101,32 @@
 
                 </table>
             </div>
-            <c:if test="${noOfPages > 1}">
-                <div class="pagination-container"
-                     style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="font-size: 0.9em; color: #777;">
-                        Đang hiển thị ${fn:length(users)} trên tổng số ${noOfRecords} người dùng.
-                    </div>
-                    <nav>
-                        <ul class="pagination" style="display: inline-flex; list-style: none; padding: 0;">
+            <div class="pagination">
 
-                                <%-- Nút trang trước --%>
-                            <c:if test="${currentPage > 1}">
-                                <li class="page-item" style="margin-right: 5px;">
-                                    <a class="page-link btn btn-secondary" href="?page=${currentPage - 1}"
-                                       style="padding: 6px 12px; text-decoration: none;">&laquo; Trước</a>
-                                </li>
-                            </c:if>
+                <%-- Trước --%>
+                <c:if test="${currentPage > 1}">
+                    <a href="?page=${currentPage - 1}&search=${searchKeyword}&role=${filterRole}">
+                        &laquo; Trước
+                    </a>
+                </c:if>
 
-                                <%-- Hiển thị các trang --%>
-                            <c:forEach begin="1" end="${noOfPages}" var="i">
-                                <li class="page-item" style="margin-right: 5px;">
-                                    <a class="page-link ${currentPage == i ? 'btn-primary' : 'btn-secondary'}"
-                                       href="?page=${i}"
-                                       style="padding: 6px 12px; text-decoration: none; border-radius: 3px; background-color: ${currentPage == i ? '#8d2a3a' : '#f0f0f0'}; color: ${currentPage == i ? '#fff' : '#333'}; border: 1px solid ${currentPage == i ? '#8d2a3a' : '#ddd'};">
-                                            ${i}
-                                    </a>
-                                </li>
-                            </c:forEach>
+                <%-- Các trang --%>
+                <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                    <a href="?page=${i}&search=${searchKeyword}&role=${filterRole}"
+                       class="${i == currentPage ? 'active' : ''}">
+                            ${i}
+                    </a>
+                </c:forEach>
 
-                                <%-- Nút trang sau --%>
-                            <c:if test="${currentPage < noOfPages}">
-                                <li class="page-item">
-                                    <a class="page-link btn btn-secondary" href="?page=${currentPage + 1}"
-                                       style="padding: 6px 12px; text-decoration: none;">Sau &raquo;</a>
-                                </li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                </div>
-            </c:if>
+                <%-- Sau --%>
+                <c:if test="${currentPage < totalPages}">
+                    <a href="?page=${currentPage + 1}&search=${searchKeyword}&role=${filterRole}">
+                        Sau &raquo;
+                    </a>
+                </c:if>
+
+            </div>
+
         </main>
     </div>
 </div>

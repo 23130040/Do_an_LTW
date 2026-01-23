@@ -1,5 +1,6 @@
 package cleanmeat.controller;
 
+import cleanmeat.model.Stock_history;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -37,69 +38,49 @@ public class UserServlet extends HttpServlet {
             }
         } else if ("delete".equals(action)) {
             doDelete(request, response);
-        } else {
-            final int RECORDS_PER_PAGE = 9;
-            int currentPage = 1;
-            String pageParam = request.getParameter("page");
+        }
 
+            int page = 1;
+            int pageSize = 5;
+
+            String pageParam = request.getParameter("page");
             if (pageParam != null) {
                 try {
-                    currentPage = Integer.parseInt(pageParam);
-                } catch (NumberFormatException e) {
-                    currentPage = 1;
-                }
-            }
-            if (currentPage < 1) currentPage = 1;
-
-            List<User> fullFilteredList;
-
-            if ((searchKeyword != null && !searchKeyword.isEmpty()) || (filterRole != null && !filterRole.isEmpty())) {
-                fullFilteredList = userDAO.searchAndFilter(searchKeyword, filterRole);
-            } else {
-                fullFilteredList = userDAO.findAll();
+                    page = Integer.parseInt(pageParam);
+                    if (page < 1) page = 1;
+                } catch (NumberFormatException ignored) {}
             }
 
-            int noOfRecords = fullFilteredList.size();
-            int noOfPages = (int) Math.ceil((double) noOfRecords / RECORDS_PER_PAGE);
+            List<User> list = userDAO.searchAndFilter( searchKeyword, filterRole, page, pageSize);
+            int totalRecords = userDAO.countFilteredUsers( searchKeyword, filterRole);
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
-            if (noOfPages == 0) noOfPages = 1;
+            int windowSize = 5;
+            int half = windowSize / 2;
 
-            int offset = (currentPage - 1) * RECORDS_PER_PAGE;
-
-            if (offset >= noOfRecords && noOfRecords > 0) {
-                currentPage = noOfPages;
-                offset = (currentPage - 1) * RECORDS_PER_PAGE;
+// Tính startPage sao cho currentPage nằm giữa
+            int startPage = page - half;
+            if (startPage < 1) {
+                startPage = 1;
             }
 
-            List<User> list = new ArrayList<>();
-
-            if (noOfRecords > 0) {
-                int start = Math.min(offset, noOfRecords);
-
-                int end = Math.min(start + RECORDS_PER_PAGE, noOfRecords);
-
-                if (start < end) {
-                    try {
-                        list = fullFilteredList.subList(start, end);
-                    } catch (IndexOutOfBoundsException e) {
-                        System.err.println("Lỗi Index khi phân trang: " + e.getMessage());
-                        list = new ArrayList<>();
-                    }
-                } else {
-                    list = new ArrayList<>();
-                }
+// Chặn biên phải để luôn thấy trang cuối
+            if (startPage + windowSize - 1 > totalPages) {
+                startPage = Math.max(1, totalPages - windowSize + 1);
             }
+
+            int endPage = Math.min(totalPages, startPage + windowSize - 1);
 
             request.setAttribute("users", list);
-            request.setAttribute("currentPage", currentPage);
-            request.setAttribute("noOfPages", noOfPages);
-            request.setAttribute("noOfRecords", noOfRecords);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("startPage", startPage);
+            request.setAttribute("endPage", endPage);
 
             request.setAttribute("searchKeyword", searchKeyword);
             request.setAttribute("filterRole", filterRole);
 
             request.getRequestDispatcher("/view/admin_quan_ly_user.jsp").forward(request, response);
-        }
     }
 
     @Override

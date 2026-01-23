@@ -77,50 +77,71 @@ public class ItemServlet extends HttpServlet {
 
             response.sendRedirect("quan-ly-san-pham?page=" + currentPage);
             return;
+        } else {
+
+
+            UnitDAO unitDAO = new UnitDAO();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            OriginDAO originDAO = new OriginDAO();
+
+            String search = request.getParameter("search");
+            String category = request.getParameter("category");
+            String origin = request.getParameter("origin");
+            String sort = request.getParameter("sort");
+
+
+            int page = 1;
+            int pageSize = 5;
+
+            String pageParam = request.getParameter("page");
+            if (pageParam != null) {
+                try {
+                    page = Integer.parseInt(pageParam);
+                    if (page < 1) page = 1;
+                } catch (NumberFormatException ignored) {
+                }
+            }
+
+            List<Item> items = itemDAO.searchAndFilter(search, category, origin, page, pageSize);
+            int totalItems = itemDAO.countFilteredItems(search, category, origin);
+            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+            int windowSize = 5;
+            int half = windowSize / 2;
+
+// Tính startPage sao cho currentPage nằm giữa
+            int startPage = page - half;
+            if (startPage < 1) {
+                startPage = 1;
+            }
+
+// Chặn biên phải để luôn thấy trang cuối
+            if (startPage + windowSize - 1 > totalPages) {
+                startPage = Math.max(1, totalPages - windowSize + 1);
+            }
+
+            int endPage = Math.min(totalPages, startPage + windowSize - 1);
+
+            request.setAttribute("items", items);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("startPage", startPage);
+            request.setAttribute("endPage", endPage);
+
+            request.setAttribute("selectedSearch", search);
+            request.setAttribute("selectedCat", category);
+            request.setAttribute("selectedOrg", origin);
+
+            request.setAttribute("unitList", unitDAO.findAll());
+            request.setAttribute("categories", categoryDAO.findAll());
+            request.setAttribute("origin", originDAO.findAll());
+
+            request.setAttribute("selectedSearch", search != null ? search : "");
+            request.setAttribute("selectedCat", category != null ? category : "");
+            request.setAttribute("selectedOrg", origin != null ? origin : "");
+
+            request.getRequestDispatcher("/view/admin_quan_ly_sp.jsp").forward(request, response);
         }
-
-        UnitDAO unitDAO = new UnitDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
-        OriginDAO originDAO = new OriginDAO();
-
-        String search = request.getParameter("search");
-        String category = request.getParameter("category");
-        String origin = request.getParameter("origin");
-        String sort = request.getParameter("sort");
-
-
-        int page = 1;
-        int pageSize = 5;
-
-        String pageParam = request.getParameter("page");
-        if (pageParam != null) {
-            try {
-                page = Integer.parseInt(pageParam);
-                if (page < 1) page = 1;
-            } catch (NumberFormatException ignored) {}
-        }
-
-        List<Item> items = itemDAO.searchAndFilter(search, category, origin, page, pageSize);
-        int totalItems = itemDAO.countFilteredItems(search, category, origin);
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-
-        request.setAttribute("items", items);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-
-        request.setAttribute("selectedSearch", search);
-        request.setAttribute("selectedCat", category);
-        request.setAttribute("selectedOrg", origin);
-
-        request.setAttribute("unitList", unitDAO.findAll());
-        request.setAttribute("categories", categoryDAO.findAll());
-        request.setAttribute("origin", originDAO.findAll());
-
-        request.setAttribute("selectedSearch", search != null ? search : "");
-        request.setAttribute("selectedCat", category != null ? category : "");
-        request.setAttribute("selectedOrg", origin != null ? origin : "");
-
-        request.getRequestDispatcher("/view/admin_quan_ly_sp.jsp").forward(request, response);
     }
 
     @Override
@@ -165,6 +186,7 @@ public class ItemServlet extends HttpServlet {
             handleUpdateItem(request, response);
         }
     }
+
     private void handleAddItem(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 

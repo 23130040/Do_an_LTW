@@ -1,5 +1,6 @@
 package cleanmeat.dao;
 
+import cleanmeat.model.Item;
 import cleanmeat.model.User;
 
 import java.sql.*;
@@ -245,7 +246,7 @@ public class UserDAO extends BaseDAO<User> {
         return list;
     }
 
-    public List<User> searchAndFilter(String keyword, String role) {
+    public List<User> searchAndFilter(String keyword, String role, int page, int pageSize) {
         List<User> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM user WHERE 1=1");
         List<Object> params = new ArrayList<>();
@@ -263,20 +264,32 @@ public class UserDAO extends BaseDAO<User> {
         }
         sql.append(" ORDER BY id ASC");
 
+        sql.append(" LIMIT ? OFFSET ? ");
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
+
         Connection conn = null;
         try {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-                for (int i = 0; i < params.size(); i++) ps.setObject(i + 1, params.get(i));
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+
                 try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) list.add(mapResultSetToEntity(rs));
+                    while (rs.next()) {
+                        list.add(mapResultSetToEntity(rs));
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
+
         return list;
     }
 
@@ -400,5 +413,44 @@ public class UserDAO extends BaseDAO<User> {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public int countFilteredUsers(String keyword, String role) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM user WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (name LIKE ? OR email LIKE ? OR phone LIKE ?)");
+            String val = "%" + keyword.trim() + "%";
+            params.add(val);
+            params.add(val);
+            params.add(val);
+        }
+        if (role != null && !role.isEmpty()) {
+            sql.append(" AND role = ?");
+            params.add(role);
+        }
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+        return 0;
     }
 }

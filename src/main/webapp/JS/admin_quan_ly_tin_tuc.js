@@ -53,9 +53,41 @@ function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
 }
 
-// Hàm mở modal tạo bài viết
+function editNews(id) {
+    console.log("Đang sửa tin tức ID:", id);
+    document.getElementById('modal-title-article').textContent = 'Chỉnh sửa';
+
+    fetch(`quan-ly-tin-tuc?action=get&id=${id}`)
+        .then(res => {
+            if (!res.ok) throw new Error("Lỗi mạng");
+            return res.json();
+        })
+        .then(data => {
+            document.getElementById('news-id').value = data.id;
+            document.getElementById('news-title').value = data.title;
+            document.getElementById('news-author').value = data.author;
+            document.getElementById('news-content').value = data.content;
+            document.getElementById('news-status').value = data.status;
+
+            // Gọi hàm mở modal
+            openModal('article-modal');
+        })
+        .catch(err => {
+            console.error("Lỗi lấy dữ liệu:", err);
+            alert("Không thể tải dữ liệu bài viết!");
+        });
+}
+
+function deleteAndKeepPage(id, currentPage) {
+    if(confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
+        // Thêm action=delete
+        window.location.href = `quan-ly-tin-tuc?action=delete&id=${id}&page=${currentPage}`;
+    }
+}
+
 function openAddArticleModal() {
     document.getElementById('modal-title-article').textContent = 'Tạo';
-    // Logic khác khi mở modal
+    document.getElementById('news-id').value = '';
+    document.querySelector('.article-form').reset();
     openModal('article-modal');
 }

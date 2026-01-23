@@ -425,9 +425,8 @@ public class ItemDAO extends BaseDAO<Item> {
         if (origin != null && !origin.isEmpty()) {
             sql.append(" AND i.origin_id = ? ");
             params.add(Integer.parseInt(origin));
-        } else {
-            sql.append(" ORDER BY i.created_at DESC ");
         }
+        sql.append(" ORDER BY i.created_at DESC ");
 
         sql.append(" LIMIT ? OFFSET ? ");
         params.add(pageSize);
