@@ -230,7 +230,7 @@
         </div>
 
         <div class="modal-body">
-            <form id="stockForm" action="quanlykho" method="post">
+            <form id="stockForm" action="quan-ly-kho" method="post">
                 <div class="form-group">
                     <label for="product_id">Sản phẩm:</label>
                     <select name="item" id="item_id" class="filter-select select2-enable" required>

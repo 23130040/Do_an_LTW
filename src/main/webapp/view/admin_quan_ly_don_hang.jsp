@@ -27,7 +27,8 @@
 
             <div class="control-panel">
                 <div class="filters">
-                    <input type="text" placeholder="Tìm kiếm theo Mã đơn hàng, Tên KH, SĐT..." class="search-input">
+                    <input type="text" placeholder="Tìm kiếm đơn hàng" class="search-input" id="searchInput"
+                           value="${searchKeyword}">
 
                     <select name="status" class="filter-select" id="statusFilter">
                         <option value="">-- Tất cả trạng thái --</option>
@@ -67,7 +68,11 @@
                                     ${o.user.name}<br>
                                 <small>${o.user.phone}</small>
                             </td>
-                            <td>${o.created_at}</td>
+                            <td>
+                                    ${o.created_at.dayOfMonth < 10 ? '0' : ''}${o.created_at.dayOfMonth}
+                                -${o.created_at.monthValue < 10 ? '0' : ''}${o.created_at.monthValue}
+                                -${o.created_at.year}
+                            </td>
                             <td>
                                 <fmt:formatNumber value="${o.total_price}" type="currency" currencySymbol="đ"/>
                             </td>
@@ -77,8 +82,16 @@
                     </span>
                             </td>
                             <td>
-                                <a href="chi-tiet-don-hang?id=${o.id}" class="btn btn-sm btn-light border">
-                                    <i class="fa fa-eye"></i> </a>
+                                <button class="btn-sm btn-action view-detail"
+                                        data-id="${o.id}"
+                                        data-status="${o.status}"
+                                        data-date="${o.created_at}"
+                                        data-customer="${o.user.name}"
+                                        data-phone="${o.user.phone}"
+                                        data-address="${o.address.address}"
+                                        data-total="<fmt:formatNumber value='${o.total_price}' type='currency' currencySymbol='đ'/>">
+                                    <i class="fas fa-eye"></i>
+                                </button>
                                 <c:if test="${o.status != 'Đã hủy'}">
                                     <button class="btn btn-sm btn-info"><i class="fa fa-print"></i></button>
                                 </c:if>
@@ -90,18 +103,16 @@
             </div>
             <div class="pagination">
                 <c:if test="${currentPage > 1}">
-                    <a href="?page=${currentPage - 1}&status=${selectedStatus}">&laquo; Trước</a>
+                    <a href="?page=${currentPage - 1}&status=${selectedStatus}&search=${searchKeyword}">&laquo; Trước</a>
                 </c:if>
 
                 <c:forEach begin="1" end="${totalPages}" var="i">
-                    <a href="?page=${i}&status=${selectedStatus}"
-                       class="${i == currentPage ? 'active' : ''}">
-                            ${i}
-                    </a>
+                    <a href="?page=${i}&status=${selectedStatus}&search=${searchKeyword}"
+                       class="${i == currentPage ? 'active' : ''}">${i}</a>
                 </c:forEach>
 
                 <c:if test="${currentPage < totalPages}">
-                    <a href="?page=${currentPage + 1}&status=${selectedStatus}">Sau &raquo;</a>
+                    <a href="?page=${currentPage + 1}&status=${selectedStatus}&search=${searchKeyword}">Sau &raquo;</a>
                 </c:if>
             </div>
         </main>
@@ -132,28 +143,26 @@
 <div id="orderDetailModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title">Chi Tiết Đơn Hàng <span id="modalOrderId">#101</span></h3>
+            <h3 class="modal-title">Chi Tiết Đơn Hàng <span id="modalOrderId"></span></h3>
             <span class="close-btn">&times;</span>
         </div>
         <div class="modal-body">
             <div class="summary-info">
                 <div class="summary-item">
                     <p class="summary-label">Trạng thái Đơn hàng:</p>
-                    <p id="modalOrderStatus" class="status-badge status-shipping">Đang giao hàng</p>
-                </div>
+                    <p id="modalOrderStatus" class="status-badge"></p> </div>
                 <div class="summary-item">
                     <p class="summary-label">Ngày đặt:</p>
-                    <p id="modalOrderDate">20/11/2023</p>
+                    <p id="modalOrderDate"></p>
                 </div>
             </div>
 
             <div class="section-container">
                 <h4><i class="fas fa-user"></i> Thông tin Khách hàng & Giao hàng</h4>
                 <div class="info-grid">
-                    <p><strong>Khách hàng:</strong> <span id="modalCustomerName">Nguyễn A</span></p>
-                    <p><strong>Điện thoại:</strong> <span id="modalCustomerPhone">0901xxxx89</span></p>
-                    <p><strong>Địa chỉ Giao hàng:</strong> <span id="modalShippingAddress">123 Đường ABC, Phường X, Quận Y, TP.HCM</span>
-                    </p>
+                    <p><strong>Khách hàng:</strong> <span id="modalCustomerName"></span></p>
+                    <p><strong>Điện thoại:</strong> <span id="modalCustomerPhone"></span></p>
+                    <p><strong>Địa chỉ Giao hàng:</strong> <span id="modalShippingAddress"></span></p>
                 </div>
             </div>
 
@@ -169,24 +178,12 @@
                     </tr>
                     </thead>
                     <tbody id="modalProductList">
-                    <tr>
-                        <td>Thịt Bò Thăn Nội (300g)</td>
-                        <td>200,000đ</td>
-                        <td>1</td>
-                        <td>200,000đ</td>
-                    </tr>
-                    <tr>
-                        <td>Thịt Heo Ba Chỉ (500g)</td>
-                        <td>150,000đ</td>
-                        <td>1</td>
-                        <td>150,000đ</td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="total-summary">
-                <h4 class="grand-total">Tổng thanh toán: <span id="modalGrandTotal">350,000đ</span></h4>
+                <h4 class="grand-total">Tổng thanh toán: <span id="modalGrandTotal"></span></h4>
             </div>
         </div>
         <div class="modal-footer">
@@ -195,6 +192,9 @@
         </div>
     </div>
 </div>
+<script>
+    const CONTEXT_PATH = '${pageContext.request.contextPath}';
+</script>
 <script src="${pageContext.request.contextPath}/JS/admin_quan_ly_don_hang.js"></script>
 </body>
 </html>

@@ -38,7 +38,7 @@ public class UserService {
             throw new RuntimeException("Mật khẩu xác nhận không được để trống");
         name = name.trim();
         email = email.trim();
-        if (isValidEmail(email))
+        if (!isValidEmail(email))
             throw new RuntimeException("Địa chỉ email không hợp lệ.");
         if (userDAO.existsByEmail(email))
             throw new RuntimeException("Email này đã được liên kết tới một tài khoản khác.");

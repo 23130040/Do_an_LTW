@@ -155,7 +155,7 @@
         <span class="close-btn" onclick="closeProductModal()">&times;</span>
         <h3><span id="modal-title-product">Thêm</span> Sản Phẩm</h3>
         <form class="product-form"
-              action="quanlysanpham"
+              action="quan-ly-san-pham"
               method="post">
             <input type="hidden" name="action" id="formAction" value="addItem">
             <input type="hidden" name="productId" id="productId">

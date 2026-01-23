@@ -218,3 +218,36 @@
             window.location.href = `quanlysanpham?action=delete&id=${id}&page=${page}`;
         }
     }
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const originFilter = document.getElementById('originFilter');
+
+    function applyFilterAndSearch() {
+        const keyword = searchInput.value.trim();
+        const category = categoryFilter.value;
+        const origin = originFilter.value;
+
+        const params = new URLSearchParams();
+
+        if (keyword) params.append('search', keyword);
+        if (category) params.append('category', category);
+        if (origin) params.append('origin', origin);
+
+        params.append('page', '1');
+
+        window.location.href = 'quan-ly-san-pham?' + params.toString();
+    }
+
+
+    categoryFilter.addEventListener('change', applyFilterAndSearch);
+    originFilter.addEventListener('change', applyFilterAndSearch);
+
+    searchInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            if (typeof searchTimeout !== 'undefined') {
+                clearTimeout(searchTimeout);
+            }
+            applyFilterAndSearch();
+        }
+    });

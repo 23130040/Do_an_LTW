@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const userModal = document.getElementById("user-modal");
     const modalTitle = document.getElementById("modal-title-user");
     const userForm = userModal.querySelector(".user-form");
-    const USER_API_URL = "quanlyuser";
+    const USER_API_URL = "quan-ly-nguoi-dung";
 
     window.openUserModal = (isEdit = false, userData = null) => {
         userForm.reset();
@@ -309,7 +309,7 @@ function applyFilterAndSearch() {
     const keyword = searchInput.value;
     const role = roleFilter.value;
 
-    let url = 'quanlyuser?';
+    let url = 'quan-ly-nguoi-dung?';
 
     if (keyword) {
         url += 'search=' + encodeURIComponent(keyword) + '&';

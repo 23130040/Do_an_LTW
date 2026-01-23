@@ -159,7 +159,7 @@
         <span class="close-btn" onclick="closeUserModal()">&times;</span>
         <h3><span id="modal-title-user">Thêm</span> Người Dùng</h3>
         <form class="user-form"
-              action="${pageContext.request.contextPath}/quanlyuser"
+              action="${pageContext.request.contextPath}/quan-ly-nguoi-dung"
               method="POST">
 
             <input type="hidden" name="action" id="formAction">

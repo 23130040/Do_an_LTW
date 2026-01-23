@@ -137,7 +137,7 @@
             <span class="close-btn" onclick="closeModal('addCategoryModal')">&times;</span>
         </div>
         <div class="modal-body">
-            <form action="quanlydanhmuc" method="POST">
+            <form action="quan-ly-danh-muc" method="POST">
                 <div class="form-group">
                     <label for="categoryName">Tên Danh mục:</label>
                     <input type="text" id="categoryName" name="name" required placeholder="Ví dụ: Thịt Heo Tươi">

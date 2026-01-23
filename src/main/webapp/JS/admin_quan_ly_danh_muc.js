@@ -81,13 +81,13 @@ window.closeModal = function(modalId) {
 };
 function deleteCategory(id) {
     if (confirm("Bạn có chắc chắn muốn xóa danh mục này?")) {
-        window.location.href = "quanlydanhmuc?action=delete&id=" + id;
+        window.location.href = "quan-ly-danh-muc?action=delete&id=" + id;
     }
 }
 
 function deleteOrigin(id) {
     if (confirm("Bạn có chắc chắn muốn xóa nguồn gốc này?")) {
         // Gọi đến OriginServlet
-        window.location.href = "quanlynguongoc?action=delete&id=" + id;
+        window.location.href = "quan-ly-nguon-goc?action=delete&id=" + id;
     }
 }

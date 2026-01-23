@@ -387,7 +387,6 @@ public class ItemDAO extends BaseDAO<Item> {
             String keyword,
             String category,
             String origin,
-            String sort,
             int page,
             int pageSize
     ) {
@@ -423,21 +422,7 @@ public class ItemDAO extends BaseDAO<Item> {
             params.add(Integer.parseInt(origin));
         }
 
-        if (sort != null && !sort.isEmpty()) {
-            switch (sort) {
-                case "price_asc":
-                    sql.append(" ORDER BY i.price ASC ");
-                    break;
-                case "price_desc":
-                    sql.append(" ORDER BY i.price DESC ");
-                    break;
-                case "newest":
-                    sql.append(" ORDER BY i.created_at DESC ");
-                    break;
-                default:
-                    sql.append(" ORDER BY i.created_at DESC ");
-            }
-        } else {
+         else {
             sql.append(" ORDER BY i.created_at DESC ");
         }
 

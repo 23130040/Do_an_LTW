@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* *********** XỬ LÝ XÓA THỰC TẾ **************/
     window.deleteFeedback = function(feedbackId) {
         if (confirm("Bạn có chắc chắn muốn xóa đánh giá này? Dữ liệu phản hồi liên quan cũng sẽ bị xóa.")) {
-            window.location.href = `quanlydanhgia?action=delete&id=${feedbackId}`;
+            window.location.href = `quan-ly-danh-gia?action=delete&id=${feedbackId}`;
         }
     };
 
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (rate) params.append('rating', rate);
         if (type) params.append('type', type);
 
-        window.location.href = 'quanlydanhgia?' + params.toString();
+        window.location.href = 'quan-ly-danh-gia?' + params.toString();
     }
 
     if (searchInput) {

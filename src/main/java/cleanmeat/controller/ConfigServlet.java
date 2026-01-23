@@ -59,9 +59,9 @@ public class ConfigServlet extends HttpServlet {
         }
 
         if (success) {
-            response.sendRedirect("cauhinhhethong?status=success");
+            response.sendRedirect("cau-hinh-he-thong?status=success");
         } else {
-            response.sendRedirect("cauhinhhethong?status=error");
+            response.sendRedirect("cau-hinh-he-thong?status=error");
         }
     }
 }

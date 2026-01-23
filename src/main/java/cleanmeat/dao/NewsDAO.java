@@ -121,6 +121,7 @@ public class NewsDAO extends BaseDAO<News> {
         }
         return list;
     }
+
     public List<News> findByPage(int page) {
         List<News> list = new ArrayList<>();
 
@@ -132,18 +133,25 @@ public class NewsDAO extends BaseDAO<News> {
                         "ORDER BY created_at DESC " +
                         "LIMIT ? OFFSET ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, pageSize);
-            ps.setInt(2, offset);
+                ps.setInt(1, pageSize);
+                ps.setInt(2, offset);
 
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(mapResultSetToEntity(rs));
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
 
         return list;
@@ -153,16 +161,23 @@ public class NewsDAO extends BaseDAO<News> {
         int pageSize = 4;
         String sql = "SELECT COUNT(*) FROM news";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
 
-            if (rs.next()) {
-                int total = rs.getInt(1);
-                return (int) Math.ceil(total * 1.0 / pageSize);
-            }
+                    if (rs.next()) {
+                        int total = rs.getInt(1);
+                        return (int) Math.ceil(total * 1.0 / pageSize);
+                    }
+                }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
         return 1;
     }
