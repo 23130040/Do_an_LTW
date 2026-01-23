@@ -1,5 +1,6 @@
 package cleanmeat.controller;
 
+import cleanmeat.model.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -21,7 +22,9 @@ public class ReplyFeedbackServlet extends HttpServlet {
         int parentId = Integer.parseInt(request.getParameter("parentId"));
         String comment = request.getParameter("comment");
 
-        int adminId = 1;
+        HttpSession session = request.getSession();
+        User admin = (User) session.getAttribute("user");
+        int adminId = admin.getId();
 
         FeedbackDAO dao = new FeedbackDAO();
         boolean success = dao.insertReply(parentId, adminId, comment);

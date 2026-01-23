@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +18,16 @@ public class CategoryDAO extends BaseDAO<Category> {
 
     @Override
     protected Category mapResultSetToEntity(ResultSet rs) throws SQLException {
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime() : null;
+        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                ? rs.getTimestamp("updated_at").toLocalDateTime() : null;
         return new Category(
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getString("description"),
-                rs.getTimestamp("created_at"),
-                rs.getTimestamp("updated_at")
+                created_at,
+                updated_at
         );
     }
 

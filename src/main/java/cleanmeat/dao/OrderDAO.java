@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,8 +52,10 @@ public class OrderDAO extends BaseDAO<Order> {
         Address address = addressDAO.findById(rs.getInt("address_id"));
         double totalPrice = rs.getDouble("total_price");
         String status = rs.getString("status");
-        LocalDate created_at = rs.getDate("created_at").toLocalDate();
-        LocalDate updated_at = rs.getDate("updated_at").toLocalDate();
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime() : null;
+        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                ? rs.getTimestamp("updated_at").toLocalDateTime() : null;
         return new Order(id, user, address, totalPrice, status, created_at, updated_at);
     }
 
@@ -184,8 +187,8 @@ public class OrderDAO extends BaseDAO<Order> {
                             addr,
                             rs.getDouble("total_price"),
                             rs.getString("status"),
-                            rs.getDate("created_at").toLocalDate(),
-                            rs.getDate("updated_at").toLocalDate()
+                            rs.getTimestamp("created_at").toLocalDateTime(),
+                            rs.getTimestamp("updated_at").toLocalDateTime()
                     );
                     list.add(order);
                 }
@@ -275,8 +278,8 @@ public class OrderDAO extends BaseDAO<Order> {
                                 rs.getInt("id"), user, addr,
                                 rs.getDouble("total_price"),
                                 rs.getString("status"),
-                                rs.getDate("created_at").toLocalDate(),
-                                rs.getDate("updated_at").toLocalDate()
+                                rs.getTimestamp("created_at").toLocalDateTime(),
+                                rs.getTimestamp("updated_at").toLocalDateTime()
                         );
                         list.add(order);
                     }

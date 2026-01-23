@@ -87,7 +87,8 @@
                             <td>${item.categoryName}</td>
                             <td>${item.originName}</td>
                             <td>${item.unitName}</td>
-                            <td>${item.price}</td>
+                            <td><fmt:formatNumber value="${item.price}" type="currency" currencySymbol="đ" maxFractionDigits="0"/></td>
+
                             <td class="inventory-col">${item.current_stock}</td>
                             <td>
                                 <button type="button"
@@ -109,19 +110,22 @@
                 </table>
             </div>
             <div class="pagination">
+                <%-- Nút Trước --%>
                 <c:if test="${currentPage > 1}">
-                    <a href="?page=${currentPage - 1}">&laquo; Trước</a>
+                    <a href="?page=${currentPage - 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">&laquo; Trước</a>
                 </c:if>
 
+                <%-- Các số trang --%>
                 <c:forEach begin="1" end="${totalPages}" var="i">
-                    <a href="?page=${i}"
+                    <a href="?page=${i}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}"
                        class="${i == currentPage ? 'active' : ''}">
                             ${i}
                     </a>
                 </c:forEach>
 
+                <%-- Nút Sau --%>
                 <c:if test="${currentPage < totalPages}">
-                    <a href="?page=${currentPage + 1}">Sau &raquo;</a>
+                    <a href="?page=${currentPage + 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">Sau &raquo;</a>
                 </c:if>
             </div>
         </main>
@@ -210,21 +214,18 @@
                 </div>
 
                 <label>Giá gốc (VND):</label>
-                <input type="number" name="price" id="price" placeholder="50000" required>
+                <input type="text" name="price" id="price" placeholder="50.000" required>
 
                 <label>Giảm giá (%):</label>
                 <input type="number" name="discount" id="discount" placeholder="20" value="0">
 
                 <label>Giá bán (VND):</label>
-                <input type="number"
-                       name="finalPrice"
-                       id="finalPrice"
-                       readonly
-                       placeholder="Tự động tính">
+                <input type="text" name="finalPrice" id="finalPrice" readonly placeholder="Tự động tính">
 
 
                 <label>Mã sản phẩm(SKU):</label>
                 <input type="text" placeholder="1001" name="sku">
+                <small id="skuError" style="color: red; display: none; margin-top: 4px;">SKU đã tồn tại trong hệ thống!</small>
 
                 <div class="inventory-group">
                     <label>Ngưỡng cảnh báo:</label>

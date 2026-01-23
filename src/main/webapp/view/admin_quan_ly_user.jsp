@@ -20,7 +20,7 @@
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="base/admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp"/>
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
@@ -83,10 +83,17 @@
                                     </c:otherwise>
                                 </c:choose>
                             </td>
-                            <td>—</td>
                             <td>
-                                <button class="btn-icon edit-btn" onclick="editUser(${u.id})"><i class="fas fa-edit"></i></button>
-                                <button class="btn-icon delete-btn" onclick="deleteUser(${u.id})"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn-sm btn-info view-history"
+                                        data-id="${u.id}">
+                                    <i class="fas fa-history"></i> Xem
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn-icon edit-btn" onclick="editUser(${u.id})"><i
+                                        class="fas fa-edit"></i></button>
+                                <button class="btn-icon delete-btn" onclick="deleteUser(${u.id})"><i
+                                        class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -95,7 +102,8 @@
                 </table>
             </div>
             <c:if test="${noOfPages > 1}">
-                <div class="pagination-container" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div class="pagination-container"
+                     style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
                     <div style="font-size: 0.9em; color: #777;">
                         Đang hiển thị ${fn:length(users)} trên tổng số ${noOfRecords} người dùng.
                     </div>
@@ -105,14 +113,16 @@
                                 <%-- Nút trang trước --%>
                             <c:if test="${currentPage > 1}">
                                 <li class="page-item" style="margin-right: 5px;">
-                                    <a class="page-link btn btn-secondary" href="?page=${currentPage - 1}" style="padding: 6px 12px; text-decoration: none;">&laquo; Trước</a>
+                                    <a class="page-link btn btn-secondary" href="?page=${currentPage - 1}"
+                                       style="padding: 6px 12px; text-decoration: none;">&laquo; Trước</a>
                                 </li>
                             </c:if>
 
                                 <%-- Hiển thị các trang --%>
                             <c:forEach begin="1" end="${noOfPages}" var="i">
                                 <li class="page-item" style="margin-right: 5px;">
-                                    <a class="page-link ${currentPage == i ? 'btn-primary' : 'btn-secondary'}" href="?page=${i}"
+                                    <a class="page-link ${currentPage == i ? 'btn-primary' : 'btn-secondary'}"
+                                       href="?page=${i}"
                                        style="padding: 6px 12px; text-decoration: none; border-radius: 3px; background-color: ${currentPage == i ? '#8d2a3a' : '#f0f0f0'}; color: ${currentPage == i ? '#fff' : '#333'}; border: 1px solid ${currentPage == i ? '#8d2a3a' : '#ddd'};">
                                             ${i}
                                     </a>
@@ -122,7 +132,8 @@
                                 <%-- Nút trang sau --%>
                             <c:if test="${currentPage < noOfPages}">
                                 <li class="page-item">
-                                    <a class="page-link btn btn-secondary" href="?page=${currentPage + 1}" style="padding: 6px 12px; text-decoration: none;">Sau &raquo;</a>
+                                    <a class="page-link btn btn-secondary" href="?page=${currentPage + 1}"
+                                       style="padding: 6px 12px; text-decoration: none;">Sau &raquo;</a>
                                 </li>
                             </c:if>
                         </ul>
@@ -211,7 +222,7 @@
 
     </div>
 </div>
-<div id="historyModal" class="modal">
+<div id="historyModal" class="custom-modal-overlay">
     <div class="custom-modal-content large-modal">
         <div class="modal-header-history">
             <h3 class="modal-title">Lịch Sử Mua Hàng - ID: <span id="historyUserId">#001</span></h3>
@@ -219,13 +230,20 @@
         </div>
         <div class="modal-body history-body">
             <div class="history-controls">
-                <input type="text" placeholder="Tìm kiếm theo Mã ĐH..." class="history-search-input">
-                <select class="history-filter-select">
-                    <option value="">-- Trạng thái đơn --</option>
-                    <option value="delivered">Đã giao hàng</option>
-                    <option value="cancelled">Đã hủy</option>
+                <input type="text" placeholder="Tìm kiếm đơn hàng" class="search-input" id="historySearchInput"
+                       value="${searchKeyword}">
+
+                <select name="status" class="filter-select" id="statusFilter">
+                    <option value="">-- Tất cả trạng thái --</option>
+                    <option value="Chờ xác nhận" ${selectedStatus == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác
+                        nhận
+                    </option>
+                    <option value="Đang giao" ${selectedStatus == 'Đang giao' ? 'selected' : ''}>Đang giao hàng
+                    </option>
+                    <option value="Đã giao" ${selectedStatus == 'Đã giao' ? 'selected' : ''}>Đã giao hàng</option>
+                    <option value="Đã hủy" ${selectedStatus == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
                 </select>
-                <input type="date" class="history-filter-date" title="Lọc theo ngày đặt hàng">
+                <input type="date" class="filter-date" title="Lọc theo ngày đặt hàng">
             </div>
 
             <div class="history-table-container">
@@ -239,28 +257,60 @@
                         <th>Thao tác</th>
                     </tr>
                     </thead>
-                    <tbody id="historyOrderList">
-                    <tr>
-                        <td>#1001</td>
-                        <td>15/10/2025</td>
-                        <td>450,000đ</td>
-                        <td><span class="status-badge status-delivered">Đã giao hàng</span></td>
-                        <td><button class="btn-sm btn-action view-detail" title="Xem chi tiết đơn"><i class="fas fa-eye"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>#1002</td>
-                        <td>01/11/2025</td>
-                        <td>1,200,000đ</td>
-                        <td><span class="status-badge status-cancelled">Đã hủy</span></td>
-                        <td><button class="btn-sm btn-action view-detail" title="Xem chi tiết đơn"><i class="fas fa-eye"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>#1003</td>
-                        <td>10/11/2025</td>
-                        <td>75,000đ</td>
-                        <td><span class="status-badge status-delivered">Đã giao hàng</span></td>
-                        <td><button class="btn-sm btn-action view-detail" title="Xem chi tiết đơn"><i class="fas fa-eye"></i></button></td>
-                    </tr>
+                    <tbody>
+                    <c:forEach var="order" items="${orders}">
+                        <tr>
+                            <td>#${order.id}</td>
+                            <td>
+                                    ${order.created_at.hour < 10 ? '0' : ''}${order.created_at.hour}:${order.created_at.minute < 10 ? '0' : ''}${order.created_at.minute}
+                                <br>
+                                    ${order.created_at.dayOfMonth < 10 ? '0' : ''}${order.created_at.dayOfMonth}-${order.created_at.monthValue < 10 ? '0' : ''}${order.created_at.monthValue}-${order.created_at.year}
+                            </td>
+                            <td>
+                                <fmt:formatNumber value="${order.total_price}" type="currency" currencySymbol="đ"
+                                                  maxFractionDigits="0"/>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${order.status == 'Chờ xác nhận'}">
+            <span class="status-badge status-pending-bg">
+                    ${order.status}
+            </span>
+                                    </c:when>
+                                    <c:when test="${order.status == 'Đang giao'}">
+            <span class="status-badge status-shipping-bg">
+                    ${order.status}
+            </span>
+                                    </c:when>
+                                    <c:when test="${order.status == 'Đã giao'}">
+            <span class="status-badge status-delivered-bg">
+                    ${order.status}
+            </span>
+                                    </c:when>
+                                    <c:when test="${order.status == 'Đã hủy'}">
+            <span class="status-badge status-cancelled-bg">
+                    ${order.status}
+            </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge bg-secondary">${order.status}</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <button class="btn-sm btn-action view-detail"
+                                        data-id="${order.id}"
+                                        data-status="${order.status}"
+                                        data-date="${order.created_at}"
+                                        data-customer="${order.user.name}"
+                                        data-phone="${empty order.user.phone ? 'Chưa có' : order.user.phone}"
+                                        data-address="${order.address.address}"
+                                        data-total="<fmt:formatNumber value='${order.total_price}' type='currency' currencySymbol='đ' maxFractionDigits='0'/>">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -270,35 +320,29 @@
         </div>
     </div>
 </div>
-<div id="orderDetailModal" class="modal">
-    <div class="modal-content">
+<div id="orderDetailModal" class="custom-modal-overlay">
+    <div class="custom-modal-content large-modal">
         <div class="modal-header">
-            <h3 class="modal-title">Chi Tiết Đơn Hàng <span id="modalOrderId">#101</span></h3>
+            <h3 class="modal-title">Chi Tiết Đơn Hàng <span id="modalOrderId"></span></h3>
             <span class="close-btn">&times;</span>
         </div>
         <div class="modal-body">
             <div class="summary-info">
                 <div class="summary-item">
                     <p class="summary-label">Trạng thái Đơn hàng:</p>
-                    <p id="modalOrderStatus" class="status-badge status-pending">Chờ xác nhận</p>
-                </div>
-                <div class="summary-item">
-                    <p class="summary-label">Trạng thái Thanh toán:</p>
-                    <p id="modalPaymentStatus" class="status-badge status-unpaid">Chưa thanh toán</p>
-                </div>
+                    <p id="modalOrderStatus" class="status-badge"></p></div>
                 <div class="summary-item">
                     <p class="summary-label">Ngày đặt:</p>
-                    <p id="modalOrderDate">20/11/2023</p>
+                    <p id="modalOrderDate"></p>
                 </div>
             </div>
 
             <div class="section-container">
                 <h4><i class="fas fa-user"></i> Thông tin Khách hàng & Giao hàng</h4>
                 <div class="info-grid">
-                    <p><strong>Khách hàng:</strong> <span id="modalCustomerName">Nguyễn A</span></p>
-                    <p><strong>Điện thoại:</strong> <span id="modalCustomerPhone">0901xxxx89</span></p>
-                    <p><strong>Địa chỉ Giao hàng:</strong> <span id="modalShippingAddress">123 Đường ABC, Phường X, Quận Y, TP.HCM</span></p>
-                    <p><strong>Phương thức vận chuyển:</strong> <span id="modalShippingMethod">Standard</span></p>
+                    <p><strong>Khách hàng:</strong> <span id="modalCustomerName"></span></p>
+                    <p><strong>Điện thoại:</strong> <span id="modalCustomerPhone"></span></p>
+                    <p><strong>Địa chỉ Giao hàng:</strong> <span id="modalShippingAddress"></span></p>
                 </div>
             </div>
 
@@ -314,42 +358,16 @@
                     </tr>
                     </thead>
                     <tbody id="modalProductList">
-                    <tr>
-                        <td>Thịt Bò Thăn Nội (300g)</td>
-                        <td>200,000đ</td>
-                        <td>1</td>
-                        <td>200,000đ</td>
-                    </tr>
-                    <tr>
-                        <td>Thịt Heo Ba Chỉ (500g)</td>
-                        <td>150,000đ</td>
-                        <td>1</td>
-                        <td>150,000đ</td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="total-summary">
-                <p>Phụ phí (Shipping): <span>0đ</span></p>
-                <p>Mã giảm giá (Discount): <span>-0đ</span></p>
-                <h4 class="grand-total">Tổng thanh toán: <span id="modalGrandTotal">350,000đ</span></h4>
+                <h4 class="grand-total">Tổng thanh toán: <span id="modalGrandTotal"></span></h4>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary close-btn-footer">Đóng</button>
-            <button type="button" class="btn btn-primary"><i class="fas fa-print"></i> In Hóa Đơn</button>
-        </div>
-    </div>
-</div>
-<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
-    <div id="appToast" class="toast align-items-center text-bg-primary border-0" role="alert">
-        <div class="d-flex">
-            <div class="toast-body" id="toastMessage">
-                <!-- message -->
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                    data-bs-dismiss="toast"></button>
         </div>
     </div>
 </div>
@@ -371,6 +389,26 @@
         </div>
     </div>
 </div>
+<div class="toast-container position-fixed top-0 start-50 p-3">
+    <div id="appToast"
+         class="toast align-items-center text-bg-info border-0"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMessage">
+                <!-- message -->
+            </div>
+            <button type="button"
+                    class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+<script>
+    const CONTEXT_PATH = '<%= request.getContextPath() %>';
+</script>
 <script src="${pageContext.request.contextPath}/JS/admin_quan_ly_user.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

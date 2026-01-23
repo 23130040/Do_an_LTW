@@ -1,14 +1,14 @@
 package cleanmeat.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Address {
     private int id;
     private User user;
     private String address;
     private boolean isDefault;
-    private LocalDate created_at;
-    private LocalDate updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public Address(User user, String address, boolean isDefault) {
         this.user = user;
@@ -16,7 +16,7 @@ public class Address {
         this.isDefault = isDefault;
     }
 
-    public Address(int id, User user, String address, boolean isDefault, LocalDate created_at, LocalDate updated_at) {
+    public Address(int id, User user, String address, boolean isDefault, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.user = user;
         this.address = address;
@@ -61,19 +61,19 @@ public class Address {
         isDefault = aDefault;
     }
 
-    public LocalDate getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(LocalDate created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public LocalDate getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(LocalDate updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 }

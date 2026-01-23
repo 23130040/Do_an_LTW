@@ -17,6 +17,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,17 @@ public class ItemServlet extends HttpServlet {
             throws ServletException, IOException {
         ItemDAO itemDAO = new ItemDAO();
         String action = request.getParameter("action");
+        if ("checkSKU".equals(action)) {
+            String sku = request.getParameter("sku");
+            String idStr = request.getParameter("id");
+            int currentId = (idStr == null || idStr.isEmpty()) ? 0 : Integer.parseInt(idStr);
+
+            boolean isDuplicate = itemDAO.checkSKUExists(sku, currentId);
+
+            response.setContentType("text/plain");
+            response.getWriter().write(isDuplicate ? "exists" : "ok");
+            return;
+        }
         if ("getEditData".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
 
@@ -44,6 +56,10 @@ public class ItemServlet extends HttpServlet {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDate.class,
                             (JsonSerializer<LocalDate>) (src, type, ctx) -> new JsonPrimitive(src.toString()))
+
+                    .registerTypeAdapter(LocalDateTime.class,
+                            (JsonSerializer<LocalDateTime>) (src, type, ctx) -> new JsonPrimitive(src.toString()))
+
                     .serializeNulls()
                     .create();
 
@@ -59,7 +75,7 @@ public class ItemServlet extends HttpServlet {
 
             boolean success = itemDAO.delete(id);
 
-            response.sendRedirect("quanlysanpham?page=" + currentPage);
+            response.sendRedirect("quan-ly-san-pham?page=" + currentPage);
             return;
         }
 
@@ -99,6 +115,10 @@ public class ItemServlet extends HttpServlet {
         request.setAttribute("unitList", unitDAO.findAll());
         request.setAttribute("categories", categoryDAO.findAll());
         request.setAttribute("origin", originDAO.findAll());
+
+        request.setAttribute("selectedSearch", search != null ? search : "");
+        request.setAttribute("selectedCat", category != null ? category : "");
+        request.setAttribute("selectedOrg", origin != null ? origin : "");
 
         request.getRequestDispatcher("/view/admin_quan_ly_sp.jsp").forward(request, response);
     }
@@ -178,7 +198,7 @@ public class ItemServlet extends HttpServlet {
                 }
             }
 
-            response.sendRedirect("quanlysanpham");
+            response.sendRedirect("quan-ly-san-pham");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -222,7 +242,7 @@ public class ItemServlet extends HttpServlet {
                 }
             }
 
-            response.sendRedirect("quanlysanpham");
+            response.sendRedirect("quan-ly-san-pham");
 
         } catch (Exception e) {
             e.printStackTrace();

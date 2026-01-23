@@ -1,16 +1,17 @@
 package cleanmeat.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Stock_history {
     private int id;
     private Item item;
     private String type;
     private int quantity;
-    private LocalDate created_at;
+    private LocalDateTime created_at;
     private User created_by;
 
-    public Stock_history(int id, Item item, String type, int quantity, LocalDate created_at, User created_by) {
+    public Stock_history(int id, Item item, String type, int quantity, LocalDateTime created_at, User created_by) {
         this.id = id;
         this.item = item;
         this.type = type;
@@ -58,11 +59,11 @@ public class Stock_history {
         this.quantity = quantity;
     }
 
-    public LocalDate getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(LocalDate created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 

@@ -79,7 +79,11 @@
                         <c:forEach var="s" items="${stockList}">
                                 <tr>
                                     <td>${s.id}</td>
-                                    <td>${s.created_at}</td>
+                                    <td>
+                                            ${s.created_at.hour < 10 ? '0' : ''}${s.created_at.hour}:${s.created_at.minute < 10 ? '0' : ''}${s.created_at.minute}
+                                        <br>
+                                            ${s.created_at.dayOfMonth < 10 ? '0' : ''}${s.created_at.dayOfMonth}-${s.created_at.monthValue < 10 ? '0' : ''}${s.created_at.monthValue}-${s.created_at.year}
+                                    </td>
                                     <td>${s.item.sku}</td>
                                     <td>${s.item.name}</td>
                                     <td>${s.item.categoryName}</td>
@@ -148,7 +152,7 @@
                         <thead>
                         <tr>
                             <th>Mã Phiếu</th>
-                            <th>Thời gian</th>
+                            <th>Ngày</th>
                             <th>SKU</th>
                             <th>Sản phẩm</th>
                             <th>Danh mục</th>
@@ -163,7 +167,11 @@
                         <c:forEach var="s" items="${stockList}">
                                 <tr>
                                     <td>${s.id}</td>
-                                    <td>${s.created_at}</td>
+                                    <td>
+                                            ${s.created_at.hour < 10 ? '0' : ''}${s.created_at.hour}:${s.created_at.minute < 10 ? '0' : ''}${s.created_at.minute}
+                                        <br>
+                                            ${s.created_at.dayOfMonth < 10 ? '0' : ''}${s.created_at.dayOfMonth}-${s.created_at.monthValue < 10 ? '0' : ''}${s.created_at.monthValue}-${s.created_at.year}
+                                    </td>
                                     <td>${s.item.sku}</td>
                                     <td>${s.item.name}</td>
                                     <td>${s.item.categoryName}</td>

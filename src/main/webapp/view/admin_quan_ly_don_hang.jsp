@@ -43,11 +43,6 @@
                     <input type="date" class="filter-date" title="Lọc theo ngày đặt hàng">
                 </div>
 
-                <div class="export-actions">
-                    <button class="btn btn-secondary">
-                        <i class="fas fa-file-excel"></i> Xuất Excel
-                    </button>
-                </div>
             </div>
 
             <div class="order-table-container">
@@ -65,15 +60,15 @@
                     <tbody>
                     <c:forEach var="o" items="${orders}">
                         <tr>
-                            <td>#${o.id}</td>
+                            <td>${o.id}</td>
                             <td>
                                     ${o.user.name}<br>
                                 <small>${o.user.phone}</small>
                             </td>
                             <td>
-                                    ${o.created_at.dayOfMonth < 10 ? '0' : ''}${o.created_at.dayOfMonth}
-                                -${o.created_at.monthValue < 10 ? '0' : ''}${o.created_at.monthValue}
-                                -${o.created_at.year}
+                                    ${o.created_at.hour < 10 ? '0' : ''}${o.created_at.hour}:${o.created_at.minute < 10 ? '0' : ''}${o.created_at.minute}
+                                <br>
+                                    ${o.created_at.dayOfMonth < 10 ? '0' : ''}${o.created_at.dayOfMonth}-${o.created_at.monthValue < 10 ? '0' : ''}${o.created_at.monthValue}-${o.created_at.year}
                             </td>
                             <td>
                                 <fmt:formatNumber value="${o.total_price}" type="currency" currencySymbol="đ" maxFractionDigits="0"/>
@@ -116,9 +111,6 @@
                                         data-total="<fmt:formatNumber value='${o.total_price}' type='currency' currencySymbol='đ' maxFractionDigits='0'/>">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <c:if test="${o.status != 'Đã hủy'}">
-                                    <button class="btn btn-sm btn-info"><i class="fa fa-print"></i></button>
-                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
@@ -213,7 +205,6 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary close-btn-footer">Đóng</button>
-            <button type="button" class="btn btn-primary"><i class="fas fa-print"></i> In Hóa Đơn</button>
         </div>
     </div>
 </div>

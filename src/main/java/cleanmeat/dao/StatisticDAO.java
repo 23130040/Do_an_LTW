@@ -56,18 +56,27 @@ public class StatisticDAO extends BaseDAO<StatisticDTO> {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT i.name, " +
-                "SUM(oi.quantity) as sold, " +
-                "SUM(oi.price * oi.quantity) as revenue, " +
-                "(SUM(oi.price * oi.quantity) * 100 / (SELECT SUM(total_price) FROM `order` WHERE status = 'Đã giao')) as percentage, " +
-                "AVG(f.rating) as ratingAvg " +
-                "FROM order_item oi " +
-                "JOIN `item` i ON oi.item_id = i.id " +
-                "JOIN `order` o ON oi.order_id = o.id " +
-                "LEFT JOIN `feedback` f ON i.id = f.item_id " +
-                "WHERE o.status = 'Đã giao' " +
-                "GROUP BY i.id, i.name " +
-                "ORDER BY sold DESC LIMIT 5";
+        String sql = "SELECT \n" +
+                "    i.name,\n" +
+                "    SUM(oi.quantity) AS sold,\n" +
+                "    SUM(oi.price * oi.quantity) AS revenue,\n" +
+                "    SUM(oi.price * oi.quantity) * 100 /\n" +
+                "        (SELECT SUM(total_price)\n" +
+                "         FROM `order`\n" +
+                "         WHERE status = 'Đã giao') AS percentage,\n" +
+                "    (\n" +
+                "        SELECT AVG(f.rating)\n" +
+                "        FROM feedback f\n" +
+                "        WHERE f.item_id = i.id\n" +
+                "          AND f.response_id = 0\n" +
+                "    ) AS ratingAvg\n" +
+                "FROM order_item oi\n" +
+                "JOIN item i ON oi.item_id = i.id\n" +
+                "JOIN `order` o ON oi.order_id = o.id\n" +
+                "WHERE o.status = 'Đã giao'\n" +
+                "GROUP BY i.id, i.name\n" +
+                "ORDER BY sold DESC\n" +
+                "LIMIT 5;";
 
         try {
             conn = getConnection();

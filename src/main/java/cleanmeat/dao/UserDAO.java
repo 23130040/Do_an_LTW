@@ -4,6 +4,7 @@ import cleanmeat.model.User;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,15 +52,15 @@ public class UserDAO extends BaseDAO<User> {
         String role = rs.getString("role");
         String avatar = rs.getString("avatar");
         boolean status = rs.getBoolean("status");
-        Date createdDate = rs.getDate("created_at");
-        LocalDate createdAt = (createdDate != null) ? createdDate.toLocalDate() : null;
         boolean email_verified = rs.getBoolean("email_verified");
         String verify_token = rs.getString("verify_token");
-        Date updatedDate = rs.getDate("updated_at");
-        LocalDate updatedAt = (updatedDate != null) ? updatedDate.toLocalDate() : null;
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime() : null;
+        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                ? rs.getTimestamp("updated_at").toLocalDateTime() : null;
 
         return new User(id, name, email, password, phone, gender,
-                birthday, role, avatar, status, email_verified, verify_token, createdAt, updatedAt);
+                birthday, role, avatar, status, email_verified, verify_token, created_at, updated_at);
     }
 
     @Override

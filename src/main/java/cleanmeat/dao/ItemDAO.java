@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class ItemDAO extends BaseDAO<Item> {
 
     @Override
     protected Item mapResultSetToEntity(ResultSet rs) throws SQLException {
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime() : null;
+        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                ? rs.getTimestamp("updated_at").toLocalDateTime() : null;
+
         Item item = new Item();
         item.setId(rs.getInt("id"));
         item.setName(rs.getString("name"));
@@ -38,12 +44,8 @@ public class ItemDAO extends BaseDAO<Item> {
         item.setCategory_id(rs.getInt("category_id"));
         item.setOrigin_id(rs.getInt("origin_id"));
 
-        if (rs.getDate("created_at") != null) {
-            item.setCreated_at(rs.getDate("created_at").toLocalDate());
-        }
-        if (rs.getDate("updated_at") != null) {
-            item.setUpdated_at(rs.getDate("updated_at").toLocalDate());
-        }
+        item.setCreated_at(created_at);
+        item.setUpdated_at(updated_at);
         return item;
     }
 
@@ -337,6 +339,7 @@ public class ItemDAO extends BaseDAO<Item> {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
     }
+
     @Override
     public boolean delete(int id) {
         String sqlDeleteImage = "DELETE FROM item_image WHERE item_id = ?";
@@ -368,6 +371,7 @@ public class ItemDAO extends BaseDAO<Item> {
         }
         return false;
     }
+
     public void deleteAllImagesByItemId(int itemId) {
         String sql = "DELETE FROM item_image WHERE item_id = ?";
         Connection conn = null;
@@ -383,6 +387,7 @@ public class ItemDAO extends BaseDAO<Item> {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
     }
+
     public List<Item> searchAndFilter(
             String keyword,
             String category,
@@ -420,9 +425,7 @@ public class ItemDAO extends BaseDAO<Item> {
         if (origin != null && !origin.isEmpty()) {
             sql.append(" AND i.origin_id = ? ");
             params.add(Integer.parseInt(origin));
-        }
-
-         else {
+        } else {
             sql.append(" ORDER BY i.created_at DESC ");
         }
 
@@ -462,7 +465,8 @@ public class ItemDAO extends BaseDAO<Item> {
         if (keyword != null && !keyword.trim().isEmpty()) {
             sql.append(" AND (name LIKE ? OR sku LIKE ?)");
             String val = "%" + keyword.trim() + "%";
-            params.add(val); params.add(val);
+            params.add(val);
+            params.add(val);
         }
         if (category != null && !category.isEmpty()) {
             sql.append(" AND category_id = ?");
@@ -495,6 +499,7 @@ public class ItemDAO extends BaseDAO<Item> {
         }
         return 0;
     }
+
     public List<String> findImagesByItemId(int itemId) {
         List<String> list = new ArrayList<>();
         String sql = "SELECT url FROM item_image WHERE item_id = ? ORDER BY is_primary DESC, id ASC";
@@ -518,4 +523,28 @@ public class ItemDAO extends BaseDAO<Item> {
         return list;
     }
 
+    public boolean checkSKUExists(String sku, int currentId) {
+        String sql = "SELECT COUNT(*) FROM item WHERE sku = ? AND id != ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, sku);
+                ps.setInt(2, currentId);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1) > 0;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+        return false;
+    }
 }

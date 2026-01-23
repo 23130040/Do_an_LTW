@@ -1,15 +1,15 @@
 package cleanmeat.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Unit {
     private int id;
     private String name;
     private int amount;
-    private LocalDate created_at;
-    private LocalDate updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
-    public Unit(int id, String name, int amount, LocalDate created_at, LocalDate updated_at) {
+    public Unit(int id, String name, int amount, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -49,19 +49,19 @@ public class Unit {
         this.amount = amount;
     }
 
-    public LocalDate getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(LocalDate created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public LocalDate getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(LocalDate updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 }

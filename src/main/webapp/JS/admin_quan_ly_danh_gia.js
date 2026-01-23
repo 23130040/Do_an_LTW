@@ -99,6 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
+    let isDataChanged = false;
+
     if (sendReplyButton) {
         sendReplyButton.addEventListener("click", () => {
             const content = replyInput.value.trim();
@@ -120,7 +122,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
+                        alert("Phản hồi thành công!");
                         replyInput.value = "";
+                        isDataChanged = true;
+
                         loadChatHistory(currentFeedbackData.userId, currentFeedbackData.customerName);
                     } else {
                         alert("Gửi phản hồi thất bại!");
@@ -139,18 +144,18 @@ document.addEventListener("DOMContentLoaded", () => {
     window.closeReplyModal = function () {
         replyModal.style.display = "none";
         if (replyInput) replyInput.value = "";
-        // reset history
+
         const historyContainer = document.getElementById("modalReplyHistory");
         if (historyContainer) {
             historyContainer.innerHTML = "";
         }
 
+        currentFeedbackData = { id: null, userId: null, customerName: "" };
 
-        currentFeedbackData = {
-            id: null,
-            userId: null,
-            customerName: ""
-        };
+        if (isDataChanged) {
+            isDataChanged = false;
+            window.location.reload();
+        }
     };
 
     /* *********** XỬ LÝ XÓA THỰC TẾ **************/

@@ -1,6 +1,6 @@
 package cleanmeat.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Notification {
     private int id;
@@ -8,9 +8,9 @@ public class Notification {
     private String content;
     private String email;
     private String url;
-    private LocalDate created_at;
+    private LocalDateTime created_at;
 
-    public Notification(int id, User user, String content, String email, String url, LocalDate created_at) {
+    public Notification(int id, User user, String content, String email, String url, LocalDateTime created_at) {
         this.id = id;
         this.user = user;
         this.content = content;

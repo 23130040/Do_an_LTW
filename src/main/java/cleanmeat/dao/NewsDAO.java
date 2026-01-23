@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class NewsDAO extends BaseDAO<News> {
 
     @Override
     protected News mapResultSetToEntity(ResultSet rs) throws SQLException {
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime() : null;
+        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                ? rs.getTimestamp("updated_at").toLocalDateTime() : null;
+
         News news = new News();
         news.setId(rs.getInt("id"));
         news.setTitle(rs.getString("title"));
@@ -27,10 +33,8 @@ public class NewsDAO extends BaseDAO<News> {
         news.setPicture_url(rs.getString("picture_url"));
         news.setContent(rs.getString("content"));
         news.setStatus(rs.getString("status"));
-        news.setCreated_at(rs.getDate("created_at").toLocalDate());
-        if (rs.getDate("updated_at") != null) {
-            news.setUpdated_at(rs.getDate("updated_at").toLocalDate());
-        }
+        news.setCreated_at(created_at);
+        news.setUpdated_at(updated_at);
         return news;
     }
 
@@ -167,11 +171,11 @@ public class NewsDAO extends BaseDAO<News> {
             try (PreparedStatement ps = conn.prepareStatement(sql);
                  ResultSet rs = ps.executeQuery()) {
 
-                    if (rs.next()) {
-                        int total = rs.getInt(1);
-                        return (int) Math.ceil(total * 1.0 / pageSize);
-                    }
+                if (rs.next()) {
+                    int total = rs.getInt(1);
+                    return (int) Math.ceil(total * 1.0 / pageSize);
                 }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

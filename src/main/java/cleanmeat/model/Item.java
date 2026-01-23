@@ -1,6 +1,6 @@
 package cleanmeat.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Item {
@@ -16,8 +16,8 @@ public class Item {
     private double discount;
     private int current_stock;
     private int min_stock;
-    private LocalDate created_at;
-    private LocalDate updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
     private String imageUrl;
     private List<String> images;
     private String categoryName;
@@ -25,7 +25,7 @@ public class Item {
     private String unitName;
 
 
-    public Item(int id, String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock, LocalDate created_at, LocalDate updated_at) {
+    public Item(int id, String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.sku = sku;
         this.name = name;
@@ -67,19 +67,19 @@ public class Item {
     public void setUnitName(String unitName) { this.unitName = unitName; }
 
 
-    public LocalDate getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(LocalDate updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 
-    public LocalDate getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(LocalDate created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 

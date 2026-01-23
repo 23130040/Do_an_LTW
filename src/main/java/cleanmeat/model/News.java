@@ -1,6 +1,6 @@
 package cleanmeat.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -12,25 +12,12 @@ public class News {
     private String picture_url;
     private String content;
     private String status;
-    private LocalDate created_at;
-    private LocalDate updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
     private User created_by;
 
-    public Date getCreatedAtDate() {
-        if (created_at == null) return null;
-        return Date.from(
-                created_at.atStartOfDay(ZoneId.systemDefault()).toInstant()
-        );
-    }
 
-    public Date getUpdatedAtDate() {
-        if (updated_at == null) return null;
-        return Date.from(
-                updated_at.atStartOfDay(ZoneId.systemDefault()).toInstant()
-        );
-    }
-
-    public News(int id, String title, String author, String content, String status, LocalDate created_at, LocalDate updated_at, User created_by) {
+    public News(int id, String title, String author, String content, String status, LocalDateTime created_at, LocalDateTime updated_at, User created_by) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -100,19 +87,19 @@ public class News {
         this.status = status;
     }
 
-    public LocalDate getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(LocalDate created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public LocalDate getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(LocalDate updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 
@@ -124,10 +111,4 @@ public class News {
         this.created_by = created_by;
     }
 
-    public String setFormattedDate(java.sql.Date date) {
-        String formattedDate;
-        if (date == null) formattedDate = "";
-        formattedDate = date.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return formattedDate;
-    }
 }
