@@ -15,24 +15,24 @@
 */
 
 SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+SET
+FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for address
 -- ----------------------------
 DROP TABLE IF EXISTS `address`;
-CREATE TABLE `address`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `is_default` bit(1) NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  CONSTRAINT `fk1_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
-
+CREATE TABLE `address`
+(
+    `id`         int NOT NULL AUTO_INCREMENT,
+    `user_id`    int NOT NULL,
+    `address`    text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `is_default` bit(1) NULL DEFAULT NULL,
+    `created_at` datetime NULL DEFAULT current_timestamp(),
+    `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX        `user_id`(`user_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 -- ----------------------------
 -- Records of address
 -- ----------------------------
@@ -42,15 +42,17 @@ INSERT INTO `address` VALUES (1, 33, 'NLU, TPHCM', b'1', '2026-01-23 08:04:13', 
 -- Table structure for category
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
-CREATE TABLE `category`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `category`
+(
+    `id`          int                                                           NOT NULL AUTO_INCREMENT,
+    `name`        varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `created_at`  datetime NULL DEFAULT current_timestamp(),
+    `updated_at`  datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `name`(`name`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
 
 -- ----------------------------
 -- Records of category
@@ -63,55 +65,54 @@ INSERT INTO `category` VALUES (3, 'Thịt gà', 'Thịt bò tươi sống, bò n
 -- Table structure for feedback
 -- ----------------------------
 DROP TABLE IF EXISTS `feedback`;
-CREATE TABLE `feedback`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `response_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `item_id` int NULL DEFAULT NULL,
-  `rating` int NULL DEFAULT NULL,
-  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`, `response_id`) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  INDEX `item_id`(`item_id` ASC) USING BTREE,
-  CONSTRAINT `fk1_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `fk2_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
-
+CREATE TABLE `feedback`
+(
+    `id`          int NOT NULL AUTO_INCREMENT,
+    `response_id` int NOT NULL,
+    `user_id`     int NOT NULL,
+    `item_id`     int NULL DEFAULT NULL,
+    `rating`      int NULL DEFAULT NULL,
+    `comment`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `created_at`  datetime NULL DEFAULT current_timestamp(),
+    `updated_at`  datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`, `response_id`) USING BTREE,
+    INDEX         `user_id`(`user_id`) USING BTREE,
+    INDEX         `item_id`(`item_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 -- ----------------------------
 -- Records of feedback
 -- ----------------------------
-INSERT INTO `feedback` VALUES (1, 0, 29, 1, 4, 'Sản phẩm tươi', '2026-01-23 08:01:56', '2026-01-23 08:01:56');
+INSERT INTO `feedback`
+VALUES (1, 0, 22, 1, 4, 'Sản phẩm tươi ngon, đóng gói cẩn thận', '2025-12-16 21:29:51', '2025-12-18 21:38:11');
+INSERT INTO `feedback`
+VALUES (2, 1, 29, 1, 0, 'Cảm ơn', '2025-12-17 18:35:10', '2025-12-18 21:56:48');
+
 
 -- ----------------------------
 -- Table structure for item
 -- ----------------------------
 DROP TABLE IF EXISTS `item`;
-CREATE TABLE `item`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `sku` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `short_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `long_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `category_id` int NOT NULL,
-  `origin_id` int NOT NULL,
-  `unit_id` int NOT NULL,
-  `price` decimal(10, 2) NOT NULL,
-  `discount` decimal(5, 2) NULL DEFAULT 0.00,
-  `current_stock` int NULL DEFAULT 0,
-  `min_stock` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `category_id`(`category_id` ASC) USING BTREE,
-  INDEX `origin_id`(`origin_id` ASC) USING BTREE,
-  INDEX `unit_id`(`unit_id` ASC) USING BTREE,
-  CONSTRAINT `fk1_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `fk1_origin` FOREIGN KEY (`origin_id`) REFERENCES `origin` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `fk1_unit` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 133 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
-
+CREATE TABLE `item`
+(
+    `id`                int                                                           NOT NULL AUTO_INCREMENT,
+    `sku`               varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `name`              varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `short_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `long_description`  text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `category_id`       int                                                           NOT NULL,
+    `origin_id`         int                                                           NOT NULL,
+    `unit_id`           int                                                           NOT NULL,
+    `price`             decimal(10, 2)                                                NOT NULL,
+    `discount`          decimal(5, 2) NULL DEFAULT 0.00,
+    `current_stock`     int NULL DEFAULT 0,
+    `min_stock`         int NULL DEFAULT NULL,
+    `created_at`        datetime NULL DEFAULT current_timestamp(),
+    `updated_at`        datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX               `category_id`(`category_id`) USING BTREE,
+    INDEX               `origin_id`(`origin_id`) USING BTREE,
+    INDEX               `unit_id`(`unit_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 133 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 -- ----------------------------
 -- Records of item
 -- ----------------------------
@@ -247,21 +248,24 @@ INSERT INTO `item` VALUES (129, 'CMDKX-030103', 'Cơm má đùi không xương',
 INSERT INTO `item` VALUES (130, 'MG-030101', 'Mề gà', NULL, NULL, 3, 1, 1, 104000.00, 0.00, 100, 10, '2026-01-23 11:00:00', '2026-01-23 11:00:00');
 INSERT INTO `item` VALUES (131, 'MG-030102', 'Mề gà', NULL, NULL, 3, 1, 2, 187200.00, 0.00, 100, 10, '2026-01-23 11:00:00', '2026-01-23 11:00:00');
 INSERT INTO `item` VALUES (132, 'MG-030103', 'Mề gà', NULL, NULL, 3, 1, 3, 280800.00, 0.00, 100, 10, '2026-01-23 11:00:00', '2026-01-23 11:00:00');
+-- ----------------------------
+-- Records of item
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for item_image
 -- ----------------------------
 DROP TABLE IF EXISTS `item_image`;
-CREATE TABLE `item_image`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `item_id` int NOT NULL,
-  `url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `is_primary` bit(1) NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `item_id`(`item_id` ASC) USING BTREE,
-  CONSTRAINT `fk2_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `item_image`
+(
+    `id`         int NOT NULL AUTO_INCREMENT,
+    `item_id`    int NOT NULL,
+    `url`        text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `is_primary` bit(1) NULL DEFAULT NULL,
+    `created_at` datetime NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX        `item_id`(`item_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 59 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of item_image
@@ -422,23 +426,26 @@ INSERT INTO `item_image` VALUES (153, 129, 'images/Ga10.png', b'1', '2026-01-23 
 INSERT INTO `item_image` VALUES (154, 130, 'images/Ga11.png', b'1', '2026-01-23 11:30:00');
 INSERT INTO `item_image` VALUES (155, 131, 'images/Ga11.png', b'1', '2026-01-23 11:30:00');
 INSERT INTO `item_image` VALUES (156, 132, 'images/Ga11.png', b'1', '2026-01-23 11:30:00');
+
 -- ----------------------------
 -- Table structure for news
 -- ----------------------------
 DROP TABLE IF EXISTS `news`;
-CREATE TABLE `news`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `picture_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `created_by` int NOT NULL,
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `created_by`(`created_by` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `news`
+(
+    `id`          int                                                           NOT NULL AUTO_INCREMENT,
+    `title`       varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `author`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `picture_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `content`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `status`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `created_at`  datetime NULL DEFAULT current_timestamp(),
+    `created_by`  int                                                           NOT NULL,
+    `updated_at`  datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX         `created_by`(`created_by`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
 
 -- ----------------------------
 -- Records of news
@@ -452,20 +459,22 @@ INSERT INTO `news` VALUES (6, 'Người đàn ông suýt mất mạng sau chế 
 INSERT INTO `news` VALUES (7, '5 sai lầm phổ biến khiến món thịt bò xào bị dai', 'Bùi Thủy', 'images/news7.jpg', '\r\n<p>Nhiều người nội trợ thắc mắc tại sao dù chọn miếng thịt bò tươi ngon, khi xào lên vẫn bị khô và dai cứng. Vấn đề không chỉ nằm ở miếng thịt mà còn ở cách chúng ta xử lý và kiểm soát nhiệt độ.</p>\r\n\r\n<h3>Tại sao thịt bò dễ bị dai khi xào?</h3>\r\n<p>Thịt bò có cấu trúc sợi cơ to và nhiều mô liên kết (collagen) hơn thịt heo, gà. Khi gặp nhiệt độ cao đột ngột và trong thời gian ngắn như lúc xào, các protein chính trong thịt (myosin và actin) sẽ co rút mạnh.</p>\r\n<p>Ở 50-60°C, myosin co lại, thịt bắt đầu săn chắc, nước bị ép ra. Trên 70°C, actin co rút mạnh hơn, sợi cơ siết chặt, thịt mất phần lớn nước, trở nên khô và dai.</p>\r\n<p>Collagen, thành phần giúp thịt sống đàn hồi, cũng co cứng lại khi xào nhanh thay vì kịp chuyển thành gelatin mềm như khi hầm, ninh lâu. Chính cấu trúc đặc biệt và phản ứng nhanh với nhiệt này khiến thịt bò đòi hỏi kỹ thuật xào tinh tế hơn.</p>\r\n\r\n<h3>Những sai lầm phổ biến khiến bò xào dai</h3>\r\n<ul>\r\n    <li><strong>Xào quá kỹ:</strong> Xào thịt bò quá lâu trên lửa lớn khiến protein co rút tối đa, nước bốc hơi hết, miếng thịt trở nên khô xác.</li>\r\n    <li><strong>Ướp muối, nước mắm quá sớm:</strong> Gia vị mặn sẽ rút nước ra khỏi thịt nhanh chóng, làm thịt dễ bị khô và dai hơn khi chế biến.</li>\r\n    <li><strong>Cho thịt vào chảo khô quá nóng:</strong> Nhiệt độ cao tác động trực tiếp làm bề mặt thịt co cứng và cháy xém tức thì, trong khi bên trong chưa chín tới. Điều này dễ dẫn đến việc phải xào lâu hơn, làm thịt càng dai.</li>\r\n    <li><strong>Thái thịt sai thớ:</strong> Thái thịt dọc theo sợi cơ khiến miếng thịt rất khó nhai và tạo cảm giác dai, dù nấu đúng cách.</li>\r\n</ul>\r\n\r\n<h3>Bí quyết để món bò xào luôn mềm mọng</h3>\r\n<p><strong>Thái thịt đúng cách:</strong> Luôn thái thịt ngang thớ (vuông góc với chiều sợi cơ). Thao tác này giúp các sợi cơ dễ dàng bị cắt đứt khi nhai, tạo cảm giác mềm mại.</p>\r\n\r\n<p><strong>Ướp thịt thông minh:</strong></p>\r\n<ul>\r\n    <li><strong>Tạo lớp bảo vệ:</strong> Ướp thịt với một ít dầu ăn, bột bắp (hoặc bột năng) hoặc lòng trắng trứng trước khi nêm gia vị. Lớp màng mỏng này giúp giữ nước, hạn chế thịt tiếp xúc trực tiếp với nhiệt độ cao quá nhanh.</li>\r\n    <li><strong>Nêm muối/nước mắm sau cùng:</strong> Chỉ nêm gia vị mặn khi thịt đã gần chín hoặc sau khi xào xong rau củ, cho thịt vào đảo lại. Muối sẽ thấm vào bề mặt mà không làm mất nước bên trong thịt.</li>\r\n</ul>\r\n\r\n<p><strong>Kiểm soát nhiệt độ và thời gian:</strong></p>\r\n<ul>\r\n    <li><strong>Lửa lớn, thời gian ngắn:</strong> Xào thịt bò trên lửa lớn thật nhanh tay. Khi bề mặt thịt vừa se lại, chuyển sang màu hồng sậm thì nhanh chóng trút ra đĩa.</li>\r\n    <li><strong>Xào riêng:</strong> Xào rau củ trước, sau đó mới cho thịt bò đã xào sơ vào đảo nhanh ở bước cuối cùng để làm nóng và hòa quyện gia vị. Cách này đảm bảo thịt vừa chín tới, giữ được độ mềm và ngọt.</li>\r\n</ul>\r\n\r\n<p><strong>Mẹo nhỏ từ đầu bếp (tùy chọn):</strong> Một số nhà hàng dùng một lượng rất nhỏ baking soda (khoảng 1/2 thìa cà phê cho 300g thịt) ướp trong 15-20 phút rồi rửa sạch trước khi chế biến. Baking soda giúp sợi cơ giãn nở, làm thịt mềm hơn. Tuy nhiên, cần cẩn thận liều lượng để tránh làm thay đổi vị thịt.</p>\r\n', 'published', '2025-10-25 17:41:00', 1, '2026-01-16 20:56:05');
 INSERT INTO `news` VALUES (8, 'Trời lạnh, nhất định phải ăn 5 món hấp này: Vừa nhanh, dễ nấu lại thơm lừng và cực kỳ ngon miệng', 'Huệ Lan', 'images/news8.jpg', '\r\n<p>Mùa đông, tiết trời lạnh, bạn nhất định không thể bỏ qua 5 món hấp này. Vừa đơn giản, vừa tươi mát, thơm ngon, lại ấm áp. Thời gian nấu chỉ từ 15 phút là hoàn thành.</p>\r\n\r\n<p>Hấp chính là \"kỹ nghệ\" nấu nướng hoàn hảo giúp giữ được hương vị nguyên bản mà thao tác đơn giản, nấu cũng siêu nhanh, giải quyết mọi sự phức tạp mà vẫn đảm bảo dưỡng chất nhất của thực phẩm.</p>\r\n\r\n<h3>1. Đùi gà hấp đậu phụ và đậu nành Nhật Bản</h3>\r\n<p><strong>Nguyên liệu:</strong> 2 cái đùi gà, 1 hộp đậu phụ non, 1 bát con đậu nành Nhật Bản, gia vị (nước tương, dầu hào, muối, gừng, hành lá, rượu nấu ăn, tinh bột bắp).</p>\r\n<p><strong>Cách làm:</strong> Đùi gà rửa sạch, chặt miếng vừa ăn rồi ướp với gừng, hành, nước tương, dầu hào, tinh bột bắp trong 15 phút. Xếp đậu phụ cắt miếng và đậu nành Nhật vào đĩa sâu lòng, rải gà lên trên và hấp 20 phút kể từ khi nước sôi.</p>\r\n<p><strong>Thành phẩm:</strong> Đậu phụ mềm thấm vị ngọt của thịt gà, đậu nành dẻo giòn trung hòa chất béo, thịt gà chín tới không bị khô.</p>\r\n\r\n<h3>2. Sườn heo hấp nấm nhung hươu (nấm lộc nhung)</h3>\r\n<p><strong>Nguyên liệu:</strong> 400g sườn non, 50g nấm nhung hươu, tỏi, gừng, nước tương, tinh bột bắp, tinh chất cốt gà.</p>\r\n<p><strong>Cách làm:</strong> Nấm ngâm nở, rửa sạch. Sườn chặt miếng, ngâm nước 5 phút loại bỏ máu thừa rồi thấm khô. Ướp sườn với nước tương, gừng, tỏi, bột bắp và nấm trong 20 phút. Cho vào đĩa sâu lòng và hấp khoảng 30 phút kể từ khi nước sôi.</p>\r\n<p><strong>Thành phẩm:</strong> Sườn mềm dễ rút xương, nấm mềm ngọt thơm đặc trưng hòa quyện cùng nước dùng đậm đà.</p>\r\n\r\n<h3>3. Thịt gà hấp nấm</h3>\r\n<p><strong>Nguyên liệu:</strong> 2 phần đùi gà rút xương, 8-10 cây nấm hương, tỏi băm, nước tương, dầu hào, nước tương đen, tinh bột bắp.</p>\r\n<p><strong>Cách làm:</strong> Nấm hương thái lát mỏng. Thịt gà thái miếng vừa ăn, ướp với tỏi và các gia vị trong 15 phút. Xếp nấm hương xuống đáy đĩa, rải gà lên trên và hấp 30 phút từ khi nước sôi.</p>\r\n<p><strong>Thành phẩm:</strong> Hương nấm nồng nàn thấm vào thịt gà mịn màng, vị mặn ngọt hài hòa, tươi mát cho ngày lạnh.</p>\r\n\r\n<h3>4. Thịt bò hấp cải thảo non</h3>\r\n<p><strong>Nguyên liệu:</strong> 200g thịt bò, 1 cây cải thảo non, tỏi băm, nước tương, dầu hào, dầu ô liu, bột bắp, tiêu.</p>\r\n<p><strong>Cách làm:</strong> Thịt bò thái lát mỏng, ướp gia vị trong 15 phút. Cải thảo cắt miếng lót dưới đáy đĩa, rải thịt bò lên trên. Hấp trong khoảng 12-15 phút kể từ khi nước sôi.</p>\r\n<p><strong>Thành phẩm:</strong> Cải thảo giữ độ giòn ngọt, thịt bò mềm đậm đà không mùi tanh, hương vị thanh mát cân bằng.</p>\r\n\r\n<h3>5. Trứng hấp phi lê cá</h3>\r\n<p><strong>Nguyên liệu:</strong> 100g phi lê cá (cá trắm hoặc cá vược), 2 quả trứng gà, gừng, hành lá, 120ml nước ấm.</p>\r\n<p><strong>Cách làm:</strong> Cá thái mỏng, ướp gừng, hành, dầu ăn và bột bắp trong 10 phút. Trứng đánh đều với chút muối và nước ấm, lọc qua rây. Hấp trứng 8 phút cho đặc lại rồi đặt cá lên, hấp tiếp 10 phút. Rưới thêm nước tương và hành lá khi hoàn thành.</p>\r\n<p><strong>Thành phẩm:</strong> Cá mềm tan, không xương; trứng mịn như bánh pudding thấm vị cá tươi ngon.</p>\r\n', 'published', '2025-11-06 06:00:00', 1, '2026-01-16 20:56:08');
 
+
 -- ----------------------------
 -- Table structure for notification
 -- ----------------------------
 DROP TABLE IF EXISTS `notification`;
-CREATE TABLE `notification`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `email` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `notification`
+(
+    `id`         int NOT NULL AUTO_INCREMENT,
+    `user_id`    int NOT NULL,
+    `content`    text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `email`      varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `url`        text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `created_at` datetime NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX        `user_id`(`user_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of notification
@@ -475,22 +484,30 @@ CREATE TABLE `notification`  (
 -- Table structure for order
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int NOT NULL,
-  `total_price` decimal(10, 2) NULL DEFAULT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  `address_id` int NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `code`(`code` ASC) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  INDEX `address_id`(`address_id` ASC) USING BTREE,
-  CONSTRAINT `fk3_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `order`
+(
+    `id`             int                                                          NOT NULL AUTO_INCREMENT,
+    `code`           varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `user_id`        int                                                          NOT NULL,
+    `total_price`    decimal(10, 2) NULL DEFAULT NULL,
+    `status`         varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `transport_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `payment_type`   varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `created_at`     datetime NULL DEFAULT current_timestamp(),
+    `updated_at`     datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    `address_id`     int                                                          NOT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `code`(`code`) USING BTREE,
+    INDEX            `user_id`(`user_id`) USING BTREE,
+    INDEX            `address_id`(`address_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+ALTER TABLE `order`
+DROP
+COLUMN `transport_type`;
 
+ALTER TABLE `order`
+DROP
+COLUMN `payment_type`;
 -- ----------------------------
 -- Records of order
 -- ----------------------------
@@ -500,17 +517,16 @@ INSERT INTO `order` VALUES (1, '101', 33, 250000.00, 'Đang Giao', '2026-01-23 0
 -- Table structure for order_item
 -- ----------------------------
 DROP TABLE IF EXISTS `order_item`;
-CREATE TABLE `order_item`  (
-  `order_id` int NOT NULL,
-  `item_id` int NOT NULL,
-  `price` decimal(10, 2) NULL DEFAULT NULL,
-  `quantity` decimal(10, 2) NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`order_id`, `item_id`) USING BTREE,
-  INDEX `item_id`(`item_id` ASC) USING BTREE,
-  CONSTRAINT `fk2_order` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `fk3_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `order_item`
+(
+    `order_id`   int NOT NULL,
+    `item_id`    int NOT NULL,
+    `price`      decimal(10, 2) NULL DEFAULT NULL,
+    `quantity`   decimal(10, 2) NULL DEFAULT NULL,
+    `created_at` datetime NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (`order_id`, `item_id`) USING BTREE,
+    INDEX        `item_id`(`item_id`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of order_item
@@ -521,16 +537,16 @@ INSERT INTO `order_item` VALUES (1, 1, 50000.00, 5.00, '2026-01-23 08:05:15');
 -- Table structure for origin
 -- ----------------------------
 DROP TABLE IF EXISTS `origin`;
-CREATE TABLE `origin`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
-
+CREATE TABLE `origin`
+(
+    `id`          int                                                           NOT NULL AUTO_INCREMENT,
+    `name`        varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `created_at`  datetime NULL DEFAULT current_timestamp(),
+    `updated_at`  datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `name`(`name`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 -- ----------------------------
 -- Records of origin
 -- ----------------------------
@@ -543,18 +559,19 @@ INSERT INTO `origin` VALUES (4, 'Hàn Quốc', '', '2025-12-27 21:54:49', '2026-
 -- Table structure for stock_history
 -- ----------------------------
 DROP TABLE IF EXISTS `stock_history`;
-CREATE TABLE `stock_history`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `item_id` int NULL DEFAULT NULL,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quantity` decimal(10, 2) NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `created_by` int NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `product_id`(`item_id` ASC) USING BTREE,
-  INDEX `created_by`(`created_by` ASC) USING BTREE,
-  CONSTRAINT `fk4_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+CREATE TABLE `stock_history`
+(
+    `id`         int                                                          NOT NULL AUTO_INCREMENT,
+    `item_id`    int NULL DEFAULT NULL,
+    `type`       varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `quantity`   decimal(10, 2) NULL DEFAULT NULL,
+    `created_at` datetime NULL DEFAULT current_timestamp(),
+    `created_by` int                                                          NOT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX        `product_id`(`item_id`) USING BTREE,
+    INDEX        `created_by`(`created_by`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of stock_history
@@ -564,76 +581,131 @@ CREATE TABLE `stock_history`  (
 -- Table structure for system_config
 -- ----------------------------
 DROP TABLE IF EXISTS `system_config`;
-CREATE TABLE `system_config`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `hotline` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `tax_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `facebook` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `instagram` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `logo_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `created_by` int NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `created_by`(`created_by` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `system_config`
+(
+    `id`         int                                                          NOT NULL AUTO_INCREMENT,
+    `name`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `email`      varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `hotline`    varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `tax_code`   varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `facebook`   varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `instagram`  varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `address`    text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `logo_url`   text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `created_by` int NULL DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX        `created_by`(`created_by`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of system_config
 -- ----------------------------
-INSERT INTO `system_config` VALUES (1, 'Clean Meat', 'nmhau2410@gmail.com', '0962967942', '12344', 'https://www.facebook.com/nmhau2410', 'https://www.instagram.com/_nmh2410', 'Đai học Nông Lâm TP.HCM', '', 1);
+INSERT INTO `system_config`
+VALUES (1, 'Clean Meat', 'nmhau2410@gmail.com', '0962967942', '12344', 'https://www.facebook.com/nmhau2410',
+        'https://www.instagram.com/_nmh2410', 'Đai học Nông Lâm TP.HCM', '', 1);
 
 -- ----------------------------
 -- Table structure for unit
 -- ----------------------------
 DROP TABLE IF EXISTS `unit`;
-CREATE TABLE `unit`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` decimal(10, 2) NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+CREATE TABLE `unit`
+(
+    `id`         int                                                           NOT NULL AUTO_INCREMENT,
+    `name`       varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `amount`     decimal(10, 2) NULL DEFAULT NULL,
+    `created_at` datetime NULL DEFAULT current_timestamp(),
+    `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `name`(`name`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of unit
 -- ----------------------------
-INSERT INTO `unit` VALUES (1, '250g', 250.00, '2025-12-29 19:55:45', '2025-12-29 19:55:45');
-INSERT INTO `unit` VALUES (2, '500g', 500.00, '2025-12-29 00:00:00', '2025-12-29 21:25:58');
-INSERT INTO `unit` VALUES (3, '1kg', 1000.00, '2025-12-29 00:00:00', '2025-12-29 21:26:00');
-INSERT INTO `unit` VALUES (4, '2kg', 2000.00, '2025-12-29 00:00:00', '2025-12-29 21:32:01');
-INSERT INTO `unit` VALUES (5, '3kg', 3000.00, '2025-12-29 00:00:00', '2025-12-29 21:31:51');
+INSERT INTO `unit`
+VALUES (1, '250g', 250.00, '2025-12-29 19:55:45', '2025-12-29 19:55:45');
+INSERT INTO `unit`
+VALUES (2, '500g', 500.00, '2025-12-29 00:00:00', '2025-12-29 21:25:58');
+INSERT INTO `unit`
+VALUES (3, '1kg', 1000.00, '2025-12-29 00:00:00', '2025-12-29 21:26:00');
+INSERT INTO `unit`
+VALUES (4, '2kg', 2000.00, '2025-12-29 00:00:00', '2025-12-29 21:32:01');
+INSERT INTO `unit`
+VALUES (5, '3kg', 3000.00, '2025-12-29 00:00:00', '2025-12-29 21:31:51');
 
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT ' ',
-  `birthday` date NULL DEFAULT '2005-02-02',
-  `role` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'user',
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT ' ',
-  `created_at` datetime NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  `status` bit(1) NULL DEFAULT b'0',
-  `email_verified` tinyint(1) NULL DEFAULT 0,
-  `verify_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `email`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
-
+CREATE TABLE `user`
+(
+    `id`         int                                                           NOT NULL AUTO_INCREMENT,
+    `name`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL,
+    `email`      varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `password`   text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `phone`      varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `gender`     varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT ' ',
+    `birthday`   date NULL DEFAULT '2005-02-02',
+    `role`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'user',
+    `avatar`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT ' ',
+    `created_at` datetime NULL DEFAULT current_timestamp(),
+    `updated_at` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+    `status`     bit(1) NULL DEFAULT b'0',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `email`(`email`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+ALTER TABLE `user`
+    ADD COLUMN email_verified BOOLEAN DEFAULT FALSE;
+ALTER TABLE `user`
+    ADD COLUMN verify_token VARCHAR(255);
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (29, 'Nguyễn Văn A', 'admin@gmail.com', '123456', '0962967942', ' ', '2005-02-02', 'customer', '', '2025-12-24 13:17:11', '2026-01-23 08:01:40', b'0', 0, NULL);
-INSERT INTO `user` VALUES (33, 'Nguyễn Minh Hậu', 'nmhau2410@gmail.com', 'f5f7d95f9e47cc35e188e0b076152faf', NULL, NULL, NULL, 'admin', NULL, '2026-01-23 01:25:43', '2026-01-23 01:26:46', b'1', 1, NULL);
+INSERT INTO `user`
+VALUES (29, 'Nguyễn Văn A', 'admin@gmail.com', '123456', '0962967942', '', NULL, 'admin', '', '2025-12-24 13:17:11',
+        '2026-01-04 02:42:28', b'0');
+INSERT INTO `user`
+VALUES (22, 'Nguyễn Văn A', 'nmhau2410@gmail.com', '123', '0962967942', '', NULL, 'customer', '', '2025-12-13 13:27:47',
+        '2025-12-13 21:54:14', b'0');
 
-SET FOREIGN_KEY_CHECKS = 1;
+SET
+FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE user ENGINE=InnoDB;
+ALTER TABLE category ENGINE=InnoDB;
+ALTER TABLE origin ENGINE=InnoDB;
+ALTER TABLE unit ENGINE=InnoDB;
+ALTER TABLE system_config ENGINE=InnoDB;
+ALTER TABLE address ENGINE=InnoDB;
+ALTER TABLE item ENGINE=InnoDB;
+ALTER TABLE item_image ENGINE=InnoDB;
+ALTER TABLE feedback ENGINE=InnoDB;
+ALTER TABLE `order` ENGINE=InnoDB;
+ALTER TABLE order_item ROW_FORMAT = DYNAMIC;
+ALTER TABLE order_item ENGINE=InnoDB;
+ALTER TABLE stock_history ENGINE=InnoDB;
+ALTER TABLE notification ENGINE=InnoDB;
+ALTER TABLE news ENGINE=InnoDB;
+
+ALTER TABLE `address`
+    ADD CONSTRAINT fk1_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE;
+ALTER TABLE feedback
+    ADD CONSTRAINT fk2_user Foreign key (user_id) references user (id);
+ALTER TABLE `feedback`
+    ADD CONSTRAINT fk1_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
+ALTER TABLE `item`
+    ADD CONSTRAINT fk1_category FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE;
+ALTER TABLE `item`
+    ADD CONSTRAINT fk1_origin FOREIGN KEY (origin_id) REFERENCES origin (id) ON DELETE CASCADE;
+ALTER TABLE `item`
+    ADD CONSTRAINT fk1_unit FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE;
+ALTER TABLE `item_image`
+    ADD CONSTRAINT fk2_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
+ALTER TABLE `order`
+    ADD CONSTRAINT fk3_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE;
+ALTER TABLE `order_item`
+    ADD CONSTRAINT fk2_order FOREIGN KEY (order_id) REFERENCES `order` (id) ON DELETE CASCADE;
+ALTER TABLE `order_item`
+    ADD CONSTRAINT fk3_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
+ALTER TABLE `stock_history`
+    ADD CONSTRAINT fk4_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;

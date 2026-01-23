@@ -13,7 +13,6 @@ public class GioHang extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
         Cart cart = (Cart) session.getAttribute("cart");
         session.setAttribute("cart", cart);
 

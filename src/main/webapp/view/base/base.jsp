@@ -7,8 +7,7 @@
     <meta charset="UTF-8">
 
     <title>
-        Clean Meat -
-        <c:out value="${requestScope.pageTitle}"/>
+        Clean Meat - <c:out value="${requestScope.pageTitle}"/>
     </title>
 
     <!-- ===== CSS HEADER ===== -->
