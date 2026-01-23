@@ -178,7 +178,7 @@ public class DangNhap extends HttpServlet {
             session.setAttribute("user", user);
             String role = user.getRole();
             if ("admin".equalsIgnoreCase(role)) {
-                response.sendRedirect(request.getContextPath() + "/view/admin_thong_ke.jsp");
+                response.sendRedirect(request.getContextPath() + "/thong-ke");
             } else {
                 response.sendRedirect(request.getContextPath() + "/trang-chu");
             }

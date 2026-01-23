@@ -18,21 +18,28 @@ public class OrderItemDAO extends BaseDAO<OrderItem> {
     public List<OrderItem> findByOrderId(int orderId) {
         List<OrderItem> list = new ArrayList<>();
         String sql = """
-                    SELECT oi.*, i.*
-                    FROM order_item oi
-                    JOIN item i ON oi.item_id = i.id
-                    WHERE oi.order_id = ?
+                    SELECT
+                                             oi.price AS oi_price,
+                                             oi.quantity,
+                                             i.id AS item_id,
+                                             i.name AS item_name
+                                         FROM order_item oi
+                                         JOIN item i ON oi.item_id = i.id
+                                         WHERE oi.order_id = ?
                 """;
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, orderId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Item item = itemDAO.mapResultSetToEntity(rs);
+                Item item = new Item();
+                item.setId(rs.getInt("item_id"));
+                item.setName(rs.getString("item_name"));
+
                 OrderItem oi = new OrderItem(
                         item,
-                        rs.getDouble("price"),
-                        rs.getDouble("quantity")
+                        rs.getDouble("oi_price"),
+                        rs.getInt("quantity")
                 );
                 list.add(oi);
             }
@@ -75,4 +82,5 @@ public class OrderItemDAO extends BaseDAO<OrderItem> {
     public List<OrderItem> findAll() {
         return List.of();
     }
+
 }

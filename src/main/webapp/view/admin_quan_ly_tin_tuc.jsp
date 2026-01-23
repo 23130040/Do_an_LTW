@@ -50,7 +50,12 @@
                             <tr>
                                 <td>${news.title}</td>
                                 <td>${news.author}</td>
-                                <td>${news.created_at}</td>
+                                <td>
+                                        ${news.created_at.hour < 10 ? '0' : ''}${news.created_at.hour}:${news.created_at.minute < 10 ? '0' : ''}${news.created_at.minute}
+                                    <br>
+                                        ${news.created_at.dayOfMonth < 10 ? '0' : ''}${news.created_at.dayOfMonth}-${news.created_at.monthValue < 10 ? '0' : ''}${news.created_at.monthValue}-${news.created_at.year}
+                                </td>
+
                                 <td>1250</td> <td>
                 <span class="status-badge ${news.status == 'Đã đăng' ? 'status-active' : 'status-draft'}">
                         ${news.status}
@@ -66,6 +71,25 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                </div>
+                <div class="pagination">
+                    <%-- Nút Trước --%>
+                    <c:if test="${currentPage > 1}">
+                        <a href="?page=${currentPage - 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">&laquo; Trước</a>
+                    </c:if>
+
+                    <%-- Các số trang --%>
+                    <c:forEach begin="1" end="${totalPages}" var="i">
+                        <a href="?page=${i}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}"
+                           class="${i == currentPage ? 'active' : ''}">
+                                ${i}
+                        </a>
+                    </c:forEach>
+
+                    <%-- Nút Sau --%>
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="?page=${currentPage + 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">Sau &raquo;</a>
+                    </c:if>
                 </div>
             </div>
 

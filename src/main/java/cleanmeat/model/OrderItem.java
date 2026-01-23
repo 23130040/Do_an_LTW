@@ -1,24 +1,35 @@
 package cleanmeat.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class OrderItem {
     private Item item;
     private double price;
-    private double quantity;
-    private LocalDate creates_at;
+    private int quantity;
+    private LocalDateTime creates_at;
 
-    public OrderItem(Item item, double price, double quantity, LocalDate creates_at) {
+    public OrderItem(Item item, double price, int quantity, LocalDateTime creates_at) {
         this.item = item;
         this.price = price;
         this.quantity = quantity;
         this.creates_at = creates_at;
     }
 
-    public OrderItem(Item item, double price, double quantity) {
+    public OrderItem(Item item, double price, int quantity) {
         this.item = item;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public OrderItem() {
+    }
+
+    public LocalDateTime getCreates_at() {
+        return creates_at;
+    }
+
+    public void setCreates_at(LocalDateTime creates_at) {
+        this.creates_at = creates_at;
     }
 
     public Item getItem() {
@@ -41,7 +52,7 @@ public class OrderItem {
         this.price = price;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

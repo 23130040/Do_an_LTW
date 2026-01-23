@@ -250,15 +250,15 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
 
     public boolean insertReply(int parentId, int adminId, String comment) {
         String sql = "INSERT INTO feedback (response_id, user_id, item_id, rating, comment, created_at) " +
-                "SELECT ?, ?, item_id, rating, ?, NOW() FROM feedback WHERE id = ?";
+                "VALUES (?, ?, (SELECT item_id FROM (SELECT item_id FROM feedback WHERE id = ?) AS tmp), 0, ?, NOW())";
         Connection conn = null;
         try {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, parentId);
                 ps.setInt(2, adminId);
-                ps.setString(3, comment);
-                ps.setInt(4, parentId);
+                ps.setInt(3, parentId);
+                ps.setString(4, comment);
                 return ps.executeUpdate() > 0;
             }
         } catch (Exception e) {

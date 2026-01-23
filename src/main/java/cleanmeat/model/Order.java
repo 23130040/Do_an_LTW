@@ -1,6 +1,6 @@
 package cleanmeat.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +10,11 @@ public class Order {
     private Address address;
     private double total_price;
     private String status;
-    private LocalDate created_at;
-    private LocalDate updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
     private List<OrderItem> listItem;
 
-    public Order(int id, User user, Address address, double total_price, String status, LocalDate created_at, LocalDate updated_at) {
+    public Order(int id, User user, Address address, double total_price, String status, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.user = user;
         this.address = address;
@@ -23,6 +23,9 @@ public class Order {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.listItem = new ArrayList<>();
+    }
+
+    public Order() {
     }
 
     public int getId() {
@@ -71,5 +74,21 @@ public class Order {
 
     public void setListItem(List<OrderItem> listItem) {
         this.listItem = listItem;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+    }
+
+    public LocalDateTime getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(LocalDateTime updated_at) {
+        this.updated_at = updated_at;
     }
 }

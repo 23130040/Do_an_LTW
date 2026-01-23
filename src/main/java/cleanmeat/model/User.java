@@ -1,6 +1,7 @@
 package cleanmeat.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class User {
     private int id;
@@ -15,8 +16,8 @@ public class User {
     private boolean status;
     private boolean email_verified;
     private String verify_token;
-    private LocalDate created_at;
-    private LocalDate updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public User(String name, String email, String password, String phone, String gender, LocalDate birthday, String role, String avatar, String verify_token) {
         this.name = name;
@@ -32,7 +33,7 @@ public class User {
         this.email_verified = false;
     }
 
-    public User(int id, String name, String email, String password, String phone, String gender, LocalDate birthday, String role, String avatar, boolean status, boolean email_verified, String verify_token, LocalDate created_at, LocalDate updated_at) {
+    public User(int id, String name, String email, String password, String phone, String gender, LocalDate birthday, String role, String avatar, boolean status, boolean email_verified, String verify_token, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -155,19 +156,19 @@ public class User {
         this.status = status;
     }
 
-    public LocalDate getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(LocalDate created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public LocalDate getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(LocalDate updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 

@@ -99,6 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
+    let isDataChanged = false;
+
     if (sendReplyButton) {
         sendReplyButton.addEventListener("click", () => {
             const content = replyInput.value.trim();
@@ -120,7 +122,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
+                        alert("Phản hồi thành công!");
                         replyInput.value = "";
+                        isDataChanged = true;
+
                         loadChatHistory(currentFeedbackData.userId, currentFeedbackData.customerName);
                     } else {
                         alert("Gửi phản hồi thất bại!");
@@ -139,24 +144,24 @@ document.addEventListener("DOMContentLoaded", () => {
     window.closeReplyModal = function () {
         replyModal.style.display = "none";
         if (replyInput) replyInput.value = "";
-        // reset history
+
         const historyContainer = document.getElementById("modalReplyHistory");
         if (historyContainer) {
             historyContainer.innerHTML = "";
         }
 
+        currentFeedbackData = { id: null, userId: null, customerName: "" };
 
-        currentFeedbackData = {
-            id: null,
-            userId: null,
-            customerName: ""
-        };
+        if (isDataChanged) {
+            isDataChanged = false;
+            window.location.reload();
+        }
     };
 
     /* *********** XỬ LÝ XÓA THỰC TẾ **************/
     window.deleteFeedback = function(feedbackId) {
         if (confirm("Bạn có chắc chắn muốn xóa đánh giá này? Dữ liệu phản hồi liên quan cũng sẽ bị xóa.")) {
-            window.location.href = `quanlydanhgia?action=delete&id=${feedbackId}`;
+            window.location.href = `quan-ly-danh-gia?action=delete&id=${feedbackId}`;
         }
     };
 
@@ -198,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (rate) params.append('rating', rate);
         if (type) params.append('type', type);
 
-        window.location.href = 'quanlydanhgia?' + params.toString();
+        window.location.href = 'quan-ly-danh-gia?' + params.toString();
     }
 
     if (searchInput) {

@@ -5,6 +5,7 @@ import cleanmeat.model.User;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Date;
 
@@ -44,10 +45,10 @@ public class AddressDAO extends BaseDAO<Address> {
         int id = rs.getInt("id");
         String address = rs.getString("address");
         boolean is_Default = rs.getBoolean("is_default");
-        Timestamp ca = rs.getTimestamp("created_at");
-        LocalDate created_at = (ca != null) ? ca.toLocalDateTime().toLocalDate() : null;
-        Timestamp ua = rs.getTimestamp("updated_at");
-        LocalDate updated_at = (ua != null) ? ua.toLocalDateTime().toLocalDate() : null;
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime() : null;
+        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                ? rs.getTimestamp("updated_at").toLocalDateTime() : null;
         return new Address(id, user, address, is_Default, created_at, updated_at);
     }
 

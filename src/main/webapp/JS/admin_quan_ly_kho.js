@@ -153,7 +153,7 @@ function applyFilterAndSearch() {
     if (origin) params.append('origin', origin);
     params.append('page', '1');
 
-    window.location.href = 'quanlykho?' + params.toString();
+    window.location.href = 'quan-ly-kho?' + params.toString();
 }
 
 categoryFilter?.addEventListener('change', applyFilterAndSearch);

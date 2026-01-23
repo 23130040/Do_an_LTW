@@ -8,7 +8,7 @@ import cleanmeat.model.System_config;
 
 import java.io.IOException;
 
-@WebServlet(name = "ConfigServlet", value = "/cauhinhhethong", loadOnStartup = 1)
+@WebServlet(name = "ConfigServlet", value = "/cau-hinh-he-thong", loadOnStartup = 1)
 public class ConfigServlet extends HttpServlet {
     private ConfigDAO configDAO = new ConfigDAO();
 
@@ -59,9 +59,9 @@ public class ConfigServlet extends HttpServlet {
         }
 
         if (success) {
-            response.sendRedirect("cauhinhhethong?status=success");
+            response.sendRedirect("cau-hinh-he-thong?status=success");
         } else {
-            response.sendRedirect("cauhinhhethong?status=error");
+            response.sendRedirect("cau-hinh-he-thong?status=error");
         }
     }
 }

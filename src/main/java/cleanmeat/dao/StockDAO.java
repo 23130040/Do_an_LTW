@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class StockDAO extends BaseDAO<Stock_history> {
         item.setOriginName(rs.getString("origin_name"));
         item.setUnitName(rs.getString("unit_name"));
 
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime() : null;
+
         User user = new User();
         user.setName(rs.getString("created_by_name"));
 
@@ -34,7 +38,7 @@ public class StockDAO extends BaseDAO<Stock_history> {
                 item,
                 rs.getString("type"),
                 rs.getInt("quantity"),
-                rs.getDate("created_at").toLocalDate(),
+                created_at,
                 user
         );
     }

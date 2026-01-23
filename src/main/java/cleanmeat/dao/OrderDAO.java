@@ -1,15 +1,13 @@
 package cleanmeat.dao;
 
-import cleanmeat.model.Address;
-import cleanmeat.model.Order;
-import cleanmeat.model.OrderItem;
-import cleanmeat.model.User;
+import cleanmeat.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +20,8 @@ public class OrderDAO extends BaseDAO<Order> {
     private Map<Integer, Order> orderMap = new HashMap<>();
 
     public OrderDAO() {
-        orderMap = new HashMap<Integer, Order>();
-        loadAll();
+        //orderMap = new HashMap<Integer, Order>();
+        //loadAll();
     }
 
     @Override
@@ -54,8 +52,10 @@ public class OrderDAO extends BaseDAO<Order> {
         Address address = addressDAO.findById(rs.getInt("address_id"));
         double totalPrice = rs.getDouble("total_price");
         String status = rs.getString("status");
-        LocalDate created_at = rs.getDate("created_at").toLocalDate();
-        LocalDate updated_at = rs.getDate("updated_at").toLocalDate();
+        LocalDateTime created_at = rs.getTimestamp("created_at") != null
+                ? rs.getTimestamp("created_at").toLocalDateTime() : null;
+        LocalDateTime updated_at = rs.getTimestamp("updated_at") != null
+                ? rs.getTimestamp("updated_at").toLocalDateTime() : null;
         return new Order(id, user, address, totalPrice, status, created_at, updated_at);
     }
 
@@ -155,7 +155,50 @@ public class OrderDAO extends BaseDAO<Order> {
 
     @Override
     public List<Order> findAll() {
-        return new ArrayList<Order>(orderMap.values());
+        List<Order> list = new ArrayList<>();
+        String sql = """
+                SELECT o.*, 
+                       u.name AS user_name, u.phone AS user_phone, u.email AS user_email,
+                       a.address AS detail_address
+                FROM `order` o
+                JOIN user u ON o.user_id = u.id
+                JOIN address a ON o.address_id = a.id
+                ORDER BY o.created_at DESC
+                """;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("user_id"));
+                    user.setName(rs.getString("user_name"));
+                    user.setPhone(rs.getString("user_phone"));
+
+                    Address addr = new Address();
+                    addr.setId(rs.getInt("address_id"));
+                    addr.setAddress(rs.getString("detail_address"));
+
+                    Order order = new Order(
+                            rs.getInt("id"),
+                            user,
+                            addr,
+                            rs.getDouble("total_price"),
+                            rs.getString("status"),
+                            rs.getTimestamp("created_at").toLocalDateTime(),
+                            rs.getTimestamp("updated_at").toLocalDateTime()
+                    );
+                    list.add(order);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
+        return list;
     }
 
     public List<Order> findByUserId(int userId) {
@@ -166,18 +209,121 @@ public class OrderDAO extends BaseDAO<Order> {
                     WHERE user_id = ?
                     ORDER BY created_at DESC
                 """;
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Order order = mapResultSetToEntity(rs);
-                order.setListItem(oiDAO.findByOrderId(order.getId()));
-                orders.add(order);
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Order order = mapResultSetToEntity(rs);
+                    order.setListItem(oiDAO.findByOrderId(order.getId()));
+                    orders.add(order);
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
         return orders;
+    }
+
+    public List<Order> searchAndFilter(String keyword, String status, int page, int pageSize) {
+        List<Order> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(
+                "SELECT o.*, u.name AS user_name, u.phone AS user_phone, a.address AS detail_address " +
+                        "FROM `order` o " +
+                        "JOIN user u ON o.user_id = u.id " +
+                        "JOIN address a ON o.address_id = a.id " +
+                        "WHERE 1=1 "
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (u.name LIKE ? OR u.phone LIKE ? OR CAST(o.id AS CHAR) LIKE ?) ");
+            String val = "%" + keyword.trim() + "%";
+            params.add(val);
+            params.add(val);
+            params.add(val);
+        }
+
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND o.status = ? ");
+            params.add(status);
+        }
+
+        sql.append(" ORDER BY o.created_at DESC LIMIT ? OFFSET ? ");
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        User user = new User();
+                        user.setName(rs.getString("user_name"));
+                        user.setPhone(rs.getString("user_phone"));
+                        Address addr = new Address();
+                        addr.setAddress(rs.getString("detail_address"));
+
+                        Order order = new Order(
+                                rs.getInt("id"), user, addr,
+                                rs.getDouble("total_price"),
+                                rs.getString("status"),
+                                rs.getTimestamp("created_at").toLocalDateTime(),
+                                rs.getTimestamp("updated_at").toLocalDateTime()
+                        );
+                        list.add(order);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
+        return list;
+    }
+
+    public int countFilteredOrders(String keyword, String status) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM `order` o JOIN user u ON o.user_id = u.id WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (u.name LIKE ? OR u.phone LIKE ? OR CAST(o.id AS CHAR) LIKE ?)");
+            String val = "%" + keyword.trim() + "%";
+            params.add(val);
+            params.add(val);
+            params.add(val);
+        }
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND o.status = ?");
+            params.add(status);
+        }
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) return rs.getInt(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
+        return 0;
     }
 }

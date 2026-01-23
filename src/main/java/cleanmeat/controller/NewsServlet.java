@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "NewsServlet", value = "/quanlytintuc")
+@WebServlet(name = "NewsServlet", value = "/quan-ly-tin-tuc")
 public class NewsServlet extends HttpServlet {
     private NewsDAO newsDAO = new NewsDAO();
 

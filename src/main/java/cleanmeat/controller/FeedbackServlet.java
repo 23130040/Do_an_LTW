@@ -9,7 +9,7 @@ import cleanmeat.model.Feedback;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "QuanLyDanhGia", value = "/quanlydanhgia")
+@WebServlet(name = "QuanLyDanhGia", value = "/quan-ly-danh-gia")
 public class FeedbackServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,7 +35,7 @@ public class FeedbackServlet extends HttpServlet {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
                 dao.delete(id);
-                response.sendRedirect("quanlydanhgia");
+                response.sendRedirect("quan-ly-danh-gia");
                 return;
             } catch (Exception e) {
                 e.printStackTrace();

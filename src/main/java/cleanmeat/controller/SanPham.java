@@ -42,7 +42,7 @@ public class SanPham extends HttpServlet {
         } catch (Exception ignored) {}
 
         List<Item> items = itemDAO.searchAndFilter(
-                keyword, category, origin, sort, page, PAGE_SIZE
+                keyword, category, origin, page, PAGE_SIZE
         );
 
         int totalItems = itemDAO.countFilteredItems(keyword, category, origin);

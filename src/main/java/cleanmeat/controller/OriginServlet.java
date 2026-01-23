@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "OriginServlet", value = "/quanlynguongoc")
+@WebServlet(name = "OriginServlet", value = "/quan-ly-nguon-goc")
 public class OriginServlet extends HttpServlet {
     OriginDAO originDAO = new OriginDAO();
 
@@ -19,7 +19,7 @@ public class OriginServlet extends HttpServlet {
         if ("delete".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             originDAO.delete(id);
-            response.sendRedirect("quanlydanhmuc?tab=QuanLyNguonGoc&status=deleted");
+            response.sendRedirect("quan-ly-danh-muc?tab=QuanLyNguonGoc&status=deleted");
             return;
         }
         request.setAttribute("categories", new CategoryDAO().findAll());
@@ -45,12 +45,12 @@ public class OriginServlet extends HttpServlet {
 
         try {
             if(originDAO.insert(newOrg)) {
-                response.sendRedirect("quanlydanhmuc?tab=QuanLyNguonGoc&status=success");
+                response.sendRedirect("quan-ly-danh-muc?tab=QuanLyNguonGoc&status=success");
             } else {
-                response.sendRedirect("quanlydanhmuc?tab=QuanLyNguonGoc&status=fail");
+                response.sendRedirect("quan-ly-danh-muc?tab=QuanLyNguonGoc&status=fail");
             }
         } catch (Exception e) {
-            response.sendRedirect("quanlydanhmuc?tab=QuanLyNguonGoc&status=error");
+            response.sendRedirect("quan-ly-danh-muc?tab=QuanLyNguonGoc&status=error");
         }
     }
 }

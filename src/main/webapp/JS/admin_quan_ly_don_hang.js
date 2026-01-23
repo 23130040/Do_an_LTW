@@ -1,3 +1,22 @@
+const modal = document.getElementById("orderDetailModal");
+const closeBtns = document.querySelectorAll(".close-btn, .close-btn-footer");
+const viewDetailBtns = document.querySelectorAll(".view-detail");
+const orderTableBody = document.querySelector(".order-table tbody");
+
+
+function format(number) {
+    if (isNaN(number)) return "0đ";
+    return Number(number).toLocaleString('vi-VN', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }) + "đ";
+}
+function formatDateVN(dateStr) {
+    if (!dateStr) return "";
+    const [year, month, day] = dateStr.split("-");
+    return `${day}-${month}-${year}`;
+}
+
 // Hàm User Menu
 function toggleUserMenu() {
     document.getElementById("userMenuContent").classList.toggle("show");
@@ -42,10 +61,7 @@ window.onclick = function(event) {
         notificationPanel.classList.remove('show-panel');
     }
 }
-const modal = document.getElementById("orderDetailModal");
-const closeBtns = document.querySelectorAll(".close-btn, .close-btn-footer");
-const viewDetailBtns = document.querySelectorAll(".view-detail");
-const orderTableBody = document.querySelector(".order-table tbody");
+
 
 
 // Hàm mở modal
@@ -80,3 +96,91 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+viewDetailBtns.forEach(button => {
+    button.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const { id, status, date, customer, phone, address, total } = this.dataset;
+
+        modalOrderId.innerText = "#" + id;
+        modalOrderStatus.innerText = status;
+        modalOrderDate.innerText = formatDateVN(date);
+        modalCustomerName.innerText = customer;
+        modalCustomerPhone.innerText = phone;
+        modalShippingAddress.innerText = address;
+        modalGrandTotal.innerText = total;
+
+        loadOrderItems(id);
+        openModal();
+    });
+});
+
+
+function loadOrderItems(orderId) {
+    const tbody = document.getElementById("modalProductList");
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Đang tải sản phẩm...</td></tr>';
+
+    fetch(`${CONTEXT_PATH}/OrderDetailServlet?id=${orderId}`)
+
+        .then(response => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            return response.json();
+        })
+        .then(data => {
+            tbody.innerHTML = "";
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Không có sản phẩm nào.</td></tr>';
+                return;
+            }
+
+            data.forEach(oi => {
+                const row = `
+        <tr>
+            <td>${oi.item.name}</td>
+            <td>${format(oi.price)}</td>
+            <td>${oi.quantity}</td>
+            <td>${format(oi.price * oi.quantity)}đ</td>
+        </tr>
+    `;
+                tbody.insertAdjacentHTML("beforeend", row);
+            });
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Lỗi khi tải chi tiết sản phẩm.</td></tr>';
+        });
+}
+const searchInput = document.getElementById('searchInput');
+const statusFilter = document.getElementById('statusFilter');
+
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+
+    function applyFilterAndSearch() {
+        const keyword = searchInput.value.trim();
+        const status = statusFilter.value;
+
+        const params = new URLSearchParams();
+        if (keyword !== "") params.append('search', keyword);
+        if (status !== "") params.append('status', status);
+        params.append('page', '1');
+
+        window.location.href = 'quan-ly-don-hang?' + params.toString();
+    }
+
+    if (statusFilter) {
+        statusFilter.addEventListener('change', applyFilterAndSearch);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                applyFilterAndSearch();
+            }
+        });
+    }
+});
