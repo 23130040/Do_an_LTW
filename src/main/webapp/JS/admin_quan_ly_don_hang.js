@@ -5,7 +5,11 @@ const orderTableBody = document.querySelector(".order-table tbody");
 
 
 function format(number) {
-    return Number(number).toLocaleString('vi-VN');
+    if (isNaN(number)) return "0đ";
+    return Number(number).toLocaleString('vi-VN', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }) + "đ";
 }
 function formatDateVN(dateStr) {
     if (!dateStr) return "";
@@ -135,7 +139,7 @@ function loadOrderItems(orderId) {
                 const row = `
         <tr>
             <td>${oi.item.name}</td>
-            <td>${format(oi.price)}đ</td>
+            <td>${format(oi.price)}</td>
             <td>${oi.quantity}</td>
             <td>${format(oi.price * oi.quantity)}đ</td>
         </tr>

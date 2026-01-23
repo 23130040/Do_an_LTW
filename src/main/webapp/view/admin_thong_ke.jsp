@@ -28,28 +28,37 @@
                 <div class="kpi-card bg-red">
                     <div class="kpi-icon"><i class="fas fa-chart-line"></i></div>
                     <div class="kpi-info">
-                        <span class="kpi-value">98.230.000₫</span>
-                        <span class="kpi-label">Doanh Thu Tháng</span>
+            <span class="kpi-value">
+                <fmt:formatNumber value="${stats.totalRevenue}" pattern="#,###"/>₫
+            </span>
+                        <span class="kpi-label">Doanh Thu</span>
                     </div>
                 </div>
+
                 <div class="kpi-card bg-blue">
                     <div class="kpi-icon"><i class="fas fa-shopping-cart"></i></div>
                     <div class="kpi-info">
-                        <span class="kpi-value">1,280</span>
-                        <span class="kpi-label">Đơn Hàng Mới</span>
+            <span class="kpi-value">
+                <fmt:formatNumber value="${stats.totalOrders}" pattern="#,###"/>
+            </span>
+                        <span class="kpi-label">Đơn Hàng</span>
                     </div>
                 </div>
+
                 <div class="kpi-card bg-yellow">
                     <div class="kpi-icon"><i class="fas fa-user-plus"></i></div>
                     <div class="kpi-info">
-                        <span class="kpi-value">2,500</span>
-                        <span class="kpi-label">Khách Hàng Mới</span>
+            <span class="kpi-value">
+                <fmt:formatNumber value="${stats.totalUsers}" pattern="#,###"/>
+            </span>
+                        <span class="kpi-label">Khách Hàng</span>
                     </div>
                 </div>
+
                 <div class="kpi-card bg-dark">
                     <div class="kpi-icon"><i class="fas fa-boxes"></i></div>
                     <div class="kpi-info">
-                        <span class="kpi-value">45</span>
+                        <span class="kpi-value">${stats.lowStockCount}</span>
                         <span class="kpi-label">Mục Cần Nhập</span>
                     </div>
                 </div>
@@ -70,61 +79,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Thịt Bò Thăn Nội Cao Cấp (Mỹ)</td>
-                            <td>952</td>
-                            <td>238M</td>
-                            <td>25.1%</td> <td>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </td> </tr>
-                        <tr>
-                            <td>Thịt Heo Ba Chỉ Thảo Mộc</td>
-                            <td>1,280</td>
-                            <td>153M</td>
-                            <td>16.2%</td> <td>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </td> </tr>
-                        <tr>
-                            <td>Thịt Gà Ta Organic</td>
-                            <td>788</td>
-                            <td>95M</td>
-                            <td>10.0%</td> <td>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <i class="far fa-star"></i>
-                        </td> </tr>
-                        <tr>
-                            <td>Cá Hồi Fillet Na Uy</td>
-                            <td>604</td>
-                            <td>181M</td>
-                            <td>19.1%</td> <td>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </td> </tr>
-                        <tr>
-                            <td>Gân Bò Úc Tươi</td>
-                            <td>1,010</td>
-                            <td>120M</td>
-                            <td>12.7%</td> <td>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                        </td> </tr>
+                        <c:forEach var="p" items="${topProducts}">
+                            <tr>
+                                <td>${p.productName}</td>
+                                <td><fmt:formatNumber value="${p.quantitySold}" /></td>
+                                <td><fmt:formatNumber value="${p.revenue}" maxFractionDigits="0"/></td>
+                                <td><fmt:formatNumber value="${p.percentage}" maxFractionDigits="1"/>%</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${p.ratingAvg > 0}">
+                                            <i class="fas fa-star" style="color: #ffc107;"></i>
+                                            <fmt:formatNumber value="${p.ratingAvg}" maxFractionDigits="1"/>/5
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="text-muted">Chưa có đánh giá</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -136,23 +109,19 @@
                     <ul class="order-status-list">
                         <li>
                             <i class="fas fa-circle status-pending"></i>
-                            Chờ Xác Nhận: <span>25 Đơn</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-circle status-processing"></i>
-                            Đang Chuẩn Bị: <span>50 Đơn</span>
+                            Chờ Xác Nhận: <span>${stats.pendingOrders} Đơn</span>
                         </li>
                         <li>
                             <i class="fas fa-circle status-shipped"></i>
-                            Đang Giao Hàng: <span>120 Đơn</span>
+                            Đang Giao Hàng: <span>${stats.shippingOrders} Đơn</span>
                         </li>
                         <li>
                             <i class="fas fa-circle status-completed"></i>
-                            Đã Giao Hàng: <span>1,085 Đơn</span>
+                            Đã Giao Hàng: <span>${stats.completedOrders} Đơn</span>
                         </li>
                         <li>
                             <i class="fas fa-circle status-cancelled"></i>
-                            Đã Hủy: <span>15 Đơn</span>
+                            Đã Hủy: <span>${stats.cancelledOrders} Đơn</span>
                         </li>
                     </ul>
                 </div>

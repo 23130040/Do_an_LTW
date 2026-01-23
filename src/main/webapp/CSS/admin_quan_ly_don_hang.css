@@ -407,12 +407,12 @@ a {
 }
 
 
-/*!* Màu trạng thái Đơn hàng *!*/
-/*.status-pending { color: #333333; }*/
+/* Màu trạng thái Đơn hàng */
 /*.status-processing { color: #333333; }*/
-/*.status-shipping { color: #333333; }*/
-/*.status-delivered { color: #333333; }*/
-/*.status-cancelled { color: #333333; }*/
+.status-pending-bg { background-color: #f39c12; color: white; padding: 5px 10px; border-radius: 4px; }
+.status-shipping-bg { background-color: #9b59b6; color: white; padding: 5px 10px; border-radius: 4px; }
+.status-delivered-bg { background-color: #2ecc71; color: white; padding: 5px 10px; border-radius: 4px; }
+.status-cancelled-bg { background-color: #e74c3c; color: white; padding: 5px 10px; border-radius: 4px; }
 
 /*!* Màu trạng thái Thanh toán *!*/
 /*.status-unpaid { background-color: var(--main-red); }*/

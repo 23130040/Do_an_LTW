@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/quan-ly-san-pham", "/quan-ly-nguoi-dung", "/quan-ly-danh-muc", "/quan-ly-tin-tuc", "/quan-ly-danh-gia",
-        "/cau-hinh-he-thong", "/quan-ly-kho", "/quan-ly-don-hang"})
+        "/cau-hinh-he-thong", "/quan-ly-kho", "/quan-ly-don-hang", "/thong-ke"})
 public class AdminFilter implements Filter {
 
     @Override

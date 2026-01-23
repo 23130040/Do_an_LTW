@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,7 +13,7 @@
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="base/admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp"/>
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
@@ -32,8 +31,11 @@
 
                     <select name="status" class="filter-select" id="statusFilter">
                         <option value="">-- Tất cả trạng thái --</option>
-                        <option value="Chờ xác nhận" ${selectedStatus == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>
-                        <option value="Đang giao" ${selectedStatus == 'Đang giao' ? 'selected' : ''}>Đang giao hàng</option>
+                        <option value="Chờ xác nhận" ${selectedStatus == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác
+                            nhận
+                        </option>
+                        <option value="Đang giao" ${selectedStatus == 'Đang giao' ? 'selected' : ''}>Đang giao hàng
+                        </option>
                         <option value="Đã giao" ${selectedStatus == 'Đã giao' ? 'selected' : ''}>Đã giao hàng</option>
                         <option value="Đã hủy" ${selectedStatus == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
                     </select>
@@ -74,12 +76,34 @@
                                 -${o.created_at.year}
                             </td>
                             <td>
-                                <fmt:formatNumber value="${o.total_price}" type="currency" currencySymbol="đ"/>
+                                <fmt:formatNumber value="${o.total_price}" type="currency" currencySymbol="đ" maxFractionDigits="0"/>
                             </td>
                             <td>
-                    <span class="badge ${o.status == 'Đã hủy' ? 'bg-danger' : 'bg-info'}">
-                            ${o.status}
-                    </span>
+                                <c:choose>
+                                    <c:when test="${o.status == 'Chờ xác nhận'}">
+            <span class="badge status-pending-bg">
+                    ${o.status}
+            </span>
+                                    </c:when>
+                                    <c:when test="${o.status == 'Đang giao'}">
+            <span class="badge status-shipping-bg">
+                    ${o.status}
+            </span>
+                                    </c:when>
+                                    <c:when test="${o.status == 'Đã giao'}">
+            <span class="badge status-delivered-bg">
+                    ${o.status}
+            </span>
+                                    </c:when>
+                                    <c:when test="${o.status == 'Đã hủy'}">
+            <span class="badge status-cancelled-bg">
+                    ${o.status}
+            </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge bg-secondary">${o.status}</span>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                             <td>
                                 <button class="btn-sm btn-action view-detail"
@@ -89,7 +113,7 @@
                                         data-customer="${o.user.name}"
                                         data-phone="${o.user.phone}"
                                         data-address="${o.address.address}"
-                                        data-total="<fmt:formatNumber value='${o.total_price}' type='currency' currencySymbol='đ'/>">
+                                        data-total="<fmt:formatNumber value='${o.total_price}' type='currency' currencySymbol='đ' maxFractionDigits='0'/>">
                                     <i class="fas fa-eye"></i>
                                 </button>
                                 <c:if test="${o.status != 'Đã hủy'}">
@@ -103,7 +127,8 @@
             </div>
             <div class="pagination">
                 <c:if test="${currentPage > 1}">
-                    <a href="?page=${currentPage - 1}&status=${selectedStatus}&search=${searchKeyword}">&laquo; Trước</a>
+                    <a href="?page=${currentPage - 1}&status=${selectedStatus}&search=${searchKeyword}">&laquo;
+                        Trước</a>
                 </c:if>
 
                 <c:forEach begin="1" end="${totalPages}" var="i">
@@ -150,7 +175,7 @@
             <div class="summary-info">
                 <div class="summary-item">
                     <p class="summary-label">Trạng thái Đơn hàng:</p>
-                    <p id="modalOrderStatus" class="status-badge"></p> </div>
+                    <p id="modalOrderStatus" class="status-badge"></p></div>
                 <div class="summary-item">
                     <p class="summary-label">Ngày đặt:</p>
                     <p id="modalOrderDate"></p>

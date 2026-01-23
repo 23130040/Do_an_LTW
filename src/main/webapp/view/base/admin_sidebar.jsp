@@ -4,7 +4,7 @@
     <nav class="sidebar-nav">
         <ul>
             <li class="${param.active == 'statistic' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/view/admin_thong_ke.jsp">Thống kê và Phân tích</a>
+                <a href="${pageContext.request.contextPath}/thong-ke">Thống kê và Phân tích</a>
             </li>
 
             <li class="${param.active == 'warehouse' ? 'active' : ''}">

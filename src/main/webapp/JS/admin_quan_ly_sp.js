@@ -88,7 +88,7 @@
         }
     });
     function editProduct(id) {
-        fetch(`${window.APP_CONTEXT}/quanlysanpham?action=getEditData&id=${id}`)
+        fetch(`${window.APP_CONTEXT}/quan-ly-san-pham?action=getEditData&id=${id}`)
             .then(res => {
                 if (!res.ok) throw new Error("Server error");
                 return res.json();
@@ -184,7 +184,7 @@
         params.append('action', 'addUnit');
         params.append('name', val);
 
-        fetch('quanlysanpham', {
+        fetch('quan-ly-san-pham', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -210,12 +210,12 @@
     };
     function deleteProduct(button, id) {
         if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
-            window.location.href = `quanlysanpham?action=delete&id=${id}`;
+            window.location.href = `quan-ly-san-pham?action=delete&id=${id}`;
         }
     }
     function deleteAndKeepPage(id, page) {
         if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
-            window.location.href = `quanlysanpham?action=delete&id=${id}&page=${page}`;
+            window.location.href = `quan-ly-san-pham?action=delete&id=${id}&page=${page}`;
         }
     }
     const searchInput = document.getElementById('searchInput');
