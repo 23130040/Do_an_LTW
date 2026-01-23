@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-    private User user;
     private Map<Integer, CartItem> map;
 
     public Cart() {
@@ -27,7 +26,7 @@ public class Cart {
         return map.remove(id) == null;
     }
 
-    public int total() {
+    public int getTotal() {
         int total = 0;
         for (CartItem cartItem : map.values()) {
             total += (cartItem.getQuantity() * cartItem.getPrice());
@@ -35,7 +34,7 @@ public class Cart {
         return total;
     }
 
-    public Collection<CartItem> list() {
+    public Collection<CartItem> getList() {
         return map.values();
     }
 }

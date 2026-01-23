@@ -63,6 +63,10 @@ main {
     position: relative;
 }
 
+.home main.main-content {
+    padding-top: 0;
+}
+
 .home .menubar {
     position: absolute;
     top: 0;
@@ -144,6 +148,7 @@ main {
 .home .menuitem-right i {
     font-size: 18px;
 }
+
 /************************* MAIN *******************************/
 
 /************************* SẢN PHẨM NỐI BẬT **********************/
@@ -176,7 +181,6 @@ main {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 6px 15px #e00000;
 }
-
 
 .badge-new {
     position: absolute;
