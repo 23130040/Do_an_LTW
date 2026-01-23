@@ -9,13 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.sql.DriverManager.getConnection;
-
 public class NewsDAO extends BaseDAO<News> {
 
     @Override
     protected void loadAll() {
-
     }
 
     @Override
@@ -28,6 +25,7 @@ public class NewsDAO extends BaseDAO<News> {
         news.setContent(rs.getString("content"));
         news.setStatus(rs.getString("status"));
         news.setCreated_at(rs.getDate("created_at").toLocalDate());
+
         if (rs.getDate("updated_at") != null) {
             news.setUpdated_at(rs.getDate("updated_at").toLocalDate());
         }
@@ -35,7 +33,7 @@ public class NewsDAO extends BaseDAO<News> {
     }
 
     @Override
-    public boolean insert(News news) throws SQLException, ClassNotFoundException {
+    public boolean insert(News news) {
         return false;
     }
 
@@ -52,23 +50,16 @@ public class NewsDAO extends BaseDAO<News> {
     @Override
     public News findById(int id) {
         String sql = "SELECT * FROM news WHERE id = ?";
-        Connection conn = null;
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, id);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return mapResultSetToEntity(rs);
-                }
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return mapResultSetToEntity(rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
         }
         return null;
     }
@@ -77,60 +68,26 @@ public class NewsDAO extends BaseDAO<News> {
     public List<News> findAll() {
         List<News> list = new ArrayList<>();
         String sql = "SELECT * FROM news";
-        Connection conn = null;
 
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-                while (rs.next()) {
-                    list.add(mapResultSetToEntity(rs));
-                }
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
         }
         return list;
     }
 
-
-    public List<News> findLatest(int limit) {
-        List<News> list = new ArrayList<>();
-        String sql = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?";
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, limit);
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    list.add(mapResultSetToEntity(rs));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
-        }
-        return list;
-    }
     public List<News> findByPage(int page) {
         List<News> list = new ArrayList<>();
-
         int pageSize = 4;
         int offset = (page - 1) * pageSize;
 
-        String sql =
-                "SELECT * FROM news " +
-                        "ORDER BY created_at DESC " +
-                        "LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM news ORDER BY created_at DESC LIMIT ? OFFSET ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -145,7 +102,6 @@ public class NewsDAO extends BaseDAO<News> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
@@ -167,4 +123,22 @@ public class NewsDAO extends BaseDAO<News> {
         return 1;
     }
 
+    public List<News> findLatest(int limit) {
+        List<News> list = new ArrayList<>();
+        String sql = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
