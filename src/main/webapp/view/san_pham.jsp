@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!-- ========== SAN PHAM PAGE  ========== -->
+<!-- ========== SAN PHAM PAGE ========== -->
 <div class="san-pham-page">
 
     <div class="page-container">
@@ -88,20 +88,19 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-
-                            <button ${item.current_stock == 0 ? "disabled" : ""}>
-                                THÊM VÀO GIỎ
-                            </button>
-
+                            <form action="them-vao-gio" method="post">
+                                <input type="hidden" name="itemId" value="${item.id}">
+                                <button type="submit" ${item.current_stock == 0 ? "disabled" : ""}>
+                                    THÊM VÀO GIỎ
+                                </button>
+                            </form>
                         </div>
                     </c:forEach>
 
                     <c:if test="${empty items}">
                         <p style="padding:20px">Không có sản phẩm.</p>
                     </c:if>
-
                 </div>
-
             </div>
         </section>
     </div>

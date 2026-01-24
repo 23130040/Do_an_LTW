@@ -26,10 +26,10 @@ public class Cart {
         return map.remove(id) == null;
     }
 
-    public int getTotal() {
-        int total = 0;
+    public double getTotal() {
+        double total = 0;
         for (CartItem cartItem : map.values()) {
-            total += (cartItem.getQuantity() * cartItem.getPrice());
+            total += cartItem.getSubTotal();
         }
         return total;
     }

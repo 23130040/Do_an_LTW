@@ -6,16 +6,11 @@ public class CartItem {
     private int id;
     private Item item;
     private int quantity;
-    private int price;
 
-    public CartItem() {
-    }
-
-    public CartItem(int id, Item item, int quantity, int price) {
+    public CartItem(int id, Item item, int quantity) {
         this.id = id;
         this.item = item;
         this.quantity = quantity;
-        this.price = price;
     }
 
     public void quantityUp() {
@@ -51,11 +46,7 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    public double getSubTotal() {
+        return this.quantity * this.item.getPrice();
     }
 }
