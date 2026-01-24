@@ -86,11 +86,13 @@ public class NewsServlet extends HttpServlet {
         n.setPicture_url("default.jpg");
 
         if (idParam == null || idParam.isEmpty()) {
-            try { newsDAO.insert(n); } catch (Exception e) { e.printStackTrace(); }
+            try { newsDAO.insert(n); } catch (Exception e) { e.printStackTrace(); response.sendRedirect("quan-ly-tin-tuc"); }
         } else {
             newsDAO.update(n, Integer.parseInt(idParam));
+            String page = request.getParameter("page");
+            response.sendRedirect("quan-ly-tin-tuc?page=" + (page != null ? page : "1"));
         }
-        response.sendRedirect("quan-ly-tin-tuc");
+
     }
 
     private void deleteNews(HttpServletRequest request, HttpServletResponse response) throws IOException {

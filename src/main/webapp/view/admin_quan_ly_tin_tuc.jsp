@@ -134,6 +134,7 @@
             <h3><span id="modal-title-article">Tạo</span> Bài Viết Mới</h3>
             <form class="article-form" action="quan-ly-tin-tuc?action=save" method="post">
                 <input type="hidden" name="id" id="news-id">
+                <input type="hidden" name="page" value="${currentPage}">
                 <div class="form-section full-col">
                     <label>Tiêu đề bài viết:</label>
                     <input type="text" name="title" id="news-title" required>

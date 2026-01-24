@@ -13,6 +13,7 @@ public class Item {
     private int origin_id;
     private int unit_id;
     private double price;
+    private double finalPrice;
     private double discount;
     private int current_stock;
     private int min_stock;
@@ -25,7 +26,7 @@ public class Item {
     private String unitName;
 
 
-    public Item(int id, String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock, LocalDateTime created_at, LocalDateTime updated_at) {
+    public Item(int id, String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, double finalPrice, int current_stock, int min_stock, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.sku = sku;
         this.name = name;
@@ -40,8 +41,9 @@ public class Item {
         this.min_stock = min_stock;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.finalPrice = finalPrice;
     }
-    public Item(String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, int current_stock, int min_stock) {
+    public Item(String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, double finalPrice,int current_stock, int min_stock) {
         this.name = name;
         this.sku = sku;
         this.short_description = short_description;
@@ -53,6 +55,7 @@ public class Item {
         this.discount = discount;
         this.current_stock = current_stock;
         this.min_stock = min_stock;
+        this.finalPrice = finalPrice;
     }
 
     public Item() {
@@ -196,5 +199,9 @@ public class Item {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public void setFinalPrice(double finalPrice) {
+        this.finalPrice = finalPrice;
     }
 }

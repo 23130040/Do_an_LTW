@@ -28,7 +28,9 @@ public class OrderServlet extends HttpServlet {
                 page = Integer.parseInt(pageParam);
                 if (page < 1) page = 1;
             } catch (NumberFormatException ignored) {}
-        }
+        }else{
+
+
 
         List<Order> orders = orderDAO.searchAndFilter(search, status, page, pageSize);
 
@@ -42,6 +44,7 @@ public class OrderServlet extends HttpServlet {
         request.setAttribute("selectedStatus", status);
 
         request.getRequestDispatcher("/view/admin_quan_ly_don_hang.jsp").forward(request, response);
+        }
     }
 
     @Override

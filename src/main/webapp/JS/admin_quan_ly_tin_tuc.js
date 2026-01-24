@@ -80,7 +80,6 @@ function editNews(id) {
 
 function deleteAndKeepPage(id, currentPage) {
     if(confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
-        // Thêm action=delete
         window.location.href = `quan-ly-tin-tuc?action=delete&id=${id}&page=${currentPage}`;
     }
 }

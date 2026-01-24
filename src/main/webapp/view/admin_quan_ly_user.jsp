@@ -53,6 +53,7 @@
             </div>
 
             <div class="user-table-container">
+                <c:set var="currentUser" value="${sessionScope.user}" />
                 <table class="user-table">
                     <thead>
                     <tr>
@@ -61,6 +62,7 @@
                         <th>Thông tin liên hệ</th>
                         <th>Phân quyền</th>
                         <th>Lịch sử mua hàng</th>
+                        <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
                     </thead>
@@ -84,16 +86,39 @@
                                 </c:choose>
                             </td>
                             <td>
-                                <button class="btn-sm btn-info view-history"
-                                        data-id="${u.id}">
-                                    <i class="fas fa-history"></i> Xem
-                                </button>
+                                <c:choose>
+                                    <c:when test="${u.role eq 'customer'}">
+                                        <button class="btn-sm btn-info view-history"
+                                                data-id="${u.id}">
+                                            <i class="fas fa-history"></i> Xem
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="text-muted">--</span>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                             <td>
-                                <button class="btn-icon edit-btn" onclick="editUser(${u.id})"><i
-                                        class="fas fa-edit"></i></button>
-                                <button class="btn-icon delete-btn" onclick="deleteUser(${u.id})"><i
-                                        class="fas fa-trash-alt"></i></button>
+                                <label class="switch">
+                                    <input type="checkbox"
+                                        ${u.status ? "checked" : ""}
+                                           onchange="window.toggleStatus(${u.id}, this.checked)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <c:if test="${currentUser == null || currentUser.id != u.id}">
+                                    <button class="btn-icon edit-btn" onclick="editUser(${u.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete-btn" onclick="deleteUser(${u.id})">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </c:if>
+
+                                <c:if test="${currentUser != null && currentUser.id == u.id}">
+                                    <span class="text-muted">Bạn</span>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
@@ -161,8 +186,8 @@
               method="POST">
 
             <input type="hidden" name="action" id="formAction">
-
             <input type="hidden" id="userIdHidden" name="id" value="">
+            <input type="hidden" name="page" value="${currentPage}">
 
             <div class="form-section left-col">
                 <label for="userName">Họ và tên:</label>

@@ -9,6 +9,7 @@ public class Origin {
     private String description;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    private int totalItems;
 
     public Origin(int id, String name, String description, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
@@ -65,5 +66,13 @@ public class Origin {
 
     public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getTotalItems() {
+        return totalItems;
+    }
+
+    public void setTotalItems(int totalItems) {
+        this.totalItems = totalItems;
     }
 }

@@ -109,13 +109,11 @@ public class ItemServlet extends HttpServlet {
             int windowSize = 5;
             int half = windowSize / 2;
 
-// Tính startPage sao cho currentPage nằm giữa
             int startPage = page - half;
             if (startPage < 1) {
                 startPage = 1;
             }
 
-// Chặn biên phải để luôn thấy trang cuối
             if (startPage + windowSize - 1 > totalPages) {
                 startPage = Math.max(1, totalPages - windowSize + 1);
             }
@@ -232,6 +230,10 @@ public class ItemServlet extends HttpServlet {
             throws IOException {
 
         try {
+            String currentPage = request.getParameter("currentPage");
+            if (currentPage == null || currentPage.isEmpty()) {
+                currentPage = "1";
+            }
             int id = Integer.parseInt(request.getParameter("productId"));
             ItemDAO itemDAO = new ItemDAO();
             Item item = itemDAO.findById(id);
@@ -264,7 +266,7 @@ public class ItemServlet extends HttpServlet {
                 }
             }
 
-            response.sendRedirect("quan-ly-san-pham");
+            response.sendRedirect("quan-ly-san-pham?page=" + currentPage);
 
         } catch (Exception e) {
             e.printStackTrace();

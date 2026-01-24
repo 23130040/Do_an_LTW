@@ -84,15 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.closeUserModal = () => userModal.style.display = "none";
 
-    function fillUserForm(u) {
-        userForm.userIdHidden.value = u.id || "";
-        userForm.userName.value = u.name || "";
-        userForm.userEmail.value = u.email || "";
-        userForm.userPhone.value = u.phone || "";
-        userForm.userRole.value = u.role || "";
-        userForm.userPassword.value = "";
-        userForm.userConfirmPassword.value = "";
-    }
     window.editUser = function (id) {
 
         fetch(USER_API_URL + '?action=edit&id=' + id)
@@ -153,10 +144,9 @@ document.addEventListener("DOMContentLoaded", () => {
         })
             .then(response => response.text())
             .then(data => {
-                if (data.includes("thành công")) {
+                if (data.trim() === "SUCCESS") {
                     deleteModal.hide();
                     showToast("Xóa người dùng thành công", "success");
-
                     setTimeout(() => {
                         location.reload();
                     }, 500);
@@ -241,6 +231,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
+        const phone = userForm.userPhone.value.trim();
+
+        if (!phone) {
+            return showToast("Số điện thoại không được để trống", "warning");
+        }
+
+        if (!isValidPhone(phone)) {
+            return showToast(
+                "Số điện thoại phải có 10 số, bắt đầu bằng 0",
+                "warning"
+            );
+        }
 
         fetch(USER_API_URL, {
             method: "POST",
@@ -250,6 +252,16 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(r => r.text())
             .then(r => {
                 if (r.trim() === "SUCCESS") {
+                    showToast("Thành công", "success");
+                    setTimeout(() => location.reload(), 800);
+                }
+                if (r === "PHONE_REQUIRED") {
+                    showToast("Số điện thoại không được để trống", "warning");
+                } else if (r === "PHONE_INVALID") {
+                    showToast("Số điện thoại phải có 10 số và bắt đầu bằng 0", "warning");
+                } else if (r === "PHONE_EXISTS") {
+                    showToast("Số điện thoại đã tồn tại", "danger");
+                } else if (r === "SUCCESS") {
                     showToast("Thành công", "success");
                     setTimeout(() => location.reload(), 800);
                 } else {
@@ -424,4 +436,36 @@ function showToast(msg, type = "info") {
     toastEl.className = `toast text-bg-${type}`;
     document.getElementById("toastMessage").innerText = msg;
     new bootstrap.Toast(toastEl, {delay: 3000}).show();
+}
+
+window.toggleStatus = function(userId, isChecked) {
+    const params = new URLSearchParams();
+    params.append('action', 'updateStatus');
+    params.append('id', userId);
+    params.append('status', isChecked);
+
+    fetch('quan-ly-nguoi-dung', {
+        method: 'POST',
+        body: params,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then(response => response.text())
+        .then(data => {
+            if (data.trim() === "SUCCESS") {
+                showToast("Cập nhật trạng thái thành công", "success");
+            } else {
+                showToast("Lỗi khi cập nhật trạng thái", "danger");
+                setTimeout(() => location.reload(), 1000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showToast("Lỗi kết nối máy chủ", "danger");
+        });
+};
+function isValidPhone(phone) {
+    const phoneRegex = /^0\d{9}$/;
+    return phoneRegex.test(phone);
 }
