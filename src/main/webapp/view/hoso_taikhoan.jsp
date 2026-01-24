@@ -16,7 +16,7 @@
             <div class="profile-form group">
                 <label class="profile-form label">Email</label>
                 <div class="profile-form value-wrapper">
-                    <span class="profile-form static-value">${user.email}</span>
+                    <span class="profile-form static-value" id="email">${user.email}</span>
                     <a href="#" class="profile-form change-btn" id="open-change-email-modal">Thay
                         Đổi</a>
                 </div>
@@ -24,7 +24,7 @@
             <div class="profile-form group">
                 <label class="profile-form label">Số điện thoại</label>
                 <div class="profile-form value-wrapper">
-                    <span class="profile-form static-value">(+84) ${user.phone}</span>
+                    <span class="profile-form static-value" id="phone">${user.phone}</span>
                     <a href="#" class="profile-form change-btn" id="open-change-phone-number">Thay
                         Đổi</a>
                 </div>
@@ -46,7 +46,7 @@
             <div class="profile-form group">
                 <label class="profile-form label">Ngày sinh</label>
                 <div class="profile-form value-wrapper">
-                    <span class="profile-form static-value">${birthday}</span>
+                    <span class="profile-form static-value" id="birthday">${birthday}</span>
                     <a href="#" class="profile-form change-btn" id="open-change-birthday-btn">Thay Đổi</a>
                 </div>
             </div>
@@ -70,7 +70,7 @@
         <div class="confirm-form">
             <div class="message">
                 <i class="fa-solid fa-circle-check"></i>
-                <span id="info-confirm">Lưu thông tin thành công</span>
+                <span class="info-confirm">Lưu thông tin thành công</span>
             </div>
             <span class="confirm-btn">
                     <button id="confirm-save-info-btn">OK</button>
@@ -78,21 +78,34 @@
         </div>
     </div>
 </div>
-
+<div id="confirm-change-email" class="modal">
+    <div class="confirm-form">
+        <div class="message">
+            <i class="fa-solid fa-exclamation"></i>
+            <span class="info-confirm">Email có sự thay đổi. Bạn vui lòng xác thực địa chỉ email mới và đăng nhập lại.</span>
+            <span class="info-confirm italic">Link xác thực đã được gửi đến địa chỉ email <span
+                    id="new-email"></span></span>
+        </div>
+        <span class="confirm-btn">
+            <button id="confirm-save-info-btn">OK</button>
+        </span>
+    </div>
+</div>
 <div id="change-email" class="modal">
-    <div class="modal-content">
+    <form class="modal-content">
         <span class="close-btn" id="close-change-email-modal">&times;</span>
-        <div class="email-form">
+        <form class="day-form" action="${pageContext.request.contextPath}/tai-khoan?action=update-emal" method="post">
             <div class="form-input">
-                <label for="email" class="profile-form label"><i class="fa-solid fa-envelope"></i></label>
-                <input type="email" id="email" name="email" class="profile-form input-field"
+                <label for="newEmail" class="profile-form label"><i class="fa-solid fa-envelope"></i></label>
+                <input type="email" id="newEmail" name="newEmail" class="profile-form input-field"
                        placeholder="Nhập địa chỉ Email mới">
             </div>
+            <div class="error-message" id="email-error"></div>
             <span class="confirm-btn">
-                    <button id="save-email-btn">Lưu</button>
-                </span>
-        </div>
-    </div>
+                <button id="save-email-btn">Lưu</button>
+            </span>
+        </form>
+</div>
 </div>
 
 <div id="change-phone-number" class="modal">
@@ -122,7 +135,7 @@
             </div>
             <span class="confirm-btn">
                     <button id="save-birthday-btn">Lưu</button>
-                </span>
+            </span>
         </div>
     </div>
 </div>
@@ -176,6 +189,115 @@
             if (e.target === document.getElementById("change-birthday")) {
                 closeModal("change-birthday");
             }
+        });
+
+        const originalEmail = "${user.email}";
+        const tempUser = {
+            name: "${user.name}",
+            email: "${user.email}",
+            phone: "${user.phone}",
+            gender: "${user.gender}",
+            birthday: "${birthday}"
+        };
+
+        document.getElementById("name-input")?.addEventListener("input", e => {
+            tempUser.name = e.target.value.trim();
+        });
+
+        document.getElementById("save-email-btn")?.addEventListener("click", e => {
+            e.preventDefault();
+            const emailInput = document.getElementById("newEmail");
+            const errorBox = document.getElementById("email-error");
+            const email = emailInput.value.trim();
+            if (!email) {
+                errorBox.innerText = "Email không được để trống";
+                return;
+            }
+            errorBox.innerText = "";
+            fetch("${pageContext.request.contextPath}/tai-khoan?action=check-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) {
+                        errorBox.innerText = data.message;
+                        return;
+                    }
+                    tempUser.email = email;
+                    document.getElementById("email").innerText = email;
+                    closeModal("change-email");
+                })
+                .catch(() => {
+                    errorBox.innerText = "Không thể kiểm tra email";
+                });
+        });
+
+
+        document.getElementById("save-phone-number-btn")?.addEventListener("click", e => {
+            e.preventDefault();
+            const phone = document.getElementById("phone-number").value.trim();
+            if (!phone) return;
+
+            tempUser.phone = phone;
+            document.getElementById("phone").innerText = phone;
+
+            closeModal("change-phone-number");
+        });
+
+        document.querySelectorAll("input[name='gender']").forEach(radio => {
+            radio.addEventListener("change", e => {
+                tempUser.gender = e.target.value;
+            });
+        });
+
+        document.getElementById("save-birthday-btn")?.addEventListener("click", e => {
+            e.preventDefault();
+            const birthday = document.getElementById("birthDay").value;
+            if (!birthday) return;
+            tempUser.birthday = birthday;
+            document.getElementById("birthday").innerText =
+                new Date(birthday).toLocaleDateString("vi-VN");
+            closeModal("change-birthday");
+        });
+
+
+        document.getElementById("saveInfoBtn")?.addEventListener("click", () => {
+
+            const emailChanged = tempUser.email !== originalEmail;
+
+            fetch("${pageContext.request.contextPath}/tai-khoan", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    action: "updateProfile",
+                    emailChanged: emailChanged,
+                    name: tempUser.name,
+                    email: tempUser.email,
+                    phone: tempUser.phone,
+                    gender: tempUser.gender,
+                    birthday: tempUser.birthday
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert(data.message || "Cập nhật thất bại");
+                        return;
+                    }
+
+                    if (emailChanged) {
+                        document.getElementById("new-email").innerText = tempUser.email;
+                        openModal("confirm-change-email");
+                    } else {
+                        openModal("confirm-save-info");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Có lỗi xảy ra");
+                });
         });
     });
 

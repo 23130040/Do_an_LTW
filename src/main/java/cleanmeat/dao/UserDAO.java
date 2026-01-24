@@ -401,4 +401,25 @@ public class UserDAO extends BaseDAO<User> {
         }
         return false;
     }
+
+    public boolean updateProfile(int id, String name, String email, String phone, String gender, LocalDate birthday) {
+        String sql = """
+                    UPDATE user
+                    SET name=?, email=?, phone=?, gender=?, birthday=?, updated_at=NOW()
+                    WHERE id=?
+                """;
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, gender);
+            ps.setDate(5, birthday != null ? Date.valueOf(birthday) : null);
+            ps.setInt(6, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
