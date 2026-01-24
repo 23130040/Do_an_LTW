@@ -10,7 +10,6 @@ a {
 }
 
 main {
-    margin-top: 70px;
     background-color: #f8f8f8;
 }
 
@@ -290,4 +289,49 @@ main .contents .summary .container .footer button:hover {
 
 #delivery-message p {
     line-height: 1.5;
+}
+
+/* ===== EMPTY CART ===== */
+.empty-cart-row td {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.empty-cart {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 40px 30px;
+}
+
+.empty-cart::before {
+    content: "🛒";
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.empty-cart p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 24px;
+}
+
+.buy-now-btn {
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #e00000, rgba(255, 99, 71, 0.93));
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.buy-now-btn:hover {
+    transform: translateY(-2px);
+}
+
+.buy-now-btn:active {
+    transform: scale(0.97);
 }

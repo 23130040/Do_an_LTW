@@ -27,7 +27,7 @@
                             </td>
                             <td class="order-table-item price">
                                 <span>cartItem.price</span>
-                                <span class="detail">đ/${cartItem.item}</span>
+                                <span class="detail">đ</span>
                             </td>
                             <td class="order-table-item amount">
                                 <div class="amount-wrapper">
@@ -49,10 +49,16 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <div class="none">
-                        <p>Không có sản phẩm trong giỏ hàng</p>
-                        <button type="button">Mua hàng ngay</button>
-                    </div>
+                    <tr class="empty-cart-row">
+                        <td colspan="5">
+                            <div class="empty-cart">
+                                <p>Không có sản phẩm trong giỏ hàng</p>
+                                <a href="san-pham">
+                                    <button class="buy-now-btn">Mua hàng ngay</button>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
                 </c:otherwise>
             </c:choose>
         </table>

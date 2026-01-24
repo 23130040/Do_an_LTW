@@ -6,7 +6,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 100000;
     display: flex;
     align-items: center;
 }
@@ -76,9 +76,11 @@
     transition: 0.25s;
     padding: 30px 15px;
 }
-#shopping-cart a{
+
+#shopping-cart a {
     color: white;
 }
+
 #open-searchBar:hover, #close-searchBar.active:hover, #shopping-cart a:hover, #user-setting:hover .user i {
     color: #e00000 !important;
     transition: color 0.25s;
@@ -109,18 +111,19 @@
     font-size: 30px;
     color: white;
 }
+
 /* ===== USER MENU ===== */
-.user-menu-wrapper{
+.user-menu-wrapper {
     position: relative;
 }
 
-.user-menu-wrapper .user{
+.user-menu-wrapper .user {
     font-size: 22px;
     color: white;
     cursor: pointer;
 }
 
-.user-menu{
+.user-menu {
     position: absolute;
     top: 80%;
     right: 0;
@@ -129,14 +132,14 @@
     padding: 8px 0;
     width: 210px;
     display: none;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-.user-menu li{
+.user-menu li {
     list-style: none;
 }
 
-.user-menu a{
+.user-menu a {
     color: #333 !important;
     text-decoration: none;
     display: block;
@@ -147,18 +150,28 @@
     border-bottom: 1px solid #eee;
 }
 
-.user-menu li:last-child a{
+.user-menu li:last-child a {
     border-bottom: none;
 }
 
-.user-menuitem a:hover{
+.user-menuitem a:hover {
     background-color: #e00000;
     color: white !important;
 }
 
-.user-menu-wrapper:hover .user-menu{
+.user-menu-wrapper:hover .user-menu {
     display: block;
 }
+
 main.main-content {
     padding-top: 70px;
 }
+
+.login-link {
+    color: white;
+}
+
+.login-link:hover {
+    color: #e00000;
+}
+
