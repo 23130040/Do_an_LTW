@@ -92,7 +92,7 @@
     </div>
 </div>
 <div id="change-email" class="modal">
-    <form class="modal-content">
+    <div class="modal-content">
         <span class="close-btn" id="close-change-email-modal">&times;</span>
         <form class="day-form" action="${pageContext.request.contextPath}/tai-khoan?action=update-emal" method="post">
             <div class="form-input">
@@ -105,7 +105,7 @@
                 <button id="save-email-btn">Lưu</button>
             </span>
         </form>
-</div>
+    </div>
 </div>
 
 <div id="change-phone-number" class="modal">
@@ -216,8 +216,8 @@
             errorBox.innerText = "";
             fetch("${pageContext.request.contextPath}/tai-khoan?action=check-email", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email })
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({email})
             })
                 .then(res => res.json())
                 .then(data => {
@@ -271,7 +271,7 @@
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    action: "updateProfile",
+                    action: "update-profile",
                     emailChanged: emailChanged,
                     name: tempUser.name,
                     email: tempUser.email,

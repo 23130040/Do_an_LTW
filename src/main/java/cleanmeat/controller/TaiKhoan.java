@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "tai-khoan", value = "/tai-khoan")
+@MultipartConfig
 public class TaiKhoan extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -79,15 +80,14 @@ public class TaiKhoan extends HttpServlet {
         String action = request.getParameter("action");
         AddressService addressService = new AddressService();
         UserService userService = new UserService();
-        JsonObject body = null;
 
         if (contentType != null && contentType.equals("application/json")) {
             String json = request.getReader().lines().reduce("", (a, b) -> a + b);
-            body = JsonParser.parseString(json).getAsJsonObject();
-
+            JsonObject body = JsonParser.parseString(json).getAsJsonObject();
             if (body.has("action")) {
                 action = body.get("action").getAsString();
             }
+            request.setAttribute("jsonBody", body);
         }
         try {
             if ("add".equals(action)) {
@@ -115,11 +115,16 @@ public class TaiKhoan extends HttpServlet {
                 String oldPassword = request.getParameter("currentPassword");
                 String newPassword = request.getParameter("newPassword");
                 String confirmPassword = request.getParameter("confirmPassword");
-                userService.changePassword(user.getId(), oldPassword, newPassword, confirmPassword);
-                response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=doi-mat-khau");
+                try {
+                    userService.changePassword(user.getId(), oldPassword, newPassword, confirmPassword);
+                    response.getWriter().write("{\"success\": true}");
+                } catch (RuntimeException e) {
+                    response.getWriter().write("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
+                }
+                return;
             } else if ("delete-account".equals(action)) {
                 String json = request.getReader().lines().reduce("", (acc, line) -> acc + line);
-                body = JsonParser.parseString(json).getAsJsonObject();
+                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
                 String password = body.get("password").getAsString();
                 try {
                     boolean success = userService.deleteAccount(user.getId(), password);
@@ -135,9 +140,9 @@ public class TaiKhoan extends HttpServlet {
                 }
                 return;
             } else if ("check-email".equals(action)) {
+                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
                 String email = body.get("email").getAsString();
                 PrintWriter out = response.getWriter();
-
                 try {
                     userService.isValidEmail(email);
                     out.write("{\"success\": true}");
@@ -146,6 +151,7 @@ public class TaiKhoan extends HttpServlet {
                 }
                 return;
             } else if ("update-profile".equals(action)) {
+                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
                 String name = body.get("name").getAsString();
                 String email = body.get("email").getAsString();
                 String phone = body.get("phone").getAsString();
