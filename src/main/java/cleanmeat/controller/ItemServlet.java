@@ -24,7 +24,8 @@ import java.util.List;
 
 @WebServlet(name = "ItemServlet", value = "/quan-ly-san-pham")
 public class ItemServlet extends HttpServlet {
-
+    ItemDAO itemDAO = new ItemDAO();
+    UnitDAO unitDAO = new UnitDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -97,7 +98,8 @@ public class ItemServlet extends HttpServlet {
             try {
                 page = Integer.parseInt(pageParam);
                 if (page < 1) page = 1;
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
 
         List<Item> items = itemDAO.searchAndFilter(search, category, origin, page, pageSize);
@@ -165,11 +167,12 @@ public class ItemServlet extends HttpServlet {
             handleUpdateItem(request, response);
         }
     }
+
     private void handleAddItem(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
         try {
-            ItemDAO itemDAO = new ItemDAO();
+
             Item item = new Item();
 
             item.setName(request.getParameter("name"));
@@ -177,7 +180,7 @@ public class ItemServlet extends HttpServlet {
             item.setLong_description(request.getParameter("longDescription"));
             item.setCategory_id(Integer.parseInt(request.getParameter("categoryId")));
             item.setOrigin_id(Integer.parseInt(request.getParameter("originId")));
-            item.setUnit_id(Integer.parseInt(request.getParameter("unitId")));
+            item.setUnit(unitDAO.findById(Integer.parseInt(request.getParameter("unitId"))));
             item.setPrice(Double.parseDouble(request.getParameter("price")));
             item.setDiscount(Double.parseDouble(request.getParameter("discount")));
             item.setSku(request.getParameter("sku"));
@@ -224,7 +227,7 @@ public class ItemServlet extends HttpServlet {
             item.setLong_description(request.getParameter("longDescription"));
             item.setCategory_id(Integer.parseInt(request.getParameter("categoryId")));
             item.setOrigin_id(Integer.parseInt(request.getParameter("originId")));
-            item.setUnit_id(Integer.parseInt(request.getParameter("unitId")));
+            item.setUnit(unitDAO.findById(Integer.parseInt(request.getParameter("unitId"))));
             item.setPrice(Double.parseDouble(request.getParameter("price")));
             item.setDiscount(Double.parseDouble(request.getParameter("discount")));
             item.setMin_stock(Integer.parseInt(request.getParameter("minStock")));

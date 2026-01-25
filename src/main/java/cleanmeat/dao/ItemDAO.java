@@ -2,6 +2,7 @@ package cleanmeat.dao;
 
 import cleanmeat.model.Item;
 import cleanmeat.model.ItemImage;
+import cleanmeat.model.Unit;
 import cleanmeat.model.User;
 
 import java.sql.Connection;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAO extends BaseDAO<Item> {
+
+    UnitDAO unitDAO = new UnitDAO();
 
     @Override
     protected void loadAll() {
@@ -35,7 +38,8 @@ public class ItemDAO extends BaseDAO<Item> {
         item.setDiscount(rs.getDouble("discount"));
         item.setCurrent_stock(rs.getInt("current_stock"));
         item.setMin_stock(rs.getInt("min_stock"));
-        item.setUnit_id(rs.getInt("unit_id"));
+        Unit unit = unitDAO.findById(rs.getInt("unit_id"));
+        item.setUnit(unit);
         item.setCategoryName(rs.getString("category_name"));
         item.setOriginName(rs.getString("origin_name"));
         item.setUnitName(rs.getString("unit_name"));
@@ -69,7 +73,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 ps.setString(4, item.getLong_description());
                 ps.setInt(5, item.getCategory_id());
                 ps.setInt(6, item.getOrigin_id());
-                ps.setInt(7, item.getUnit_id());
+                ps.setInt(7, item.getUnit().getId());
                 ps.setDouble(8, item.getPrice());
                 ps.setDouble(9, item.getDiscount());
                 ps.setInt(10, item.getMin_stock());
@@ -304,7 +308,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 ps.setString(4, item.getLong_description());
                 ps.setInt(5, item.getCategory_id());
                 ps.setInt(6, item.getOrigin_id());
-                ps.setInt(7, item.getUnit_id());
+                ps.setInt(7, item.getUnit().getId());
                 ps.setDouble(8, item.getPrice());
                 ps.setDouble(9, item.getDiscount());
                 ps.setInt(10, item.getCurrent_stock());
