@@ -175,3 +175,35 @@ main.main-content {
     color: #e00000;
 }
 
+#count-item {
+    position: absolute;
+    top: -1.5px;
+    right: -4px;
+    background-color: #e00000; /* Màu đỏ nổi bật */
+    color: white; /* Màu chữ trắng */
+    font-size: 9px; /* Chữ nhỏ lại */
+    font-weight: bold;
+    min-width: 9px; /* Đảm bảo hình tròn/bo góc đều */
+    height: 9px;
+    border-radius: 50%; /* Tạo hình tròn */
+    display: flex; /* Căn giữa số bên trong */
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    pointer-events: none;
+    z-index: 10000000;
+}
+
+.cart-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    text-decoration: none;
+}
+
+.cart-link i {
+    font-size: 22px; /* Chỉnh kích thước icon vừa vặn */
+    color: white;
+}

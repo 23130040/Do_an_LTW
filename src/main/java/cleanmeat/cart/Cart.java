@@ -23,7 +23,7 @@ public class Cart {
     }
 
     public boolean removeCartItem(int id) {
-        return map.remove(id) == null;
+        return map.remove(id) != null;
     }
 
     public double getTotal() {

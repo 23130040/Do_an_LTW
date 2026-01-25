@@ -18,7 +18,6 @@ public class GioHang extends HttpServlet {
             cart = new Cart();
             session.setAttribute("cart", cart);
         }
-
         request.setAttribute("pageTitle", "Giỏ hàng");
         request.setAttribute("mainContent", "/view/giohang.jsp");
         request.setAttribute("pageCss", "/CSS/giohang.css");

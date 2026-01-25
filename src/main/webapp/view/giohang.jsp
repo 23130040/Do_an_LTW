@@ -46,8 +46,11 @@
                                 <span class="total" id="sum1">${cartItem.subTotal}</span>
                                 <span class="detail">đ</span>
                             </td>
-                            <td class="order-table-item trash" id="trash1">
-                                <i class="fa-solid fa-trash"></i>
+                            <td class="order-table-item trash">
+                                <form action="cart-remove" method="post">
+                                    <input type="hidden" name="id" value="${cartItem.id}">
+                                    <button type="submit" class="trash-button"><i class="fa-solid fa-trash trash-btn" data-id="${cartItem.id}"></i></button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>
@@ -77,17 +80,10 @@
                         <span class="total number">${cart.total}</span>
                     </p>
                 </div>
-                <div class="order-summary discount">
-                    <p>
-                        <span class="discount txt">Giảm giá:</span>
-                        <span class="discount number" id="discount">0</span>
-                    </p>
-                </div>
                 <div class="order-summary delivery-fee">
                     <p>
-                                <span class="delivery-fee txt">
-                                    <i class="fa-solid fa-circle-exclamation" id="opendeliverymessage"></i>
-                                    Phí vận chuyển:</span>
+                        <span class="delivery-fee txt">
+                            <i class="fa-solid fa-circle-exclamation" id="opendeliverymessage"></i>Phí vận chuyển:</span>
                         <span class="delivery-fee number" id="delivery">0</span>
                     </p>
                 </div>

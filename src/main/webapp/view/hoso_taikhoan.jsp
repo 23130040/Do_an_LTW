@@ -118,8 +118,8 @@
                        placeholder="Nhập số điện thoại mới">
             </div>
             <span class="confirm-btn">
-                    <button id="save-phone-number-btn">Lưu</button>
-                </span>
+                <button id="save-phone-number-btn">Lưu</button>
+            </span>
         </div>
     </div>
 </div>
@@ -234,7 +234,6 @@
                 });
         });
 
-
         document.getElementById("save-phone-number-btn")?.addEventListener("click", e => {
             e.preventDefault();
             const phone = document.getElementById("phone-number").value.trim();
@@ -262,11 +261,8 @@
             closeModal("change-birthday");
         });
 
-
         document.getElementById("saveInfoBtn")?.addEventListener("click", () => {
-
             const emailChanged = tempUser.email !== originalEmail;
-
             fetch("${pageContext.request.contextPath}/tai-khoan", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -286,7 +282,6 @@
                         alert(data.message || "Cập nhật thất bại");
                         return;
                     }
-
                     if (emailChanged) {
                         document.getElementById("new-email").innerText = tempUser.email;
                         openModal("confirm-change-email");

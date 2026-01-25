@@ -339,3 +339,12 @@ main .contents .summary .container .footer button:hover {
 .buy-now-btn:active {
     transform: scale(0.97);
 }
+
+.trash-button {
+    background: none;
+    border: none;
+}
+
+.trash-btn {
+    font-size: 15px;
+}
