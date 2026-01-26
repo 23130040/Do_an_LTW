@@ -23,6 +23,37 @@ public class OrderServlet extends HttpServlet {
         int pageSize = 5;
 
         String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            try {
+                page = Integer.parseInt(pageParam);
+                if (page < 1) page = 1;
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        List<Order> orders = orderDAO.searchAndFilter(search, status, page, pageSize);
+        int totalOrders = orderDAO.countFilteredOrders(search, status);
+        int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
+
+        int windowSize = 5;
+        int half = windowSize / 2;
+
+        int startPage = page - half;
+        if (startPage < 1) {
+            startPage = 1;
+        }
+
+        if (startPage + windowSize - 1 > totalPages) {
+            startPage = Math.max(1, totalPages - windowSize + 1);
+        }
+
+        int endPage = Math.min(totalPages, startPage + windowSize - 1);
+
+        request.setAttribute("orders", orders);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", endPage);
         if (pageParam != null && !pageParam.isEmpty()) {
             try {
                 page = Integer.parseInt(pageParam);
@@ -32,14 +63,8 @@ public class OrderServlet extends HttpServlet {
 
 
 
-        List<Order> orders = orderDAO.searchAndFilter(search, status, page, pageSize);
-
-        int totalItems = orderDAO.countFilteredOrders(search, status);
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
 
         request.setAttribute("orders", orders);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
         request.setAttribute("searchKeyword", search);
         request.setAttribute("selectedStatus", status);
 

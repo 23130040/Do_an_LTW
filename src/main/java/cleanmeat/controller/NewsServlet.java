@@ -56,8 +56,8 @@ public class NewsServlet extends HttpServlet {
         }
 
         List<News> news = newsDAO.searchAndFilter(search, page, pageSize);
-        int totalItems = newsDAO.countFilteredNews(search);
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+        int totalNews = newsDAO.countFilteredNews(search);
+        int totalPages = (int) Math.ceil((double) totalNews / pageSize);
 
         int windowSize = 5;
         int startPage = Math.max(1, page - windowSize / 2);

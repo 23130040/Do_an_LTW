@@ -35,7 +35,7 @@
 
             <div id="store-settings" class="tab-content active-tab">
                 <div class="setting-card">
-                    <form class="setting-form" action="cauhinhhethong" method="POST">
+                    <form class="setting-form" action="cau-hinh-he-thong" method="POST">
                         <input type="hidden" name="action" value="save">
                         <input type="hidden" name="id" value="${config.id}">
 
