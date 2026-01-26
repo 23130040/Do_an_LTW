@@ -6,6 +6,7 @@ import cleanmeat.security.HashUtil;
 import jakarta.mail.internet.InternetAddress;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class UserService {
@@ -38,7 +39,7 @@ public class UserService {
             throw new RuntimeException("Mật khẩu xác nhận không được để trống");
         name = name.trim();
         email = email.trim();
-        if (!isValidEmail(email))
+        if (isValidEmail(email))
             throw new RuntimeException("Địa chỉ email không hợp lệ.");
         if (userDAO.existsByEmail(email))
             throw new RuntimeException("Email này đã được liên kết tới một tài khoản khác.");
@@ -60,7 +61,7 @@ public class UserService {
     public boolean isEmailRegistered(String email) {
         if (email == null || email.trim().isEmpty())
             throw new RuntimeException("Email không được để trống");
-        if (!isValidEmail(email))
+        if (isValidEmail(email))
             throw new RuntimeException("Email không hợp lệ");
         return userDAO.existsByEmail(email.trim());
     }
@@ -112,7 +113,7 @@ public class UserService {
         return checkLength && checkUpper && checkNumber && checkLower && checkSpecial;
     }
 
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         try {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
@@ -131,5 +132,9 @@ public class UserService {
 
     public boolean resetPasswordByEmail(String email, String hashedPassword) {
         return userDAO.updatePasswordByEmail(email, hashedPassword);
+    }
+
+    public void updateProfile(int id, String name, String email, String phone, String gender, LocalDate birthday) {
+        userDAO.updateProfile(id, name, email, phone, gender, birthday);
     }
 }

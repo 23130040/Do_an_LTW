@@ -60,7 +60,11 @@ main .contents .details tr.order-table-body:hover {
 }
 
 main .contents .details .product {
-    width: 40%;
+    width: 30%;
+}
+
+main .contents .details .unit {
+    width: 12%;
 }
 
 main .contents .details .price {
@@ -68,11 +72,11 @@ main .contents .details .price {
 }
 
 main .contents .details .amount {
-    width: 25%;
+    width: 20%;
 }
 
 main .contents .details .sum {
-    width: 13%;
+    width: 15%;
 }
 
 main .contents .details .trash {
@@ -334,4 +338,13 @@ main .contents .summary .container .footer button:hover {
 
 .buy-now-btn:active {
     transform: scale(0.97);
+}
+
+.trash-button {
+    background: none;
+    border: none;
+}
+
+.trash-btn {
+    font-size: 15px;
 }

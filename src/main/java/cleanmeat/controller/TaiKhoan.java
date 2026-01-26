@@ -13,9 +13,11 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "tai-khoan", value = "/tai-khoan")
+@MultipartConfig
 public class TaiKhoan extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -74,11 +76,19 @@ public class TaiKhoan extends HttpServlet {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
-
+        String contentType = request.getContentType();
         String action = request.getParameter("action");
         AddressService addressService = new AddressService();
         UserService userService = new UserService();
 
+        if (contentType != null && contentType.equals("application/json")) {
+            String json = request.getReader().lines().reduce("", (a, b) -> a + b);
+            JsonObject body = JsonParser.parseString(json).getAsJsonObject();
+            if (body.has("action")) {
+                action = body.get("action").getAsString();
+            }
+            request.setAttribute("jsonBody", body);
+        }
         try {
             if ("add".equals(action)) {
                 String addressDetail = request.getParameter("address");
@@ -105,11 +115,16 @@ public class TaiKhoan extends HttpServlet {
                 String oldPassword = request.getParameter("currentPassword");
                 String newPassword = request.getParameter("newPassword");
                 String confirmPassword = request.getParameter("confirmPassword");
-                userService.changePassword(user.getId(), oldPassword, newPassword, confirmPassword);
-                response.sendRedirect(request.getContextPath() + "/tai-khoan?tab=doi-mat-khau");
+                try {
+                    userService.changePassword(user.getId(), oldPassword, newPassword, confirmPassword);
+                    response.getWriter().write("{\"success\": true}");
+                } catch (RuntimeException e) {
+                    response.getWriter().write("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
+                }
+                return;
             } else if ("delete-account".equals(action)) {
                 String json = request.getReader().lines().reduce("", (acc, line) -> acc + line);
-                JsonObject body = JsonParser.parseString(json).getAsJsonObject();
+                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
                 String password = body.get("password").getAsString();
                 try {
                     boolean success = userService.deleteAccount(user.getId(), password);
@@ -124,10 +139,44 @@ public class TaiKhoan extends HttpServlet {
                     response.getWriter().write("{\"success\": false, \"message\": \"Lỗi hệ thống\"}");
                 }
                 return;
+            } else if ("check-email".equals(action)) {
+                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
+                String email = body.get("email").getAsString();
+                PrintWriter out = response.getWriter();
+                try {
+                    userService.isValidEmail(email);
+                    out.write("{\"success\": true}");
+                } catch (RuntimeException e) {
+                    out.write("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
+                }
+                return;
+            } else if ("update-profile".equals(action)) {
+                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
+                String name = body.get("name").getAsString();
+                String email = body.get("email").getAsString();
+                String phone = body.get("phone").getAsString();
+                String gender = body.get("gender").getAsString();
+                boolean emailChanged = body.get("emailChanged").getAsBoolean();
+                String birthdayStr = body.get("birthday").getAsString();
+                LocalDate birthday = null;
+                if (birthdayStr != null && !birthdayStr.isEmpty()) {
+                    birthday = LocalDate.parse(birthdayStr);
+                }
+                if (emailChanged) {
+                    userService.isValidEmail(email);
+                }
+                userService.updateProfile(user.getId(), name, email, phone, gender, birthday);
+                user.setName(name);
+                user.setEmail(email);
+                user.setPhone(phone);
+                user.setGender(gender);
+                user.setBirthday(birthday);
+                session.setAttribute("user", user);
+                response.getWriter().write("{\"success\": true}");
+                return;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

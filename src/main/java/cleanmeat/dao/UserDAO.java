@@ -1,6 +1,5 @@
 package cleanmeat.dao;
 
-import cleanmeat.model.Item;
 import cleanmeat.model.User;
 
 import java.sql.*;
@@ -115,7 +114,7 @@ public class UserDAO extends BaseDAO<User> {
 
     @Override
     public boolean update(User user, int id) {
-        String sql = "UPDATE user SET name=?, email=?, password=?, phone=?, gender=?, birthday=?, role=?, avatar=?, updated_at=NOW() WHERE id=?";
+        String sql = "UPDATE user SET name=?, email=?, password=?, phone=?, gender=?, birthday=?, role=?, avatar=?, status=?, updated_at=NOW() WHERE id=?";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -128,7 +127,8 @@ public class UserDAO extends BaseDAO<User> {
                 ps.setDate(6, user.getBirthday() != null ? Date.valueOf(user.getBirthday()) : null);
                 ps.setString(7, user.getRole());
                 ps.setString(8, user.getAvatar());
-                ps.setInt(9, id);
+                ps.setBoolean(9, user.isStatus());
+                ps.setInt(10, id);
 
                 if (ps.executeUpdate() > 0) {
                     users.put(id, user);
@@ -245,7 +245,7 @@ public class UserDAO extends BaseDAO<User> {
         return list;
     }
 
-    public List<User> searchAndFilter(String keyword, String role, int page, int pageSize) {
+    public List<User> searchAndFilter(String keyword, String role) {
         List<User> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM user WHERE 1=1");
         List<Object> params = new ArrayList<>();
@@ -263,32 +263,20 @@ public class UserDAO extends BaseDAO<User> {
         }
         sql.append(" ORDER BY id ASC");
 
-        sql.append(" LIMIT ? OFFSET ? ");
-        params.add(pageSize);
-        params.add((page - 1) * pageSize);
-
         Connection conn = null;
         try {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-                for (int i = 0; i < params.size(); i++) {
-                    ps.setObject(i + 1, params.get(i));
-                }
-
+                for (int i = 0; i < params.size(); i++) ps.setObject(i + 1, params.get(i));
                 try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        list.add(mapResultSetToEntity(rs));
-                    }
+                    while (rs.next()) list.add(mapResultSetToEntity(rs));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (conn != null) {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
-
         return list;
     }
 
@@ -369,23 +357,16 @@ public class UserDAO extends BaseDAO<User> {
 
     public User findByVerifyToken(String token) {
         String sql = "SELECT * FROM user WHERE verify_token = ?";
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, token);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        return mapResultSetToEntity(rs);
-                    }
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, token);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToEntity(rs);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
         }
         return null;
     }
@@ -398,118 +379,47 @@ public class UserDAO extends BaseDAO<User> {
                         updated_at = NOW()
                     WHERE verify_token = ?
                 """;
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, token);
-                return ps.executeUpdate() > 0;
-            }
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, token);
+            return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
         }
         return false;
     }
 
     public boolean updatePasswordByEmail(String email, String hashedPassword) {
         String sql = "UPDATE user SET password = ? WHERE email = ?";
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, hashedPassword);
-                ps.setString(2, email);
-                return ps.executeUpdate() > 0;
-            }
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, hashedPassword);
+            ps.setString(2, email);
+            return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
         }
         return false;
     }
 
-    public int countFilteredUsers(String keyword, String role) {
-        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM user WHERE 1=1");
-        List<Object> params = new ArrayList<>();
-
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            sql.append(" AND (name LIKE ? OR email LIKE ? OR phone LIKE ?)");
-            String val = "%" + keyword.trim() + "%";
-            params.add(val);
-            params.add(val);
-            params.add(val);
-        }
-        if (role != null && !role.isEmpty()) {
-            sql.append(" AND role = ?");
-            params.add(role);
-        }
-
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-                for (int i = 0; i < params.size(); i++) {
-                    ps.setObject(i + 1, params.get(i));
-                }
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        return rs.getInt(1);
-                    }
-                }
-            }
+    public boolean updateProfile(int id, String name, String email, String phone, String gender, LocalDate birthday) {
+        String sql = """
+                    UPDATE user
+                    SET name=?, email=?, phone=?, gender=?, birthday=?, updated_at=NOW()
+                    WHERE id=?
+                """;
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, gender);
+            ps.setDate(5, birthday != null ? Date.valueOf(birthday) : null);
+            ps.setInt(6, id);
+            return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                ConnectionPool.getInstance().releaseConnection(conn);
-            }
-        }
-        return 0;
-    }
-
-    public boolean updateStatus(int id, boolean status) {
-        String sql = "UPDATE user SET status = ?, updated_at = NOW() WHERE id = ?";
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setBoolean(1, status);
-                ps.setInt(2, id);
-                return ps.executeUpdate() > 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
-        }
-    }
-
-    public boolean isPhoneExists(String phone) {
-        String sql = "SELECT 1 FROM user WHERE phone = ? LIMIT 1";
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
-                ps.setString(1, phone);
-                ResultSet rs = ps.executeQuery();
-                return rs.next();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
         return false;
     }
-
 }

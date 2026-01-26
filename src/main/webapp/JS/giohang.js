@@ -15,6 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('click', (e) => {
         if (e.target === deliveryMessage) deliveryMessage.style.display = "none";
     });
+
+    document.querySelector(".trash-btn").forEach(btn => {
+        btn.onclick = () => {
+            let id = btn.dataset.id;
+            fetch(`cart-remove?id=${id}`, {method: `POST`})
+                .then(resp => location.reload());
+        }
+    })
 });
 
 

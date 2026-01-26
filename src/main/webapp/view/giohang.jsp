@@ -9,6 +9,7 @@
         <table class="order-table">
             <tr class="order-table-header">
                 <th class="header product">Sản phẩm</th>
+                <th clas="header unit">Quy cách</th>
                 <th class="header price">Đơn giá</th>
                 <th class="header amount">Số lượng</th>
                 <th class="header sum">Thành tiền</th>
@@ -20,30 +21,36 @@
                         <tr class="order-table-body">
                             <td class="order-table-item product">
                                 <div class="product-wrapper">
-                                    <img src="${cartItem.item.image}"
+                                    <img src="${cartItem.item.imageUrl}"
                                          alt="${cartItem.item.name}">
-                                    <span class="detail">cartItem.item.name</span>
+                                    <span class="detail">${cartItem.item.name}</span>
                                 </div>
                             </td>
+                            <td class="order-table-item unit">
+                                <span>${cartItem.item.unit.name}</span>
+                            </td>
                             <td class="order-table-item price">
-                                <span>cartItem.price</span>
+                                <span>${cartItem.item.price}</span>
                                 <span class="detail">đ</span>
                             </td>
                             <td class="order-table-item amount">
                                 <div class="amount-wrapper">
-                                    <button type="button" data-action="decrease" class="quantity-btn" id="decrease1">-
+                                    <button type="button" data-action="decrease" class="quantity-btn">-
                                     </button>
-                                    <input type="text" class="quantity-input" value="1" id="SP001">
-                                    <button type="button" data-action="increase" class="quantity-btn" id="increase1">+
+                                    <input type="text" class="quantity-input" value="1">
+                                    <button type="button" data-action="increase" class="quantity-btn">+
                                     </button>
                                 </div>
                             </td>
                             <td class="order-table-item sum">
-                                <span class="total" id="sum1">${cartItem.price * cartItem.quantity}</span>
+                                <span class="total" id="sum1">${cartItem.subTotal}</span>
                                 <span class="detail">đ</span>
                             </td>
-                            <td class="order-table-item trash" id="trash1">
-                                <i class="fa-solid fa-trash"></i>
+                            <td class="order-table-item trash">
+                                <form action="cart-remove" method="post">
+                                    <input type="hidden" name="id" value="${cartItem.id}">
+                                    <button type="submit" class="trash-button"><i class="fa-solid fa-trash trash-btn" data-id="${cartItem.id}"></i></button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>
@@ -73,17 +80,10 @@
                         <span class="total number">${cart.total}</span>
                     </p>
                 </div>
-                <div class="order-summary discount">
-                    <p>
-                        <span class="discount txt">Giảm giá:</span>
-                        <span class="discount number" id="discount">0</span>
-                    </p>
-                </div>
                 <div class="order-summary delivery-fee">
                     <p>
-                                <span class="delivery-fee txt">
-                                    <i class="fa-solid fa-circle-exclamation" id="opendeliverymessage"></i>
-                                    Phí vận chuyển:</span>
+                        <span class="delivery-fee txt">
+                            <i class="fa-solid fa-circle-exclamation" id="opendeliverymessage"></i>Phí vận chuyển:</span>
                         <span class="delivery-fee number" id="delivery">0</span>
                     </p>
                 </div>
