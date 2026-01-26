@@ -123,7 +123,6 @@ public class TaiKhoan extends HttpServlet {
                 }
                 return;
             } else if ("delete-account".equals(action)) {
-                String json = request.getReader().lines().reduce("", (acc, line) -> acc + line);
                 JsonObject body = (JsonObject) request.getAttribute("jsonBody");
                 String password = body.get("password").getAsString();
                 try {
@@ -139,39 +138,26 @@ public class TaiKhoan extends HttpServlet {
                     response.getWriter().write("{\"success\": false, \"message\": \"Lỗi hệ thống\"}");
                 }
                 return;
-            } else if ("check-email".equals(action)) {
-                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
-                String email = body.get("email").getAsString();
-                PrintWriter out = response.getWriter();
-                try {
-                    userService.isValidEmail(email);
-                    out.write("{\"success\": true}");
-                } catch (RuntimeException e) {
-                    out.write("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
-                }
-                return;
-            } else if ("update-profile".equals(action)) {
+            } else if ("updateProfile".equals(action)) {
                 JsonObject body = (JsonObject) request.getAttribute("jsonBody");
                 String name = body.get("name").getAsString();
                 String email = body.get("email").getAsString();
                 String phone = body.get("phone").getAsString();
                 String gender = body.get("gender").getAsString();
-                boolean emailChanged = body.get("emailChanged").getAsBoolean();
                 String birthdayStr = body.get("birthday").getAsString();
+
+                switch (gender) {
+                    case "male" -> gender = "Nam";
+                    case "female" -> gender = "Nữ";
+                    default -> gender = null;
+                }
+
                 LocalDate birthday = null;
                 if (birthdayStr != null && !birthdayStr.isEmpty()) {
                     birthday = LocalDate.parse(birthdayStr);
                 }
-                if (emailChanged) {
-                    userService.isValidEmail(email);
-                }
+
                 userService.updateProfile(user.getId(), name, email, phone, gender, birthday);
-                user.setName(name);
-                user.setEmail(email);
-                user.setPhone(phone);
-                user.setGender(gender);
-                user.setBirthday(birthday);
-                session.setAttribute("user", user);
                 response.getWriter().write("{\"success\": true}");
                 return;
             }
