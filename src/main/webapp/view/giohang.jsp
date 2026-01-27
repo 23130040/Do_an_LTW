@@ -27,7 +27,7 @@
                                 </div>
                             </td>
                             <td class="order-table-item unit">
-                                <span>${cartItem.item.unit.name}</span>
+                                <span>${cartItem.item.unitName}</span>
                             </td>
                             <td class="order-table-item price">
                                 <span>${cartItem.item.price}</span>
@@ -37,7 +37,7 @@
                                 <div class="amount-wrapper">
                                     <button type="button" data-action="decrease" class="quantity-btn">-
                                     </button>
-                                    <input type="text" class="quantity-input" value="1">
+                                    <input type="text" class="quantity-input" value="${cartItem.quantity}">
                                     <button type="button" data-action="increase" class="quantity-btn">+
                                     </button>
                                 </div>

@@ -41,7 +41,17 @@ public class ConfigServlet extends HttpServlet {
         String address = request.getParameter("address");
         String logo_url = request.getParameter("logoUrl");
 
-        System_config config = new System_config(0, name, email, hotline, tax_code, facebook, instagram, address, "");
+        System_config config = new System_config(
+                0,
+                name,
+                email,
+                hotline,
+                tax_code,
+                facebook,
+                instagram,
+                address,
+                logo_url
+        );
 
         ConfigDAO configDAO = new ConfigDAO();
         boolean success;
@@ -59,9 +69,14 @@ public class ConfigServlet extends HttpServlet {
         }
 
         if (success) {
+            System_config newConfig = configDAO.getSystemConfig();
+
+            getServletContext().setAttribute("globalConfig", newConfig);
+
             response.sendRedirect("cau-hinh-he-thong?status=success");
         } else {
             response.sendRedirect("cau-hinh-he-thong?status=error");
         }
+
     }
 }

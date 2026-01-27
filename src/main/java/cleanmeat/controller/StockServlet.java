@@ -49,13 +49,32 @@ public class StockServlet extends HttpServlet {
         int totalRecords = stockDao.countSearchFilter(type, search, category, origin);
         int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
+        int windowSize = 5;
+        int half = windowSize / 2;
 
+// Tính startPage sao cho currentPage nằm giữa
+        int startPage = page - half;
+        if (startPage < 1) {
+            startPage = 1;
+        }
+
+// Chặn biên phải để luôn thấy trang cuối
+        if (startPage + windowSize - 1 > totalPages) {
+            startPage = Math.max(1, totalPages - windowSize + 1);
+        }
+
+        int endPage = Math.min(totalPages, startPage + windowSize - 1);
+
+        request.setAttribute("stockList", list);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", endPage);
 
         ItemDAO itemDao = new ItemDAO();
         request.setAttribute("selectedSearch", search);
         request.setAttribute("selectedCat", category);
         request.setAttribute("selectedOrg", origin);
-        request.setAttribute("stockList", list);
         request.setAttribute("items", itemDao.findAll());
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);

@@ -394,6 +394,16 @@ a {
     border-radius: 3px;
     border: 1px solid #eee;
 }
+.original-price {
+    color: #888;
+    font-size: 13px;
+    text-decoration: line-through;
+    display: block;
+    margin-top: 2px;
+}
+.final-price {
+    color: #e00000;
+}
 
 .inventory-col {
     font-weight: bold;
@@ -658,4 +668,8 @@ input:checked + .small-switch .slider:before {
     object-fit: cover;
     border-radius: 4px;
     border: 1px solid #ddd;
+}
+.input-error {
+    border: 1px solid red !important;
+    background-color: #fff0f0;
 }

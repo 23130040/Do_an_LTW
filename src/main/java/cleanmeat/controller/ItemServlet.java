@@ -24,8 +24,7 @@ import java.util.List;
 
 @WebServlet(name = "ItemServlet", value = "/quan-ly-san-pham")
 public class ItemServlet extends HttpServlet {
-    ItemDAO itemDAO = new ItemDAO();
-    UnitDAO unitDAO = new UnitDAO();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -78,51 +77,67 @@ public class ItemServlet extends HttpServlet {
 
             response.sendRedirect("quan-ly-san-pham?page=" + currentPage);
             return;
-        }
-
-        UnitDAO unitDAO = new UnitDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
-        OriginDAO originDAO = new OriginDAO();
-
-        String search = request.getParameter("search");
-        String category = request.getParameter("category");
-        String origin = request.getParameter("origin");
-        String sort = request.getParameter("sort");
+        } else {
 
 
-        int page = 1;
-        int pageSize = 5;
+            UnitDAO unitDAO = new UnitDAO();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            OriginDAO originDAO = new OriginDAO();
 
-        String pageParam = request.getParameter("page");
-        if (pageParam != null) {
-            try {
-                page = Integer.parseInt(pageParam);
-                if (page < 1) page = 1;
-            } catch (NumberFormatException ignored) {
+            String search = request.getParameter("search");
+            String category = request.getParameter("category");
+            String origin = request.getParameter("origin");
+
+
+            int page = 1;
+            int pageSize = 5;
+
+            String pageParam = request.getParameter("page");
+            if (pageParam != null) {
+                try {
+                    page = Integer.parseInt(pageParam);
+                    if (page < 1) page = 1;
+                } catch (NumberFormatException ignored) {
+                }
             }
+
+            List<Item> items = itemDAO.searchAndFilter(search, category, origin, page, pageSize);
+            int totalItems = itemDAO.countFilteredItems(search, category, origin);
+            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+            int windowSize = 5;
+            int half = windowSize / 2;
+
+            int startPage = page - half;
+            if (startPage < 1) {
+                startPage = 1;
+            }
+
+            if (startPage + windowSize - 1 > totalPages) {
+                startPage = Math.max(1, totalPages - windowSize + 1);
+            }
+
+            int endPage = Math.min(totalPages, startPage + windowSize - 1);
+
+            request.setAttribute("items", items);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("startPage", startPage);
+            request.setAttribute("endPage", endPage);
+
+            request.setAttribute("selectedSearch", search);
+            request.setAttribute("selectedCat", category);
+            request.setAttribute("selectedOrg", origin);
+
+            request.setAttribute("unitList", unitDAO.findAll());
+            request.setAttribute("categories", categoryDAO.findAll());
+            request.setAttribute("origin", originDAO.findAll());
+
+            request.setAttribute("selectedSearch", search != null ? search : "");
+            request.setAttribute("selectedCat", category != null ? category : "");
+            request.setAttribute("selectedOrg", origin != null ? origin : "");
+
+            request.getRequestDispatcher("/view/admin_quan_ly_sp.jsp").forward(request, response);
         }
-
-        List<Item> items = itemDAO.searchAndFilter(search, category, origin,page, pageSize);
-        int totalItems = itemDAO.countFilteredItems(search, category, origin);
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-
-        request.setAttribute("items", items);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-
-        request.setAttribute("selectedSearch", search);
-        request.setAttribute("selectedCat", category);
-        request.setAttribute("selectedOrg", origin);
-
-        request.setAttribute("unitList", unitDAO.findAll());
-        request.setAttribute("categories", categoryDAO.findAll());
-        request.setAttribute("origin", originDAO.findAll());
-
-        request.setAttribute("selectedSearch", search != null ? search : "");
-        request.setAttribute("selectedCat", category != null ? category : "");
-        request.setAttribute("selectedOrg", origin != null ? origin : "");
-
-        request.getRequestDispatcher("/view/admin_quan_ly_sp.jsp").forward(request, response);
     }
 
     @Override
@@ -172,7 +187,7 @@ public class ItemServlet extends HttpServlet {
             throws IOException {
 
         try {
-
+            ItemDAO itemDAO = new ItemDAO();
             Item item = new Item();
 
             item.setName(request.getParameter("name"));
@@ -180,7 +195,7 @@ public class ItemServlet extends HttpServlet {
             item.setLong_description(request.getParameter("longDescription"));
             item.setCategory_id(Integer.parseInt(request.getParameter("categoryId")));
             item.setOrigin_id(Integer.parseInt(request.getParameter("originId")));
-            item.setUnit(unitDAO.findById(Integer.parseInt(request.getParameter("unitId"))));
+            item.setUnit_id(Integer.parseInt(request.getParameter("unitId")));
             item.setPrice(Double.parseDouble(request.getParameter("price")));
             item.setDiscount(Double.parseDouble(request.getParameter("discount")));
             item.setSku(request.getParameter("sku"));
@@ -213,6 +228,10 @@ public class ItemServlet extends HttpServlet {
             throws IOException {
 
         try {
+            String currentPage = request.getParameter("currentPage");
+            if (currentPage == null || currentPage.isEmpty()) {
+                currentPage = "1";
+            }
             int id = Integer.parseInt(request.getParameter("productId"));
             ItemDAO itemDAO = new ItemDAO();
             Item item = itemDAO.findById(id);
@@ -227,7 +246,7 @@ public class ItemServlet extends HttpServlet {
             item.setLong_description(request.getParameter("longDescription"));
             item.setCategory_id(Integer.parseInt(request.getParameter("categoryId")));
             item.setOrigin_id(Integer.parseInt(request.getParameter("originId")));
-            item.setUnit(unitDAO.findById(Integer.parseInt(request.getParameter("unitId"))));
+            item.setUnit_id(Integer.parseInt(request.getParameter("unitId")));
             item.setPrice(Double.parseDouble(request.getParameter("price")));
             item.setDiscount(Double.parseDouble(request.getParameter("discount")));
             item.setMin_stock(Integer.parseInt(request.getParameter("minStock")));
@@ -245,7 +264,7 @@ public class ItemServlet extends HttpServlet {
                 }
             }
 
-            response.sendRedirect("quan-ly-san-pham");
+            response.sendRedirect("quan-ly-san-pham?page=" + currentPage);
 
         } catch (Exception e) {
             e.printStackTrace();

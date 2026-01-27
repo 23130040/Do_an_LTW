@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,7 +13,7 @@
 
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="base/admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp"/>
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
@@ -87,7 +86,19 @@
                             <td>${item.categoryName}</td>
                             <td>${item.originName}</td>
                             <td>${item.unitName}</td>
-                            <td><fmt:formatNumber value="${item.price}" type="currency" currencySymbol="đ" maxFractionDigits="0"/></td>
+                            <td>
+                                <span class="${item.price != item.finalPrice ? 'final-price' : ''}">
+                                    <fmt:formatNumber value="${item.finalPrice}" type="currency" currencySymbol="đ"
+                                                      maxFractionDigits="0"/>
+                                </span>
+                                <br>
+                                <c:if test="${item.price != item.finalPrice}">
+                                    <del class="original-price">
+                                        <fmt:formatNumber value="${item.price}" type="currency" currencySymbol="đ"
+                                                          maxFractionDigits="0"/>
+                                    </del>
+                                </c:if>
+                            </td>
 
                             <td class="inventory-col">${item.current_stock}</td>
                             <td>
@@ -110,13 +121,16 @@
                 </table>
             </div>
             <div class="pagination">
+
                 <%-- Nút Trước --%>
                 <c:if test="${currentPage > 1}">
-                    <a href="?page=${currentPage - 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">&laquo; Trước</a>
+                    <a href="?page=${currentPage - 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">
+                        &laquo; Trước
+                    </a>
                 </c:if>
 
-                <%-- Các số trang --%>
-                <c:forEach begin="1" end="${totalPages}" var="i">
+                <%-- Các số trang thông minh --%>
+                <c:forEach var="i" begin="${startPage}" end="${endPage}">
                     <a href="?page=${i}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}"
                        class="${i == currentPage ? 'active' : ''}">
                             ${i}
@@ -125,9 +139,13 @@
 
                 <%-- Nút Sau --%>
                 <c:if test="${currentPage < totalPages}">
-                    <a href="?page=${currentPage + 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">Sau &raquo;</a>
+                    <a href="?page=${currentPage + 1}&search=${selectedSearch}&category=${selectedCat}&origin=${selectedOrg}">
+                        Sau &raquo;
+                    </a>
                 </c:if>
+
             </div>
+
         </main>
     </div>
 </div>
@@ -163,9 +181,10 @@
               method="post">
             <input type="hidden" name="action" id="formAction" value="addItem">
             <input type="hidden" name="productId" id="productId">
+            <input type="hidden" id="current_page_input" name="currentPage" value="${currentPage}">
             <div class="form-section left-col">
                 <label>Tên sản phẩm:</label>
-                <input type="text" name="name"  placeholder="Tên sản phẩm" required>
+                <input type="text" name="name" placeholder="Tên sản phẩm" required>
 
                 <label>Mô tả ngắn:</label>
                 <textarea name="shortDescription" rows="3" placeholder="Mô tả ngắn gọn"></textarea>
@@ -218,6 +237,7 @@
 
                 <label>Giảm giá (%):</label>
                 <input type="number" name="discount" id="discount" placeholder="20" value="0">
+                <span id="discountError" style="display:none; color:red;">Không được để trống</span>
 
                 <label>Giá bán (VND):</label>
                 <input type="text" name="finalPrice" id="finalPrice" readonly placeholder="Tự động tính">
@@ -225,7 +245,8 @@
 
                 <label>Mã sản phẩm(SKU):</label>
                 <input type="text" placeholder="1001" name="sku">
-                <small id="skuError" style="color: red; display: none; margin-top: 4px;">SKU đã tồn tại trong hệ thống!</small>
+                <small id="skuError" style="color: red; display: none; margin-top: 4px;">SKU đã tồn tại trong hệ
+                    thống!</small>
 
                 <div class="inventory-group">
                     <label>Ngưỡng cảnh báo:</label>
@@ -236,7 +257,8 @@
                 <div class="image-upload-container">
                     <label>Hình ảnh sản phẩm:</label>
 
-                    <div id="imagePreviewContainer" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; min-height: 60px;">
+                    <div id="imagePreviewContainer"
+                         style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; min-height: 60px;">
                     </div>
 
                     <input type="hidden" name="selectedImages" id="selectedImages">
@@ -283,7 +305,7 @@
             if (currentImage) currentImage.style.display = "none";
 
             const names = [];
-            const files = (allFiles && allFiles.length) ? allFiles : [{ url: fileUrl }];
+            const files = (allFiles && allFiles.length) ? allFiles : [{url: fileUrl}];
 
             files.forEach(file => {
                 let fullPath = decodeURIComponent(file.url);

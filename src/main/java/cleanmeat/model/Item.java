@@ -11,8 +11,9 @@ public class Item {
     private String long_description;
     private int category_id;
     private int origin_id;
-    private Unit unit;
+    private int unit_id;
     private double price;
+    private double finalPrice;
     private double discount;
     private int current_stock;
     private int min_stock;
@@ -24,7 +25,8 @@ public class Item {
     private String originName;
     private String unitName;
 
-    public Item(int id, String sku, String name, String short_description, String long_description, int category_id, int origin_id, Unit unit, double price, double discount, int current_stock, int min_stock, LocalDateTime created_at, LocalDateTime updated_at) {
+
+    public Item(int id, String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, double finalPrice, int current_stock, int min_stock, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.sku = sku;
         this.name = name;
@@ -32,55 +34,41 @@ public class Item {
         this.long_description = long_description;
         this.category_id = category_id;
         this.origin_id = origin_id;
-        this.unit = unit;
+        this.unit_id = unit_id;
         this.price = price;
         this.discount = discount;
         this.current_stock = current_stock;
         this.min_stock = min_stock;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.finalPrice = finalPrice;
     }
-
-    public Item(String sku, String name, String short_description, String long_description, int category_id, int origin_id, Unit unit, double price, double discount, int current_stock, int min_stock) {
+    public Item(String sku, String name, String short_description, String long_description, int category_id, int origin_id, int unit_id, double price, double discount, double finalPrice,int current_stock, int min_stock) {
         this.name = name;
         this.sku = sku;
         this.short_description = short_description;
         this.long_description = long_description;
         this.category_id = category_id;
         this.origin_id = origin_id;
-        this.unit = unit;
+        this.unit_id = unit_id;
         this.price = price;
         this.discount = discount;
         this.current_stock = current_stock;
         this.min_stock = min_stock;
+        this.finalPrice = finalPrice;
     }
 
     public Item() {
     }
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
+    public String getOriginName() { return originName; }
+    public void setOriginName(String originName) { this.originName = originName; }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
+    public String getUnitName() { return unitName; }
+    public void setUnitName(String unitName) { this.unitName = unitName; }
 
-    public String getOriginName() {
-        return originName;
-    }
-
-    public void setOriginName(String originName) {
-        this.originName = originName;
-    }
-
-    public String getUnitName() {
-        return unitName;
-    }
-
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
-    }
 
     public LocalDateTime getUpdated_at() {
         return updated_at;
@@ -130,12 +118,12 @@ public class Item {
         this.price = price;
     }
 
-    public Unit getUnit() {
-        return unit;
+    public int getUnit_id() {
+        return unit_id;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setUnit_id(int unit_id) {
+        this.unit_id = unit_id;
     }
 
     public int getOrigin_id() {
@@ -201,7 +189,6 @@ public class Item {
     public void setSku(String sku) {
         this.sku = sku;
     }
-
     public double getFinalPrice() {
         return price * (100 - discount) / 100;
     }
@@ -212,5 +199,9 @@ public class Item {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public void setFinalPrice(double finalPrice) {
+        this.finalPrice = finalPrice;
     }
 }

@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,7 +12,7 @@
 <body>
 <div class="admin-container">
     <!---------------- Thanh menu ------------------->
-    <jsp:include page="base/admin_header.jsp" />
+    <jsp:include page="base/admin_header.jsp"/>
 
     <!---------------- Side Bar ------------------->
     <div class="main-wrapper">
@@ -41,7 +40,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>Danh mục sản phẩm (Thịt heo, Thịt bò,...)</h3>
-                            <button class="btn-add" onclick="openModal('addCategoryModal')"><i class="fas fa-plus"></i> Thêm Danh mục</button>
+                            <button class="btn-add" onclick="openModal('addCategoryModal')"><i class="fas fa-plus"></i>
+                                Thêm Danh mục
+                            </button>
                         </div>
                         <div class="card-body">
                             <table>
@@ -58,9 +59,11 @@
                                     <tr>
                                         <td>${cat.id}</td>
                                         <td>${cat.name}</td>
-                                        <td>0</td> <td>
-                                        <button class="btn-delete" onclick="deleteCategory(${cat.id})"><i class="fas fa-trash"></i></button>
-                                    </td>
+                                        <td>${cat.totalItems}</td>
+                                        <td>
+                                            <button class="btn-delete" onclick="deleteCategory(${cat.id})"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -75,7 +78,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>Nguồn gốc sản phẩm </h3>
-                            <button class="btn-add" onclick="openModal('addOriginModal')"><i class="fas fa-plus"></i> Thêm Nguồn gốc</button>
+                            <button class="btn-add" onclick="openModal('addOriginModal')"><i class="fas fa-plus"></i>
+                                Thêm Nguồn gốc
+                            </button>
                         </div>
                         <div class="card-body">
                             <table>
@@ -92,9 +97,11 @@
                                     <tr>
                                         <td>${org.id}</td>
                                         <td>${org.name}</td>
-                                        <td>0</td> <td>
-                                        <button class="btn-delete" onclick="deleteOrigin(${org.id})"><i class="fas fa-trash"></i></button>
-                                    </td>
+                                        <td>${org.totalItems}</td>
+                                        <td>
+                                            <button class="btn-delete" onclick="deleteOrigin(${org.id})"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -144,7 +151,8 @@
                 </div>
                 <div class="form-group">
                     <label for="categoryDescription">Mô tả (Tùy chọn):</label>
-                    <textarea id="categoryDescription" name="description" rows="3" placeholder="Mô tả ngắn về danh mục này"></textarea>
+                    <textarea id="categoryDescription" name="description" rows="3"
+                              placeholder="Mô tả ngắn về danh mục này"></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-save"><i class="fas fa-plus"></i> Thêm mới</button>

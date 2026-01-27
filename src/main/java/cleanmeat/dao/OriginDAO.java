@@ -76,14 +76,19 @@ public class OriginDAO extends BaseDAO<Origin> {
     @Override
     public List<Origin> findAll() {
         List<Origin> list = new ArrayList<>();
-        String sql = "SELECT * FROM origin";
+        String sql = "SELECT o.*, COUNT(DISTINCT LEFT(i.sku, LENGTH(i.sku) - 2)) AS totalItems " +
+                "FROM origin o " +
+                "LEFT JOIN item i ON o.id = i.origin_id " +
+                "GROUP BY o.id";
         Connection conn = null;
         try {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql);
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    list.add(mapResultSetToEntity(rs));
+                    Origin org = mapResultSetToEntity(rs);
+                    org.setTotalItems((rs.getInt("totalItems")));
+                    list.add(org);
                 }
             }
         } catch (Exception e) {

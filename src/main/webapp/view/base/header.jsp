@@ -2,6 +2,19 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!-- ===== HEADER ===== -->
+<c:if test="${sessionScope.ROLE_ERROR}">
+    <div id="customModalOverlay" class="modal-overlay">
+        <div class="custom-modal">
+            <div class="modal-header-custom">
+                <span class="modal-title-custom">Thông báo</span>
+                <span class="close-modal-custom" onclick="closeCustomModal()">&times;</span>
+            </div>
+            <div class="modal-body-custom">
+                Bạn không có quyền truy cập chức năng quản trị.
+            </div>
+        </div>
+    </div>
+</c:if>
 <nav class="menubar">
     <div class="sixteen column">
 
@@ -44,8 +57,19 @@
 
                 <!-- CART -->
                 <li class="menuitem-right" id="shopping-cart">
-                    <a href="${pageContext.request.contextPath}/gio-hang" class="cart-link"><i class="fa-solid fa-cart-shopping"></i><span
-                            id="count-item">1</span></a>
+                    <a href="${pageContext.request.contextPath}/gio-hang" class="cart-link"><i
+                            class="fa-solid fa-cart-shopping"></i>
+                        <span id="count-item">
+                            <c:choose>
+                                <c:when test="${not empty sessionScope.cart}">
+                                    ${sessionScope.cart.totalQuantity}
+                                </c:when>
+                                <c:otherwise>
+                                    0
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
+                    </a>
 
                 </li>
 
@@ -77,3 +101,30 @@
         </div>
     </div>
 </nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        <%
+            Boolean roleError = (Boolean) session.getAttribute("ROLE_ERROR");
+            if (roleError != null && roleError) {
+                session.removeAttribute("ROLE_ERROR");
+        %>
+        new bootstrap.Modal(
+            document.getElementById("roleErrorModal")
+        ).show();
+        <% } %>
+    });
+    function closeCustomModal() {
+        const modal = document.getElementById('customModalOverlay');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+    function goBack() {
+        document.getElementById('roleErrorModal').style.display = 'none';
+        window.history.back();
+    }
+</script>
+

@@ -53,6 +53,7 @@
             </div>
 
             <div class="user-table-container">
+                <c:set var="currentUser" value="${sessionScope.user}"/>
                 <table class="user-table">
                     <thead>
                     <tr>
@@ -61,6 +62,7 @@
                         <th>Thông tin liên hệ</th>
                         <th>Phân quyền</th>
                         <th>Lịch sử mua hàng</th>
+                        <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
                     </thead>
@@ -84,16 +86,39 @@
                                 </c:choose>
                             </td>
                             <td>
-                                <button class="btn-sm btn-info view-history"
-                                        data-id="${u.id}">
-                                    <i class="fas fa-history"></i> Xem
-                                </button>
+                                <c:choose>
+                                    <c:when test="${u.role eq 'customer'}">
+                                        <button class="btn-sm btn-info view-history"
+                                                data-id="${u.id}">
+                                            <i class="fas fa-history"></i> Xem
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="text-muted">--</span>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                             <td>
-                                <button class="btn-icon edit-btn" onclick="editUser(${u.id})"><i
-                                        class="fas fa-edit"></i></button>
-                                <button class="btn-icon delete-btn" onclick="deleteUser(${u.id})"><i
-                                        class="fas fa-trash-alt"></i></button>
+                                <label class="switch">
+                                    <input type="checkbox"
+                                        ${u.status ? "checked" : ""}
+                                           onchange="window.toggleStatus(${u.id}, this.checked)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <c:if test="${currentUser == null || currentUser.id != u.id}">
+                                    <button class="btn-icon edit-btn" onclick="editUser(${u.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete-btn" onclick="deleteUser(${u.id})">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </c:if>
+
+                                <c:if test="${currentUser != null && currentUser.id == u.id}">
+                                    <span class="text-muted">Bạn</span>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
@@ -101,45 +126,32 @@
 
                 </table>
             </div>
-            <c:if test="${noOfPages > 1}">
-                <div class="pagination-container"
-                     style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="font-size: 0.9em; color: #777;">
-                        Đang hiển thị ${fn:length(users)} trên tổng số ${noOfRecords} người dùng.
-                    </div>
-                    <nav>
-                        <ul class="pagination" style="display: inline-flex; list-style: none; padding: 0;">
+            <div class="pagination">
 
-                                <%-- Nút trang trước --%>
-                            <c:if test="${currentPage > 1}">
-                                <li class="page-item" style="margin-right: 5px;">
-                                    <a class="page-link btn btn-secondary" href="?page=${currentPage - 1}"
-                                       style="padding: 6px 12px; text-decoration: none;">&laquo; Trước</a>
-                                </li>
-                            </c:if>
+                <%-- Trước --%>
+                <c:if test="${currentPage > 1}">
+                    <a href="?page=${currentPage - 1}&search=${searchKeyword}&role=${filterRole}">
+                        &laquo; Trước
+                    </a>
+                </c:if>
 
-                                <%-- Hiển thị các trang --%>
-                            <c:forEach begin="1" end="${noOfPages}" var="i">
-                                <li class="page-item" style="margin-right: 5px;">
-                                    <a class="page-link ${currentPage == i ? 'btn-primary' : 'btn-secondary'}"
-                                       href="?page=${i}"
-                                       style="padding: 6px 12px; text-decoration: none; border-radius: 3px; background-color: ${currentPage == i ? '#8d2a3a' : '#f0f0f0'}; color: ${currentPage == i ? '#fff' : '#333'}; border: 1px solid ${currentPage == i ? '#8d2a3a' : '#ddd'};">
-                                            ${i}
-                                    </a>
-                                </li>
-                            </c:forEach>
+                <%-- Các trang --%>
+                <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                    <a href="?page=${i}&search=${searchKeyword}&role=${filterRole}"
+                       class="${i == currentPage ? 'active' : ''}">
+                            ${i}
+                    </a>
+                </c:forEach>
 
-                                <%-- Nút trang sau --%>
-                            <c:if test="${currentPage < noOfPages}">
-                                <li class="page-item">
-                                    <a class="page-link btn btn-secondary" href="?page=${currentPage + 1}"
-                                       style="padding: 6px 12px; text-decoration: none;">Sau &raquo;</a>
-                                </li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                </div>
-            </c:if>
+                <%-- Sau --%>
+                <c:if test="${currentPage < totalPages}">
+                    <a href="?page=${currentPage + 1}&search=${searchKeyword}&role=${filterRole}">
+                        Sau &raquo;
+                    </a>
+                </c:if>
+
+            </div>
+
         </main>
     </div>
 </div>
@@ -174,12 +186,37 @@
               method="POST">
 
             <input type="hidden" name="action" id="formAction">
-
             <input type="hidden" id="userIdHidden" name="id" value="">
+            <input type="hidden" name="page" value="${currentPage}">
 
             <div class="form-section left-col">
                 <label for="userName">Họ và tên:</label>
                 <input type="text" id="userName" name="userName" placeholder="Nguyễn Văn A" required>
+
+                <label>Giới tính:</label>
+                <div class="gender-group">
+                    <label>
+                        <input type="radio" name="gender" value="Nam"
+                        ${user.gender == 'Nam' ? 'checked' : ''}> Nam
+                    </label>
+
+                    <label>
+                        <input type="radio" name="gender" value="Nữ"
+                        ${user.gender == 'Nữ' ? 'checked' : ''}> Nữ
+                    </label>
+
+                    <label>
+                        <input type="radio" name="gender" value="Khác"
+                        ${user.gender == 'Khác' ? 'checked' : ''}> Khác
+                    </label>
+
+                </div>
+                <label for="dob">Ngày sinh:</label>
+                <input
+                        type="date"
+                        id="dob"
+                        name="birthday"
+                        value="${user.birthday}">
 
                 <label for="userEmail">Email:</label>
                 <div class="input-group-custom">
@@ -193,12 +230,13 @@
                     <button type="button" id="btnVerifyOTP" class="btn-inline btn-verify">Xác nhận</button>
                 </div>
 
-                <label for="userPhone">Số điện thoại:</label>
-                <input type="tel" id="userPhone" name="userPhone" placeholder="0123456789"
-                       pattern="[0-9]{10}" title="Số điện thoại phải có 10 chữ số" required>
             </div>
 
             <div class="form-section right-col">
+                <label for="userPhone">Số điện thoại:</label>
+                <input type="tel" id="userPhone" name="userPhone" placeholder="0123456789"
+                       pattern="[0-9]{10}" title="Số điện thoại phải có 10 chữ số" required>
+
                 <label for="userRole">Phân quyền:</label>
                 <select id="userRole" name="userRole" required>
                     <option value="">-- Chọn vai trò --</option>
@@ -348,18 +386,20 @@
 
             <div class="section-container">
                 <h4><i class="fas fa-boxes"></i> Sản phẩm trong đơn hàng</h4>
-                <table class="product-table">
-                    <thead>
-                    <tr>
-                        <th>Sản phẩm</th>
-                        <th>Đơn giá</th>
-                        <th>SL</th>
-                        <th>Tổng</th>
-                    </tr>
-                    </thead>
-                    <tbody id="modalProductList">
-                    </tbody>
-                </table>
+                <div id="orderDetailBody">
+                    <table class="product-table">
+                        <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>SL</th>
+                            <th>Tổng</th>
+                        </tr>
+                        </thead>
+                        <tbody id="modalProductList">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="total-summary">
@@ -409,7 +449,7 @@
 <script>
     const CONTEXT_PATH = '<%= request.getContextPath() %>';
 </script>
-<script src="${pageContext.request.contextPath}/JS/admin_quan_ly_user.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/JS/admin_quan_ly_user.js"></script>
 </body>
 </html>
