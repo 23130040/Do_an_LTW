@@ -12,6 +12,13 @@ import java.util.UUID;
 public class UserService {
     private final UserDAO userDAO = new UserDAO();
 
+    private static final String GOOGLE_ONLY_PREFIX = "__GOOGLE_ONLY__:";
+
+    private boolean isGoogleOnlyUser(User user) {
+        return user.getPassword() != null
+                && user.getPassword().startsWith(GOOGLE_ONLY_PREFIX);
+    }
+
     public User login(String email, String password) {
         if (email == null || email.trim().isEmpty())
             throw new RuntimeException("Email không được để trống");
@@ -20,6 +27,9 @@ public class UserService {
         User user = userDAO.findByEmail(email);
         if (user == null)
             throw new RuntimeException("Email hoặc mật khẩu không đúng");
+        if (isGoogleOnlyUser(user)) {
+            throw new RuntimeException("Tài khoản này đăng nhập bằng Google");
+        }
         String hashedInput = HashUtil.md5(password);
         if (!user.getPassword().equals(hashedInput))
             throw new RuntimeException("Email hoặc mật khẩu không đúng");
@@ -140,5 +150,21 @@ public class UserService {
 
     public boolean updateEmailVerificationStatus(int id, String token, boolean b) {
         return userDAO.updateVerification(id, token, b);
+    }
+    public void changePasswordForGoogleUser(
+            int userId,
+            String newPassword,
+            String confirmPassword
+    ) {
+        if (newPassword == null || newPassword.length() < 8) {
+            throw new RuntimeException("Mật khẩu mới phải có ít nhất 8 ký tự");
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            throw new RuntimeException("Mật khẩu xác nhận không khớp");
+        }
+
+        String hashed = HashUtil.md5(newPassword);
+        userDAO.changePassword(userId, hashed);
     }
 }

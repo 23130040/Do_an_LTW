@@ -21,7 +21,7 @@ public class StatisticDAO extends BaseDAO<StatisticDTO> {
         String sql = "SELECT " +
                 " (SELECT SUM(total_price) FROM `order` WHERE status = 'Đã giao') AS totalRevenue, " +
                 " (SELECT COUNT(*) FROM `order` WHERE status = 'Đã giao') AS totalOrders, " +
-                " (SELECT COUNT(*) FROM `user` WHERE role = 'user') AS totalUsers, " +
+                " (SELECT COUNT(*) FROM `user` WHERE role = 'customer') AS totalUsers, " +
                 " (SELECT COUNT(*) FROM `item` WHERE current_stock <= min_stock) AS lowStock, " +
                 " (SELECT COUNT(*) FROM `order` WHERE status = 'Chờ xác nhận') AS pendingOrders, " +
                 " (SELECT COUNT(*) FROM `order` WHERE status = 'Đang giao') AS shippingOrders, " +

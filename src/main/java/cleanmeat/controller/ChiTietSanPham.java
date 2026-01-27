@@ -2,9 +2,11 @@ package cleanmeat.controller;
 
 import cleanmeat.dao.ItemDAO;
 import cleanmeat.dao.FeedbackDAO;
+import cleanmeat.dao.OriginDAO;
 import cleanmeat.model.Item;
 import cleanmeat.model.Feedback;
 import cleanmeat.model.RatingSummary;
+import cleanmeat.model.Origin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,11 +23,13 @@ public class ChiTietSanPham extends HttpServlet {
 
     private ItemDAO itemDAO;
     private FeedbackDAO feedbackDAO;
+    private OriginDAO originDAO; // ✅ THÊM
 
     @Override
     public void init() {
         itemDAO = new ItemDAO();
         feedbackDAO = new FeedbackDAO();
+        originDAO = new OriginDAO(); // ✅ THÊM
     }
 
     @Override
@@ -47,15 +51,13 @@ public class ChiTietSanPham extends HttpServlet {
             return;
         }
 
-        /* ===== LẤY SẢN PHẨM HIỆN TẠI ===== */
-        Item currentItem = itemDAO.findById(itemId);
-        if (currentItem == null) {
+        Item sp = itemDAO.findById(itemId);
+        if (sp == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
-        /* ===== SKU BASE ===== */
-        String sku = currentItem.getSku();
+        String sku = sp.getSku();
         if (sku == null || sku.length() < 2) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
@@ -68,28 +70,33 @@ public class ChiTietSanPham extends HttpServlet {
             variantList = new ArrayList<>();
         }
 
-        Item baseItem = currentItem;
+        Item baseItem = variantList.isEmpty() ? sp : variantList.get(0);
 
         RatingSummary rating =
                 feedbackDAO.getRatingSummaryByItemId(baseItem.getId());
         if (rating == null) {
-            rating = new RatingSummary(5.0, 0);
+            rating = new RatingSummary(0.0, 0);
         }
 
         List<Feedback> feedbackList =
                 feedbackDAO.findByItemId(baseItem.getId());
-
         if (feedbackList == null) {
             feedbackList = new ArrayList<>();
         }
 
-        /* ===== ĐẨY SANG JSP ===== */
+        Origin origin = null;
+        if (baseItem.getOrigin_id() > 0) {
+            origin = originDAO.findById(baseItem.getOrigin_id());
+        }
+        request.setAttribute("origin", origin);
+
+        request.setAttribute("sp", sp);
+        request.setAttribute("baseItem", baseItem);
         request.setAttribute("variantList", variantList);
         request.setAttribute("rating", rating);
         request.setAttribute("feedbackList", feedbackList);
-        request.setAttribute("baseItem", currentItem);
 
-        request.setAttribute("pageTitle", currentItem.getName());
+        request.setAttribute("pageTitle", baseItem.getName());
         request.setAttribute("mainContent", "/view/chi_tiet_san_pham.jsp");
         request.setAttribute("pageCss", "/CSS/chi_tiet_san_pham.css");
         request.setAttribute("pageJS", "/JS/chi_tiet_san_pham.js");

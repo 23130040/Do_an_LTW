@@ -40,8 +40,8 @@
             <div class="separator-line"></div>
         </div>
         <div class="block social-login">
-            <a href="#" class="link google-submit">
-                <i class="fab fa-google"></i>
+            <a href="${pageContext.request.contextPath}/login-google" class="link google-submit">
+            <i class="fab fa-google"></i>
                 TIẾP TỤC VỚI GOOGLE
             </a>
         </div>

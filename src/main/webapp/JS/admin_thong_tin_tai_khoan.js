@@ -119,31 +119,3 @@ function showToast(msg, type = "info") {
     document.getElementById("toastMessage").innerText = msg;
     new bootstrap.Toast(toastEl, {delay: 3000}).show();
 }
-
-window.toggleStatus = function(userId, isChecked) {
-    const params = new URLSearchParams();
-    params.append('action', 'updateStatus');
-    params.append('id', userId);
-    params.append('status', isChecked);
-
-    fetch('quan-ly-nguoi-dung', {
-        method: 'POST',
-        body: params,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
-        .then(response => response.text())
-        .then(data => {
-            if (data.trim() === "SUCCESS") {
-                showToast("Cập nhật trạng thái thành công", "success");
-            } else {
-                showToast("Lỗi khi cập nhật trạng thái", "danger");
-                setTimeout(() => location.reload(), 1000);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showToast("Lỗi kết nối máy chủ", "danger");
-        });
-};

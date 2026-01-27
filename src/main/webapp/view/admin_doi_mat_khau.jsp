@@ -32,11 +32,12 @@
                 <form class="password-change-form"
                       method="post"
                       action="${pageContext.request.contextPath}/admin-doi-mat-khau">
-
-                    <div class="form-group">
-                        <label>Mật Khẩu Hiện Tại:</label>
-                        <input type="password" name="oldPassword" required>
-                    </div>
+                    <c:if test="${not isGoogleAccount}">
+                        <div class="form-group">
+                            <label>Mật Khẩu Hiện Tại:</label>
+                            <input type="password" name="oldPassword" required>
+                        </div>
+                    </c:if>
 
                     <div class="form-group">
                         <label>Mật Khẩu Mới:</label>
