@@ -34,6 +34,10 @@ public class Cart {
         return total;
     }
 
+    public int getTotalQuantity() {
+        return map.size();
+    }
+
     public Collection<CartItem> getList() {
         return map.values();
     }
