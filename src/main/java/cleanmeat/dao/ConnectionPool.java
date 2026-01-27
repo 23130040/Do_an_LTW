@@ -12,7 +12,7 @@ public class ConnectionPool {
     private final Queue<Connection> pool = new LinkedList<Connection>();
     private static final String URL = "jdbc:mysql://localhost:3306/cleanmeat?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "123456";
     private static class Holder {
         private static final ConnectionPool INSTANCE = new ConnectionPool();
     }
