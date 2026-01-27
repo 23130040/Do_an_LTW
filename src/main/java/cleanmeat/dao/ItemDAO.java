@@ -243,11 +243,21 @@ public class ItemDAO extends BaseDAO<Item> {
     }
 
     public Item getBestSellerItem() {
-        String sql = "SELECT i.*, img.url AS image_url, c.name AS category_name, o.name AS origin_name, u.name AS unit_name " +
-                "FROM item i LEFT JOIN order_item oi ON i.id = oi.item_id " +
-                "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
-                "LEFT JOIN category c ON i.category_id = c.id LEFT JOIN origin o ON i.origin_id = o.id " +
-                "LEFT JOIN unit u ON i.unit_id = u.id GROUP BY i.id ORDER BY SUM(oi.quantity) DESC LIMIT 1";
+        String sql =
+                "SELECT i.*, img.url AS image_url, c.name AS category_name, " +
+                        "       o.name AS origin_name, u.name AS unit_name, s.total_sold " +
+                        "FROM item i " +
+                        "JOIN ( " +
+                        "    SELECT item_id, SUM(quantity) AS total_sold " +
+                        "    FROM order_item " +
+                        "    GROUP BY item_id " +
+                        ") s ON s.item_id = i.id " +
+                        "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
+                        "LEFT JOIN category c ON i.category_id = c.id " +
+                        "LEFT JOIN origin o ON i.origin_id = o.id " +
+                        "LEFT JOIN unit u ON i.unit_id = u.id " +
+                        "ORDER BY s.total_sold DESC " +
+                        "LIMIT 1";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -625,6 +635,7 @@ public class ItemDAO extends BaseDAO<Item> {
         sql.append(" LIMIT ? OFFSET ? ");
         params.add(pageSize);
         params.add((page - 1) * pageSize);
+        System.out.println(sql.toString());
 
         Connection conn = null;
         try {
