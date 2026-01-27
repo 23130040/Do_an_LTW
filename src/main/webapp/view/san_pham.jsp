@@ -64,6 +64,7 @@
                 <div class="product-list">
 
                     <c:forEach items="${items}" var="item">
+                        <!-- chỉ lấy SKU gốc -->
                         <c:if test="${item.sku != null && item.sku.endsWith('1')}">
 
                             <div class="product-item ${item.current_stock == 0 ? 'out-of-stock' : ''}">
@@ -75,12 +76,16 @@
                                         <div class="discount">-${item.discount}%</div>
                                     </c:if>
 
-                                    <img src="${pageContext.request.contextPath}/${item.imageUrl}"
-                                         alt="${item.name}">
+                                    <!-- ===== ẢNH ===== -->
+                                    <img
+                                            src="${pageContext.request.contextPath}/images/${item.imageUrl}"
+                                            alt="${item.name}"
+                                            onerror="this.src='${pageContext.request.contextPath}/images/no-image.png'">
 
                                     <h3>${item.name}</h3>
                                 </a>
 
+                                <!-- ===== GIÁ ===== -->
                                 <div class="price">
                                     <c:choose>
                                         <c:when test="${item.discount > 0}">
@@ -101,10 +106,12 @@
                                     </c:choose>
                                 </div>
 
-                                <form action="them-vao-gio" method="post">
+                                <!-- ===== ADD CART ===== -->
+                                <form method="post">
                                     <input type="hidden" name="itemId" value="${item.id}">
                                     <button type="button"
-                                            onclick="addToCart(${item.id})" ${item.current_stock == 0 ? "disabled" : ""}>
+                                            onclick="addToCart(${item.id})"
+                                        ${item.current_stock == 0 ? "disabled" : ""}>
                                         THÊM VÀO GIỎ
                                     </button>
                                 </form>
@@ -112,7 +119,6 @@
                             </div>
 
                         </c:if>
-
                     </c:forEach>
 
                     <c:if test="${empty items}">
@@ -125,12 +131,10 @@
                 <c:if test="${totalPages > 1}">
                     <div class="pagination">
 
-                        <!-- Prev -->
                         <c:if test="${currentPage > 1}">
                             <a href="?page=${currentPage - 1}">&laquo;</a>
                         </c:if>
 
-                        <!-- Page numbers -->
                         <c:forEach begin="1" end="${totalPages}" var="p">
                             <a href="?page=${p}"
                                class="${p == currentPage ? 'active' : ''}">
@@ -138,7 +142,6 @@
                             </a>
                         </c:forEach>
 
-                        <!-- Next -->
                         <c:if test="${currentPage < totalPages}">
                             <a href="?page=${currentPage + 1}">&raquo;</a>
                         </c:if>
