@@ -42,7 +42,7 @@ public class SanPham extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         } catch (Exception ignored) {}
 
-        List<Item> items = itemDAO.searchAndFilter(
+        List<Item> items = itemDAO.searchAndFilterForSanPham(
                 keyword,
                 categoryDB,
                 origin,

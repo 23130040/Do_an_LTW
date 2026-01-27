@@ -396,7 +396,6 @@ public class ItemDAO extends BaseDAO<Item> {
             String keyword,
             String category,
             String origin,
-            String sort,
             int page,
             int pageSize
     ) {
@@ -431,19 +430,8 @@ public class ItemDAO extends BaseDAO<Item> {
             sql.append(" AND i.origin_id = ? ");
             params.add(Integer.parseInt(origin));
         }
+        sql.append(" ORDER BY i.created_at DESC ");
 
-        sql.append(" AND RIGHT(i.sku, 1) = '1' ");
-
-        // ===== SORT =====
-        if ("price_asc".equals(sort)) {
-            sql.append(" ORDER BY (i.price * (100 - i.discount) / 100) ASC ");
-        } else if ("price_desc".equals(sort)) {
-            sql.append(" ORDER BY (i.price * (100 - i.discount) / 100) DESC ");
-        } else {
-            sql.append(" ORDER BY i.created_at DESC ");
-        }
-
-        // ===== PAGINATION =====
         sql.append(" LIMIT ? OFFSET ? ");
         params.add(pageSize);
         params.add((page - 1) * pageSize);
@@ -472,7 +460,6 @@ public class ItemDAO extends BaseDAO<Item> {
 
         return list;
     }
-
 
     public int countFilteredItems(String keyword, String category, String origin) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM item WHERE 1=1");
@@ -567,14 +554,85 @@ public class ItemDAO extends BaseDAO<Item> {
         }
         return false;
     }
-    public List<Item> searchAndFilter(
+    public List<Item> searchAndFilterForSanPham(
             String keyword,
             String category,
             String origin,
+            String sort,
             int page,
             int pageSize
     ) {
-        return searchAndFilter(keyword, category, origin, null, page, pageSize);
+        List<Item> list = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder(
+                "SELECT i.*, img.url AS image_url, c.name AS category_name, " +
+                        "o.name AS origin_name, u.name AS unit_name " +
+                        "FROM item i " +
+                        "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
+                        "LEFT JOIN category c ON i.category_id = c.id " +
+                        "LEFT JOIN origin o ON i.origin_id = o.id " +
+                        "LEFT JOIN unit u ON i.unit_id = u.id " +
+                        "WHERE 1=1 "
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (i.name LIKE ? OR i.sku LIKE ?) ");
+            String val = "%" + keyword.trim() + "%";
+            params.add(val);
+            params.add(val);
+        }
+
+        if (category != null && !category.isEmpty()) {
+            sql.append(" AND i.category_id = ? ");
+            params.add(Integer.parseInt(category));
+        }
+
+        if (origin != null && !origin.isEmpty()) {
+            sql.append(" AND i.origin_id = ? ");
+            params.add(Integer.parseInt(origin));
+        }
+
+        sql.append(" AND RIGHT(i.sku, 1) = '1' ");
+
+        // ===== SORT =====
+        if ("price_asc".equals(sort)) {
+            sql.append(" ORDER BY (i.price * (100 - i.discount) / 100) ASC ");
+        } else if ("price_desc".equals(sort)) {
+            sql.append(" ORDER BY (i.price * (100 - i.discount) / 100) DESC ");
+        } else {
+            sql.append(" ORDER BY i.created_at DESC ");
+        }
+
+        // ===== PAGINATION =====
+        sql.append(" LIMIT ? OFFSET ? ");
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        list.add(mapResultSetToEntity(rs));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+
+        return list;
     }
 
 }
