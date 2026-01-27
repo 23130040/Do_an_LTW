@@ -102,7 +102,7 @@ public class ItemServlet extends HttpServlet {
             }
         }
 
-        List<Item> items = itemDAO.searchAndFilter(search, category, origin, sort,page, pageSize);
+        List<Item> items = itemDAO.searchAndFilter(search, category, origin,page, pageSize);
         int totalItems = itemDAO.countFilteredItems(search, category, origin);
         int totalPages = (int) Math.ceil((double) totalItems / pageSize);
 

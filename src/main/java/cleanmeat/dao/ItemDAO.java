@@ -567,4 +567,14 @@ public class ItemDAO extends BaseDAO<Item> {
         }
         return false;
     }
+    public List<Item> searchAndFilter(
+            String keyword,
+            String category,
+            String origin,
+            int page,
+            int pageSize
+    ) {
+        return searchAndFilter(keyword, category, origin, null, page, pageSize);
+    }
+
 }
