@@ -60,36 +60,78 @@ public class OrderDAO extends BaseDAO<Order> {
     }
 
     @Override
-    public boolean insert(Order order) throws SQLException, ClassNotFoundException {
-        String sql = """
-                insert into order(user_id, address_id, total_price, status)
-                values(?, ?, ?, ?)
-                """;
+    public boolean insert(Order order) throws SQLException {
+        String sqlOrder = "INSERT INTO `order` (user_id, address_id, total_price, status, created_at) VALUES (?, ?, ?, ?, NOW())";
+        String sqlItem = "INSERT INTO order_item (order_id, item_id, price, quantity) VALUES (?, ?, ?, ?)";
+
         Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement psOrder = null;
+        PreparedStatement psItem = null;
+
         try {
             conn = getConnection();
-            conn.setAutoCommit(false);
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, order.getUser().getId());
-            ps.setInt(2, order.getAddress().getId());
-            ps.setDouble(3, order.getTotal_price());
-            ps.setString(4, order.getStatus());
+            conn.setAutoCommit(false); // Bắt đầu Transaction
 
-            if (ps.executeUpdate() == 0) return false;
-            rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                order.setId(rs.getInt(1));
-                orderMap.put(order.getId(), order);
+            // 1. Lưu Order chính
+            psOrder = conn.prepareStatement(sqlOrder, PreparedStatement.RETURN_GENERATED_KEYS);
+            psOrder.setInt(1, order.getUser().getId());
+            psOrder.setInt(2, order.getAddress().getId());
+            psOrder.setDouble(3, order.getTotal_price());
+            psOrder.setString(4, order.getStatus());
+
+            int affectedRows = psOrder.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Tạo đơn hàng thất bại, không có dòng nào được thêm.");
             }
+
+            // Lấy ID đơn hàng vừa tạo (Auto Increment)
+            try (ResultSet rs = psOrder.getGeneratedKeys()) {
+                if (rs.next()) {
+                    order.setId(rs.getInt(1));
+                } else {
+                    throw new SQLException("Tạo đơn hàng thất bại, không lấy được ID.");
+                }
+            }
+
+            // 2. Lưu chi tiết đơn hàng (Order Items)
+            psItem = conn.prepareStatement(sqlItem);
+            for (OrderItem item : order.getListItem()) {
+                // QUAN TRỌNG: item.getItem().getId() phải là ID của sản phẩm trong bảng `item`
+                if (item.getItem() == null || item.getItem().getId() == 0) {
+                    throw new SQLException("Lỗi: Sản phẩm trong giỏ hàng không có ID hợp lệ.");
+                }
+
+                psItem.setInt(1, order.getId());
+                psItem.setInt(2, item.getItem().getId());
+                psItem.setDouble(3, item.getPrice());
+                psItem.setInt(4, item.getQuantity());
+                psItem.addBatch();
+            }
+
+            psItem.executeBatch(); // Chạy hàng loạt để tối ưu hiệu suất
+
+            conn.commit(); // Hoàn tất giao dịch
             return true;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback(); // Hủy bỏ nếu có lỗi (Foreign key fail sẽ rơi vào đây)
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            System.err.println("Database Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         } finally {
-            close(rs, ps, conn);
+            // Đóng tài nguyên đúng cách
+            if (psOrder != null) psOrder.close();
+            if (psItem != null) psItem.close();
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
     }
 
@@ -326,6 +368,7 @@ public class OrderDAO extends BaseDAO<Order> {
         }
         return 0;
     }
+
     public boolean updateStatus(int orderId, String status) {
         String sql = "UPDATE `order` SET status = ?, updated_at = NOW() WHERE id = ?";
         Connection conn = null;
@@ -348,10 +391,10 @@ public class OrderDAO extends BaseDAO<Order> {
 
     public Order findByIdAndUser(int orderId, int userId) {
         String sql = """
-        SELECT *
-        FROM `order`
-        WHERE id = ? AND user_id = ?
-    """;
+                    SELECT *
+                    FROM `order`
+                    WHERE id = ? AND user_id = ?
+                """;
 
         Connection conn = null;
         try {

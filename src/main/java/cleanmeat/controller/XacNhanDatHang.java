@@ -5,6 +5,7 @@ import cleanmeat.model.Address;
 import cleanmeat.model.User;
 import cleanmeat.services.AddressService;
 import java.util.List;
+import cleanmeat.services.OrderService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -46,6 +47,32 @@ public class XacNhanDatHang extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Cart cart = (Cart) session.getAttribute("cart");
 
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        if (user == null || cart == null || cart.getList().isEmpty()) {
+            response.getWriter().write("{\"status\":\"error\", \"message\":\"Phiên đăng nhập hết hạn hoặc giỏ hàng trống.\"}");
+            return;
+        }
+
+        try {
+            int addressId = Integer.parseInt(request.getParameter("addressId"));
+            OrderService orderService = new OrderService();
+
+            boolean success = orderService.placeOrder(user, cart, addressId);
+
+            if (success) {
+                session.removeAttribute("cart");
+                response.getWriter().write("{\"status\":\"success\"}");
+            } else {
+                response.getWriter().write("{\"status\":\"error\", \"message\":\"Không thể lưu đơn hàng vào hệ thống.\"}");
+            }
+        } catch (Exception e) {
+            response.getWriter().write("{\"status\":\"error\", \"message\":\"Dữ liệu không hợp lệ.\"}");
+        }
     }
 }

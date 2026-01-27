@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     setupSearchBox();
-    setupStickyMenu();
 });
 
 // Gắn sự kiện tìm kiếm
@@ -18,15 +17,4 @@ function setupSearchBox() {
     });
 }
 
-// Sticky Menu khi cuộn
-function setupStickyMenu() {
-    const menu = document.getElementById("home-menu");
 
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 100) {
-            menu.classList.remove("home");
-        } else {
-            menu.classList.add("home");
-        }
-    });
-}

@@ -26,9 +26,11 @@
                 </p>
             </div>
             <div class="profile-right">
-                <p id="address">${sessionScope.addressDefault.address}</p>
+                <p id="address">${defaultAddress != null ? defaultAddress.address : "Chưa có địa chỉ mặc định"}</p>
                 <div class="block-default">
-                    <p id="tag-default">Mặc định</p>
+                    <p id="tag-default">
+                        Mặc định
+                    </p>
                 </div>
             </div>
         </div>
@@ -161,13 +163,12 @@
             <div class="address-content">
                 <c:forEach var="addr" items="${addressList}">
                     <div class="address ${addr.defaultAddress ? 'check' : ''}"
-                         data-id="${addr.id}">
-                        <p class="address-detail">
-                                ${addr.address}
-                            <c:if test="${addr.defaultAddress}">
-                                <span class="address-default">Mặc định</span>
-                            </c:if>
-                        </p>
+                         data-id="${addr.id}"
+                         data-is-default="${addr.defaultAddress}">
+                        <p class="address-detail">${addr.address}</p>
+                        <c:if test="${addr.defaultAddress}">
+                            <span class="address-default">Mặc định</span>
+                        </c:if>
                     </div>
                 </c:forEach>
                 <button id="add-address-btn">+ Thêm địa chỉ</button>

@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
         addAddress: $("add-address-modal")
     };
 
-    /* ================== ĐẶT HÀNG ================== */
-    $("confirmOrder").onclick = () => show(modals.redirect);
-
     $("return-to-home-btn").onclick = () =>
         window.location.href = contextPath + "/trang-chu";
 
@@ -48,17 +45,25 @@ document.addEventListener("DOMContentLoaded", () => {
     $("add-address-btn").onclick = () => show(modals.addAddress);
     $("close-add-address-modal").onclick = () => hide(modals.addAddress);
 
-    // chọn địa chỉ
-    document.querySelectorAll(".address").forEach(address => {
-        address.onclick = () => {
-            document.querySelectorAll(".address")
-                .forEach(a => a.classList.remove("check"));
+    document.querySelectorAll('.address').forEach(item => {
+        item.addEventListener('click', function () {
+            document.querySelectorAll('.address').forEach(a => a.classList.remove('check'));
+            this.classList.add('check');
+            let addressText = this.querySelector('.address-detail').childNodes[0].textContent.trim();
+            let isDefault = this.getAttribute('data-is-default') === 'true';
 
-            address.classList.add("check");
+            const mainAddressDisplay = document.getElementById('address');
+            const defaultTag = document.getElementById('tag-default');
 
-            $("address").innerText = address.innerText;
-            $("address").dataset.addressId = address.dataset.id;
-        };
+            mainAddressDisplay.innerText = addressText;
+
+            if (isDefault) {
+                defaultTag.style.display = "block"; // Hiện chữ Mặc định
+            } else {
+                defaultTag.style.display = "none";  // Ẩn chữ Mặc định
+            }
+
+        });
     });
 
     /* ================== CLICK RA NGOÀI MODAL ================== */
@@ -66,5 +71,51 @@ document.addEventListener("DOMContentLoaded", () => {
         Object.values(modals).forEach(modal => {
             if (e.target === modal) hide(modal);
         });
+    };
+
+    /* ================== KIỂM TRA TRẠNG THÁI SAU KHI LOAD TRANG ================== */
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('orderStatus') === 'success') {
+        show(modals.redirect);
+    }
+
+    /* ================== XỬ LÝ ĐẶT HÀNG AJAX ================== */
+    $("confirmOrder").onclick = () => {
+        // Tìm địa chỉ đang có class 'check' (do người dùng click chọn)
+        // Nếu chưa click cái nào, lấy cái mặc định (có sẵn class 'check' từ JSP)
+        const selectedAddress = document.querySelector('.address.check');
+        const addressId = selectedAddress ? selectedAddress.getAttribute('data-id') : null;
+
+        if (!addressId) {
+            alert("Vui lòng chọn hoặc thêm địa chỉ giao hàng!");
+            return;
+        }
+
+        // Hiện loading hoặc disable nút để tránh spam click
+        $("confirmOrder").disabled = true;
+        $("confirmOrder").innerText = "ĐANG XỬ LÝ...";
+
+        fetch(window.location.pathname, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `addressId=${addressId}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    show(modals.redirect); // Hiện modal thành công
+                } else {
+                    alert("Lỗi: " + data.message);
+                    $("confirmOrder").innerText = "ĐẶT HÀNG";
+                    $("confirmOrder").disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Mất kết nối với máy chủ.");
+                $("confirmOrder").disabled = false;
+            });
     };
 });
