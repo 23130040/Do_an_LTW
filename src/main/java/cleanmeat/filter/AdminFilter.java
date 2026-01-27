@@ -28,25 +28,22 @@ public class AdminFilter implements Filter {
             chain.doFilter(request, response);
         }
         else if (user != null) {
-            // Đã login nhưng KHÔNG PHẢI ADMIN
-
-            // Lưu flag để hiển thị modal
             session.setAttribute("ROLE_ERROR", true);
 
-            // Quay về trang trước đó (an toàn)
+            String lastPage = (String) session.getAttribute("LAST_PAGE");
             String referer = httpRequest.getHeader("Referer");
 
-            if (referer != null && !referer.contains("/quan-ly")) {
+            if (lastPage != null) {
+                httpResponse.sendRedirect(lastPage);
+            } else if (referer != null && !referer.isEmpty()) {
                 httpResponse.sendRedirect(referer);
             } else {
-                // fallback an toàn
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/trang-chu");
             }
             return;
         }
 
         else {
-            // CHƯA LOGIN
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/dang-nhap");
         }
 
