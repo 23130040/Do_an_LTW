@@ -1,19 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-
 <!-- ===== HEADER ===== -->
 <c:if test="${sessionScope.ROLE_ERROR}">
-    <div class="modal fade" id="roleErrorModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-warning">
-                    <h5 class="modal-title">Thông báo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    Bạn không có quyền truy cập chức năng quản trị.
-                </div>
+    <div id="customModalOverlay" class="modal-overlay">
+        <div class="custom-modal">
+            <div class="modal-header-custom">
+                <span class="modal-title-custom">Thông báo</span>
+                <span class="close-modal-custom" onclick="closeCustomModal()">&times;</span>
+            </div>
+            <div class="modal-body-custom">
+                Bạn không có quyền truy cập chức năng quản trị.
             </div>
         </div>
     </div>
@@ -119,5 +116,15 @@
         ).show();
         <% } %>
     });
+    function closeCustomModal() {
+        const modal = document.getElementById('customModalOverlay');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+    function goBack() {
+        document.getElementById('roleErrorModal').style.display = 'none';
+        window.history.back();
+    }
 </script>
 

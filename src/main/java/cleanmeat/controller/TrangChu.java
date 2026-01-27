@@ -26,6 +26,7 @@ public class TrangChu extends HttpServlet {
         request.setAttribute("featuredProduct", itemDAO.getFeaturedItem());
         request.setAttribute("bestSellerProduct", itemDAO.getBestSellerItem());
         request.setAttribute("bestDealProduct", itemDAO.getBestDealItem());
+        request.setAttribute("homeItems", itemDAO.findDistinctBySkuBase());
 
         request.getRequestDispatcher("/view/base/base.jsp").forward(request, response);
     }
