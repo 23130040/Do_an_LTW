@@ -12,6 +12,61 @@
     <!-- ===== CSS HEADER ===== -->
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/CSS/header.css">
+    <style>
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .custom-modal {
+        width: 450px;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        animation: fadeInDown 0.3s ease; /* Hiệu ứng hiện ra */
+    }
+
+    .modal-header-custom {
+        background-color: #ffc107;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-title-custom {
+        font-weight: bold;
+        color: #333;
+        font-size: 18px;
+    }
+
+    .close-modal-custom {
+        font-size: 24px;
+        cursor: pointer;
+        color: #333;
+        line-height: 1;
+    }
+
+    .modal-body-custom {
+        padding: 30px 20px;
+        color: #333;
+        font-size: 16px;
+        background: #fff;
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }</style>
 
     <!-- ===== CSS NỘI DUNG ===== -->
     <c:if test="${not empty requestScope.pageCss}">
@@ -26,10 +81,6 @@
     <!-- ===== FONT ICON ===== -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous">
 </head>
 
 <body class="${requestScope.pageClass}" id="${requestScope.pageId}">
