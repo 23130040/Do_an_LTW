@@ -19,10 +19,10 @@
             <h3>${newProduct.name}</h3>
             <p class="price">${newProduct.price} đ</p>
             <div class="badge-new">Sản phẩm mới</div>
-            <form action="them-vao-gio" method="post">
-                <input type="hidden" name="itemId" value="${newProduct.id}">
-                <button type="submit" ${newProduct.current_stock == 0 ? "disabled" : ""}>THÊM VÀO GIỎ</button>
-            </form>
+            <button type="button"
+                    onclick="addToCart(${newProduct.id})" ${newProduct.current_stock == 0 ? "disabled" : ""}>
+                THÊM VÀO GIỎ
+            </button>
         </div>
 
         <div class="product-item featured-item">
@@ -31,10 +31,10 @@
             <h3>${featuredProduct.name}</h3>
             <p class="price">${featuredProduct.price} đ</p>
             <div class="badge-new">Nổi Bật</div>
-            <form action="them-vao-gio" method="post">
-                <input type="hidden" name="itemId" value="${featuredProduct.id}">
-                <button type="submit" ${featuredProduct.current_stock == 0 ? "disabled" : ""}>THÊM VÀO GIỎ</button>
-            </form>
+            <button type="button"
+                    onclick="addToCart(${featuredProduct.id})" ${featuredProduct.current_stock == 0 ? "disabled" : ""}>
+                THÊM VÀO GIỎ
+            </button>
         </div>
 
         <div class="product-item featured-item">
@@ -42,10 +42,10 @@
             <h3>${bestSellerProduct.name}</h3>
             <p class="price">${bestSellerProduct.price} đ</p>
             <div class="badge-new">Bán Chạy</div>
-            <form action="them-vao-gio" method="post">
-                <input type="hidden" name="itemId" value="${bestSellerProduct.id}">
-                <button type="submit" ${bestSellerProduct.current_stock == 0 ? "disabled" : ""}>THÊM VÀO GIỎ</button>
-            </form>
+            <button type="button"
+                    onclick="addToCart(${bestSellerProduct.id})" ${bestSellerProduct.current_stock == 0 ? "disabled" : ""}>
+                THÊM VÀO GIỎ
+            </button>
         </div>
 
         <div class="product-item featured-item">
@@ -53,10 +53,10 @@
             <h3>${bestDealProduct.name}</h3>
             <p class="price">${bestDealProduct.price} đ</p>
             <div class="badge-new">Giá Tốt</div>
-            <form action="them-vao-gio" method="post">
-                <input type="hidden" name="itemId" value="${bestDealProduct.id}">
-                <button type="submit" ${bestDealProduct.current_stock == 0 ? "disabled" : ""}>THÊM VÀO GIỎ</button>
-            </form>
+            <button type="button"
+                    onclick="addToCart(${bestDealProduct.id})" ${bestDealProduct.current_stock == 0 ? "disabled" : ""}>
+                THÊM VÀO GIỎ
+            </button>
         </div>
     </div>
 </section>

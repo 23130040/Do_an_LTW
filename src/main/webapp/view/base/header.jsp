@@ -57,8 +57,19 @@
 
                 <!-- CART -->
                 <li class="menuitem-right" id="shopping-cart">
-                    <a href="${pageContext.request.contextPath}/gio-hang" class="cart-link"><i class="fa-solid fa-cart-shopping"></i><span
-                            id="count-item">1</span></a>
+                    <a href="${pageContext.request.contextPath}/gio-hang" class="cart-link"><i
+                            class="fa-solid fa-cart-shopping"></i>
+                        <span id="count-item">
+                            <c:choose>
+                                <c:when test="${not empty sessionScope.cart}">
+                                    ${sessionScope.cart.totalQuantity}
+                                </c:when>
+                                <c:otherwise>
+                                    0
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
+                    </a>
 
                 </li>
 

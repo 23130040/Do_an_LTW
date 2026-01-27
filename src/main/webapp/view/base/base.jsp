@@ -110,5 +110,26 @@
 <!-- ===== JS ===== -->
 <script src="${pageContext.request.contextPath}${requestScope.pageJS}"></script>
 <script src="${pageContext.request.contextPath}/JS/main.js"></script>
+<script>
+    function addToCart(itemId) {
+        fetch('${pageContext.request.contextPath}/them-vao-gio', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'itemId=' + itemId
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const badge = document.getElementById('count-item');
+                    if (badge) {
+                        badge.innerText = data.totalQuantity;
+                    }
+                }
+            })
+            .catch(err => console.error(err));
+    }
+</script>
 </body>
 </html>

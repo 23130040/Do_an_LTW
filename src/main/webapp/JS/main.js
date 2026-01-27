@@ -25,7 +25,7 @@ function setupStickyMenu() {
     window.addEventListener("scroll", () => {
         if (window.scrollY > 100) {
             menu.classList.remove("home");
-        }else{
+        } else {
             menu.classList.add("home");
         }
     });

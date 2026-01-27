@@ -88,12 +88,10 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                            <form action="them-vao-gio" method="post">
-                                <input type="hidden" name="itemId" value="${item.id}">
-                                <button type="submit" ${item.current_stock == 0 ? "disabled" : ""}>
-                                    THÊM VÀO GIỎ
-                                </button>
-                            </form>
+                            <button type="button"
+                                    onclick="addToCart(${item.id})" ${item.current_stock == 0 ? "disabled" : ""}>
+                                THÊM VÀO GIỎ
+                            </button>
                         </div>
                     </c:forEach>
 
