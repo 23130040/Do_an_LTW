@@ -204,4 +204,5 @@ public class Item {
     public void setFinalPrice(double finalPrice) {
         this.finalPrice = finalPrice;
     }
+
 }

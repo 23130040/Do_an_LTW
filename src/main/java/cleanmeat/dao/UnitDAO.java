@@ -1,6 +1,7 @@
 package cleanmeat.dao;
 
 import cleanmeat.model.Unit;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

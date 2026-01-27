@@ -57,7 +57,7 @@
 
                 <!-- CART -->
                 <li class="menuitem-right" id="shopping-cart">
-                    <a href="${pageContext.request.contextPath}/gio-hang" class="cart-link"><i
+                    <a href="${pageContext.request.contextPath}${empty sessionScope.user ? "/dang-nhap" : "/gio-hang"}" class="cart-link"><i
                             class="fa-solid fa-cart-shopping"></i>
                         <span id="count-item">
                             <c:choose>

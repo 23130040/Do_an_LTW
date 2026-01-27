@@ -19,11 +19,11 @@
             <h3>${newProduct.name}</h3>
             <div class="price-container">
                 <p class="price">
-                    <fmt:formatNumber value="${newProduct.finalPrice}" type="number" groupingUsed="true" /> đ
+                    <fmt:formatNumber value="${newProduct.finalPrice}" type="number" groupingUsed="true"/> đ
                 </p>
                 <c:if test="${newProduct.price != newProduct.finalPrice}">
                     <del class="original-price">
-                        <fmt:formatNumber value="${newProduct.price}" type="number" groupingUsed="true" /> đ
+                        <fmt:formatNumber value="${newProduct.price}" type="number" groupingUsed="true"/> đ
                     </del>
                 </c:if>
             </div>
@@ -40,11 +40,11 @@
             <h3>${featuredProduct.name}</h3>
             <div class="price-container">
                 <p class="price">
-                    <fmt:formatNumber value="${featuredProduct.finalPrice}" type="number" groupingUsed="true" /> đ
+                    <fmt:formatNumber value="${featuredProduct.finalPrice}" type="number" groupingUsed="true"/> đ
                 </p>
                 <c:if test="${featuredProduct.price != featuredProduct.finalPrice}">
                     <del class="original-price">
-                        <fmt:formatNumber value="${featuredProduct.price}" type="number" groupingUsed="true" /> đ
+                        <fmt:formatNumber value="${featuredProduct.price}" type="number" groupingUsed="true"/> đ
                     </del>
                 </c:if>
             </div>
@@ -60,11 +60,11 @@
             <h3>${bestSellerProduct.name}</h3>
             <div class="price-container">
                 <p class="price">
-                    <fmt:formatNumber value="${bestSellerProduct.finalPrice}" type="number" groupingUsed="true" /> đ
+                    <fmt:formatNumber value="${bestSellerProduct.finalPrice}" type="number" groupingUsed="true"/> đ
                 </p>
                 <c:if test="${bestSellerProduct.price != bestSellerProduct.finalPrice}">
                     <del class="original-price">
-                        <fmt:formatNumber value="${bestSellerProduct.price}" type="number" groupingUsed="true" /> đ
+                        <fmt:formatNumber value="${bestSellerProduct.price}" type="number" groupingUsed="true"/> đ
                     </del>
                 </c:if>
             </div>
@@ -80,11 +80,11 @@
             <h3>${bestDealProduct.name}</h3>
             <div class="price-container">
                 <p class="price">
-                    <fmt:formatNumber value="${bestDealProduct.finalPrice}" type="number" groupingUsed="true" /> đ
+                    <fmt:formatNumber value="${bestDealProduct.finalPrice}" type="number" groupingUsed="true"/> đ
                 </p>
                 <c:if test="${bestDealProduct.price != bestDealProduct.finalPrice}">
                     <del class="original-price">
-                        <fmt:formatNumber value="${bestDealProduct.price}" type="number" groupingUsed="true" /> đ
+                        <fmt:formatNumber value="${bestDealProduct.price}" type="number" groupingUsed="true"/> đ
                     </del>
                 </c:if>
             </div>
@@ -111,11 +111,15 @@
                     <p class="price">
                         <fmt:formatNumber value="${item.finalPrice}" type="number"/> ₫
                     </p>
-                    <button>THÊM VÀO GIỎ</button>
+                    <button type="button"
+                            onclick="addToCart(${item.id})" ${item.current_stock == 0 ? "disabled" : ""}>
+                        THÊM VÀO GIỎ
+                    </button>
                 </div>
             </c:forEach>
 
-            <div class="product-item view-all-item" onclick="window.location.href='${pageContext.request.contextPath}/san-pham'">
+            <div class="product-item view-all-item"
+                 onclick="window.location.href='${pageContext.request.contextPath}/san-pham'">
                 <i class="fa-solid fa-arrow-right" style="font-size: 50px; margin-bottom: 10px;"></i>
                 <h3>Xem tất cả</h3>
                 <p>Khám phá toàn bộ sản phẩm</p>
@@ -125,4 +129,19 @@
         <button class="arrow right" onclick="scrollToRight(this)">&#10095;</button>
     </div>
 </section>
+<script>
+    function setupStickyMenu() {
+        const menu = document.getElementById("home-menu");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 100) {
+                menu.classList.remove("home");
+            } else {
+                menu.classList.add("home");
+            }
+        });
+    }
 
+    document.addEventListener("DOMContentLoaded", () => {
+        setupStickyMenu();
+    });
+</script>

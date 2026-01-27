@@ -340,11 +340,11 @@ main .contents .summary .container .footer button:hover {
     transform: scale(0.97);
 }
 
-.trash-button {
+.trash-btn {
     background: none;
     border: none;
 }
 
-.trash-btn {
+.trash-btn i {
     font-size: 15px;
 }

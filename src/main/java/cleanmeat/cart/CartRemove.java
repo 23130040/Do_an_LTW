@@ -21,6 +21,6 @@ public class CartRemove extends HttpServlet {
         if (cart != null) {
             cart.removeCartItem(id);
         }
-        response.sendRedirect("gio-hang");
+        response.setStatus(200);
     }
 }
