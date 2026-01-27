@@ -17,70 +17,46 @@
             <img src="${pageContext.request.contextPath}/images/${newProduct.imageUrl}"
                  alt="${newProduct.name}">
             <h3>${newProduct.name}</h3>
-            <div class="price-container">
-                <p class="price">
-                    <fmt:formatNumber value="${newProduct.finalPrice}" type="number" groupingUsed="true" /> đ
-                </p>
-                <c:if test="${newProduct.price != newProduct.finalPrice}">
-                    <del class="original-price">
-                        <fmt:formatNumber value="${newProduct.price}" type="number" groupingUsed="true" /> đ
-                    </del>
-                </c:if>
-            </div>
+            <p class="price">${newProduct.price} đ</p>
             <div class="badge-new">Sản phẩm mới</div>
-            <button>THÊM VÀO GIỎ</button>
+            <form action="them-vao-gio" method="post">
+                <input type="hidden" name="itemId" value="${newProduct.id}">
+                <button type="submit" ${newProduct.current_stock == 0 ? "disabled" : ""}>THÊM VÀO GIỎ</button>
+            </form>
         </div>
 
         <div class="product-item featured-item">
             <img src="${pageContext.request.contextPath}/images/${featuredProduct.imageUrl}"
                  alt="${featuredProduct.name}">
             <h3>${featuredProduct.name}</h3>
-            <div class="price-container">
-                <p class="price">
-                    <fmt:formatNumber value="${featuredProduct.finalPrice}" type="number" groupingUsed="true" /> đ
-                </p>
-                <c:if test="${featuredProduct.price != featuredProduct.finalPrice}">
-                    <del class="original-price">
-                        <fmt:formatNumber value="${featuredProduct.price}" type="number" groupingUsed="true" /> đ
-                    </del>
-                </c:if>
-            </div>
+            <p class="price">${featuredProduct.price} đ</p>
             <div class="badge-new">Nổi Bật</div>
-            <button>THÊM VÀO GIỎ</button>
+            <form action="them-vao-gio" method="post">
+                <input type="hidden" name="itemId" value="${featuredProduct.id}">
+                <button type="submit" ${featuredProduct.current_stock == 0 ? "disabled" : ""}>THÊM VÀO GIỎ</button>
+            </form>
         </div>
 
         <div class="product-item featured-item">
             <img src="../images/thitTC1.png" alt="Thịt thăn heo nổi bật">
             <h3>${bestSellerProduct.name}</h3>
-            <div class="price-container">
-                <p class="price">
-                    <fmt:formatNumber value="${bestSellerProduct.finalPrice}" type="number" groupingUsed="true" /> đ
-                </p>
-                <c:if test="${bestSellerProduct.price != bestSellerProduct.finalPrice}">
-                    <del class="original-price">
-                        <fmt:formatNumber value="${bestSellerProduct.price}" type="number" groupingUsed="true" /> đ
-                    </del>
-                </c:if>
-            </div>
+            <p class="price">${bestSellerProduct.price} đ</p>
             <div class="badge-new">Bán Chạy</div>
-            <button>THÊM VÀO GIỎ</button>
+            <form action="them-vao-gio" method="post">
+                <input type="hidden" name="itemId" value="${bestSellerProduct.id}">
+                <button type="submit" ${bestSellerProduct.current_stock == 0 ? "disabled" : ""}>THÊM VÀO GIỎ</button>
+            </form>
         </div>
 
         <div class="product-item featured-item">
             <img src="../images/thitTC2.png" alt="Thịt đùi gà nổi bật">
             <h3>${bestDealProduct.name}</h3>
-            <div class="price-container">
-                <p class="price">
-                    <fmt:formatNumber value="${bestDealProduct.finalPrice}" type="number" groupingUsed="true" /> đ
-                </p>
-                <c:if test="${bestDealProduct.price != bestDealProduct.finalPrice}">
-                    <del class="original-price">
-                        <fmt:formatNumber value="${bestDealProduct.price}" type="number" groupingUsed="true" /> đ
-                    </del>
-                </c:if>
-            </div>
+            <p class="price">${bestDealProduct.price} đ</p>
             <div class="badge-new">Giá Tốt</div>
-            <button>THÊM VÀO GIỎ</button>
+            <form action="them-vao-gio" method="post">
+                <input type="hidden" name="itemId" value="${bestDealProduct.id}">
+                <button type="submit" ${bestDealProduct.current_stock == 0 ? "disabled" : ""}>THÊM VÀO GIỎ</button>
+            </form>
         </div>
     </div>
 </section>
