@@ -2,7 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="header">
     <div class="logo-placeholder">
-        <img src="${pageContext.request.contextPath}/images/logoCleanmeat.png">
+        <img src="${pageContext.request.contextPath}/${applicationScope.globalConfig.logo_url}"
+             alt="Logo"
+             class="logo">
+
     </div>
 
     <div class="header-icons">

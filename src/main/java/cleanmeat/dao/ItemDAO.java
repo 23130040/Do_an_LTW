@@ -37,8 +37,7 @@ public class ItemDAO extends BaseDAO<Item> {
 
         item.setCurrent_stock(rs.getInt("current_stock"));
         item.setMin_stock(rs.getInt("min_stock"));
-        Unit unit = unitDAO.findById(rs.getInt("unit_id"));
-        item.setUnit(unit);
+        item.setUnit_id(rs.getInt("unit_id"));
         item.setCategoryName(rs.getString("category_name"));
         item.setOriginName(rs.getString("origin_name"));
         item.setUnitName(rs.getString("unit_name"));
@@ -80,7 +79,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 ps.setString(4, item.getLong_description());
                 ps.setInt(5, item.getCategory_id());
                 ps.setInt(6, item.getOrigin_id());
-                ps.setInt(7, item.getUnit().getId());
+                ps.setInt(7, item.getUnit_id());
                 ps.setDouble(8, item.getPrice());
                 ps.setDouble(9, item.getDiscount());
                 ps.setInt(10, item.getMin_stock());
@@ -324,7 +323,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 ps.setString(4, item.getLong_description());
                 ps.setInt(5, item.getCategory_id());
                 ps.setInt(6, item.getOrigin_id());
-                ps.setInt(7, item.getUnit().getId());
+                ps.setInt(7, item.getUnit_id());
                 ps.setDouble(8, item.getPrice());
                 ps.setDouble(9, item.getDiscount());
                 ps.setInt(10, item.getCurrent_stock());

@@ -55,7 +55,6 @@ public class SendOtpServlet extends HttpServlet {
         EmailService.sendOTP(email, otp);
 
 
-        EmailService.sendOTP(email, otp);
 
         response.getWriter().write("OK");
     }

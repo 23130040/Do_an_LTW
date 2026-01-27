@@ -87,7 +87,6 @@ public class ItemServlet extends HttpServlet {
             String search = request.getParameter("search");
             String category = request.getParameter("category");
             String origin = request.getParameter("origin");
-            String sort = request.getParameter("sort");
 
 
             int page = 1;

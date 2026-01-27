@@ -1,3 +1,9 @@
+let currentOrderId = null;
+let currentPage = 1;
+let totalPages = 1;
+let isLoading = false;
+
+
 const modal = document.getElementById("orderDetailModal");
 const closeBtns = document.querySelectorAll(".close-btn, .close-btn-footer");
 const viewDetailBtns = document.querySelectorAll(".view-detail");
@@ -102,9 +108,10 @@ viewDetailBtns.forEach(button => {
         e.stopPropagation();
 
         const { id, status, date, customer, phone, address, total } = this.dataset;
+        currentOrderId = id;
 
-        modalOrderId.innerText = "#" + id;
-        modalOrderStatus.innerText = status;
+        modalOrderId.innerText = id;
+        modalOrderStatus.value = status;
         modalOrderDate.innerText = formatDateVN(date);
         modalCustomerName.innerText = customer;
         modalCustomerPhone.innerText = phone;
@@ -141,7 +148,7 @@ function loadOrderItems(orderId) {
             <td>${oi.item.name}</td>
             <td>${format(oi.price)}</td>
             <td>${oi.quantity}</td>
-            <td>${format(oi.price * oi.quantity)}đ</td>
+            <td>${format(oi.price * oi.quantity)}</td>
         </tr>
     `;
                 tbody.insertAdjacentHTML("beforeend", row);
@@ -183,4 +190,52 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+});
+const btnUpdateOrderStatus = document.getElementById("btnUpdateOrderStatus");
+
+btnUpdateOrderStatus.addEventListener("click", function () {
+    if (!currentOrderId) {
+        alert("Không xác định được đơn hàng.");
+        return;
+    }
+
+    const newStatus = document.getElementById("modalOrderStatus").value;
+
+    if (!confirm(`Xác nhận cập nhật trạng thái đơn hàng ${currentOrderId}?`)) {
+        return;
+    }
+
+    fetch(`${CONTEXT_PATH}/quan-ly-don-hang`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            orderId: currentOrderId,
+            status: newStatus
+        })
+    })
+        .then(res => {
+            if (!res.ok) throw new Error("Update failed");
+            return res.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert("Cập nhật trạng thái thành công!");
+                window.location.reload();
+
+                const row = document.querySelector(`tr[data-order-id="${currentOrderId}"]`);
+                if (row) {
+                    row.querySelector(".order-status").innerText = newStatus;
+                }
+
+                closeModal();
+            } else {
+                alert(data.message || "Cập nhật thất bại.");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Có lỗi xảy ra khi cập nhật trạng thái.");
+        });
 });

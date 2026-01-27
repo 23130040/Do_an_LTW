@@ -71,7 +71,8 @@
                                     ${o.created_at.dayOfMonth < 10 ? '0' : ''}${o.created_at.dayOfMonth}-${o.created_at.monthValue < 10 ? '0' : ''}${o.created_at.monthValue}-${o.created_at.year}
                             </td>
                             <td>
-                                <fmt:formatNumber value="${o.total_price}" type="currency" currencySymbol="đ" maxFractionDigits="0"/>
+                                <fmt:formatNumber value="${o.total_price}" type="currency" currencySymbol="đ"
+                                                  maxFractionDigits="0"/>
                             </td>
                             <td>
                                 <c:choose>
@@ -167,7 +168,13 @@
             <div class="summary-info">
                 <div class="summary-item">
                     <p class="summary-label">Trạng thái Đơn hàng:</p>
-                    <p id="modalOrderStatus" class="status-badge"></p></div>
+                    <select id="modalOrderStatus" class="filter-select">
+                        <option value="Chờ xác nhận">Chờ xác nhận</option>
+                        <option value="Đang giao">Đang giao</option>
+                        <option value="Đã giao">Đã giao</option>
+                        <option value="Đã hủy">Đã hủy</option>
+                    </select>
+                    </div>
                 <div class="summary-item">
                     <p class="summary-label">Ngày đặt:</p>
                     <p id="modalOrderDate"></p>
@@ -185,18 +192,20 @@
 
             <div class="section-container">
                 <h4><i class="fas fa-boxes"></i> Sản phẩm trong đơn hàng</h4>
-                <table class="product-table">
-                    <thead>
-                    <tr>
-                        <th>Sản phẩm</th>
-                        <th>Đơn giá</th>
-                        <th>SL</th>
-                        <th>Tổng</th>
-                    </tr>
-                    </thead>
-                    <tbody id="modalProductList">
-                    </tbody>
-                </table>
+                <div id="orderDetailBody">
+                    <table class="product-table">
+                        <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>SL</th>
+                            <th>Tổng</th>
+                        </tr>
+                        </thead>
+                        <tbody id="modalProductList">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="total-summary">
@@ -205,6 +214,10 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary close-btn-footer">Đóng</button>
+            <button type="button" class="btn btn-primary" id="btnUpdateOrderStatus">
+                Cập nhật
+            </button>
+
         </div>
     </div>
 </div>

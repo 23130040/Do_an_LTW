@@ -268,6 +268,107 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
         }
         return false;
     }
+    public List<Feedback> searchAndFilter(
+            String keyword,
+            String rate,
+            String type,
+            int page,
+            int pageSize
+    ) {
+        List<Feedback> list = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder(
+                "SELECT f.*, u.name AS user_name, i.name AS item_name, " +
+                        "(SELECT EXISTS(SELECT 1 FROM feedback r WHERE r.response_id = f.id)) AS is_replied " +
+                        "FROM feedback f " +
+                        "LEFT JOIN user u ON f.user_id = u.id " +
+                        "LEFT JOIN item i ON f.item_id = i.id " +
+                        "WHERE f.response_id = 0 "
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND f.comment LIKE ? ");
+            params.add("%" + keyword.trim() + "%");
+        }
+
+        if (rate != null && !rate.isEmpty()) {
+            sql.append(" AND f.rating = ? ");
+            params.add(Integer.parseInt(rate));
+        }
+
+        if ("no-reply".equals(type)) {
+            sql.append(" AND NOT EXISTS (SELECT 1 FROM feedback r WHERE r.response_id = f.id) ");
+        } else if ("replied".equals(type)) {
+            sql.append(" AND EXISTS (SELECT 1 FROM feedback r WHERE r.response_id = f.id) ");
+        }
+
+        sql.append(" ORDER BY f.created_at DESC LIMIT ? OFFSET ? ");
+
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+
+    public int countFilteredFeedbacks(String keyword, String type, String rate) {
+        StringBuilder sql = new StringBuilder(
+                "SELECT COUNT(*) FROM feedback f WHERE f.response_id = 0 "
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND f.comment LIKE ? ");
+            params.add("%" + keyword.trim() + "%");
+        }
+
+        if (rate != null && !rate.isEmpty()) {
+            sql.append(" AND f.rating = ? ");
+            params.add(Integer.parseInt(rate));
+        }
+
+        if ("no-reply".equals(type)) {
+            sql.append(" AND NOT EXISTS (SELECT 1 FROM feedback r WHERE r.response_id = f.id) ");
+        } else if ("replied".equals(type)) {
+            sql.append(" AND EXISTS (SELECT 1 FROM feedback r WHERE r.response_id = f.id) ");
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 
     @Override public boolean insert(Feedback feedback) { return false; }
 }

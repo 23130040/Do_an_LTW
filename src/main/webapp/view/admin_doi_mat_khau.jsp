@@ -2,12 +2,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Đổi Mật Khẩu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/admin_doi_mat_khau.css">
 </head>
 <body>
@@ -26,28 +29,36 @@
 
             <div class="password-container">
 
-                <form class="password-change-form">
-                    <p style="margin-bottom: 25px; color: #777;">Vui lòng nhập mật khẩu hiện tại và mật khẩu mới để bảo mật tài khoản của bạn.</p>
+                <form class="password-change-form"
+                      method="post"
+                      action="${pageContext.request.contextPath}/admin-doi-mat-khau">
 
                     <div class="form-group">
-                        <label for="current-password"><i class="fas fa-key"></i> Mật Khẩu Hiện Tại:</label>
-                        <input type="password" id="current-password" required placeholder="Nhập mật khẩu hiện tại của bạn">
+                        <label>Mật Khẩu Hiện Tại:</label>
+                        <input type="password" name="oldPassword" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="new-password"><i class="fas fa-lock"></i> Mật Khẩu Mới:</label>
-                        <input type="password" id="new-password" required pattern=".{6,}" title="Mật khẩu phải có ít nhất 6 ký tự" placeholder="Mật khẩu phải có ít nhất 6 ký tự">
+                        <label>Mật Khẩu Mới:</label>
+                        <input type="password" name="newPassword" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="confirm-password"><i class="fas fa-redo-alt"></i> Xác Nhận Mật Khẩu Mới:</label>
-                        <input type="password" id="confirm-password" required placeholder="Nhập lại mật khẩu mới">
+                        <label>Xác Nhận Mật Khẩu Mới:</label>
+                        <input type="password" name="confirmPassword" required>
                     </div>
 
-                    <div id="password-message" class="message-area"></div>
+                    <c:if test="${not empty error}">
+                        <div class="message-area error">${error}</div>
+                    </c:if>
 
-                    <button type="submit" class="btn-update"><i class="fas fa-save"></i> Lưu Thay Đổi Mật Khẩu</button>
+                    <c:if test="${not empty success}">
+                        <div class="message-area success">${success}</div>
+                    </c:if>
+
+                    <button type="submit" class="btn-update">Lưu Thay Đổi</button>
                 </form>
+
             </div>
         </main>
     </div>
@@ -73,6 +84,34 @@
         </div>
     </div>
 </div>
+<div class="toast-container position-fixed top-0 start-50 p-3">
+    <div id="appToast"
+         class="toast align-items-center text-bg-info border-0"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMessage">
+            </div>
+            <button type="button"
+                    class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/JS/admin_doi_mat_khau.js"></script>
+<c:if test="${not empty toastMessage}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            showToast(
+                "${fn:escapeXml(toastMessage)}",
+                "${toastType}"
+            );
+        });
+    </script>
+</c:if>
+
 </body>
 </html>

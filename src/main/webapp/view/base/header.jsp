@@ -1,7 +1,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+
 <!-- ===== HEADER ===== -->
+<c:if test="${sessionScope.ROLE_ERROR}">
+    <div class="modal fade" id="roleErrorModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Thông báo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn không có quyền truy cập chức năng quản trị.
+                </div>
+            </div>
+        </div>
+    </div>
+</c:if>
 <nav class="menubar">
     <div class="sixteen column">
 
@@ -77,3 +93,20 @@
         </div>
     </div>
 </nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        <%
+            Boolean roleError = (Boolean) session.getAttribute("ROLE_ERROR");
+            if (roleError != null && roleError) {
+                session.removeAttribute("ROLE_ERROR");
+        %>
+        new bootstrap.Modal(
+            document.getElementById("roleErrorModal")
+        ).show();
+        <% } %>
+    });
+</script>
+

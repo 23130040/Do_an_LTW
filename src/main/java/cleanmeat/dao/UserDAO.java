@@ -207,77 +207,152 @@ public class UserDAO extends BaseDAO<User> {
         return list;
     }
 
-    public int getNoOfRecords() {
-        String sql = "SELECT COUNT(id) FROM user";
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
-        }
-        return 0;
-    }
 
-    public List<User> findUsersByPage(int offset, int noOfRecords) {
+    public List<User> searchAndFilter(
+            String keyword,
+            String role,
+            Boolean status,
+            int page,
+            int pageSize
+    ) {
         List<User> list = new ArrayList<>();
-        String sql = "SELECT * FROM user ORDER BY id ASC LIMIT ? OFFSET ?";
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, noOfRecords);
-                ps.setInt(2, offset);
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) list.add(mapResultSetToEntity(rs));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
-        }
-        return list;
-    }
 
-    public List<User> searchAndFilter(String keyword, String role) {
-        List<User> list = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT * FROM user WHERE 1=1");
+        StringBuilder sql = new StringBuilder(
+                "SELECT * FROM user WHERE 1=1 "
+        );
+
         List<Object> params = new ArrayList<>();
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            sql.append(" AND (name COLLATE utf8mb4_bin LIKE ? OR email COLLATE utf8mb4_bin LIKE ? OR phone COLLATE utf8mb4_bin LIKE ?)");
-            String likeValue = "%" + keyword.trim() + "%";
-            params.add(likeValue);
-            params.add(likeValue);
-            params.add(likeValue);
+            sql.append("""
+            AND (
+                name  LIKE ?
+             OR email LIKE ?
+             OR phone LIKE ?
+            )
+        """);
+            String val = "%" + keyword.trim() + "%";
+            params.add(val);
+            params.add(val);
+            params.add(val);
         }
-        if (role != null && !role.trim().isEmpty()) {
-            sql.append(" AND role = ?");
+
+        if (role != null && !role.isEmpty()) {
+            sql.append(" AND role = ? ");
             params.add(role);
         }
-        sql.append(" ORDER BY id ASC");
+
+        if (status != null) {
+            sql.append(" AND status = ? ");
+            params.add(status);
+        }
+
+        sql.append(" ORDER BY created_at DESC ");
+        sql.append(" LIMIT ? OFFSET ? ");
+
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
 
         Connection conn = null;
         try {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-                for (int i = 0; i < params.size(); i++) ps.setObject(i + 1, params.get(i));
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+
                 try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) list.add(mapResultSetToEntity(rs));
+                    while (rs.next()) {
+                        list.add(mapResultSetToEntity(rs));
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+
+        return list;
+    }
+
+    public int countFilteredUsers(String keyword, String role) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM user WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (name LIKE ? OR email LIKE ? OR phone LIKE ?)");
+            String val = "%" + keyword.trim() + "%";
+            params.add(val);
+            params.add(val);
+            params.add(val);
+        }
+        if (role != null && !role.isEmpty()) {
+            sql.append(" AND role = ?");
+            params.add(role);
+        }
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+        return 0;
+    }
+
+    public boolean updateStatus(int id, boolean status) {
+        String sql = "UPDATE user SET status = ?, updated_at = NOW() WHERE id = ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setBoolean(1, status);
+                ps.setInt(2, id);
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
             if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
-        return list;
+    }
+
+    public boolean isPhoneExists(String phone) {
+        String sql = "SELECT 1 FROM user WHERE phone = ? LIMIT 1";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+                ps.setString(1, phone);
+                ResultSet rs = ps.executeQuery();
+                return rs.next();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
+        return false;
     }
 
     public User findByEmail(String email) {

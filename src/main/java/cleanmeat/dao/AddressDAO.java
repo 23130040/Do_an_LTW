@@ -206,17 +206,22 @@ public class AddressDAO extends BaseDAO<Address> {
                 JOIN user u ON a.user_id = u.id
                 WHERE a.id = ?
                 """;
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapResultSetToEntity(rs);
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return mapResultSetToEntity(rs);
+                    }
+                    return null;
                 }
-                return null;
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
     }
 

@@ -1,6 +1,5 @@
 package cleanmeat.dao;
 
-import cleanmeat.model.Category;
 import cleanmeat.model.Origin;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

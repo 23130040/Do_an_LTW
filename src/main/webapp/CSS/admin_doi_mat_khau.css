@@ -372,3 +372,6 @@ a {
     background-color: #f1f1f1;
     color: var(--main-red);
 }
+ol, ul {
+    padding-left: 0;
+}

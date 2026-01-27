@@ -245,6 +245,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     roleFilter?.addEventListener("change", applyFilter);
+
+    document.addEventListener("click", e => {
+        const historyBtn = e.target.closest(".view-history");
+        if (historyBtn) openHistoryModal(historyBtn.dataset.id);
+
+        const detailBtn = e.target.closest(".view-detail");
+        if (detailBtn) openOrderDetailModal(detailBtn.dataset);
+    });
 });
 
 /* ================= HISTORY MODAL ================= */
@@ -413,7 +421,3 @@ window.toggleStatus = function(userId, isChecked) {
             showToast("Lỗi kết nối máy chủ", "danger");
         });
 };
-function isValidPhone(phone) {
-    const phoneRegex = /^0\d{9}$/;
-    return phoneRegex.test(phone);
-}

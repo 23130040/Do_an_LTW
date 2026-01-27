@@ -53,7 +53,7 @@
             </div>
 
             <div class="user-table-container">
-                <c:set var="currentUser" value="${sessionScope.user}" />
+                <c:set var="currentUser" value="${sessionScope.user}"/>
                 <table class="user-table">
                     <thead>
                     <tr>
@@ -193,6 +193,31 @@
                 <label for="userName">Họ và tên:</label>
                 <input type="text" id="userName" name="userName" placeholder="Nguyễn Văn A" required>
 
+                <label>Giới tính:</label>
+                <div class="gender-group">
+                    <label>
+                        <input type="radio" name="gender" value="Nam"
+                        ${user.gender == 'Nam' ? 'checked' : ''}> Nam
+                    </label>
+
+                    <label>
+                        <input type="radio" name="gender" value="Nữ"
+                        ${user.gender == 'Nữ' ? 'checked' : ''}> Nữ
+                    </label>
+
+                    <label>
+                        <input type="radio" name="gender" value="Khác"
+                        ${user.gender == 'Khác' ? 'checked' : ''}> Khác
+                    </label>
+
+                </div>
+                <label for="dob">Ngày sinh:</label>
+                <input
+                        type="date"
+                        id="dob"
+                        name="birthday"
+                        value="${user.birthday}">
+
                 <label for="userEmail">Email:</label>
                 <div class="input-group-custom">
                     <input type="email" id="userEmail" name="userEmail" placeholder="example@email.com" required>
@@ -205,12 +230,13 @@
                     <button type="button" id="btnVerifyOTP" class="btn-inline btn-verify">Xác nhận</button>
                 </div>
 
-                <label for="userPhone">Số điện thoại:</label>
-                <input type="tel" id="userPhone" name="userPhone" placeholder="0123456789"
-                       pattern="[0-9]{10}" title="Số điện thoại phải có 10 chữ số" required>
             </div>
 
             <div class="form-section right-col">
+                <label for="userPhone">Số điện thoại:</label>
+                <input type="tel" id="userPhone" name="userPhone" placeholder="0123456789"
+                       pattern="[0-9]{10}" title="Số điện thoại phải có 10 chữ số" required>
+
                 <label for="userRole">Phân quyền:</label>
                 <select id="userRole" name="userRole" required>
                     <option value="">-- Chọn vai trò --</option>
@@ -360,18 +386,20 @@
 
             <div class="section-container">
                 <h4><i class="fas fa-boxes"></i> Sản phẩm trong đơn hàng</h4>
-                <table class="product-table">
-                    <thead>
-                    <tr>
-                        <th>Sản phẩm</th>
-                        <th>Đơn giá</th>
-                        <th>SL</th>
-                        <th>Tổng</th>
-                    </tr>
-                    </thead>
-                    <tbody id="modalProductList">
-                    </tbody>
-                </table>
+                <div id="orderDetailBody">
+                    <table class="product-table">
+                        <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>SL</th>
+                            <th>Tổng</th>
+                        </tr>
+                        </thead>
+                        <tbody id="modalProductList">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="total-summary">
@@ -421,7 +449,7 @@
 <script>
     const CONTEXT_PATH = '<%= request.getContextPath() %>';
 </script>
-<script src="${pageContext.request.contextPath}/JS/admin_quan_ly_user.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/JS/admin_quan_ly_user.js"></script>
 </body>
 </html>

@@ -27,24 +27,29 @@ public class OrderItemDAO extends BaseDAO<OrderItem> {
                                          JOIN item i ON oi.item_id = i.id
                                          WHERE oi.order_id = ?
                 """;
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, orderId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Item item = new Item();
-                item.setId(rs.getInt("item_id"));
-                item.setName(rs.getString("item_name"));
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, orderId);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Item item = new Item();
+                    item.setId(rs.getInt("item_id"));
+                    item.setName(rs.getString("item_name"));
 
-                OrderItem oi = new OrderItem(
-                        item,
-                        rs.getDouble("oi_price"),
-                        rs.getInt("quantity")
-                );
-                list.add(oi);
+                    OrderItem oi = new OrderItem(
+                            item,
+                            rs.getDouble("oi_price"),
+                            rs.getInt("quantity")
+                    );
+                    list.add(oi);
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
         return list;
     }

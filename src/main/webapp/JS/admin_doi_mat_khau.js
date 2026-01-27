@@ -17,7 +17,45 @@ function toggleNotificationMenu() {
         notificationPanel.classList.toggle("show-panel");
     }
 }
+function showToast(msg, type = "info") {
+    const toastEl = document.getElementById("appToast");
 
+    toastEl.className =
+        `toast align-items-center text-bg-${type} border-0`;
+
+    document.getElementById("toastMessage").innerText = msg;
+
+    new bootstrap.Toast(toastEl, { delay: 3000 }).show();
+}
+
+
+window.toggleStatus = function(userId, isChecked) {
+    const params = new URLSearchParams();
+    params.append('action', 'updateStatus');
+    params.append('id', userId);
+    params.append('status', isChecked);
+
+    fetch('quan-ly-nguoi-dung', {
+        method: 'POST',
+        body: params,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })``
+        .then(response => response.text())
+        .then(data => {
+            if (data.trim() === "SUCCESS") {
+                showToast("Cập nhật trạng thái thành công", "success");
+            } else {
+                showToast("Lỗi khi cập nhật trạng thái", "danger");
+                setTimeout(() => location.reload(), 1000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showToast("Lỗi kết nối máy chủ", "danger");
+        });
+};
 
 // Xử lý đóng cả hai menu khi người dùng click ra ngoài
 window.onclick = function(event) {
@@ -42,3 +80,26 @@ window.onclick = function(event) {
         notificationPanel.classList.remove('show-panel');
     }
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector(".password-change-form");
+
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+        const newPassword = form.querySelector('input[name="newPassword"]').value;
+        const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+
+        // Check độ dài
+        if (newPassword.length < 8) {
+            e.preventDefault();
+            showToast("Mật khẩu mới phải có ít nhất 8 ký tự", "warning");
+            return;
+        }
+
+        // Check khớp
+        if (newPassword !== confirmPassword) {
+            e.preventDefault();
+            showToast("Mật khẩu xác nhận không khớp", "danger");
+        }
+    });
+});

@@ -61,7 +61,7 @@ public class UserService {
     public boolean isEmailRegistered(String email) {
         if (email == null || email.trim().isEmpty())
             throw new RuntimeException("Email không được để trống");
-        if (isValidEmail(email))
+        if (!isValidEmail(email))
             throw new RuntimeException("Email không hợp lệ");
         return userDAO.existsByEmail(email.trim());
     }
@@ -72,9 +72,9 @@ public class UserService {
             return false;
         String hashedOld = HashUtil.md5(oldPassword);
         if (!user.getPassword().equals(hashedOld))
-            return false;
+            throw new RuntimeException("Mật khẩu hiện tại không đúng");
         if (!newPassword.equals(confirmPassword)) {
-            return false;
+            throw new RuntimeException("Mật khẩu mới không khớp nhau");
         }
         String hashedNew = HashUtil.md5(newPassword);
         return userDAO.changePassword(userId, hashedNew);

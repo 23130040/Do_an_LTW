@@ -1,5 +1,6 @@
 package cleanmeat.controller;
 
+import cleanmeat.model.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -19,7 +20,7 @@ public class FeedbackServlet extends HttpServlet {
         String keyword = request.getParameter("search");
         String action = request.getParameter("action");
 
-        FeedbackDAO dao = new FeedbackDAO();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
 
         rate = (rate == null) ? "" : rate;
         type = (type == null) ? "" : type;
@@ -34,7 +35,7 @@ public class FeedbackServlet extends HttpServlet {
         if ("delete".equals(action)) {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
-                dao.delete(id);
+                feedbackDAO.delete(id);
                 response.sendRedirect("quan-ly-danh-gia");
                 return;
             } catch (Exception e) {
@@ -42,7 +43,35 @@ public class FeedbackServlet extends HttpServlet {
             }
         }
 
-        List<Feedback> list = dao.applyFilterAndSearch(rate, type, keyword);
+        int page = 1;
+        int pageSize = 5;
+
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            try {
+                page = Integer.parseInt(pageParam);
+                if (page < 1) page = 1;
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        List<Feedback> list = feedbackDAO.searchAndFilter( keyword, rate, type, page, pageSize);
+        int totalRecords = feedbackDAO.countFilteredFeedbacks( keyword, rate, type);
+        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+        int windowSize = 5;
+        int half = windowSize / 2;
+
+        int startPage = page - half;
+        if (startPage < 1) {
+            startPage = 1;
+        }
+
+        if (startPage + windowSize - 1 > totalPages) {
+            startPage = Math.max(1, totalPages - windowSize + 1);
+        }
+
+        int endPage = Math.min(totalPages, startPage + windowSize - 1);
         int totalReviews = list.size();
 
         double avgRating = 0;
@@ -58,6 +87,10 @@ public class FeedbackServlet extends HttpServlet {
 
 
         request.setAttribute("feedbackList", list);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", endPage);
         request.setAttribute("totalReviews", totalReviews);
         request.setAttribute("avgRating", avgRating);
         request.setAttribute("selectedRate", rate);

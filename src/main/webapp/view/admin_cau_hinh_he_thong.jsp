@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +39,8 @@
                     <form class="setting-form" action="cau-hinh-he-thong" method="POST">
                         <input type="hidden" name="action" value="save">
                         <input type="hidden" name="id" value="${config.id}">
+                        <input type="hidden" name="logoUrl" id="logoUrl"
+                               value="${config.logo_url}">
 
                         <div class="form-row">
                             <div class="form-group">
@@ -76,8 +79,11 @@
                         <textarea name="address" rows="3">${config.address}</textarea>
                         <label>Logo Hiện Tại:</label>
                         <div class="logo-preview-box">
-                            <img src="" alt="Logo" class="logo-preview">
-                            <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cloud-upload-alt"></i> Thay đổi Logo</button>
+                            <img id="logoPreview"
+                                 src="${pageContext.request.contextPath}/${config.logo_url}"
+                                 style="max-height:80px; display:${empty config.logo_url ? 'none' : 'block'}">
+                            <button type="button" onclick="selectLogo()">Chọn logo</button>
+
                         </div>
 
                         <button type="submit" class="btn btn-primary submit-btn">Lưu Cấu Hình</button>
@@ -111,6 +117,36 @@
 
 
 </div>
+<script>
+    window.APP_CONTEXT = '${pageContext.request.contextPath}';
+</script>
+<script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 <script src="${pageContext.request.contextPath}/JS/admin_cau_hinh_he_thong.js"></script>
+
+<script>
+    function selectLogo() {
+        var finder = new CKFinder();
+        finder.basePath = APP_CONTEXT + '/ckfinder/';
+        finder.selectMultiple = false;
+
+        finder.selectActionFunction = function (fileUrl) {
+            // fileUrl: /images/Bo10.png
+
+            const logoInput = document.getElementById("logoUrl");
+            const preview = document.getElementById("logoPreview");
+
+            logoInput.value = fileUrl;
+
+            preview.src = APP_CONTEXT + fileUrl;
+            preview.style.display = "block";
+        };
+
+        finder.popup();
+    }
+
+</script>
+
+
+
 </body>
 </html>

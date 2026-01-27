@@ -10,6 +10,7 @@ import cleanmeat.security.HashUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.List;
 
 @MultipartConfig
@@ -27,6 +28,14 @@ public class UserServlet extends HttpServlet {
 
         String searchKeyword = request.getParameter("search");
         String filterRole = request.getParameter("role");
+        String filterStatusRaw = request.getParameter("status");
+        Boolean filterStatus = null;
+
+        if ("1".equals(filterStatusRaw)) {
+            filterStatus = true;
+        } else if ("0".equals(filterStatusRaw)) {
+            filterStatus = false;
+        }
 
         if ("edit".equals(action)) {
             int idToEdit = Integer.parseInt(request.getParameter("id"));
@@ -53,10 +62,11 @@ public class UserServlet extends HttpServlet {
                 try {
                     page = Integer.parseInt(pageParam);
                     if (page < 1) page = 1;
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {
+                }
             }
 
-            List<User> list = userDAO.searchAndFilter( searchKeyword, filterRole, page, pageSize);
+            List<User> list = userDAO.searchAndFilter( searchKeyword, filterRole, filterStatus, page, pageSize);
             int totalRecords = userDAO.countFilteredUsers( searchKeyword, filterRole);
             int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
@@ -177,6 +187,13 @@ public class UserServlet extends HttpServlet {
                 response.getWriter().write("PASSWORD_REQUIRED");
                 return;
             }
+            String birthdayStr = request.getParameter("birthday");
+
+            LocalDate birthday = null;
+            if (birthdayStr != null && !birthdayStr.isEmpty()) {
+                birthday = LocalDate.parse(birthdayStr);
+            }
+            String gender = request.getParameter("gender");
 
             String hashedPassword = HashUtil.md5(rawPassword);
             User newUser = new User();
@@ -202,8 +219,9 @@ public class UserServlet extends HttpServlet {
             }
             newUser.setRole(request.getParameter("userRole"));
             newUser.setStatus(true);
-            newUser.setGender("");
-            newUser.setBirthday(null);
+            newUser.setEmail_verified(true);
+            newUser.setGender(gender);
+            newUser.setBirthday(birthday);
             newUser.setAvatar("");
 
             if (userDAO.insert(newUser)) {

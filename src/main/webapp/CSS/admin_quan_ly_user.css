@@ -984,3 +984,50 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+#orderDetailBody {
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #eee;
+    margin-top: 10px;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 2;
+    padding: 10px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.product-table td {
+    padding: 12px 8px;
+    height: 50px;
+    vertical-align: middle;
+}
+.gender-group {
+    display: flex;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.radio-label {
+    display: flex !important;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-weight: normal !important;
+}
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
