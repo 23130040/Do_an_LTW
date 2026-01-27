@@ -79,12 +79,96 @@ body {
     font-weight: bold;
     color: #008000;
 }
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0 15px;
+}
 
-/* ================= MÔ TẢ NGẮN ================= */
-.short-desc {
-    font-size: 16px;
+.product-rating .stars i {
+    color: #f5a623;
+    font-size: 18px;
+}
+
+.product-rating .rating-text {
+    color: #555;
+    font-size: 14px;
+}
+
+/* ================= KHỐI LƯỢNG & SỐ LƯỢNG ================= */
+
+.option-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 12px 0;
+}
+
+.option-row .label {
+    min-width: 90px;
+    font-weight: bold;
     color: #333;
-    line-height: 1.6;
+}
+
+/* ---------- Khối lượng ---------- */
+.option-list {
+    display: flex;
+    gap: 10px;
+}
+
+.option {
+    padding: 6px 14px;
+    border: 1.5px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.option:hover {
+    border-color: #cc0000;
+    color: #cc0000;
+}
+
+.option.active {
+    border-color: #cc0000;
+    color: #cc0000;
+    font-weight: bold;
+}
+
+/* ---------- Số lượng ---------- */
+.quantity-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.quantity-box button {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    border: 1.5px solid #ddd;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: .2s;
+}
+
+.quantity-box button:hover {
+    border-color: #cc0000;
+    color: #cc0000;
+}
+
+.quantity-box input {
+    width: 50px;
+    height: 34px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1.5px solid #ddd;
+    font-size: 15px;
 }
 
 /* ================= NÚT GIỎ HÀNG ================= */

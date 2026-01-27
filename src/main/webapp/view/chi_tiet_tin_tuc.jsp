@@ -12,9 +12,14 @@
 
         <div class="date-view">
             <i class="fa fa-calendar"></i>
-            <!-- LocalDate -> hiển thị trực tiếp -->
             ${news.created_at}
         </div>
+
+        <c:if test="${not empty news.picture_url}">
+            <img class="detail-img"
+                 src="${pageContext.request.contextPath}/${news.picture_url}"
+                 alt="${news.title}">
+        </c:if>
 
         <div class="detail-content">
             ${news.content}
@@ -34,7 +39,7 @@
             </strong>
         </p>
 
-        <a href="<c:url value='/tin-tuc'/>" class="back-link">
+        <a href="${pageContext.request.contextPath}/tin-tuc" class="back-link">
             &larr; Quay lại tin tức
         </a>
 
@@ -47,11 +52,11 @@
         <c:forEach items="${latestNews}" var="n">
             <div class="tin-moi-item">
 
-                <img src="<c:url value='/images/${n.picture_url}'/>"
+                <img src="${pageContext.request.contextPath}/${n.picture_url}"
                      alt="${n.title}">
 
                 <div>
-                    <a href="<c:url value='/chi-tiet-tin-tuc?id=${n.id}'/>">
+                    <a href="${pageContext.request.contextPath}/chi-tiet-tin-tuc?id=${n.id}">
                             ${n.title}
                     </a>
 

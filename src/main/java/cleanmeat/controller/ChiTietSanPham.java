@@ -1,14 +1,17 @@
 package cleanmeat.controller;
 
 import cleanmeat.dao.ItemDAO;
+import cleanmeat.dao.FeedbackDAO;
 import cleanmeat.model.Item;
+import cleanmeat.model.Feedback;
+import cleanmeat.model.RatingSummary;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet(
         name = "ChiTietSanPham",
@@ -17,42 +20,76 @@ import java.util.Map;
 public class ChiTietSanPham extends HttpServlet {
 
     private ItemDAO itemDAO;
+    private FeedbackDAO feedbackDAO;
 
     @Override
     public void init() {
         itemDAO = new ItemDAO();
+        feedbackDAO = new FeedbackDAO();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // ===== LẤY ID TỪ URL =====
+        /* ===== LẤY ID ===== */
         String idParam = request.getParameter("id");
         if (idParam == null) {
             response.sendRedirect(request.getContextPath() + "/san-pham");
             return;
         }
 
-        int id;
+        int itemId;
         try {
-            id = Integer.parseInt(idParam);
+            itemId = Integer.parseInt(idParam);
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/san-pham");
             return;
         }
 
-        // ===== LẤY SẢN PHẨM =====
-        Item item = itemDAO.findById(id);
-        if (item == null) {
+        /* ===== LẤY SẢN PHẨM HIỆN TẠI ===== */
+        Item currentItem = itemDAO.findById(itemId);
+        if (currentItem == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
-        // ===== ĐẨY DỮ LIỆU SANG JSP =====
-        request.setAttribute("sp", item);
+        /* ===== SKU BASE ===== */
+        String sku = currentItem.getSku();
+        if (sku == null || sku.length() < 2) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
 
-        request.setAttribute("pageTitle", item.getName());
+        String baseSku = sku.substring(0, sku.length() - 2);
+
+        List<Item> variantList = itemDAO.findBySkuBase(baseSku);
+        if (variantList == null) {
+            variantList = new ArrayList<>();
+        }
+
+        Item baseItem = currentItem;
+
+        RatingSummary rating =
+                feedbackDAO.getRatingSummaryByItemId(baseItem.getId());
+        if (rating == null) {
+            rating = new RatingSummary(5.0, 0);
+        }
+
+        List<Feedback> feedbackList =
+                feedbackDAO.findByItemId(baseItem.getId());
+
+        if (feedbackList == null) {
+            feedbackList = new ArrayList<>();
+        }
+
+        /* ===== ĐẨY SANG JSP ===== */
+        request.setAttribute("variantList", variantList);
+        request.setAttribute("rating", rating);
+        request.setAttribute("feedbackList", feedbackList);
+        request.setAttribute("baseItem", currentItem);
+
+        request.setAttribute("pageTitle", currentItem.getName());
         request.setAttribute("mainContent", "/view/chi_tiet_san_pham.jsp");
         request.setAttribute("pageCss", "/CSS/chi_tiet_san_pham.css");
         request.setAttribute("pageJS", "/JS/chi_tiet_san_pham.js");
