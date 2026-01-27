@@ -63,32 +63,27 @@ public class TaiKhoan extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
-
         HttpSession session = request.getSession(false);
-
-        if (session == null) {
+        if (session == null || session.getAttribute("user") == null) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
+        UserService userService = new UserService();
+        AddressService addressService = new AddressService();
+
         String contentType = request.getContentType();
         String action = request.getParameter("action");
-        AddressService addressService = new AddressService();
-        UserService userService = new UserService();
+        JsonObject body = null;
 
-        if (contentType != null && contentType.equals("application/json")) {
-            String json = request.getReader().lines().reduce("", (a, b) -> a + b);
-            JsonObject body = JsonParser.parseString(json).getAsJsonObject();
-            if (body.has("action")) {
-                action = body.get("action").getAsString();
-            }
-            request.setAttribute("jsonBody", body);
+        // ====== NHẬN JSON BODY (AJAX) ======
+        if (contentType != null && contentType.contains("application/json")) {
+            String json = request.getReader().lines().reduce("", String::concat);
+            body = JsonParser.parseString(json).getAsJsonObject();
+            action = body.has("action") ? body.get("action").getAsString() : null;
         }
+
         try {
             if ("add".equals(action)) {
                 String addressDetail = request.getParameter("address");
@@ -123,7 +118,6 @@ public class TaiKhoan extends HttpServlet {
                 }
                 return;
             } else if ("delete-account".equals(action)) {
-                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
                 String password = body.get("password").getAsString();
                 try {
                     boolean success = userService.deleteAccount(user.getId(), password);
@@ -139,26 +133,43 @@ public class TaiKhoan extends HttpServlet {
                 }
                 return;
             } else if ("updateProfile".equals(action)) {
-                JsonObject body = (JsonObject) request.getAttribute("jsonBody");
                 String name = body.get("name").getAsString();
                 String email = body.get("email").getAsString();
                 String phone = body.get("phone").getAsString();
-                String gender = body.get("gender").getAsString();
-                String birthdayStr = body.get("birthday").getAsString();
+                String gender = body.has("gender") && !body.get("gender").isJsonNull()
+                        ? body.get("gender").getAsString()
+                        : null;
+                String birthdayStr = body.has("birthday") && !body.get("birthday").isJsonNull()
+                        ? body.get("birthday").getAsString()
+                        : null;
 
-                switch (gender) {
-                    case "male" -> gender = "Nam";
-                    case "female" -> gender = "Nữ";
-                    default -> gender = null;
+                if (gender != null) {
+                    gender = switch (gender) {
+                        case "male" -> "male";
+                        case "female" -> "female";
+                        default -> null;
+                    };
                 }
 
                 LocalDate birthday = null;
-                if (birthdayStr != null && !birthdayStr.isEmpty()) {
-                    birthday = LocalDate.parse(birthdayStr);
+                if (birthdayStr != null && !birthdayStr.isBlank()) {
+                    if (birthdayStr.contains("/")) {
+                        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        birthday = LocalDate.parse(birthdayStr, f);
+                    } else {
+                        birthday = LocalDate.parse(birthdayStr); // yyyy-MM-dd
+                    }
                 }
 
                 userService.updateProfile(user.getId(), name, email, phone, gender, birthday);
-                response.getWriter().write("{\"success\": true}");
+                try {
+                    // parse + update
+                    response.getWriter().write("{\"success\":true}");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.setStatus(500);
+                    response.getWriter().write("{\"success\":false,\"message\":\"" + e.getMessage() + "\"}");
+                }
                 return;
             }
         } catch (SQLException e) {

@@ -33,7 +33,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.image}" alt="">
+                                            <img src="${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -46,7 +46,7 @@
                                 <div class="order-footer">
                                     <span class="total">Tổng: ${order.total_price}đ</span>
                                     <button class="btn-detail"><a
-                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                            href="${pageContext.request.contextPath}/chi-tiet-don-hang?id=${order.id}">
                                         Chi tiết</a>
                                     </button>
                                 </div>
@@ -75,7 +75,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.image}" alt="">
+                                            <img src="${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -88,7 +88,7 @@
                                 <div class="order-footer">
                                     <span class="total">Tổng: ${order.total_price}đ</span>
                                     <button class="btn-detail"><a
-                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                            href="${pageContext.request.contextPath}/chi-tiet-don-hang?id=${order.id}">
                                         Chi tiết</a>
                                     </button>
                                 </div>
@@ -117,7 +117,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.image}" alt="">
+                                            <img src="${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -130,7 +130,7 @@
                                 <div class="order-footer">
                                     <span class="total">Tổng: ${order.total_price}đ</span>
                                     <button class="btn-detail"><a
-                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                            href="${pageContext.request.contextPath}/chi-tiet-don-hang?id=${order.id}">
                                         Chi tiết</a>
                                     </button>
                                 </div>
@@ -159,7 +159,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.image}" alt="">
+                                            <img src="${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -172,7 +172,7 @@
                                 <div class="order-footer">
                                     <span class="total">Tổng: ${order.total_price}đ</span>
                                     <button class="btn-detail"><a
-                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                            href="${pageContext.request.contextPath}/chi-tiet-don-hang?id=${order.id}">
                                         Chi tiết</a>
                                     </button>
                                 </div>
@@ -201,7 +201,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.image}" alt="">
+                                            <img src="${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -214,7 +214,7 @@
                                 <div class="order-footer">
                                     <span class="total">Tổng: ${order.total_price}đ</span>
                                     <button class="btn-detail"><a
-                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                            href="${pageContext.request.contextPath}/chi-tiet-don-hang?id=${order.id}">
                                         Chi tiết</a>
                                     </button>
                                 </div>
@@ -243,7 +243,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.image}" alt="">
+                                            <img src="${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -256,7 +256,7 @@
                                 <div class="order-footer">
                                     <span class="total">Tổng: ${order.total_price}đ</span>
                                     <button class="btn-detail"><a
-                                            href="${pageContext.request.pageContext}/chi-tiet-don-hang?id=${order.id}">
+                                            href="${pageContext.request.contextPath}/chi-tiet-don-hang?id=${order.id}">
                                         Chi tiết</a>
                                     </button>
                                 </div>

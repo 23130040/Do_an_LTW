@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<div id="profile-content" class="tab-content active">--%>
 <div class="profile-content header">
@@ -46,7 +47,14 @@
             <div class="profile-form group">
                 <label class="profile-form label">Ngày sinh</label>
                 <div class="profile-form value-wrapper">
-                    <span class="profile-form static-value" id="birthday">${birthday}</span>
+                    <span class="profile-form static-value" id="birthday">
+                        <c:choose>
+                            <c:when test="${not empty birthday}">${birthday}</c:when>
+                            <c:otherwise>
+                                01/01/1999
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
                     <a href="#" class="profile-form change-btn" id="open-change-birthday-btn">Thay Đổi</a>
                 </div>
             </div>
