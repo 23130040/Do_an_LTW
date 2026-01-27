@@ -270,7 +270,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 "    c.name AS category_name, \n" +
                 "    o.name AS origin_name, \n" +
                 "    u.name AS unit_name, \n" +
-                "(i.price * (100 - i.discount) / 100) AS final_price\n"+
+                "(i.price * (100 - i.discount) / 100) AS final_price\n" +
                 "FROM item i\n" +
                 "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1\n" +
                 "LEFT JOIN category c ON i.category_id = c.id\n" +
@@ -569,6 +569,7 @@ public class ItemDAO extends BaseDAO<Item> {
         }
         return false;
     }
+
     public List<Item> searchAndFilterForSanPham(
             String keyword,
             String category,
@@ -650,4 +651,39 @@ public class ItemDAO extends BaseDAO<Item> {
         return list;
     }
 
+    public List<Item> findBySkuBase(String skuBase) {
+        List<Item> list = new ArrayList<>();
+
+        String sql = """
+        SELECT i.*, 
+               img.url AS image_url,
+               c.name AS category_name,
+               o.name AS origin_name,
+               u.name AS unit_name
+        FROM item i
+        LEFT JOIN item_image img 
+            ON i.id = img.item_id AND img.is_primary = 1
+        LEFT JOIN category c ON i.category_id = c.id
+        LEFT JOIN origin o ON i.origin_id = o.id
+        LEFT JOIN unit u ON i.unit_id = u.id
+        WHERE i.sku LIKE CONCAT(?, '__')
+        ORDER BY RIGHT(i.sku, 2)
+    """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, skuBase);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

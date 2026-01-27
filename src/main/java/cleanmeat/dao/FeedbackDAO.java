@@ -2,7 +2,7 @@ package cleanmeat.dao;
 
 import cleanmeat.model.Feedback;
 import cleanmeat.model.User;
-
+import cleanmeat.model.RatingSummary;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -368,7 +368,66 @@ public class FeedbackDAO extends BaseDAO<Feedback> {
 
         return 0;
     }
+    public RatingSummary getRatingSummaryByItemId(int itemId) {
+        String sql = """
+        SELECT 
+            AVG(rating) AS avg_rating,
+            COUNT(*) AS total_rating
+        FROM feedback
+        WHERE item_id = ?
+          AND rating > 0
+          AND response_id = 0
+    """;
 
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, itemId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new RatingSummary(
+                            rs.getDouble("avg_rating"),
+                            rs.getInt("total_rating")
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new RatingSummary(0, 0);
+    }
+    public List<Feedback> findByItemId(int itemId) {
+        List<Feedback> list = new ArrayList<>();
+
+        String sql = """
+        SELECT f.*, u.name AS user_name
+        FROM feedback f
+        LEFT JOIN user u ON f.user_id = u.id
+        WHERE f.item_id = ?
+          AND f.response_id = 0
+          AND f.rating > 0
+        ORDER BY f.created_at DESC
+    """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, itemId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
     @Override public boolean insert(Feedback feedback) { return false; }
+
 }
