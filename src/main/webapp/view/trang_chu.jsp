@@ -56,7 +56,8 @@
         </div>
 
         <div class="product-item featured-item">
-            <img src="../images/thitTC1.png" alt="Thịt thăn heo nổi bật">
+            <img src="${pageContext.request.contextPath}/images/${bestSellerProduct.imageUrl}"
+                 alt="${bestSellerProduct.name}">
             <h3>${bestSellerProduct.name}</h3>
             <div class="price-container">
                 <p class="price">
@@ -76,7 +77,8 @@
         </div>
 
         <div class="product-item featured-item">
-            <img src="../images/thitTC2.png" alt="Thịt đùi gà nổi bật">
+            <img src="${pageContext.request.contextPath}/images/${bestDealProduct.imageUrl}"
+                 alt="${bestDealProduct.name}">
             <h3>${bestDealProduct.name}</h3>
             <div class="price-container">
                 <p class="price">
@@ -106,7 +108,7 @@
         <div class="product-list scrollable">
             <c:forEach var="item" items="${homeItems}">
                 <div class="product-item">
-                    <img src="${item.imageUrl}" alt="${item.name}">
+                    <img src="${pageContext.request.contextPath}/images/${item.imageUrl}" alt="${item.name}">
                     <h3>${item.name}</h3>
                     <p class="price">
                         <fmt:formatNumber value="${item.finalPrice}" type="number"/> ₫
