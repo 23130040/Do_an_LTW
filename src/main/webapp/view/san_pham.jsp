@@ -12,21 +12,31 @@
             <aside class="sidebar">
                 <h3>Danh mục sản phẩm</h3>
                 <ul>
-                    <li class="${empty param.category ? 'active' : ''}">
-                        <a href="${pageContext.request.contextPath}/san-pham">TẤT CẢ</a>
-                    </li>
 
-                    <li class="${param.category == 'heo' ? 'active' : ''}">
-                        <a href="${pageContext.request.contextPath}/san-pham?category=heo">THỊT HEO</a>
-                    </li>
+                    <a href="${pageContext.request.contextPath}/san-pham">
+                        <li class="${empty param.category ? 'active' : ''}">
+                            TẤT CẢ
+                        </li>
+                    </a>
 
-                    <li class="${param.category == 'ga' ? 'active' : ''}">
-                        <a href="${pageContext.request.contextPath}/san-pham?category=ga">THỊT GÀ</a>
-                    </li>
+                    <a href="${pageContext.request.contextPath}/san-pham?category=heo">
+                        <li class="${param.category == 'heo' ? 'active' : ''}">
+                            THỊT HEO
+                        </li>
+                    </a>
 
-                    <li class="${param.category == 'bo' ? 'active' : ''}">
-                        <a href="${pageContext.request.contextPath}/san-pham?category=bo">THỊT BÒ</a>
-                    </li>
+                    <a href="${pageContext.request.contextPath}/san-pham?category=bo">
+                        <li class="${param.category == 'bo' ? 'active' : ''}">
+                            THỊT BÒ
+                        </li>
+                    </a>
+
+                    <a href="${pageContext.request.contextPath}/san-pham?category=ga">
+                        <li class="${param.category == 'ga' ? 'active' : ''}">
+                            THỊT GÀ
+                        </li>
+                    </a>
+
                 </ul>
             </aside>
 
@@ -54,53 +64,87 @@
                 <div class="product-list">
 
                     <c:forEach items="${items}" var="item">
-                        <div class="product-item ${item.current_stock == 0 ? 'out-of-stock' : ''}">
+                        <c:if test="${item.sku != null && item.sku.endsWith('1')}">
 
-                            <a href="${pageContext.request.contextPath}/product?id=${item.id}"
-                               class="product-link">
+                            <div class="product-item ${item.current_stock == 0 ? 'out-of-stock' : ''}">
 
-                                <c:if test="${item.discount > 0}">
-                                    <div class="discount">-${item.discount}%</div>
-                                </c:if>
+                                <a href="${pageContext.request.contextPath}/product?id=${item.id}"
+                                   class="product-link">
 
-                                <img src="${pageContext.request.contextPath}/${item.imageUrl}"
-                                     alt="${item.name}">
+                                    <c:if test="${item.discount > 0}">
+                                        <div class="discount">-${item.discount}%</div>
+                                    </c:if>
 
-                                <h3>${item.name}</h3>
-                            </a>
+                                    <img src="${pageContext.request.contextPath}/${item.imageUrl}"
+                                         alt="${item.name}">
 
-                            <div class="price">
-                                <c:choose>
-                                    <c:when test="${item.discount > 0}">
-                                        <span class="new">
-                                            <fmt:formatNumber
-                                                    value="${item.price * (100 - item.discount) / 100}"
-                                                    type="number"/> ₫ / KG
-                                        </span>
-                                        <span class="old">
-                                            <fmt:formatNumber value="${item.price}" type="number"/> ₫
-                                        </span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="new">
-                                            <fmt:formatNumber value="${item.price}" type="number"/> ₫ / KG
-                                        </span>
-                                    </c:otherwise>
-                                </c:choose>
+                                    <h3>${item.name}</h3>
+                                </a>
+
+                                <div class="price">
+                                    <c:choose>
+                                        <c:when test="${item.discount > 0}">
+                                            <span class="new">
+                                                <fmt:formatNumber
+                                                        value="${item.price * (100 - item.discount) / 100}"
+                                                        type="number"/> ₫
+                                            </span>
+                                            <span class="old">
+                                                <fmt:formatNumber value="${item.price}" type="number"/> ₫
+                                            </span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="new">
+                                                <fmt:formatNumber value="${item.price}" type="number"/> ₫
+                                            </span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+
+                                <form action="them-vao-gio" method="post">
+                                    <input type="hidden" name="itemId" value="${item.id}">
+                                    <button type="submit"
+                                        ${item.current_stock == 0 ? "disabled" : ""}>
+                                        THÊM VÀO GIỎ
+                                    </button>
+                                </form>
+
                             </div>
-                            <form action="them-vao-gio" method="post">
-                                <input type="hidden" name="itemId" value="${item.id}">
-                                <button type="submit" ${item.current_stock == 0 ? "disabled" : ""}>
-                                    THÊM VÀO GIỎ
-                                </button>
-                            </form>
-                        </div>
+
+                        </c:if>
                     </c:forEach>
 
                     <c:if test="${empty items}">
                         <p style="padding:20px">Không có sản phẩm.</p>
                     </c:if>
+
                 </div>
+
+                <!-- ================= PHÂN TRANG ================= -->
+                <c:if test="${totalPages > 1}">
+                    <div class="pagination">
+
+                        <!-- Prev -->
+                        <c:if test="${currentPage > 1}">
+                            <a href="?page=${currentPage - 1}">&laquo;</a>
+                        </c:if>
+
+                        <!-- Page numbers -->
+                        <c:forEach begin="1" end="${totalPages}" var="p">
+                            <a href="?page=${p}"
+                               class="${p == currentPage ? 'active' : ''}">
+                                    ${p}
+                            </a>
+                        </c:forEach>
+
+                        <!-- Next -->
+                        <c:if test="${currentPage < totalPages}">
+                            <a href="?page=${currentPage + 1}">&raquo;</a>
+                        </c:if>
+
+                    </div>
+                </c:if>
+
             </div>
         </section>
     </div>

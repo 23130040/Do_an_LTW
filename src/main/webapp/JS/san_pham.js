@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const sortText = option.textContent.trim();
 
             selected.textContent = sortText;
-
             const url = new URL(window.location.href);
 
             if (!sortValue || sortValue === "default") {
@@ -28,7 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 url.searchParams.set("sort", sortValue);
             }
 
-            url.searchParams.set("page", 1);
+            if (!url.searchParams.has("page")) {
+                url.searchParams.set("page", "1");
+            }
 
             window.location.href = url.toString();
         });

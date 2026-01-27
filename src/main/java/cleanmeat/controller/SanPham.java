@@ -13,23 +13,24 @@ import java.util.List;
 public class SanPham extends HttpServlet {
 
     private final ItemDAO itemDAO = new ItemDAO();
-    private static final int PAGE_SIZE = 100;
+    private static final int PAGE_SIZE = 16;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String keyword = request.getParameter("keyword");
-        String category = request.getParameter("category");
+        String categoryParam = request.getParameter("category");
         String origin = request.getParameter("origin");
         String sort = request.getParameter("sort");
 
-        if ("heo".equals(category)) {
-            category = "1";
-        } else if ("ga".equals(category)) {
-            category = "2";
-        } else if ("bo".equals(category)) {
-            category = "3";
+        String categoryDB = categoryParam;
+        if ("bo".equals(categoryParam)) {
+            categoryDB = "1";
+        } else if ("heo".equals(categoryParam)) {
+            categoryDB = "2";
+        } else if ("ga".equals(categoryParam)) {
+            categoryDB = "3";
         }
 
         if (sort == null || sort.isBlank()) {
@@ -42,18 +43,29 @@ public class SanPham extends HttpServlet {
         } catch (Exception ignored) {}
 
         List<Item> items = itemDAO.searchAndFilter(
-                keyword, category, origin, page, PAGE_SIZE
+                keyword,
+                categoryDB,
+                origin,
+                sort,
+                page,
+                PAGE_SIZE
         );
 
-        int totalItems = itemDAO.countFilteredItems(keyword, category, origin);
+        int totalItems = itemDAO.countFilteredItems(
+                keyword,
+                categoryDB,
+                origin
+        );
+
         int totalPages = (int) Math.ceil((double) totalItems / PAGE_SIZE);
 
+        // ===== SET ATTRIBUTE =====
         request.setAttribute("items", items);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
 
         request.setAttribute("keyword", keyword);
-        request.setAttribute("category", category);
+        request.setAttribute("category", categoryParam);
         request.setAttribute("origin", origin);
         request.setAttribute("sort", sort);
 

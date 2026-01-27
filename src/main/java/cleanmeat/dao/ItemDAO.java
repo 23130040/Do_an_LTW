@@ -396,6 +396,7 @@ public class ItemDAO extends BaseDAO<Item> {
             String keyword,
             String category,
             String origin,
+            String sort,
             int page,
             int pageSize
     ) {
@@ -429,10 +430,20 @@ public class ItemDAO extends BaseDAO<Item> {
         if (origin != null && !origin.isEmpty()) {
             sql.append(" AND i.origin_id = ? ");
             params.add(Integer.parseInt(origin));
+        }
+
+        sql.append(" AND RIGHT(i.sku, 1) = '1' ");
+
+        // ===== SORT =====
+        if ("price_asc".equals(sort)) {
+            sql.append(" ORDER BY (i.price * (100 - i.discount) / 100) ASC ");
+        } else if ("price_desc".equals(sort)) {
+            sql.append(" ORDER BY (i.price * (100 - i.discount) / 100) DESC ");
         } else {
             sql.append(" ORDER BY i.created_at DESC ");
         }
 
+        // ===== PAGINATION =====
         sql.append(" LIMIT ? OFFSET ? ");
         params.add(pageSize);
         params.add((page - 1) * pageSize);
@@ -462,6 +473,7 @@ public class ItemDAO extends BaseDAO<Item> {
         return list;
     }
 
+
     public int countFilteredItems(String keyword, String category, String origin) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM item WHERE 1=1");
         List<Object> params = new ArrayList<>();
@@ -472,14 +484,18 @@ public class ItemDAO extends BaseDAO<Item> {
             params.add(val);
             params.add(val);
         }
+
         if (category != null && !category.isEmpty()) {
             sql.append(" AND category_id = ?");
             params.add(category);
         }
+
         if (origin != null && !origin.isEmpty()) {
             sql.append(" AND origin_id = ?");
             params.add(origin);
         }
+
+        sql.append(" AND RIGHT(sku, 1) = '1'");
 
         Connection conn = null;
         try {
