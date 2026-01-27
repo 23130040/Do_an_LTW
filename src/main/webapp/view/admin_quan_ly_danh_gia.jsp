@@ -141,6 +141,31 @@
                     </tbody>
                 </table>
             </div>
+            <div class="pagination">
+
+                <%-- Nút Trước --%>
+                <c:if test="${currentPage > 1}">
+                    <a href="?page=${currentPage - 1}&search=${selectedSearch}&rate=${selectedRate}&type=${selectedType}">
+                        &laquo; Trước
+                    </a>
+                </c:if>
+
+                <%-- Các số trang thông minh --%>
+                <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                    <a href="?page=${i}&search=${selectedSearch}&rate=${selectedRate}&type=${selectedType}"
+                       class="${i == currentPage ? 'active' : ''}">
+                            ${i}
+                    </a>
+                </c:forEach>
+
+                <%-- Nút Sau --%>
+                <c:if test="${currentPage < totalPages}">
+                    <a href="?page=${currentPage + 1}&search=${selectedSearch}&rate=${selectedCat}&type=${selectedType}">
+                        Sau &raquo;
+                    </a>
+                </c:if>
+
+            </div>
         </main>
 
     </div>

@@ -1,6 +1,8 @@
 /* ================= GLOBAL UTILS ================= */
 let emailVerified = false;
 let searchTimeout = null;
+let originalEmail = null;
+let isEditMode = false;
 
 function format(number) {
     if (isNaN(number)) return "0đ";
@@ -27,7 +29,7 @@ function getStatusClass(status) {
 /* ================= DOM READY ================= */
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ========= USER MENU ========= */
+    /* ================= USER MENU ================= */
     const userMenu = document.getElementById("userMenuContent");
     const notificationPanel = document.getElementById("notification-panel");
 
@@ -50,33 +52,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /* ========= USER MODAL ========= */
+    /* ================= USER MODAL ================= */
     const userModal = document.getElementById("user-modal");
-    const userForm = userModal?.querySelector(".user-form");
+    const userForm = userModal.querySelector(".user-form");
     const USER_API_URL = "quan-ly-nguoi-dung";
 
-    window.openUserModal = (isEdit = false, user = null) => {
+    window.openUserModal = (edit = false, user = null) => {
         userForm.reset();
+
+        isEditMode = edit;
         emailVerified = false;
+        originalEmail = null;
 
-        const email = userForm.userEmail;
-        const password = userForm.userPassword;
-        const confirm = userForm.userConfirmPassword;
+        const btnSendOTP = document.getElementById("btnSendOTP");
 
-        if (isEdit && user) {
+        if (edit && user) {
             document.getElementById("modal-title-user").innerText = "Sửa";
             fillUserForm(user);
-            email.readOnly = true;
+
+            originalEmail = user.email;
             emailVerified = true;
-            password.required = false;
-            confirm.required = false;
+            btnSendOTP.disabled = true;
+
             userForm.formAction.value = "update";
+            userForm.userPassword.required = false;
+            userForm.userConfirmPassword.required = false;
         } else {
             document.getElementById("modal-title-user").innerText = "Thêm";
-            email.readOnly = false;
-            password.required = true;
-            confirm.required = true;
+
+            btnSendOTP.disabled = false;
             userForm.formAction.value = "add";
+            userForm.userPassword.required = true;
+            userForm.userConfirmPassword.required = true;
         }
 
         userModal.style.display = "flex";
@@ -84,95 +91,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.closeUserModal = () => userModal.style.display = "none";
 
-    function fillUserForm(u) {
-        userForm.userIdHidden.value = u.id || "";
-        userForm.userName.value = u.name || "";
-        userForm.userEmail.value = u.email || "";
-        userForm.userPhone.value = u.phone || "";
-        userForm.userRole.value = u.role || "";
+    window.editUser = id => {
+        fetch(`${USER_API_URL}?action=edit&id=${id}`)
+            .then(r => r.json())
+            .then(user => openUserModal(true, user))
+            .catch(() => showToast("Không thể tải user", "danger"));
+    };
+
+    function fillUserForm(user) {
+        userForm.userIdHidden.value = user.id || "";
+        userForm.userName.value = user.name || "";
+        userForm.userEmail.value = user.email || "";
+        userForm.userPhone.value = user.phone || "";
+        userForm.userRole.value = user.role || "";
         userForm.userPassword.value = "";
         userForm.userConfirmPassword.value = "";
     }
-    window.editUser = function (id) {
 
-        fetch(USER_API_URL + '?action=edit&id=' + id)
-            .then(response => {
-                if (!response.ok) {
-
-                    return response.text().then(text => Promise.reject(text));
-                }
-                return response.json();
-            })
-            .then(user => {
-                console.log("Dữ liệu User từ Servlet:", user);
-                openUserModal(true, user);
-            })
-            .catch(error => {
-                console.error('Lỗi khi tải thông tin người dùng:', error);
-                alert('Lỗi: Không thể tải thông tin người dùng. Chi tiết: ' + error);
-            });
-    }
-
-    function fillUserForm(user) {
-        document.getElementById('userIdHidden').value = user.id || "";
-
-        document.getElementById('userName').value = user.name || "";
-        document.getElementById('userEmail').value = user.email || "";
-        document.getElementById('userPhone').value = user.phone || "";
-
-        document.getElementById('userRole').value = user.role || "";
-
-        document.getElementById('userPassword').value = "";
-        document.getElementById('userConfirmPassword').value = "";
-    }
+    /* ================= DELETE USER ================= */
     let userIdToDelete = null;
-    const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+    const deleteModal = new bootstrap.Modal(
+        document.getElementById("deleteConfirmModal")
+    );
 
-    window.deleteUser = function (id) {
+    window.deleteUser = id => {
         userIdToDelete = id;
         deleteModal.show();
     };
 
-    document.getElementById('deleteConfirmModal').addEventListener('hidden.bs.modal', function () {
-        const backdrops = document.querySelectorAll('.modal-backdrop');
-        backdrops.forEach(b => b.remove());
-
-        document.body.classList.remove('modal-open');
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-    });
-
-    document.getElementById('btnConfirmDelete').addEventListener('click', () => {
+    document.getElementById("btnConfirmDelete").addEventListener("click", () => {
         if (!userIdToDelete) return;
 
-        const btn = document.getElementById('btnConfirmDelete');
-        btn.disabled = true;
-
-        fetch(`${USER_API_URL}?action=delete&id=${userIdToDelete}`, {
-            method: "DELETE"
-        })
-            .then(response => response.text())
-            .then(data => {
-                if (data.includes("thành công")) {
-                    deleteModal.hide();
-                    showToast("Xóa người dùng thành công", "success");
-
-                    setTimeout(() => {
-                        location.reload();
-                    }, 500);
+        fetch(`${USER_API_URL}?action=delete&id=${userIdToDelete}`, { method: "DELETE" })
+            .then(r => r.text())
+            .then(r => {
+                if (r.trim() === "SUCCESS") {
+                    showToast("Xóa thành công", "success");
+                    setTimeout(() => location.reload(), 500);
                 } else {
-                    showToast("Lỗi: " + data, "danger");
-                    btn.disabled = false;
+                    showToast("Xóa thất bại", "danger");
                 }
-            })
-            .catch(error => {
-                console.error('Lỗi xóa:', error);
-                deleteModal.hide();
-                btn.disabled = false;
             });
     });
-    /* ========= OTP ========= */
-    document.getElementById("btnSendOTP")?.addEventListener("click", () => {
+
+    /* ================= OTP ================= */
+    const btnSendOTP = document.getElementById("btnSendOTP");
+    const btnVerifyOTP = document.getElementById("btnVerifyOTP");
+
+    btnSendOTP.addEventListener("click", () => {
         const email = userForm.userEmail.value.trim();
         if (!email) return showToast("Vui lòng nhập email", "warning");
 
@@ -181,17 +147,14 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: "email=" + encodeURIComponent(email)
         })
-            .then(res => res.text())
-            .then(r => showToast(
-                r === "OK" ? "OTP đã gửi" :
-                    r === "INVALID_EMAIL" ? "Email không hợp lệ" :
-                        r === "EMAIL_EXISTS" ? "Email đã tồn tại" :
-                            "Không thể gửi OTP",
-                r === "OK" ? "success" : "danger"
-            ));
+            .then(r => r.text())
+            .then(r => {
+                if (r === "OK") showToast("OTP đã gửi", "success");
+                else showToast("Không thể gửi OTP", "danger");
+            });
     });
 
-    document.getElementById("btnVerifyOTP")?.addEventListener("click", () => {
+    btnVerifyOTP.addEventListener("click", () => {
         const otp = userForm.userOTP.value.trim();
         if (!otp) return;
 
@@ -206,45 +169,52 @@ document.addEventListener("DOMContentLoaded", () => {
                     emailVerified = true;
                     userForm.userEmail.readOnly = true;
                     showToast("Xác thực thành công", "success");
-                } else showToast("OTP không hợp lệ", "danger");
+                } else {
+                    showToast("OTP không đúng", "danger");
+                }
             });
     });
 
-    /* ========= SUBMIT USER ========= */
-    userForm?.addEventListener("submit", e => {
+    userForm.userEmail.addEventListener("input", () => {
+        const email = userForm.userEmail.value.trim();
+        btnSendOTP.disabled = isEditMode && email === originalEmail;
+        emailVerified = isEditMode && email === originalEmail;
+    });
+
+    /* ================= SUBMIT ================= */
+    userForm.addEventListener("submit", e => {
         e.preventDefault();
 
         const action = userForm.formAction.value;
+        const email = userForm.userEmail.value.trim();
         const password = userForm.userPassword.value.trim();
-        const confirm  = userForm.userConfirmPassword.value.trim();
+        const confirm = userForm.userConfirmPassword.value.trim();
+        const phone = userForm.userPhone.value.trim();
 
-        // ====== ADD USER ======
+        if (isEditMode && email !== originalEmail && !emailVerified) {
+            return showToast("Email mới chưa xác thực OTP", "warning");
+        }
+
         if (action === "add") {
-            if (!password) {
-                return showToast("Mật khẩu không được để trống", "warning");
-            }
-            if (password.length < 8) {
-                return showToast("Mật khẩu phải có ít nhất 8 ký tự", "warning");
-            }
-            if (password !== confirm) {
+            if (!password || password.length < 8)
+                return showToast("Mật khẩu tối thiểu 8 ký tự", "warning");
+            if (password !== confirm)
                 return showToast("Mật khẩu không khớp", "warning");
-            }
         }
 
-        if (action === "update") {
-            if (password.length > 0) {
-                if (password.length < 8) {
-                    return showToast("Mật khẩu phải có ít nhất 8 ký tự", "warning");
-                }
-                if (password !== confirm) {
-                    return showToast("Mật khẩu không khớp", "warning");
-                }
-            }
+        if (action === "update" && password) {
+            if (password.length < 8)
+                return showToast("Mật khẩu tối thiểu 8 ký tự", "warning");
+            if (password !== confirm)
+                return showToast("Mật khẩu không khớp", "warning");
         }
+
+        if (!phone || !/^0\d{9}$/.test(phone))
+            return showToast("Số điện thoại không hợp lệ", "warning");
 
         fetch(USER_API_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: new URLSearchParams(new FormData(userForm))
         })
             .then(r => r.text())
@@ -258,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
-    /* ========= SEARCH ========= */
+    /* ================= SEARCH ================= */
     const searchInput = document.getElementById("searchInput");
     const roleFilter = document.getElementById("roleFilter");
 
@@ -276,7 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     roleFilter?.addEventListener("change", applyFilter);
 
-    /* ========= EVENT DELEGATION ========= */
     document.addEventListener("click", e => {
         const historyBtn = e.target.closest(".view-history");
         if (historyBtn) openHistoryModal(historyBtn.dataset.id);
@@ -284,7 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const detailBtn = e.target.closest(".view-detail");
         if (detailBtn) openOrderDetailModal(detailBtn.dataset);
     });
-
 });
 
 /* ================= HISTORY MODAL ================= */
@@ -425,3 +393,31 @@ function showToast(msg, type = "info") {
     document.getElementById("toastMessage").innerText = msg;
     new bootstrap.Toast(toastEl, {delay: 3000}).show();
 }
+
+window.toggleStatus = function(userId, isChecked) {
+    const params = new URLSearchParams();
+    params.append('action', 'updateStatus');
+    params.append('id', userId);
+    params.append('status', isChecked);
+
+    fetch('quan-ly-nguoi-dung', {
+        method: 'POST',
+        body: params,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then(response => response.text())
+        .then(data => {
+            if (data.trim() === "SUCCESS") {
+                showToast("Cập nhật trạng thái thành công", "success");
+            } else {
+                showToast("Lỗi khi cập nhật trạng thái", "danger");
+                setTimeout(() => location.reload(), 1000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showToast("Lỗi kết nối máy chủ", "danger");
+        });
+};

@@ -27,7 +27,7 @@
                                 </div>
                             </td>
                             <td class="order-table-item unit">
-                                <span>${cartItem.item.unit.name}</span>
+                                <span>${cartItem.item.unitName}</span>
                             </td>
                             <td class="order-table-item price">
                                 <span>${cartItem.item.price}</span>

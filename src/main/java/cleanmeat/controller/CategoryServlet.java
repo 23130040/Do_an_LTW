@@ -21,7 +21,7 @@ public class CategoryServlet extends HttpServlet {
         if ("delete".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             categoryDAO.delete(id);
-            response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=deleted");
+            response.sendRedirect("quan-ly-danh-muc?tab=QuanLyDanhMuc&status=deleted");
             return;
         }
         request.setAttribute("categories", categoryDAO.findAll());
@@ -43,12 +43,12 @@ public class CategoryServlet extends HttpServlet {
         Category newCat = new Category(name, desc);
         try {
             if(categoryDAO.insert(newCat)) {
-                response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=success");
+                response.sendRedirect("quan-ly-danh-muc?tab=QuanLyDanhMuc&status=success");
             } else {
-                response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=fail");
+                response.sendRedirect("quan-ly-danh-muc?tab=QuanLyDanhMuc&status=fail");
             }
         } catch (Exception e) {
-            response.sendRedirect("quanlydanhmuc?tab=QuanLyDanhMuc&status=error");
+            response.sendRedirect("quan-ly-danh-muc?tab=QuanLyDanhMuc&status=error");
         }
     }
 }

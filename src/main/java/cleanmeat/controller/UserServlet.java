@@ -5,10 +5,12 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import cleanmeat.model.User;
 import cleanmeat.dao.UserDAO;
+import cleanmeat.security.HashUtil;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @MultipartConfig
@@ -18,10 +20,22 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
+        User currentUser = (User) session.getAttribute("user");
+
         String action = request.getParameter("action");
 
         String searchKeyword = request.getParameter("search");
         String filterRole = request.getParameter("role");
+        String filterStatusRaw = request.getParameter("status");
+        Boolean filterStatus = null;
+
+        if ("1".equals(filterStatusRaw)) {
+            filterStatus = true;
+        } else if ("0".equals(filterStatusRaw)) {
+            filterStatus = false;
+        }
 
         if ("edit".equals(action)) {
             int idToEdit = Integer.parseInt(request.getParameter("id"));
@@ -37,63 +51,45 @@ public class UserServlet extends HttpServlet {
             }
         } else if ("delete".equals(action)) {
             doDelete(request, response);
-        } else {
-            final int RECORDS_PER_PAGE = 9;
-            int currentPage = 1;
-            String pageParam = request.getParameter("page");
+        }else {
 
+
+            int page = 1;
+            int pageSize = 5;
+
+            String pageParam = request.getParameter("page");
             if (pageParam != null) {
                 try {
-                    currentPage = Integer.parseInt(pageParam);
-                } catch (NumberFormatException e) {
-                    currentPage = 1;
-                }
-            }
-            if (currentPage < 1) currentPage = 1;
-
-            List<User> fullFilteredList;
-
-            if ((searchKeyword != null && !searchKeyword.isEmpty()) || (filterRole != null && !filterRole.isEmpty())) {
-                fullFilteredList = userDAO.searchAndFilter(searchKeyword, filterRole);
-            } else {
-                fullFilteredList = userDAO.findAll();
-            }
-
-            int noOfRecords = fullFilteredList.size();
-            int noOfPages = (int) Math.ceil((double) noOfRecords / RECORDS_PER_PAGE);
-
-            if (noOfPages == 0) noOfPages = 1;
-
-            int offset = (currentPage - 1) * RECORDS_PER_PAGE;
-
-            if (offset >= noOfRecords && noOfRecords > 0) {
-                currentPage = noOfPages;
-                offset = (currentPage - 1) * RECORDS_PER_PAGE;
-            }
-
-            List<User> list = new ArrayList<>();
-
-            if (noOfRecords > 0) {
-                int start = Math.min(offset, noOfRecords);
-
-                int end = Math.min(start + RECORDS_PER_PAGE, noOfRecords);
-
-                if (start < end) {
-                    try {
-                        list = fullFilteredList.subList(start, end);
-                    } catch (IndexOutOfBoundsException e) {
-                        System.err.println("Lỗi Index khi phân trang: " + e.getMessage());
-                        list = new ArrayList<>();
-                    }
-                } else {
-                    list = new ArrayList<>();
+                    page = Integer.parseInt(pageParam);
+                    if (page < 1) page = 1;
+                } catch (NumberFormatException ignored) {
                 }
             }
 
+            List<User> list = userDAO.searchAndFilter( searchKeyword, filterRole, filterStatus, page, pageSize);
+            int totalRecords = userDAO.countFilteredUsers( searchKeyword, filterRole);
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+            int windowSize = 5;
+            int half = windowSize / 2;
+
+            int startPage = page - half;
+            if (startPage < 1) {
+                startPage = 1;
+            }
+
+            if (startPage + windowSize - 1 > totalPages) {
+                startPage = Math.max(1, totalPages - windowSize + 1);
+            }
+
+            int endPage = Math.min(totalPages, startPage + windowSize - 1);
+
+            request.setAttribute("currentUser", currentUser);
             request.setAttribute("users", list);
-            request.setAttribute("currentPage", currentPage);
-            request.setAttribute("noOfPages", noOfPages);
-            request.setAttribute("noOfRecords", noOfRecords);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("startPage", startPage);
+            request.setAttribute("endPage", endPage);
 
             request.setAttribute("searchKeyword", searchKeyword);
             request.setAttribute("filterRole", filterRole);
@@ -110,6 +106,24 @@ public class UserServlet extends HttpServlet {
             insertUser(request, response);
         } else if ("update".equals(action)) {
             updateUser(request, response);
+        }
+        else if ("updateStatus".equals(action)) {
+            try {
+                int id = Integer.parseInt(request.getParameter("id"));
+                boolean status = Boolean.parseBoolean(request.getParameter("status"));
+
+                boolean success = userDAO.updateStatus(id, status);
+
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                if (success) {
+                    response.getWriter().write("SUCCESS");
+                } else {
+                    response.getWriter().write("ERROR");
+                }
+            } catch (Exception e) {
+                response.getWriter().write("ERROR_EXCEPTION");
+            }
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action or missing parameter.");
         }
@@ -117,23 +131,31 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/plain; charset=UTF-8");
         try {
-            int idToDelete = Integer.parseInt(request.getParameter("id"));
+            String idStr = request.getParameter("id");
+            if (idStr == null || idStr.isEmpty()) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write("ID không được để trống");
+                return;
+            }
+
+            int idToDelete = Integer.parseInt(idStr);
 
             if (userDAO.delete(idToDelete)) {
                 response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().write("Xóa người dùng thành công.");
+                response.getWriter().write("SUCCESS");
             } else {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                response.getWriter().write("Lỗi: Không thể xóa người dùng.");
+                response.getWriter().write("Không tìm thấy người dùng hoặc lỗi CSDL");
             }
         } catch (NumberFormatException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("Lỗi: ID người dùng không hợp lệ.");
+            response.getWriter().write("Định dạng ID không hợp lệ");
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("Lỗi hệ thống khi xóa người dùng: " + e.getMessage());
+            response.getWriter().write("Lỗi hệ thống: " + e.getMessage());
         }
     }
 
@@ -160,15 +182,46 @@ public class UserServlet extends HttpServlet {
                 return;
             }
 
+            String rawPassword = request.getParameter("userPassword");
+            if (rawPassword == null || rawPassword.isEmpty()) {
+                response.getWriter().write("PASSWORD_REQUIRED");
+                return;
+            }
+            String birthdayStr = request.getParameter("birthday");
+
+            LocalDate birthday = null;
+            if (birthdayStr != null && !birthdayStr.isEmpty()) {
+                birthday = LocalDate.parse(birthdayStr);
+            }
+            String gender = request.getParameter("gender");
+
+            String hashedPassword = HashUtil.md5(rawPassword);
             User newUser = new User();
             newUser.setName(request.getParameter("userName"));
             newUser.setEmail(email);
-            newUser.setPassword(request.getParameter("userPassword"));
+            newUser.setPassword(hashedPassword);
             newUser.setPhone(request.getParameter("userPhone"));
+            String phone = request.getParameter("userPhone");
+
+            if (phone == null || phone.isBlank()) {
+                response.getWriter().write("PHONE_REQUIRED");
+                return;
+            }
+
+            if (!phone.matches("^0\\d{9}$")) {
+                response.getWriter().write("PHONE_INVALID");
+                return;
+            }
+
+            if (userDAO.isPhoneExists(phone)) {
+                response.getWriter().write("PHONE_EXISTS");
+                return;
+            }
             newUser.setRole(request.getParameter("userRole"));
             newUser.setStatus(true);
-            newUser.setGender("");
-            newUser.setBirthday(null);
+            newUser.setEmail_verified(true);
+            newUser.setGender(gender);
+            newUser.setBirthday(birthday);
             newUser.setAvatar("");
 
             if (userDAO.insert(newUser)) {
@@ -177,7 +230,6 @@ public class UserServlet extends HttpServlet {
 
                 response.setContentType("text/plain;charset=UTF-8");
                 response.getWriter().write("SUCCESS");
-                return;
             } else {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                         "Không thể thêm người dùng");
@@ -202,6 +254,20 @@ public class UserServlet extends HttpServlet {
             String name = request.getParameter("userName");
             String email = request.getParameter("userEmail");
             String phone = request.getParameter("userPhone");
+
+            if (!phone.matches("^0\\d{9}$")) {
+                response.getWriter().write("PHONE_INVALID");
+                return;
+            }
+
+            User oldUser = userDAO.findById(id);
+
+            if (!phone.equals(oldUser.getPhone())
+                    && userDAO.isPhoneExists(phone)) {
+                response.getWriter().write("PHONE_EXISTS");
+                return;
+            }
+
             String role = request.getParameter("userRole");
             String newPassword = request.getParameter("userPassword");
             String statusParam = request.getParameter("userStatus");
@@ -214,13 +280,17 @@ public class UserServlet extends HttpServlet {
                 existingUser.setPhone(phone);
                 existingUser.setRole(role);
 
-                existingUser.setStatus("on".equalsIgnoreCase(statusParam));
 
                 if (newPassword != null && !newPassword.isEmpty()) {
-                    existingUser.setPassword(newPassword);
+                    String hashedPassword = HashUtil.md5(newPassword);
+                    existingUser.setPassword(hashedPassword);
                 }
 
                 if (userDAO.update(existingUser, id)) {
+                    String currentPage = request.getParameter("currentPage");
+                    if (currentPage == null || currentPage.isEmpty()) {
+                        currentPage = "1";
+                    }
                     response.getWriter().write("SUCCESS");
                 } else {
                     response.getWriter().write("Lỗi: Không thể cập nhật người dùng.");

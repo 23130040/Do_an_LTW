@@ -33,13 +33,11 @@ public class ItemDAO extends BaseDAO<Item> {
         item.setId(rs.getInt("id"));
         item.setName(rs.getString("name"));
         item.setShort_description(rs.getString("short_description"));
-        item.setPrice(rs.getDouble("price"));
         item.setImageUrl(rs.getString("image_url"));
-        item.setDiscount(rs.getDouble("discount"));
+
         item.setCurrent_stock(rs.getInt("current_stock"));
         item.setMin_stock(rs.getInt("min_stock"));
-        Unit unit = unitDAO.findById(rs.getInt("unit_id"));
-        item.setUnit(unit);
+        item.setUnit_id(rs.getInt("unit_id"));
         item.setCategoryName(rs.getString("category_name"));
         item.setOriginName(rs.getString("origin_name"));
         item.setUnitName(rs.getString("unit_name"));
@@ -47,6 +45,14 @@ public class ItemDAO extends BaseDAO<Item> {
         item.setLong_description(rs.getString("long_description"));
         item.setCategory_id(rs.getInt("category_id"));
         item.setOrigin_id(rs.getInt("origin_id"));
+
+        double originalPrice = rs.getDouble("price");
+        double discount = rs.getDouble("discount");
+        double fPrice = originalPrice * (100 - discount) / 100;
+
+        item.setPrice(originalPrice);
+        item.setDiscount(discount);
+        item.setFinalPrice(fPrice);
 
         item.setCreated_at(created_at);
         item.setUpdated_at(updated_at);
@@ -73,7 +79,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 ps.setString(4, item.getLong_description());
                 ps.setInt(5, item.getCategory_id());
                 ps.setInt(6, item.getOrigin_id());
-                ps.setInt(7, item.getUnit().getId());
+                ps.setInt(7, item.getUnit_id());
                 ps.setDouble(8, item.getPrice());
                 ps.setDouble(9, item.getDiscount());
                 ps.setInt(10, item.getMin_stock());
@@ -258,11 +264,20 @@ public class ItemDAO extends BaseDAO<Item> {
     }
 
     public Item getBestDealItem() {
-        String sql = "SELECT i.*, img.url AS image_url, c.name AS category_name, o.name AS origin_name, u.name AS unit_name " +
-                "FROM item i LEFT JOIN order_item oi ON i.id = oi.item_id JOIN voucher_usage vu ON oi.order_id = vu.order_id " +
-                "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
-                "LEFT JOIN category c ON i.category_id = c.id LEFT JOIN origin o ON i.origin_id = o.id " +
-                "LEFT JOIN unit u ON i.unit_id = u.id GROUP BY i.id ORDER BY MAX(vu.discount_amount) DESC LIMIT 1";
+        String sql = "SELECT \n" +
+                "    i.*, \n" +
+                "    img.url AS image_url, \n" +
+                "    c.name AS category_name, \n" +
+                "    o.name AS origin_name, \n" +
+                "    u.name AS unit_name, \n" +
+                "(i.price * (100 - i.discount) / 100) AS final_price\n"+
+                "FROM item i\n" +
+                "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1\n" +
+                "LEFT JOIN category c ON i.category_id = c.id\n" +
+                "LEFT JOIN origin o ON i.origin_id = o.id\n" +
+                "LEFT JOIN unit u ON i.unit_id = u.id\n" +
+                "ORDER BY i.discount DESC\n" +
+                "LIMIT 1;";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -308,7 +323,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 ps.setString(4, item.getLong_description());
                 ps.setInt(5, item.getCategory_id());
                 ps.setInt(6, item.getOrigin_id());
-                ps.setInt(7, item.getUnit().getId());
+                ps.setInt(7, item.getUnit_id());
                 ps.setDouble(8, item.getPrice());
                 ps.setDouble(9, item.getDiscount());
                 ps.setInt(10, item.getCurrent_stock());
@@ -429,9 +444,8 @@ public class ItemDAO extends BaseDAO<Item> {
         if (origin != null && !origin.isEmpty()) {
             sql.append(" AND i.origin_id = ? ");
             params.add(Integer.parseInt(origin));
-        } else {
-            sql.append(" ORDER BY i.created_at DESC ");
         }
+        sql.append(" ORDER BY i.created_at DESC ");
 
         sql.append(" LIMIT ? OFFSET ? ");
         params.add(pageSize);

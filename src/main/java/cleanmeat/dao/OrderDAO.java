@@ -326,4 +326,23 @@ public class OrderDAO extends BaseDAO<Order> {
         }
         return 0;
     }
+    public boolean updateStatus(int orderId, String status) {
+        String sql = "UPDATE `order` SET status = ?, updated_at = NOW() WHERE id = ?";
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+                ps.setString(1, status);
+                ps.setInt(2, orderId);
+                return ps.executeUpdate() > 0;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
+        return false;
+    }
 }

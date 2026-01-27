@@ -90,6 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
         skuInput.classList.remove("input-error");
         skuError.style.display = "none";
     });
+    discountInput?.addEventListener("input", () => {
+        discountInput.classList.remove("input-error");
+    });
 
     productForm?.addEventListener("submit", function (e) {
         if (skuError.style.display === "block") {
@@ -128,11 +131,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function editProduct(id) {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentPage = urlParams.get('page') || '1';
     fetch(`${window.APP_CONTEXT}/quan-ly-san-pham?action=getEditData&id=${id}`)
         .then(res => res.json())
         .then(item => {
             openProductModal(true);
             const form = document.querySelector(".product-form");
+
+            document.getElementById("current_page_input").value = currentPage;
 
             document.getElementById("productId").value = item.id;
             form.name.value = item.name;
@@ -148,8 +156,8 @@ function editProduct(id) {
             form.price.value = formatNumber(priceVal);
             form.discount.value = item.discount;
 
-            const finalPrice = Math.round(priceVal * (1 - item.discount / 100));
-            document.getElementById("finalPrice").value = formatNumber(finalPrice);
+            const finalPriceVal = item.finalPrice;
+            document.getElementById("finalPrice").value = formatNumber(finalPriceVal);
 
             const container = document.getElementById("imagePreviewContainer");
             container.innerHTML = "";

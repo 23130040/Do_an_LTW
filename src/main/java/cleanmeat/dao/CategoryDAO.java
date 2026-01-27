@@ -87,7 +87,10 @@ public class CategoryDAO extends BaseDAO<Category> {
     @Override
     public List<Category> findAll() {
         List<Category> list = new ArrayList<>();
-        String sql = "SELECT * FROM category";
+        String sql = "SELECT c.*, COUNT(DISTINCT LEFT(i.sku, LENGTH(i.sku) - 2)) AS totalItems " +
+                "FROM category c " +
+                "LEFT JOIN item i ON c.id = i.category_id " +
+                "GROUP BY c.id";
         Connection conn = null;
         try {
             conn = getConnection();
@@ -95,7 +98,9 @@ public class CategoryDAO extends BaseDAO<Category> {
                  ResultSet rs = ps.executeQuery()) {
 
                 while (rs.next()) {
-                    list.add(mapResultSetToEntity(rs));
+                    Category cat = mapResultSetToEntity(rs);
+                    cat.setTotalItems((rs.getInt("totalItems")));
+                    list.add(cat);
                 }
             }
         } catch (Exception e) {

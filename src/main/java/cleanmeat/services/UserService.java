@@ -72,9 +72,9 @@ public class UserService {
             return false;
         String hashedOld = HashUtil.md5(oldPassword);
         if (!user.getPassword().equals(hashedOld))
-            return false;
+            throw new RuntimeException("Mật khẩu hiện tại không đúng");
         if (!newPassword.equals(confirmPassword)) {
-            return false;
+            throw new RuntimeException("Mật khẩu mới không khớp nhau");
         }
         String hashedNew = HashUtil.md5(newPassword);
         return userDAO.changePassword(userId, hashedNew);
