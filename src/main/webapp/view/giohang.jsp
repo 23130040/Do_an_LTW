@@ -35,10 +35,13 @@
                             </td>
                             <td class="order-table-item amount">
                                 <div class="amount-wrapper">
-                                    <button type="button" data-action="decrease" class="quantity-btn">-
+                                    <button type="button" data-action="decrease" class="quantity-btn"
+                                            data-id="${cartItem.id}">-
                                     </button>
-                                    <input type="text" class="quantity-input" value="${cartItem.quantity}">
-                                    <button type="button" data-action="increase" class="quantity-btn">+
+                                    <input type="text" class="quantity-input" value="${cartItem.quantity}"
+                                           data-id="${cartItem.id}">
+                                    <button type="button" data-action="increase" class="quantity-btn"
+                                            data-id="${cartItem.id}">+
                                     </button>
                                 </div>
                             </td>
@@ -47,10 +50,9 @@
                                 <span class="detail">đ</span>
                             </td>
                             <td class="order-table-item trash">
-                                <form action="cart-remove" method="post">
-                                    <input type="hidden" name="id" value="${cartItem.id}">
-                                    <button type="submit" class="trash-button"><i class="fa-solid fa-trash trash-btn" data-id="${cartItem.id}"></i></button>
-                                </form>
+                                <button type="button" class="trash-btn" data-id="${cartItem.id}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -83,7 +85,8 @@
                 <div class="order-summary delivery-fee">
                     <p>
                         <span class="delivery-fee txt">
-                            <i class="fa-solid fa-circle-exclamation" id="opendeliverymessage"></i>Phí vận chuyển:</span>
+                            <i class="fa-solid fa-circle-exclamation"
+                               id="opendeliverymessage"></i>Phí vận chuyển:</span>
                         <span class="delivery-fee number" id="delivery">0</span>
                     </p>
                 </div>
@@ -114,3 +117,6 @@
         </div>
     </div>
 </div>
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+</script>

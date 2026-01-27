@@ -16,14 +16,58 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === deliveryMessage) deliveryMessage.style.display = "none";
     });
 
-    document.querySelector(".trash-btn").forEach(btn => {
-        btn.onclick = () => {
-            let id = btn.dataset.id;
-            fetch(`cart-remove?id=${id}`, {method: `POST`})
-                .then(resp => location.reload());
-        }
-    })
+    // ===== XÓA SẢN PHẨM =====
+    document.querySelectorAll(".trash-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = btn.dataset.id;
+
+            fetch(`${contextPath}/cart-remove`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `id=${id}`
+            }).then(() => location.reload());
+        });
+    });
+
+    // ===== TĂNG / GIẢM SỐ LƯỢNG =====
+    document.querySelectorAll(".quantity-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = btn.dataset.id;
+            const action = btn.dataset.action;
+
+            const wrapper = btn.closest(".amount-wrapper");
+            const input = wrapper.querySelector(".quantity-input");
+
+            let quantity = parseInt(input.value);
+
+            if (action === "increase") quantity++;
+            if (action === "decrease" && quantity > 1) quantity--;
+
+            fetch(`${contextPath}/cap-nhat-so-luong`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `id=${id}&quantity=${quantity}`
+            })
+                .then(res => res.json())
+                .then(data => {
+                    input.value = quantity;
+
+                    btn.closest("tr")
+                        .querySelector(".total")
+                        .innerText = data.subTotal;
+
+                    document.querySelector("#subtotal").innerText = data.cartTotal;
+                    document.querySelector(".total.number").innerText = data.cartTotal;
+                });
+        });
+    });
 });
+
+;
 
 
 
