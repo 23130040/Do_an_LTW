@@ -34,7 +34,7 @@ public class XacNhanDatHang extends HttpServlet {
         request.setAttribute("pageTitle", "Xác nhận đặt hàng");
         request.setAttribute("mainContent", "/view/xacnhandathang.jsp");
         request.setAttribute("pageCss", "/CSS/xacnhandathang.css");
-        request.setAttribute("pageJs", "/JS/xacnhandathang.js");
+        request.setAttribute("pageJS", "/JS/xacnhandathang.js");
         request.getRequestDispatcher("/view/base/base.jsp").forward(request, response);
     }
 
