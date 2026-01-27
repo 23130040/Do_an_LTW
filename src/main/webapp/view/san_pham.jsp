@@ -103,8 +103,8 @@
 
                                 <form action="them-vao-gio" method="post">
                                     <input type="hidden" name="itemId" value="${item.id}">
-                                    <button type="submit"
-                                        ${item.current_stock == 0 ? "disabled" : ""}>
+                                    <button type="button"
+                                            onclick="addToCart(${item.id})" ${item.current_stock == 0 ? "disabled" : ""}>
                                         THÊM VÀO GIỎ
                                     </button>
                                 </form>
