@@ -486,14 +486,18 @@ public class ItemDAO extends BaseDAO<Item> {
             params.add(val);
             params.add(val);
         }
+
         if (category != null && !category.isEmpty()) {
             sql.append(" AND category_id = ?");
             params.add(category);
         }
+
         if (origin != null && !origin.isEmpty()) {
             sql.append(" AND origin_id = ?");
             params.add(origin);
         }
+
+        sql.append(" AND RIGHT(sku, 1) = '1'");
 
         Connection conn = null;
         try {
@@ -565,39 +569,74 @@ public class ItemDAO extends BaseDAO<Item> {
         }
         return false;
     }
-    public List<Item> findDistinctBySkuBase() {
+    public List<Item> searchAndFilterForSanPham(
+            String keyword,
+            String category,
+            String origin,
+            String sort,
+            int page,
+            int pageSize
+    ) {
         List<Item> list = new ArrayList<>();
 
-        String sql = """
-        SELECT i.*, img.url AS image_url,
-               c.name AS category_name,
-               o.name AS origin_name,
-               u.name AS unit_name
-        FROM item i
-        JOIN (
-            SELECT 
-                LEFT(sku, LENGTH(sku) - 2) AS sku_base,
-                MIN(CAST(RIGHT(sku, 2) AS UNSIGNED)) AS min_suffix
-            FROM item
-            GROUP BY LEFT(sku, LENGTH(sku) - 2)
-        ) t
-        ON LEFT(i.sku, LENGTH(i.sku) - 2) = t.sku_base
-        AND CAST(RIGHT(i.sku, 2) AS UNSIGNED) = t.min_suffix
-        LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1
-        LEFT JOIN category c ON i.category_id = c.id
-        LEFT JOIN origin o ON i.origin_id = o.id
-        LEFT JOIN unit u ON i.unit_id = u.id
-        ORDER BY i.created_at DESC LIMIT 5
-    """;
+        StringBuilder sql = new StringBuilder(
+                "SELECT i.*, img.url AS image_url, c.name AS category_name, " +
+                        "o.name AS origin_name, u.name AS unit_name " +
+                        "FROM item i " +
+                        "LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1 " +
+                        "LEFT JOIN category c ON i.category_id = c.id " +
+                        "LEFT JOIN origin o ON i.origin_id = o.id " +
+                        "LEFT JOIN unit u ON i.unit_id = u.id " +
+                        "WHERE 1=1 "
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (i.name LIKE ? OR i.sku LIKE ?) ");
+            String val = "%" + keyword.trim() + "%";
+            params.add(val);
+            params.add(val);
+        }
+
+        if (category != null && !category.isEmpty()) {
+            sql.append(" AND i.category_id = ? ");
+            params.add(Integer.parseInt(category));
+        }
+
+        if (origin != null && !origin.isEmpty()) {
+            sql.append(" AND i.origin_id = ? ");
+            params.add(Integer.parseInt(origin));
+        }
+
+        sql.append(" AND RIGHT(i.sku, 1) = '1' ");
+
+        // ===== SORT =====
+        if ("price_asc".equals(sort)) {
+            sql.append(" ORDER BY (i.price * (100 - i.discount) / 100) ASC ");
+        } else if ("price_desc".equals(sort)) {
+            sql.append(" ORDER BY (i.price * (100 - i.discount) / 100) DESC ");
+        } else {
+            sql.append(" ORDER BY i.created_at DESC ");
+        }
+
+        // ===== PAGINATION =====
+        sql.append(" LIMIT ? OFFSET ? ");
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
 
         Connection conn = null;
         try {
             conn = getConnection();
-            try (PreparedStatement ps = conn.prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
 
-                while (rs.next()) {
-                    list.add(mapResultSetToEntity(rs));
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        list.add(mapResultSetToEntity(rs));
+                    }
                 }
             }
         } catch (Exception e) {
@@ -607,6 +646,7 @@ public class ItemDAO extends BaseDAO<Item> {
                 ConnectionPool.getInstance().releaseConnection(conn);
             }
         }
+
         return list;
     }
 
