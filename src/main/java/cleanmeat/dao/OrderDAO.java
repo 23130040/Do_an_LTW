@@ -345,4 +345,34 @@ public class OrderDAO extends BaseDAO<Order> {
         }
         return false;
     }
+
+    public Order findByIdAndUser(int orderId, int userId) {
+        String sql = """
+        SELECT *
+        FROM `order`
+        WHERE id = ? AND user_id = ?
+    """;
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, orderId);
+                ps.setInt(2, userId);
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    Order order = mapResultSetToEntity(rs);
+                    order.setListItem(oiDAO.findByOrderId(orderId));
+                    return order;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
+        }
+        return null;
+    }
+
 }

@@ -12,5 +12,7 @@ public class OrderService {
         return orderDAO.findByUserId(userId);
     }
 
-
+    public Order getOrderDetail(int orderId, int userId) {
+        return orderDAO.findByIdAndUser(orderId, userId);
+    }
 }

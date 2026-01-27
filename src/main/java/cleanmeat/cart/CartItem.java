@@ -18,7 +18,9 @@ public class CartItem {
     }
 
     public void quantityDown() {
-        this.quantity--;
+        if (this.quantity > 1) {
+            this.quantity--;
+        }
     }
 
     public int getId() {

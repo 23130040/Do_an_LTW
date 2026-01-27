@@ -41,4 +41,12 @@ public class Cart {
     public Collection<CartItem> getList() {
         return map.values();
     }
+
+    public void updateQuantity(int id, int quantity) {
+        CartItem item = map.get(id);
+        if (item != null) {
+            item.setQuantity(quantity);
+        }
+    }
+
 }

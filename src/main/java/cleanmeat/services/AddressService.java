@@ -48,4 +48,15 @@ public class AddressService {
     public Address getAddressById(int addressId) {
         return addressDAO.findById(addressId);
     }
+
+    public Address getDefaultAddress(int userId) {
+        List<Address> addresses = getUserAddresses(userId);
+        for (Address address : addresses) {
+            if (address.isDefaultAddress()) {
+                return address;
+            }
+        }
+        return null;
+    }
+
 }
