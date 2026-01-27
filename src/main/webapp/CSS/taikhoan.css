@@ -482,3 +482,6 @@ a {
     background-color: #b6b6b6 !important;
     transition: 0.25s;
 }
+.error-message {
+    color: red;
+}

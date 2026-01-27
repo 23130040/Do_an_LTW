@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<div id="profile-content" class="tab-content active">--%>
 <div class="profile-content header">
@@ -33,20 +34,27 @@
                 <label class="profile-form label">Giới tính</label>
                 <div class="profile-form value-wrapper profile-form value-wrapper-radio">
                     <input type="radio" id="gender-male" name="gender"
-                           value="male" ${user.gender == 'Nam' ? 'checked' : ''}>
+                           value="male" ${user.gender == 'male' ? 'checked' : ''}>
                     <label for="gender-male" class="profile-form radio-label">Nam</label>
                     <input type="radio" id="gender-female" name="gender"
-                           value="female" ${user.gender == 'Nữ' ? 'checked' : ''}>
+                           value="female" ${user.gender == 'female' ? 'checked' : ''}>
                     <label for="gender-female" class="profile-form radio-label">Nữ</label>
                     <input type="radio" id="gender-other" name="gender"
-                           value="other" ${user.gender == null ? 'checked' : ''}>
+                           value="other" ${empty user.gender || user.gender == 'other' ? 'checked' : ''}>
                     <label for="gender-other" class="profile-form radio-label">Khác</label>
                 </div>
             </div>
             <div class="profile-form group">
                 <label class="profile-form label">Ngày sinh</label>
                 <div class="profile-form value-wrapper">
-                    <span class="profile-form static-value" id="birthday">${birthday}</span>
+                    <span class="profile-form static-value" id="birthday">
+                        <c:choose>
+                            <c:when test="${not empty birthday}">${birthday}</c:when>
+                            <c:otherwise>
+                                01/01/1999
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
                     <a href="#" class="profile-form change-btn" id="open-change-birthday-btn">Thay Đổi</a>
                 </div>
             </div>
@@ -73,7 +81,7 @@
                 <span class="info-confirm">Lưu thông tin thành công</span>
             </div>
             <span class="confirm-btn">
-                    <button id="confirm-save-info-btn">OK</button>
+                    <button type="button" id="confirm-save-info-btn">OK</button>
                 </span>
         </div>
     </div>
@@ -87,14 +95,14 @@
                     id="new-email"></span></span>
         </div>
         <span class="confirm-btn">
-            <button id="confirm-save-info-btn">OK</button>
+            <button type="button" id="confirm-save-info-btn">OK</button>
         </span>
     </div>
 </div>
 <div id="change-email" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="close-change-email-modal">&times;</span>
-        <form class="day-form" action="${pageContext.request.contextPath}/tai-khoan?action=update-emal" method="post">
+        <div class="email-form">
             <div class="form-input">
                 <label for="newEmail" class="profile-form label"><i class="fa-solid fa-envelope"></i></label>
                 <input type="email" id="newEmail" name="newEmail" class="profile-form input-field"
@@ -102,9 +110,9 @@
             </div>
             <div class="error-message" id="email-error"></div>
             <span class="confirm-btn">
-                <button id="save-email-btn">Lưu</button>
+                <button type="button" id="save-email-btn">Lưu</button>
             </span>
-        </form>
+        </div>
     </div>
 </div>
 
@@ -117,8 +125,9 @@
                 <input type="text" id="phone-number" name="phoneNumber" class="profile-form input-field"
                        placeholder="Nhập số điện thoại mới">
             </div>
+            <div class="error-message" id="phone-error"></div>
             <span class="confirm-btn">
-                <button id="save-phone-number-btn">Lưu</button>
+                <button type="button" id="save-phone-number-btn">Lưu</button>
             </span>
         </div>
     </div>
@@ -133,8 +142,9 @@
                 <input type="date" id="birthDay" name="birthDay" class="profile-form input-field"
                        placeholder="dd/mm/yyyy">
             </div>
+            <div class="error-message" id="error-birthday"></div>
             <span class="confirm-btn">
-                    <button id="save-birthday-btn">Lưu</button>
+                    <button type="button" id="save-birthday-btn">Lưu</button>
             </span>
         </div>
     </div>
@@ -191,110 +201,106 @@
             }
         });
 
-        const originalEmail = "${user.email}";
-        const tempUser = {
-            name: "${user.name}",
-            email: "${user.email}",
-            phone: "${user.phone}",
-            gender: "${user.gender}",
-            birthday: "${birthday}"
-        };
+        const saveEmailBtn = document.getElementById("save-email-btn");
+        const emailInput = document.getElementById("newEmail");
+        const emailSpan = document.getElementById("email");
 
-        document.getElementById("name-input")?.addEventListener("input", e => {
-            tempUser.name = e.target.value.trim();
-        });
-
-        document.getElementById("save-email-btn")?.addEventListener("click", e => {
+        saveEmailBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            const emailInput = document.getElementById("newEmail");
-            const errorBox = document.getElementById("email-error");
-            const email = emailInput.value.trim();
-            if (!email) {
-                errorBox.innerText = "Email không được để trống";
+            const newEmail = emailInput.value.trim();
+            const emailError = document.getElementById("email-error");
+            emailError.textContent = "";
+            if (!newEmail) {
+                emailError.textContent = "Email không được để trống";
                 return;
             }
-            errorBox.innerText = "";
-            fetch("${pageContext.request.contextPath}/tai-khoan?action=check-email", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({email})
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (!data.success) {
-                        errorBox.innerText = data.message;
-                        return;
-                    }
-                    tempUser.email = email;
-                    document.getElementById("email").innerText = email;
-                    closeModal("change-email");
-                })
-                .catch(() => {
-                    errorBox.innerText = "Không thể kiểm tra email";
-                });
+            if (!isValidEmailFormat(newEmail)) {
+                emailError.textContent = "Email không đúng định dạng";
+                return;
+            }
+            emailSpan.textContent = newEmail;
+            closeModal("change-email");
+            emailInput.value = "";
         });
 
-        document.getElementById("save-phone-number-btn")?.addEventListener("click", e => {
+        const savePhoneBtn = document.getElementById("save-phone-number-btn");
+        const phoneNumberInput = document.getElementById("phone-number");
+        const phoneSpan = document.getElementById("phone");
+
+        savePhoneBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            const phone = document.getElementById("phone-number").value.trim();
-            if (!phone) return;
-
-            tempUser.phone = phone;
-            document.getElementById("phone").innerText = phone;
-
+            const newPhone = phoneNumberInput.value.trim();
+            const phoneError = document.getElementById("phone-error");
+            phoneError.textContent = "";
+            if (!newPhone) {
+                phoneError.textContent = "Số điện thoại không được để trống";
+                return;
+            }
+            if (!isValidPhoneFormat(newPhone)) {
+                phoneError.textContent = "Số điện thoại không hợp lệ";
+                return;
+            }
+            phoneSpan.textContent = newPhone;
             closeModal("change-phone-number");
+            phoneNumberInput.value = "";
         });
 
-        document.querySelectorAll("input[name='gender']").forEach(radio => {
-            radio.addEventListener("change", e => {
-                tempUser.gender = e.target.value;
-            });
-        });
+        const changeBirthdayBtn = document.getElementById("save-birthday-btn");
+        const newBirthdayInput = document.getElementById("birthDay");
+        const birthdaySpan = document.getElementById("birthday");
 
-        document.getElementById("save-birthday-btn")?.addEventListener("click", e => {
+        changeBirthdayBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            const birthday = document.getElementById("birthDay").value;
-            if (!birthday) return;
-            tempUser.birthday = birthday;
-            document.getElementById("birthday").innerText =
-                new Date(birthday).toLocaleDateString("vi-VN");
+            const newBirthday = newBirthdayInput.value;
+            const errorBirthday = document.getElementById("error-birthday");
+            errorBirthday.textContent = '';
+            if (!newBirthday) {
+                errorBirthday.textContent = "Vui lòng chọn ngày sinh";
+                return;
+            }
+            birthdaySpan.textContent = formatDate(newBirthday);
             closeModal("change-birthday");
         });
 
-        document.getElementById("saveInfoBtn")?.addEventListener("click", () => {
-            const emailChanged = tempUser.email !== originalEmail;
-            fetch("${pageContext.request.contextPath}/tai-khoan", {
+        document.getElementById("saveInfoBtn").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const data = {
+                action: "updateProfile",
+                name: document.getElementById("name-input").value.trim(),
+                email: emailSpan.textContent.trim(),
+                phone: phoneSpan.textContent.trim(),
+                gender: getSelectedGender(),
+                birthday: newBirthdayInput.value
+            };
+
+            fetch(`${pageContext.request.contextPath}/tai-khoan`, {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    action: "update-profile",
-                    emailChanged: emailChanged,
-                    name: tempUser.name,
-                    email: tempUser.email,
-                    phone: tempUser.phone,
-                    gender: tempUser.gender,
-                    birthday: tempUser.birthday
-                })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
             })
                 .then(res => res.json())
-                .then(data => {
-                    if (!data.success) {
-                        alert(data.message || "Cập nhật thất bại");
-                        return;
-                    }
-                    if (emailChanged) {
-                        document.getElementById("new-email").innerText = tempUser.email;
-                        openModal("confirm-change-email");
-                    } else {
+                .then(result => {
+                    if (result.success) {
                         openModal("confirm-save-info");
+                    } else {
+                        alert(result.message || "Cập nhật thất bại");
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    alert("Có lỗi xảy ra");
+                    alert("Lỗi kết nối server");
                 });
         });
+
     });
+
+    function getSelectedGender() {
+        const checked = document.querySelector('input[name="gender"]:checked');
+        return checked ? checked.value : null;
+    }
 
     function openModal(id) {
         document.getElementById(id).style.display = "block";
@@ -303,4 +309,20 @@
     function closeModal(id) {
         document.getElementById(id).style.display = "none";
     }
+
+    function isValidEmailFormat(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    function isValidPhoneFormat(phone) {
+        const regex = /^0\d{9}$/;
+        return regex.test(phone);
+    }
+
+    function formatDate(date) {
+        const formatDate = date.split("-");
+        return formatDate[2] + "/" + formatDate[1] + "/" + formatDate[0];
+    }
+
 </script>

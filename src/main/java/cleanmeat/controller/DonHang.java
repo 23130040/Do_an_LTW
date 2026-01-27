@@ -19,6 +19,7 @@ public class DonHang extends HttpServlet {
 
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/dang-nhap");
+            return;
         }
 
         OrderService orderService = new OrderService();
