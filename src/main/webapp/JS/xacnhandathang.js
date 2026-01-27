@@ -1,70 +1,70 @@
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    //xác nhận đặt hàng
-    const confirmOrder = document.getElementById("confirmOrder");
-    confirmOrder.addEventListener("click", () => {
-        document.getElementById("redirect-modal").style.display = "block";
-    });
-    const returnToHome = document.getElementById("return-to-home-btn");
-    returnToHome.addEventListener("click", () => {
-        window.location.href = "../HTML/trang_chu_da_login.html";
-    });
-    const viewOrders = document.getElementById("view-orders-btn");
-    viewOrders.addEventListener("click", () => {
-        window.location.href = "../HTML/donhang.html";
+    /* ================== TIỆN ÍCH ================== */
+    const $ = id => document.getElementById(id);
+    const show = el => el.style.display = "block";
+    const hide = el => el.style.display = "none";
+
+    /* ================== MODAL ================== */
+    const modals = {
+        redirect: $("redirect-modal"),
+        delivery: $("delivery-message"),
+        editProfile: $("edit-profile-modal"),
+        addAddress: $("add-address-modal")
+    };
+
+    /* ================== ĐẶT HÀNG ================== */
+    $("confirmOrder").onclick = () => show(modals.redirect);
+
+    $("return-to-home-btn").onclick = () =>
+        window.location.href = contextPath + "/trang-chu";
+
+    $("view-orders-btn").onclick = () =>
+        window.location.href = contextPath + "/don-hang-cua-toi";
+
+    /* ================== THÔNG TIN VẬN CHUYỂN ================== */
+    $("opendeliverymessage").onclick = () => show(modals.delivery);
+    $("close-message-modal").onclick = () => hide(modals.delivery);
+
+    /* ================== CHỈNH SỬA THÔNG TIN ================== */
+    $("edit-profile").onclick = () => show(modals.editProfile);
+
+    [
+        "cancle-edit-profile-btn",
+        "close-edit-profile-modal"
+    ].forEach(id => $(id).onclick = () => hide(modals.editProfile));
+
+    $("confirm-edit-profile-btn").onclick = () => {
+        const name = document.querySelector('input[name="name"]').value;
+        const phone = document.querySelector('input[name="phoneNumber"]').value;
+
+        if (name) $("name").innerText = name;
+        if (phone) $("phone-number").innerText = phone;
+
+        hide(modals.editProfile);
+    };
+
+    /* ================== ĐỊA CHỈ ================== */
+    $("add-address-btn").onclick = () => show(modals.addAddress);
+    $("close-add-address-modal").onclick = () => hide(modals.addAddress);
+
+    // chọn địa chỉ
+    document.querySelectorAll(".address").forEach(address => {
+        address.onclick = () => {
+            document.querySelectorAll(".address")
+                .forEach(a => a.classList.remove("check"));
+
+            address.classList.add("check");
+
+            $("address").innerText = address.innerText;
+            $("address").dataset.addressId = address.dataset.id;
+        };
     });
 
-    const opendeliveryMessageBtn = document.getElementById("opendeliverymessage");
-    const  deliveryMessage = document.getElementById("delivery-message");
-    opendeliveryMessageBtn.addEventListener("click", () => {
-        deliveryMessage.style.display = "block";
-    });
-
-    /**Xử lý việc ẩn thông tin vận chuyển*/
-    const closedeliveryMessageBtn = document.getElementById("close-message-modal");
-    closedeliveryMessageBtn.addEventListener("click", () => {
-        deliveryMessage.style.display = "none";
-    });
-
-    /**Thay đổi địa chỉ nhận hàng*/
-    const editProfileModal = document.getElementById("edit-profile-modal");
-    const openEditProfileModal = document.getElementById("edit-profile");
-    openEditProfileModal.addEventListener("click", () => {
-        editProfileModal.style.display = "block";
-    });
-    const cancleProfileModal = document.getElementById("cancle-edit-profile-btn");
-    cancleProfileModal.addEventListener("click", () => {
-        editProfileModal.style.display = "none";
-    });
-    const confirmProfileModal = document.getElementById("confirm-edit-profile-btn");
-    confirmProfileModal.addEventListener("click", () => {
-        editProfileModal.style.display = "none";
-    });
-    const closeProfileModal = document.getElementById("close-edit-profile-modal");
-    closeProfileModal.addEventListener("click", () => {
-        editProfileModal.style.display = "none";
-    });
-    const openAddressModal = document.getElementById("add-address-btn");
-    openAddressModal.addEventListener("click", () => {
-        addAddressModal.style.display = "block";
-    });
-    const closeAddressModal = document.getElementById("close-add-address-modal");
-    closeAddressModal.addEventListener("click", () => {
-        addAddressModal.style.display = "none";
-    });
-    const confirmAddressModal = document.getElementById("confirm-add-address-btn");
-    confirmAddressModal.addEventListener("click", () => {
-        addAddressModal.style.display = "none";
-    });
-    const cancleAddressModal = document.getElementById("cancle-add-address-btn");
-    cancleAddressModal.addEventListener("click", () => {
-        addAddressModal.style.display = "none";
-    });
-    const addAddressModal = document.getElementById("add-address-modal");
-    window.addEventListener('click', (e) => {
-        if (e.target === deliveryMessage) deliveryMessage.style.display = "none";
-        if (e.target === editProfileModal) editProfileModal.style.display = "none";
-        if (e.target === addAddressModal) addAddressModal.style.display = "none";
-    });
+    /* ================== CLICK RA NGOÀI MODAL ================== */
+    window.onclick = e => {
+        Object.values(modals).forEach(modal => {
+            if (e.target === modal) hide(modal);
+        });
+    };
 });

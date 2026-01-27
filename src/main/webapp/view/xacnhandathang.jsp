@@ -159,17 +159,17 @@
             <input type="text" name="phoneNumber" class="input-text" placeholder="Nhập số điện thoại">
             <h3>Thay đổi địa chỉ</h3>
             <div class="address-content">
-                <div class="address check">
-                    <p class="address-detail">
-                        56/12/34 Đường Võ Văn Kiệt, Phường 2, Quận 5, TP. Hồ Chí Minh, Việt Nam
-                        <span class="address-default">Mặc định</span>
-                    </p>
-                </div>
-                <div class="address">
-                    <p class="address-detail">
-                        108 Đường Nguyễn Văn Bá, Phường Trường Thọ, Thủ Đức, TP. Hồ Chí Minh, Việt Nam
-                    </p>
-                </div>
+                <c:forEach var="addr" items="${addressList}">
+                    <div class="address ${addr.defaultAddress ? 'check' : ''}"
+                         data-id="${addr.id}">
+                        <p class="address-detail">
+                                ${addr.address}
+                            <c:if test="${addr.defaultAddress}">
+                                <span class="address-default">Mặc định</span>
+                            </c:if>
+                        </p>
+                    </div>
+                </c:forEach>
                 <button id="add-address-btn">+ Thêm địa chỉ</button>
             </div>
             <div class="btn">
@@ -184,8 +184,8 @@
         <span class="close-btn" id="close-add-address-modal">&times;</span>
         <div class="address-form">
             <h3>Thông tin địa chỉ khác</h3>
-            <form class="address-form" action="${pageContext.request.contextPath}/tai-khoan" method="post">
-                <h2 id="header-address"></h2>
+            <form class="address-form" action="${pageContext.request.contextPath}/dia-chi" method="post">
+                <h2 id="header-address">Thêm địa chỉ mới</h2>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="address-detail">Địa chỉ mới (*)</label>

@@ -13,60 +13,66 @@
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/CSS/header.css">
     <style>
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
 
-    .custom-modal {
-        width: 450px;
-        background: #fff;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        animation: fadeInDown 0.3s ease; /* Hiệu ứng hiện ra */
-    }
+        .custom-modal {
+            width: 450px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 0.3s ease; /* Hiệu ứng hiện ra */
+        }
 
-    .modal-header-custom {
-        background-color: #ffc107;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+        .modal-header-custom {
+            background-color: #ffc107;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .modal-title-custom {
-        font-weight: bold;
-        color: #333;
-        font-size: 18px;
-    }
+        .modal-title-custom {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
 
-    .close-modal-custom {
-        font-size: 24px;
-        cursor: pointer;
-        color: #333;
-        line-height: 1;
-    }
+        .close-modal-custom {
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            line-height: 1;
+        }
 
-    .modal-body-custom {
-        padding: 30px 20px;
-        color: #333;
-        font-size: 16px;
-        background: #fff;
-    }
+        .modal-body-custom {
+            padding: 30px 20px;
+            color: #333;
+            font-size: 16px;
+            background: #fff;
+        }
 
-    @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }</style>
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }</style>
 
     <!-- ===== CSS NỘI DUNG ===== -->
     <c:if test="${not empty requestScope.pageCss}">
@@ -111,6 +117,8 @@
 <script src="${pageContext.request.contextPath}${requestScope.pageJS}"></script>
 <script src="${pageContext.request.contextPath}/JS/main.js"></script>
 <script>
+    const contextPath = "${pageContext.request.contextPath}";
+
     function addToCart(itemId) {
         fetch('${pageContext.request.contextPath}/them-vao-gio', {
             method: 'POST',
