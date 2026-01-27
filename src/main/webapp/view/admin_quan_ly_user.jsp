@@ -196,18 +196,18 @@
                 <label>Giới tính:</label>
                 <div class="gender-group">
                     <label>
-                        <input type="radio" name="gender" value="Nam"
-                        ${user.gender == 'Nam' ? 'checked' : ''}> Nam
+                        <input type="radio" name="gender" value="male"
+                        ${user.gender == 'male' ? 'checked' : ''}> Nam
                     </label>
 
                     <label>
-                        <input type="radio" name="gender" value="Nữ"
-                        ${user.gender == 'Nữ' ? 'checked' : ''}> Nữ
+                        <input type="radio" name="gender" value="female"
+                        ${user.gender == 'female' ? 'checked' : ''}> Nữ
                     </label>
 
                     <label>
-                        <input type="radio" name="gender" value="Khác"
-                        ${user.gender == 'Khác' ? 'checked' : ''}> Khác
+                        <input type="radio" name="gender" value="other"
+                        ${user.gender == 'other' ? 'checked' : ''}> Khác
                     </label>
 
                 </div>

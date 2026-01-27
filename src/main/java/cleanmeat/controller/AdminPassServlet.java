@@ -2,6 +2,7 @@ package cleanmeat.controller;
 
 import cleanmeat.model.User;
 import cleanmeat.services.UserService;
+import cleanmeat.security.AuthConstants;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -15,8 +16,18 @@ public class AdminPassServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+        User user = (User) session.getAttribute("user");
+        boolean isGoogleAccount =
+                user.getPassword() != null &&
+                        user.getPassword().startsWith(AuthConstants.GOOGLE_ONLY_PREFIX);
+
+        request.setAttribute("isGoogleAccount", isGoogleAccount);
+
         request.getRequestDispatcher("/view/admin_doi_mat_khau.jsp").forward(request, response);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -37,12 +48,24 @@ public class AdminPassServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         try {
-            userService.changePassword(
-                    currentUser.getId(),
-                    oldPassword,
-                    newPassword,
-                    confirmPassword
-            );
+            boolean isGoogleAccount =
+                    currentUser.getPassword() != null
+                            && currentUser.getPassword().startsWith(AuthConstants.GOOGLE_ONLY_PREFIX);
+
+            if (isGoogleAccount) {
+                userService.changePasswordForGoogleUser(
+                        currentUser.getId(),
+                        newPassword,
+                        confirmPassword
+                );
+            } else {
+                userService.changePassword(
+                        currentUser.getId(),
+                        oldPassword,
+                        newPassword,
+                        confirmPassword
+                );
+            }
 
             request.setAttribute("toastType", "success");
             request.setAttribute("toastMessage", "Đổi mật khẩu thành công!");

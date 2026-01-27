@@ -497,4 +497,17 @@ public class UserDAO extends BaseDAO<User> {
         }
         return false;
     }
+    public boolean updateProfileFromGoogle(User user) {
+        String sql = "UPDATE user SET name=?, avatar=?, updated_at=NOW() WHERE email=?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getAvatar());
+            ps.setString(3, user.getEmail());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
