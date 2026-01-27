@@ -29,6 +29,14 @@ public class AddToCart extends HttpServlet {
         int itemId = Integer.parseInt(request.getParameter("itemId"));
         Item item = itemService.getItemById(itemId);
         cart.addCartItem(new CartItem(item.getId(), item, 1));
-        response.sendRedirect("san-pham");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        response.getWriter().write("""
+                    {
+                        "success": true,
+                        "totalQuantity": %d
+                    }
+                """.formatted(cart.getTotalQuantity()));
     }
 }

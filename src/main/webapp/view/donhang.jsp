@@ -252,7 +252,6 @@
                                         </div>
                                     </c:forEach>
                                 </div>
-
                                 <div class="order-footer">
                                     <span class="total">Tổng: ${order.total_price}đ</span>
                                     <button class="btn-detail"><a
