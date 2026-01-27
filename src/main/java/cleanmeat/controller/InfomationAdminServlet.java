@@ -46,7 +46,7 @@ public class InfomationAdminServlet extends HttpServlet {
             birthday = LocalDate.parse(birthdayStr);
         }
 
-        userDAO.updateProfile(currentUser.getId(), name, email, phone, gender, birthday);
+        userDAO.updateProfile(currentUser.getId(), name, email, phone, gender, birthday, currentUser.getAvatar());
 
         User refreshedUser = userDAO.findById(currentUser.getId());
         session.setAttribute("user", refreshedUser);

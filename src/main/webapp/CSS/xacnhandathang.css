@@ -222,279 +222,170 @@ main{
     background-color: #ef0000;
     transition: 0.25s;
 }
-/**Modal*/
-.modal{
+/** Modal base */
+.modal {
     display: none;
     position: fixed;
+    inset: 0;
     z-index: 9999;
-    background-color: rgba(0,0,0,0.5);
     width: 100%;
     height: 100%;
     overflow: auto;
-    top: 0;
-    left: 0;
-}
-.modal-content{
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px 30px;
-    border: 1px solid #888;
-    width: 450px;
-    max-width: 90%;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-.close-btn{
-    color: #aaa;
-    float: right;
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 20px;
+    background: rgba(0,0,0,0.5);
 }
 
-.close-btn:hover,
-.close-btn:focus {
-    color: #e00000;
-    text-decoration: none;
-    cursor: pointer;
+/** Content */
+.modal-content {
+    width: 450px;
+    max-width: 90%;
+    margin: 10% auto;
+    padding: 20px 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.5);
+    position: relative;
 }
-#redirect-modal .message{
+
+/** Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-size: 28px;
+    color: #999;
+    cursor: pointer;
+    transition: .2s;
+}
+.close-btn:hover { color: #d00; }
+
+/** Redirect modal */
+#redirect-modal .message {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-size: 20px;
+    gap: 15px;
     margin-top: 20px;
+    font-size: 20px;
     color: #0fb570;
 }
-#message-confirm{
+#message-confirm {
     font-size: 15px;
     color: red;
     font-style: italic;
 }
-#redirect-modal p{
+#redirect-modal p {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 15px;
 }
-#redirect-modal .message i{
-    font-size: 50px;
-}
-#redirect-modal .btn{
+#redirect-modal i { font-size: 50px; }
+#redirect-modal .btn {
     display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     gap: 15px;
 }
-#return-to-home-btn, #view-orders-btn{
+#return-to-home-btn,
+#view-orders-btn {
     width: 100%;
     height: 30px;
-    border-radius: 5px;
     border: none;
-    font-size: 16px;
-    background-color: #e00000;
-    color: white;
-}
-#return-to-home-btn:hover, #view-orders-btn:hover{
-    cursor: pointer;
-    background-color: #ef0000;
-    transition: 0.3s;
-}
-#opendeliverymessage:hover{
-    cursor: pointer;
-}
-#delivery-message h3{
-    text-align: center;
-}
-#delivery-message span.bold{
-    font-weight: bold;
-}
-#delivery-message p{
-    line-height: 1.5;
-}
-#edit-profile-modal input{
-    width: 100%;
-    height: 30px;
     border-radius: 5px;
-    border: 1px solid #888;
-}
-#edit-profile-modal h3{
-    font-size: 16px;
-}
-.address-content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 13px;
-}
-.address-default{
-    color: red;
-    border: 1px solid red;
-    border-radius: 5px;
-    font-size: 10px;
-    padding: 3px;
-}
-.address{
-    border: 1px solid #888;
-    border-radius: 5px;
-    padding: 0 10px;
-}
-.address.check{
-    border: 1px solid #e00000;
-}
-#add-address-btn{
-    border: 1px solid #888;
-    background: white;
-    color: #888;
-}
-#add-address-btn:hover{
-    cursor: pointer;
-    background-color: rgb(234, 234, 234);
-}
-.modal .btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    gap: 10px;
-}
-.modal BUTTON{
-    width: 120px;
-    height: 30px;
-    border-radius: 5px;
-    border: none;
-    padding: 5px 10px;
-}
-.modal .cancle-btn{
-    background: #dddddd;
-    color: #6c6c6c;
-}
-.modal .cancle-btn:hover{
-    cursor: pointer;
-    background-color: #d1d1d1;
-}
-.modal .confirm-btn{
     background: #e00000;
-    color: white;
-    transition: 0.3s;
-}
-.modal .confirm-btn:hover{
+    color: #fff;
+    font-size: 16px;
     cursor: pointer;
-    background-color: #ef0000;
-    transition: 0.3s;
+    transition: .3s;
 }
-.address-form select, .address-form textarea{
-    flex-grow: 1;
-}
-.modal .address-form label{
-    font-size: 16px;
-    width: 31%;
-}
-.address-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.modal .form-row{
+#return-to-home-btn:hover,
+#view-orders-btn:hover { background: #ef0000; }
+
+/** Delivery message */
+#opendeliverymessage:hover { cursor: pointer; }
+#delivery-message h3 { text-align: center; }
+#delivery-message p { line-height: 1.5; }
+#delivery-message .bold { font-weight: bold; }
+
+/** Edit profile modal */
+#edit-profile-modal input {
     width: 100%;
+    height: 30px;
+    border: 1px solid #888;
+    border-radius: 5px;
+}
+#edit-profile-modal h3 { font-size: 16px; }
+
+/** Address list */
+.address-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.modal .form-group{
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+.address {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    background: #fafafa;
+    transition: .2s;
 }
-/*********************Footer**************************/
-.main-footer {
-    background: #5a0000;
-    color: #f8f8f8;
-    padding-top: 50px;
-    font-size: 16px;
+.address:hover { border-color: #c30000; }
+.address.check {
+    border-color: #e00000;
+    background: #ffecec;
 }
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 0 20px 40px 20px;
-}
-.footer-col {
-    width: 32%;
-    margin-bottom: 20px;
-}
-.footer-col h4 {
-    /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
-    color: #FFD700;
-    font-size: 18px;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #555;
-    padding-bottom: 10px;
-    display: inline-block;
-}
-.footer-logo img {
-    width: 150px;
-    margin-bottom: 15px;
-}
-.about-us p {
-    line-height: 1.6;
-    margin-bottom: 20px;
+.address-detail { margin: 0; }
+.address-default {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 10px;
+    padding: 2px 5px;
+    border: 1px solid #e00000;
+    border-radius: 4px;
+    color: #e00000;
+    background: #fff5f5;
 }
 
-/* Liên kết Nhanh */
-.quick-links{
-    width: 250px;
-}
-.quick-links ul {
-    list-style: none;
-    padding: 0;
-}
-.quick-links ul li {
-    margin-bottom: 10px;
-}
-.quick-links ul li a {
-    color: #f8f8f8;
-    font-size: 16px;
-    transition: color 0.3s;
-}
-.quick-links ul li a:hover {
-    padding-left: 5px; /* Thêm chút dịch chuyển */
-}
-.contact-info p {
-    margin-bottom: 15px;
-}
-.contact-info i {
-    margin-right: 10px;
-    color: #FFD700;
-    font-size: 18px;
-}
-.social-icons a {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    background-color: #555;
-    color: white;
-    line-height: 40px;
-    border-radius: 50%;
-    text-align: center;
-    margin-right: 10px;
-    transition: background-color 0.3s, transform 0.3s;
-}
-.social-icons a:hover {
-    background-color: #8d2a3a;
-    transform: rotate(10deg) scale(1.1);
-}
-.footer-bottom {
-    text-align: center;
-    padding: 15px 0;
-    border-top: 1px solid #444;
-    background-color: #222;
+/** Add address */
+#add-address-btn {
+    margin-top: 5px;
+    padding: 8px 10px;
     font-size: 14px;
+    border-radius: 6px;
+    border: 1px dashed #999;
+    background: transparent;
+    color: #555;
+    cursor: pointer;
+    transition: .2s;
 }
+#add-address-btn:hover {
+    border-color: #e00000;
+    color: #e00000;
+}
+
+/** Modal actions */
+.modal .btn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+.modal .cancle-btn,
+.modal .confirm-btn {
+    min-width: 120px;
+    height: 35px;
+    border-radius: 6px;
+    font-size: 15px;
+}
+.modal .cancle-btn {
+    background: #f1f1f1;
+    color: #555;
+}
+.modal .cancle-btn:hover { background: #e2e2e2; }
+.modal .confirm-btn {
+    background: #e00000;
+    color: #fff;
+}
+.modal .confirm-btn:hover { background: #c30000; }

@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const mainAddressDisplay = document.getElementById('address');
             const defaultTag = document.getElementById('tag-default');
-
             mainAddressDisplay.innerText = addressText;
+            mainAddressDisplay.classList.remove('error', 'invalid');
 
             if (isDefault) {
                 defaultTag.style.display = "block"; // Hiện chữ Mặc định

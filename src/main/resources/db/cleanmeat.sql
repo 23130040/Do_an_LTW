@@ -709,3 +709,5 @@ ALTER TABLE `order_item`
     ADD CONSTRAINT fk3_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
 ALTER TABLE `stock_history`
     ADD CONSTRAINT fk4_item FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE;
+alter table `order`
+drop column code;

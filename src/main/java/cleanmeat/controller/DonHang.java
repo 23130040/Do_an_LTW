@@ -24,8 +24,12 @@ public class DonHang extends HttpServlet {
 
         OrderService orderService = new OrderService();
         List<Order> orders = orderService.getListOrder(user.getId());
-        request.setAttribute("orders", orders);
 
+        request.setAttribute("orders", orders);
+        request.setAttribute("waitingOrders", orderService.getListOrderWaiting(user.getId()));
+        request.setAttribute("deliveringOrders", orderService.getListOrderDelivering(user.getId()));
+        request.setAttribute("doneOrders", orderService.getListOrderDone(user.getId()));
+        request.setAttribute("cancleOrders", orderService.getListOrderCancle(user.getId()));
         request.setAttribute("pageTitle", "Đơn hàng của tôi");
         request.setAttribute("mainContent", "/view/donhang.jsp");
         request.setAttribute("pageCss", "/CSS/donhang.css");
@@ -34,5 +38,6 @@ public class DonHang extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
 }

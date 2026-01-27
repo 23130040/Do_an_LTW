@@ -134,7 +134,11 @@ public class UserService {
         return userDAO.updatePasswordByEmail(email, hashedPassword);
     }
 
-    public void updateProfile(int id, String name, String email, String phone, String gender, LocalDate birthday) {
-        userDAO.updateProfile(id, name, email, phone, gender, birthday);
+    public void updateProfile(int id, String name, String email, String phone, String gender, LocalDate birthday, String avatar) {
+        userDAO.updateProfile(id, name, email, phone, gender, birthday, avatar);
+    }
+
+    public boolean updateEmailVerificationStatus(int id, String token, boolean b) {
+        return userDAO.updateVerification(id, token, b);
     }
 }

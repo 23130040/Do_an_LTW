@@ -1,55 +1,90 @@
-
 document.addEventListener("DOMContentLoaded", () => {
-    const openDeliveryMessage = document.getElementById("open-delivery-message");
-    openDeliveryMessage.addEventListener("click", () => {
-        document.getElementById("delivery-message").style.display = "block";
-    });
-    const closeDeliveryMessageBtn = document.getElementById("close-message-modal");
-    closeDeliveryMessageBtn.addEventListener("click", () => {
-        document.getElementById("delivery-message").style.display = "none";
+
+    const deliveryModal = $("delivery-message");
+    const confirmReturnModal = $("confirm-return-order-modal");
+    const redirectModal = $("redirect-modal");
+
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    async function updateStatusAjax(orderId, newStatus) {
+        try {
+            const url = (window.contextPath || "") + "/cap-nhat-trang-thai-don-hang";
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: `orderId=${orderId}&status=${encodeURIComponent(newStatus)}`
+            });
+
+            if (!res.ok) return false;
+            const json = await res.json();
+            return json.success === true;
+        } catch (err) {
+            console.error("AJAX Error:", err);
+            return false;
+        }
+    }
+
+    /** ===================== ĐÃ NHẬN HÀNG ===================== **/
+    const confirmOrderBtn = $("confirm-order-btn");
+    if (confirmOrderBtn) {
+        confirmOrderBtn.onclick = async function () {
+            const orderId = this.dataset.id;
+            this.disabled = true;
+
+            const ok = await updateStatusAjax(orderId, "Đã Giao");
+            if (ok) {
+                redirectModal.style.display = "block";
+            } else {
+                alert("Cập nhật trạng thái thất bại!");
+                this.disabled = false;
+            }
+        };
+    }
+
+    /** ===================== HỦY ĐƠN ===================== **/
+    const cancelOrderBtn = $("cancel-order-btn");
+    if (cancelOrderBtn) {
+        cancelOrderBtn.onclick = function () {
+            confirmReturnModal.querySelector(".txt").innerText =
+                "Bạn có chắc chắn muốn hủy đơn hàng này?";
+            confirmReturnModal.style.display = "block";
+        };
+
+        $("confirm-btn").onclick = async () => {
+            const orderId = cancelOrderBtn.dataset.id;
+            const ok = await updateStatusAjax(orderId, "Đã Hủy");
+            if (ok) location.reload();
+            else alert("Không thể hủy đơn hàng!");
+        };
+
+        $("cancle-btn").onclick = () => {
+            confirmReturnModal.style.display = "none";
+        };
+    }
+
+    /** ===================== ĐIỀU HƯỚNG ===================== **/
+    $("return-to-home-btn")?.addEventListener("click", () => {
+        window.location.href = (window.contextPath || "") + "/trang-chu";
     });
 
-    //xử lý hoàn hàng
-    /*Mở modal xác nhận hoàn đơn*/
-    const openReturnModalBtn = document.getElementById("return-order-btn");
-    openReturnModalBtn.addEventListener("click", () => {
-        document.getElementById("confirm-return-order-modal").style.display = "block";
-    });
-    /*Đóng modal xác nhận hoàn đơn*/
-    const closeReturnModalBtn = document.getElementById("close-confirm-return-order-modal");
-    closeReturnModalBtn.addEventListener("click", () => {
-        document.getElementById("confirm-return-order-modal").style.display = "none";
-    });
-    const cancleBtn = document.getElementById("cancle-btn");
-    cancleBtn.addEventListener("click", () => {
-        document.getElementById("confirm-return-order-modal").style.display = "none";
-    });
-    /*Sau khi xác nhận hoàn đơn thì mở trang guiyeucauhoan'*/
-    const confirmBtn = document.getElementById("confirm-btn");
-    confirmBtn.addEventListener("click", () => {
-        window.location.href = "../HTML/guiyeucauhoan.html";
-    });
-    const confirmOrderBtn = document.getElementById("confirm-order-btn");
-    confirmOrderBtn.addEventListener("click", () => {
-        document.getElementById("redirect-modal").style.display = "block";
-    })
-    /*chuyển hướng đến trang chủ nếu chọn vào button quay về trang chủ*/
-    const returnHomebtn = document.getElementById("return-to-home-btn");
-    returnHomebtn.addEventListener("click", () => {
-        window.location.href = "../HTML/trang_chu_da_login.html";
-    });
-    /*chuyển hướng đến trang đơn hàng nếu chọn button xem đơn hàng của tôi*/
-    const viewOrderBtn = document.getElementById("view-orders-btn");
-    viewOrderBtn.addEventListener("click", () => {
-        window.location.href = "../HTML/donhang.html";
-    });
-    window.addEventListener("click", (e) =>{
-        if (e.target === document.getElementById("delivery-message")){
-            document.getElementById("delivery-message").style.display = "none";
-        }
-        if (e.target === document.getElementById("confirm-return-order-modal")){
-            document.getElementById("confirm-return-order-modal").style.display = "none";
-        }
+    $("view-orders-btn")?.addEventListener("click", () => {
+        window.location.href = (window.contextPath || "") + "/don-hang-cua-toi";
     });
 
+    /** ===================== XEM PHÍ GIAO ===================== **/
+    $("open-delivery-message")?.addEventListener("click", () => {
+        deliveryModal.style.display = "block";
+    });
+
+    /** ===================== CLOSE MODAL ===================== **/
+    $("close-message-modal")?.addEventListener("click", () => deliveryModal.style.display = "none");
+    $("close-confirm-return-order-modal")?.addEventListener("click", () => confirmReturnModal.style.display = "none");
+
+    window.onclick = (e) => {
+        if (e.target === deliveryModal) deliveryModal.style.display = "none";
+        if (e.target === confirmReturnModal) confirmReturnModal.style.display = "none";
+        if (e.target === redirectModal) redirectModal.style.display = "none";
+    };
 });

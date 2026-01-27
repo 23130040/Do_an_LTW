@@ -56,16 +56,15 @@
         <p class="italic-txt">Đơn hàng được đặt vào lúc <fmt:formatDate value="${created_at}"
                                                                         pattern="HH:mm:ss dd/MM/yyyy"/></p>
         <div class="status-bar">
-            <div class="status-step ${order.status == 'PENDING' ? 'status-active' : ''}">
+            <c:set var="st" value="${order.status}"/>
+
+            <div class="status-step ${st == 'Chờ Xác Nhận' || st == 'Đang Giao' || st == 'Đã Giao' ? 'status-active' : ''}">
                 Chờ xác nhận
             </div>
-            <div class="status-step ${order.status == 'PREPARING' ? 'status-active' : ''}">
-                Đang chuẩn bị
-            </div>
-            <div class="status-step ${order.status == 'DELIVERING' ? 'status-active' : ''}">
+            <div class="status-step ${st == 'Đang Giao' || st == 'Đã Giao' ? 'status-active' : ''}">
                 Đang giao
             </div>
-            <div class="status-step ${order.status == 'DELIVERED' ? 'status-active' : ''}">
+            <div class="status-step ${st == 'Đã Giao' ? 'status-active' : ''}">
                 Đã giao
             </div>
         </div>
@@ -75,7 +74,9 @@
         <table class="cost table">
             <tr class="table row">
                 <th class="header-item">Tổng tiền hàng:</th>
-                <td class="cost-item" id="total-cost-products">${order.total_price} đ</td>
+                <td class="cost-item" id="total-cost-products">
+                    <fmt:formatNumber value="${order.total_price}" type="number" groupingUsed="true"/> đ
+                </td>
             </tr>
             <tr class="table row">
                 <th class="header-item">Phí vận chuyển
@@ -85,14 +86,29 @@
             </tr>
             <tr class="table row">
                 <th class="header-item">Thành tiền:</th>
-                <td class="cost-item" id="overall-cost">${order.total_price} đ</td>
+                <td class="cost-item" id="overall-cost">
+                    <fmt:formatNumber value="${order.total_price}" type="number" groupingUsed="true"/> đ
+                </td>
             </tr>
         </table>
     </div>
-    <div class="footer">
+    <div class="footer" id="order-footer">
         <span class="italic-txt">Dự kiến đơn hàng sẽ được giao trong khoảng 2 đến 3 ngày</span>
-        <button class="confirm-btn" id="return-order-btn">Hoàn trả hàng</button>
-        <button class="confirm-btn" id="confirm-order-btn">Đã nhận hàng</button>
+        <c:choose>
+            <c:when test="${order.status == 'Chờ Xác Nhận'}">
+                <button class="confirm-btn" id="cancel-order-btn" data-id="${order.id}">Hủy đơn hàng</button>
+                <button class="confirm-btn btn-disabled" disabled>Đã nhận hàng</button>
+            </c:when>
+
+            <c:when test="${order.status == 'Đang Giao'}">
+                <button class="confirm-btn btn-disabled" disabled>Hủy đơn hàng</button>
+                <button class="confirm-btn" id="confirm-order-btn" data-id="${order.id}">Đã nhận hàng</button>
+            </c:when>
+
+            <c:when test="${order.status == 'Đã Giao'}">
+                <button class="confirm-btn" id="review-btn">Đánh giá</button>
+            </c:when>
+        </c:choose>
     </div>
 </div>
 <div id="delivery-message" class="modal">
@@ -133,3 +149,6 @@
         </div>
     </div>
 </div>
+<script>
+    window.contextPath = "${pageContext.request.contextPath}";
+</script>

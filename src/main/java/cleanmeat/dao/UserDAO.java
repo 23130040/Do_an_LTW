@@ -225,12 +225,12 @@ public class UserDAO extends BaseDAO<User> {
 
         if (keyword != null && !keyword.trim().isEmpty()) {
             sql.append("""
-            AND (
-                name  LIKE ?
-             OR email LIKE ?
-             OR phone LIKE ?
-            )
-        """);
+                        AND (
+                            name  LIKE ?
+                         OR email LIKE ?
+                         OR phone LIKE ?
+                        )
+                    """);
             String val = "%" + keyword.trim() + "%";
             params.add(val);
             params.add(val);
@@ -477,11 +477,11 @@ public class UserDAO extends BaseDAO<User> {
         return false;
     }
 
-    public boolean updateProfile(int id, String name, String email, String phone, String gender, LocalDate birthday) {
+    public boolean updateProfile(int id, String name, String email, String phone, String gender, LocalDate birthday, String avatar) {
         String sql = """
-                    UPDATE user
-                    SET name=?, email=?, phone=?, gender=?, birthday=?, updated_at=NOW()
-                    WHERE id=?
+                UPDATE user
+                SET name=?, email=?, phone=?, gender=?, birthday=?, avatar=?, updated_at=NOW()
+                WHERE id=?
                 """;
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -490,10 +490,59 @@ public class UserDAO extends BaseDAO<User> {
             ps.setString(3, phone);
             ps.setString(4, gender);
             ps.setDate(5, birthday != null ? Date.valueOf(birthday) : null);
-            ps.setInt(6, id);
-            return ps.executeUpdate() > 0;
+            ps.setString(6, avatar);
+            ps.setInt(7, id);
+
+            boolean success = ps.executeUpdate() > 0;
+            if (success) {
+                User user = users.get(id);
+                if (user != null) {
+                    user.setName(name);
+                    user.setEmail(email);
+                    user.setPhone(phone);
+                    user.setGender(gender);
+                    user.setBirthday(birthday);
+                    user.setAvatar(avatar);
+                }
+            }
+            return success;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateVerification(int userId, String token, boolean isVerified) {
+        String sql = """
+                UPDATE user 
+                SET verify_token = ?, 
+                    email_verified = ?, 
+                    updated_at = NOW() 
+                WHERE id = ?
+                """;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, token);
+                ps.setInt(2, isVerified ? 1 : 0);
+                ps.setInt(3, userId);
+
+                if (ps.executeUpdate() > 0) {
+                    User user = users.get(userId);
+                    if (user != null) {
+                        user.setVerify_token(token);
+                        user.setEmail_verified(isVerified);
+                    }
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
         }
         return false;
     }
