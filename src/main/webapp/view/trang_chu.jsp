@@ -111,7 +111,10 @@
                     <p class="price">
                         <fmt:formatNumber value="${item.finalPrice}" type="number"/> ₫
                     </p>
-                    <button>THÊM VÀO GIỎ</button>
+                    <button type="button"
+                            onclick="addToCart(${item.id})" ${item.current_stock == 0 ? "disabled" : ""}>
+                        THÊM VÀO GIỎ
+                    </button>
                 </div>
             </c:forEach>
 

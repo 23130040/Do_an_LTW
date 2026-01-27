@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <header>
     <div class="title">GIỎ HÀNG CỦA BẠN</div>
@@ -30,7 +31,8 @@
                                 <span>${cartItem.item.unitName}</span>
                             </td>
                             <td class="order-table-item price">
-                                <span>${cartItem.item.price}</span>
+                                <span><fmt:formatNumber value="${cartItem.item.price}" type="number"
+                                                        groupingUsed="true"/></span>
                                 <span class="detail">đ</span>
                             </td>
                             <td class="order-table-item amount">
@@ -46,7 +48,9 @@
                                 </div>
                             </td>
                             <td class="order-table-item sum">
-                                <span class="total" id="sum1">${cartItem.subTotal}</span>
+                                <span class="total">
+                                    <fmt:formatNumber value="${cartItem.subTotal}" type="number"
+                                                      groupingUsed="true"/></span>
                                 <span class="detail">đ</span>
                             </td>
                             <td class="order-table-item trash">
@@ -79,7 +83,9 @@
                 <div class="order-summary total">
                     <p>
                         <span class="total txt">Tổng tiền hàng:</span>
-                        <span class="total number">${cart.total}</span>
+                        <span class="total number">
+                            <fmt:formatNumber value="${cart.total}" type="number" groupingUsed="true"/>
+                        </span>
                     </p>
                 </div>
                 <div class="order-summary delivery-fee">
@@ -93,13 +99,19 @@
                 <div class="order-summary amount">
                     <p>
                         <span class="amount txt">Thành tiền:</span>
-                        <span class="amount number" id="subtotal">${cart.total}</span>
+                        <span class="amount number" id="subtotal">
+                            <fmt:formatNumber value="${cart.total}" type="number" groupingUsed="true"/>
+                        </span>
                     </p>
                 </div>
             </div>
             <div class="order-summary footer">
-                <a href="xacnhandathang.html">
-                    <button onclick="" class="order-summary submit" id="submit-btn">MUA HÀNG</button>
+                <c:url var="checkoutUrl" value="/xac-nhan-dat-hang" />
+                <a href="${not empty cart.list ? checkoutUrl : '#'}">
+                    <button type="button" class="order-summary submit"
+                            id="submit-btn" ${empty cart.list ? 'disabled' : ''}>
+                        MUA HÀNG
+                    </button>
                 </a>
             </div>
         </div>

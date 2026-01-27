@@ -56,12 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(data => {
                     input.value = quantity;
 
+                    const formattedSubTotal = data.subTotal.toLocaleString('vi-VN');
+                    const formattedCartTotal = data.cartTotal.toLocaleString('vi-VN');
                     btn.closest("tr")
                         .querySelector(".total")
-                        .innerText = data.subTotal;
+                        .innerText = formattedSubTotal;
 
-                    document.querySelector("#subtotal").innerText = data.cartTotal;
-                    document.querySelector(".total.number").innerText = data.cartTotal;
+                    document.querySelector("#subtotal").innerText = formattedCartTotal;
+                    document.querySelector(".total.number").innerText = formattedCartTotal;
                 });
         });
     });

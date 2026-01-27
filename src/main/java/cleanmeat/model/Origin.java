@@ -24,7 +24,6 @@ public class Origin {
         this.description = description;
     }
 
-
     public Origin() {
     }
 
