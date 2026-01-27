@@ -17,7 +17,16 @@
             <img src="${pageContext.request.contextPath}/images/${newProduct.imageUrl}"
                  alt="${newProduct.name}">
             <h3>${newProduct.name}</h3>
-            <p class="price">${newProduct.price} đ</p>
+            <div class="price-container">
+                <p class="price">
+                    <fmt:formatNumber value="${newProduct.finalPrice}" type="number" groupingUsed="true" /> đ
+                </p>
+                <c:if test="${newProduct.price != newProduct.finalPrice}">
+                    <del class="original-price">
+                        <fmt:formatNumber value="${newProduct.price}" type="number" groupingUsed="true" /> đ
+                    </del>
+                </c:if>
+            </div>
             <div class="badge-new">Sản phẩm mới</div>
             <button type="button"
                     onclick="addToCart(${newProduct.id})" ${newProduct.current_stock == 0 ? "disabled" : ""}>
@@ -29,7 +38,16 @@
             <img src="${pageContext.request.contextPath}/images/${featuredProduct.imageUrl}"
                  alt="${featuredProduct.name}">
             <h3>${featuredProduct.name}</h3>
-            <p class="price">${featuredProduct.price} đ</p>
+            <div class="price-container">
+                <p class="price">
+                    <fmt:formatNumber value="${featuredProduct.finalPrice}" type="number" groupingUsed="true" /> đ
+                </p>
+                <c:if test="${featuredProduct.price != featuredProduct.finalPrice}">
+                    <del class="original-price">
+                        <fmt:formatNumber value="${featuredProduct.price}" type="number" groupingUsed="true" /> đ
+                    </del>
+                </c:if>
+            </div>
             <div class="badge-new">Nổi Bật</div>
             <button type="button"
                     onclick="addToCart(${featuredProduct.id})" ${featuredProduct.current_stock == 0 ? "disabled" : ""}>
@@ -40,7 +58,16 @@
         <div class="product-item featured-item">
             <img src="../images/thitTC1.png" alt="Thịt thăn heo nổi bật">
             <h3>${bestSellerProduct.name}</h3>
-            <p class="price">${bestSellerProduct.price} đ</p>
+            <div class="price-container">
+                <p class="price">
+                    <fmt:formatNumber value="${bestSellerProduct.finalPrice}" type="number" groupingUsed="true" /> đ
+                </p>
+                <c:if test="${bestSellerProduct.price != bestSellerProduct.finalPrice}">
+                    <del class="original-price">
+                        <fmt:formatNumber value="${bestSellerProduct.price}" type="number" groupingUsed="true" /> đ
+                    </del>
+                </c:if>
+            </div>
             <div class="badge-new">Bán Chạy</div>
             <button type="button"
                     onclick="addToCart(${bestSellerProduct.id})" ${bestSellerProduct.current_stock == 0 ? "disabled" : ""}>
@@ -51,7 +78,16 @@
         <div class="product-item featured-item">
             <img src="../images/thitTC2.png" alt="Thịt đùi gà nổi bật">
             <h3>${bestDealProduct.name}</h3>
-            <p class="price">${bestDealProduct.price} đ</p>
+            <div class="price-container">
+                <p class="price">
+                    <fmt:formatNumber value="${bestDealProduct.finalPrice}" type="number" groupingUsed="true" /> đ
+                </p>
+                <c:if test="${bestDealProduct.price != bestDealProduct.finalPrice}">
+                    <del class="original-price">
+                        <fmt:formatNumber value="${bestDealProduct.price}" type="number" groupingUsed="true" /> đ
+                    </del>
+                </c:if>
+            </div>
             <div class="badge-new">Giá Tốt</div>
             <button type="button"
                     onclick="addToCart(${bestDealProduct.id})" ${bestDealProduct.current_stock == 0 ? "disabled" : ""}>
@@ -68,36 +104,17 @@
         <button class="arrow left" onclick="scrollToLeft(this)">&#10094;</button>
 
         <div class="product-list scrollable">
-            <div class="product-item">
-                <img src="../images/thitTC2.png" alt="Thịt đùi gà">
-                <h3>Thịt đùi gà</h3>
-                <p class="price">69.000 ₫ / KG</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-            <div class="product-item">
-                <img src="../images/thitTC1.png" alt="Thịt thăn heo">
-                <h3>Thịt thăn heo</h3>
-                <p class="price">89.000 ₫ / KG</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-            <div class="product-item">
-                <img src="../images/thitTC3.png" alt="Thịt bò tươi">
-                <h3>Thịt bò tươi</h3>
-                <p class="price">350.000 ₫ / KG</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-            <div class="product-item">
-                <img src="../images/thitTC4.png" alt="Thịt nọng heo">
-                <h3>Thịt nọng heo</h3>
-                <p class="price">330.000 ₫ / KG</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-            <div class="product-item">
-                <img src="../images/thitTC5.png" alt="Thịt ức gà">
-                <h3>Thịt ức gà</h3>
-                <p class="price">70.000 ₫ / KG</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
+            <c:forEach var="item" items="${homeItems}">
+                <div class="product-item">
+                    <img src="${item.imageUrl}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p class="price">
+                        <fmt:formatNumber value="${item.finalPrice}" type="number"/> ₫
+                    </p>
+                    <button>THÊM VÀO GIỎ</button>
+                </div>
+            </c:forEach>
+
             <div class="product-item view-all-item" onclick="window.location.href='${pageContext.request.contextPath}/san-pham'">
                 <i class="fa-solid fa-arrow-right" style="font-size: 50px; margin-bottom: 10px;"></i>
                 <h3>Xem tất cả</h3>
