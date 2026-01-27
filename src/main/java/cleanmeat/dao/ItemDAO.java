@@ -649,5 +649,49 @@ public class ItemDAO extends BaseDAO<Item> {
 
         return list;
     }
+    public List<Item> findDistinctBySkuBase() {
+        List<Item> list = new ArrayList<>();
+
+        String sql = """
+        SELECT i.*, img.url AS image_url,
+               c.name AS category_name,
+               o.name AS origin_name,
+               u.name AS unit_name
+        FROM item i
+        JOIN (
+            SELECT 
+                LEFT(sku, LENGTH(sku) - 2) AS sku_base,
+                MIN(CAST(RIGHT(sku, 2) AS UNSIGNED)) AS min_suffix
+            FROM item
+            GROUP BY LEFT(sku, LENGTH(sku) - 2)
+        ) t
+        ON LEFT(i.sku, LENGTH(i.sku) - 2) = t.sku_base
+        AND CAST(RIGHT(i.sku, 2) AS UNSIGNED) = t.min_suffix
+        LEFT JOIN item_image img ON i.id = img.item_id AND img.is_primary = 1
+        LEFT JOIN category c ON i.category_id = c.id
+        LEFT JOIN origin o ON i.origin_id = o.id
+        LEFT JOIN unit u ON i.unit_id = u.id
+        ORDER BY i.created_at DESC LIMIT 5
+    """;
+
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    list.add(mapResultSetToEntity(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                ConnectionPool.getInstance().releaseConnection(conn);
+            }
+        }
+        return list;
+    }
 
 }
