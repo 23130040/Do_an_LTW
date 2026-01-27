@@ -5,10 +5,12 @@
 
 <section class="product-detail">
 
+    <!-- ===== KHÔNG TÌM THẤY SẢN PHẨM ===== -->
     <c:if test="${empty baseItem}">
         <p class="not-found">Không tìm thấy sản phẩm.</p>
     </c:if>
 
+    <!-- ===== CÓ SẢN PHẨM ===== -->
     <c:if test="${not empty baseItem}">
 
         <div class="product-wrapper">
@@ -16,8 +18,9 @@
             <!-- ================= ẢNH ================= -->
             <div class="product-image">
                 <img id="main-img"
-                     src="${baseItem.imageUrl}"
-                     alt="${baseItem.name}">
+                     src="${pageContext.request.contextPath}/images/${baseItem.imageUrl}"
+                     alt="${baseItem.name}"
+                     onerror="this.src='${pageContext.request.contextPath}/images/no-image.png'">
             </div>
 
             <!-- ================= THÔNG TIN ================= -->
@@ -33,15 +36,15 @@
                         </c:forEach>
                     </div>
                     <span class="rating-text">
-                ${rating.avgRating} | ${rating.totalRating} đánh giá
-            </span>
+                        ${rating.avgRating} | ${rating.totalRating} đánh giá
+                    </span>
                 </div>
 
                 <!-- GIÁ -->
                 <div class="price-box">
-            <span class="price" id="product-price">
-                <fmt:formatNumber value="${sp.price}" type="number"/>đ
-            </span>
+                    <span class="price" id="product-price">
+                        <fmt:formatNumber value="${sp.price}" type="number"/>đ
+                    </span>
                 </div>
 
                 <!-- ================= KHỐI LƯỢNG ================= -->
@@ -59,9 +62,7 @@
                         </c:forEach>
 
                         <button type="button"
-                                class="option
-                ${v250 == null || v250.current_stock == 0 ? 'disabled' : ''}
-                ${v250 != null && v250.id == sp.id ? 'active' : ''}"
+                                class="option ${v250 == null || v250.current_stock == 0 ? 'disabled' : ''} ${v250 != null && v250.id == sp.id ? 'active' : ''}"
                                 data-item-id="${v250 != null ? v250.id : ''}"
                                 data-price="${v250 != null ? v250.price : ''}">
                             250g
@@ -76,9 +77,7 @@
                         </c:forEach>
 
                         <button type="button"
-                                class="option
-                ${v500 == null || v500.current_stock == 0 ? 'disabled' : ''}
-                ${v500 != null && v500.id == sp.id ? 'active' : ''}"
+                                class="option ${v500 == null || v500.current_stock == 0 ? 'disabled' : ''} ${v500 != null && v500.id == sp.id ? 'active' : ''}"
                                 data-item-id="${v500 != null ? v500.id : ''}"
                                 data-price="${v500 != null ? v500.price : ''}">
                             500g
@@ -93,9 +92,7 @@
                         </c:forEach>
 
                         <button type="button"
-                                class="option
-                ${v1kg == null || v1kg.current_stock == 0 ? 'disabled' : ''}
-                ${v1kg != null && v1kg.id == sp.id ? 'active' : ''}"
+                                class="option ${v1kg == null || v1kg.current_stock == 0 ? 'disabled' : ''} ${v1kg != null && v1kg.id == sp.id ? 'active' : ''}"
                                 data-item-id="${v1kg != null ? v1kg.id : ''}"
                                 data-price="${v1kg != null ? v1kg.price : ''}">
                             1kg
@@ -103,6 +100,7 @@
 
                     </div>
                 </div>
+
                 <!-- ===== SỐ LƯỢNG ===== -->
                 <div class="option-row">
                     <span class="label">Số lượng:</span>
@@ -112,6 +110,7 @@
                         <button type="button" class="qty-plus">+</button>
                     </div>
                 </div>
+
                 <!-- ================= GIỎ HÀNG ================= -->
                 <form action="${pageContext.request.contextPath}/chi-tiet-san-pham" method="post">
                     <input type="hidden" name="action" value="addCart">
@@ -130,24 +129,105 @@
         <!-- ================= MÔ TẢ ================= -->
         <div class="product-description">
             <h2>Chi tiết sản phẩm</h2>
-            <p>
-                <c:choose>
-                    <c:when test="${empty baseItem.long_description}">
-                        Mô tả sản phẩm đang được cập nhật.
-                    </c:when>
-                    <c:otherwise>
-                        ${baseItem.long_description}
-                    </c:otherwise>
-                </c:choose>
+            <!-- Mô tả chi tiết -->
+            <c:choose>
+                <c:when test="${empty baseItem.long_description}">
+                    <p class="long-desc">
+                        Mô tả chi tiết sản phẩm đang được cập nhật.
+                    </p>
+                </c:when>
+                <c:otherwise>
+                    <p class="long-desc">
+                            ${baseItem.long_description}
+                    </p>
+                </c:otherwise>
+            </c:choose>
+
+            <!-- Xuất xứ -->
+            <c:choose>
+            <c:when test="${origin != null}">
+            <p class="origin">
+                <strong>Xuất xứ:</strong> ${origin.name}
             </p>
+            </c:when>
+            <c:otherwise>
+            <p class="origin">
+                <strong>Xuất xứ:</strong> Đang cập nhật
+            </p>
+            </c:otherwise>
+            </c:choose>
+            <p><strong>Bảo quản:</strong> 0 – 4°C</p>
+            <p><strong>Hạn sử dụng:</strong> 7 ngày kể từ ngày đóng gói</p>
+            <p><strong>Đóng gói:</strong> Hút chân không đảm bảo vệ sinh an toàn thực phẩm</p>
         </div>
 
-        <!-- ================= BÌNH LUẬN ================= -->
+            <!-- ================= BÌNH LUẬN ================= -->
         <div class="product-comments">
             <h2>Bình luận</h2>
-            <p class="no-comment">Chức năng bình luận sẽ được cập nhật sau.</p>
+
+            <c:choose>
+                <c:when test="${empty feedbackList}">
+                    <p class="no-comment">Sản phẩm chưa có bình luận.</p>
+                </c:when>
+
+                <c:otherwise>
+                    <c:forEach items="${feedbackList}" var="fb">
+                        <div class="comment-item">
+
+                            <div class="comment-header">
+                                <span class="comment-user">
+                                    Người dùng #${fb.userId}
+                                </span>
+                                <span class="comment-date">
+                                        ${fb.createdAt}
+                                </span>
+                            </div>
+
+                            <div class="comment-rating">
+                                <c:forEach begin="1" end="5" var="i">
+                                    <i class="fa-solid fa-star ${fb.rating != null && i <= fb.rating ? 'active' : ''}"></i>
+                                </c:forEach>
+                            </div>
+
+                            <p class="comment-content">
+                                    ${fb.comment}
+                            </p>
+
+                        </div>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
         </div>
 
     </c:if>
 
+    <div class="back-to-list">
+        <a href="${pageContext.request.contextPath}/san-pham">
+            ← Quay lại danh sách
+        </a>
+    </div>
 </section>
+    <!-- PHẦN CAM KẾT DỊCH VỤ -->
+    <section class="features-section">
+        <div class="features-container">
+            <div class="feature-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <p>Sản phẩm an toàn</p>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <p>Chất lượng cam kết</p>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <p>Dịch vụ vượt trội</p>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-truck-fast"></i>
+                <p>Giao hàng nhanh</p>
+            </div>
+        </div>
+    </section>
+
+
+

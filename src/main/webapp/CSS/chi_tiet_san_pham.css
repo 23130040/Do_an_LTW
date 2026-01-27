@@ -256,7 +256,93 @@ body {
     color: #777;
     font-style: italic;
 }
+.product-image {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
 
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+.back-to-list {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.back-to-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #c0392b;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.25s ease;
+}
+
+.back-to-list a:hover {
+    color: #a93226;
+    transform: translateX(-4px);
+}
+/* ======================= CAM KẾT ======================= */
+.features-section {
+    width: 100%;
+    padding: 40px 0;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-top: 0;
+}
+
+.features-container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    text-align: center;
+}
+.feature-item {
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: .3s;
+}
+
+
+.feature-item i {
+    font-size: 50px;
+    margin-bottom: 15px;
+    color: #cc0000;
+    transition: .3s;
+}
+
+.feature-item p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 8px;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-item:hover i {
+    transform: scale(1.1);
+    color: #ff4b4b;
+}
 /* ================= RESPONSIVE ================= */
 @media (max-width: 900px) {
     .product-wrapper {
