@@ -49,7 +49,8 @@
         <!-- NỔI BẬT -->
         <a href="${pageContext.request.contextPath}/chi-tiet-san-pham?id=${featuredProduct.id}" class="product-link">
             <div class="product-item featured-item">
-                <img src="${pageContext.request.contextPath}/images/${featuredProduct.imageUrl}" alt="${featuredProduct.name}">
+                <img src="${pageContext.request.contextPath}/images/${featuredProduct.imageUrl}"
+                     alt="${featuredProduct.name}">
                 <h3>${featuredProduct.name}</h3>
 
                 <div class="price-container">
@@ -76,7 +77,8 @@
         <!-- BÁN CHẠY -->
         <a href="${pageContext.request.contextPath}/chi-tiet-san-pham?id=${bestSellerProduct.id}" class="product-link">
             <div class="product-item featured-item">
-                <img src="../images/thitTC1.png" alt="${bestSellerProduct.name}">
+                <img src="${pageContext.request.contextPath}/images/${bestSellerProduct.imageUrl}"
+                     alt="${bestSellerProduct.name}">
                 <h3>${bestSellerProduct.name}</h3>
 
                 <div class="price-container">
@@ -103,7 +105,8 @@
         <!-- GIÁ TỐT -->
         <a href="${pageContext.request.contextPath}/chi-tiet-san-pham?id=${bestDealProduct.id}" class="product-link">
             <div class="product-item featured-item">
-                <img src="../images/thitTC2.png" alt="${bestDealProduct.name}">
+                <img src="${pageContext.request.contextPath}/images/${bestDealProduct.imageUrl}"
+                     alt="${bestDealProduct.name}">
                 <h3>${bestDealProduct.name}</h3>
 
                 <div class="price-container">
@@ -141,11 +144,18 @@
             <c:forEach var="item" items="${homeItems}">
                 <a href="${pageContext.request.contextPath}/chi-tiet-san-pham?id=${item.id}" class="product-link">
                     <div class="product-item">
-                        <img src="${item.imageUrl}" alt="${item.name}">
+                        <img src="${pageContext.request.contextPath}/images/${item.imageUrl}" alt="${item.name}">
                         <h3>${item.name}</h3>
-                        <p class="price">
-                            <fmt:formatNumber value="${item.finalPrice}" type="number"/> ₫
-                        </p>
+                        <div class="price-container">
+                            <p class="price">
+                                <fmt:formatNumber value="${item.finalPrice}" type="number"/> ₫
+                            </p>
+                            <c:if test="${item.price != item.finalPrice}">
+                                <del class="original-price">
+                                    <fmt:formatNumber value="${item.price}" type="number" groupingUsed="true"/> đ
+                                </del>
+                            </c:if>
+                        </div>
                         <button type="button"
                                 onclick="event.stopPropagation(); addToCart(${item.id})"
                             ${item.current_stock == 0 ? "disabled" : ""}>

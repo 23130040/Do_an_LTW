@@ -169,10 +169,10 @@
                 <div class="summary-item">
                     <p class="summary-label">Trạng thái Đơn hàng:</p>
                     <select id="modalOrderStatus" class="filter-select">
-                        <option value="Chờ xác nhận">Chờ xác nhận</option>
-                        <option value="Đang giao">Đang giao</option>
-                        <option value="Đã giao">Đã giao</option>
-                        <option value="Đã hủy">Đã hủy</option>
+                        <option value="Chờ Xác Nhận">Chờ xác nhận</option>
+                        <option value="Đang Giao">Đang giao</option>
+                        <option value="Đã Giao">Đã giao</option>
+                        <option value="Đã Hủy">Đã hủy</option>
                     </select>
                     </div>
                 <div class="summary-item">
