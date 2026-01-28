@@ -153,27 +153,32 @@ a {
     color: #555;
 }
 
-.profile-content.body .profile .group .profile-form.static-value, .profile-form.input-field, .profile-form.value-wrapper{
+.profile-content.body .profile .group .profile-form.static-value, .profile-form.input-field, .profile-form.value-wrapper {
     flex-grow: 1;
     margin-right: 20px;
 }
-.profile-content.body input[type='text']{
+
+.profile-content.body input[type='text'] {
     border-radius: 5px;
     height: 30px;
     border: 1px solid #ddd;
     font-size: 15px;
 }
-.profile-content.body a{
+
+.profile-content.body a {
     color: #2461ff;
     text-decoration: underline;
 }
-.profile-content.body a:hover{
+
+.profile-content.body a:hover {
     color: #013cd5;
 }
-.profile-content.body .submit-row{
+
+.profile-content.body .submit-row {
     text-align: center;
 }
-.profile-content.body .profile BUTTON{
+
+.profile-content.body .profile BUTTON {
     width: 150px;
     height: 30px;
     border-radius: 5px;
@@ -181,16 +186,19 @@ a {
     background-color: #e00000;
     color: #fff;
 }
+
 .profile-content.body .profile BUTTON:hover {
     background-color: #ef0000;
     cursor: pointer;
 }
+
 .avatar {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.avatar-container{
+
+.avatar-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -198,11 +206,13 @@ a {
     margin-left: 80px;
     gap: 10px;
 }
+
 .avatar IMG {
     width: 120px;
     height: 120px;
     border-radius: 50%;
 }
+
 .avatar BUTTON {
     width: 150px;
     height: 30px;
@@ -210,9 +220,11 @@ a {
     border: none;
     color: #a6a6a6;
 }
+
 .avatar BUTTON:hover {
     background-color: #e3e3e3;
 }
+
 /* ============================
         ADDRESS
 =============================== */
@@ -221,9 +233,11 @@ a {
     align-items: center;
     justify-content: space-between;
 }
+
 .address-content.body {
     margin-top: 25px;
 }
+
 .address {
     border: 1px solid #ddd;
     padding: 18px;
@@ -234,13 +248,16 @@ a {
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
+
 .address p {
     flex: 1;
 }
-.address .trash, .address .edit-btn{
+
+.address .trash, .address .edit-btn {
     background: none;
     border: none;
 }
+
 .address .set-default-btn {
     padding: 6px 12px;
     border-radius: 5px;
@@ -248,28 +265,34 @@ a {
     background: #f0f0f0;
     cursor: pointer;
 }
+
 .address .set-default-btn:hover {
     background: #dcdcdc;
 }
+
 .address i {
     font-size: 18px;
     cursor: pointer;
     padding-left: 12px;
 }
+
 .address i:hover {
     color: #e00000;
 }
-.address-content p.empty-classes{
+
+.address-content p.empty-classes {
     text-align: center;
     color: #dfdfdf;
     font-style: italic;
 }
-.address .default-btn.disabled, .default-btn:disabled{
+
+.address .default-btn.disabled, .default-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
     border: none;
 }
+
 /* ============================
     PASSWORD SECTION
 =============================== */
@@ -336,59 +359,20 @@ a {
 /* ============================
     MODAL
 =============================== */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    background-color: rgba(0,0,0,0.5);
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    top: 0;
-    left: 0;
-}
 
-.modal-content{
-    background-color: #fefefe;
-    margin: 12% auto;
-    padding: 20px 30px;
-    border: 1px solid #888;
-    width: 450px;
-    max-width: 90%;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-.close-btn{
-    color: #aaa;
-    float: right;
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 20px;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: #e00000;
-    text-decoration: none;
-    cursor: pointer;
-}
-.message-container{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.message{
+.message {
     color: #04aa6d;
     font-size: 20px;
     display: flex;
     align-items: center;
     gap: 12px;
 }
-.message i{
+
+.message i {
     font-size: 30px;
 }
-.confirm-form{
+
+.confirm-form {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -396,7 +380,8 @@ a {
     justify-content: center;
     gap: 30px;
 }
-#change-email .email-form, #change-phone-number .phone-form, #change-birthday .day-form{
+
+#change-email .email-form, #change-phone-number .phone-form, #change-birthday .day-form {
     margin-top: 25px;
     display: flex;
     flex-direction: column;
@@ -404,23 +389,27 @@ a {
     justify-content: center;
     gap: 20px;
 }
-.form-input{
+
+.form-input {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
 }
-.form-input label{
+
+.form-input label {
     font-size: 30px;
 }
-.form-input input{
+
+.form-input input {
     flex-grow: 1;
     border: 1px solid #ddd;
     height: 30px;
     border-radius: 5px;
 }
-.modal BUTTON{
+
+.modal BUTTON {
     width: 150px;
     height: 30px;
     font-size: 13px;
@@ -429,59 +418,229 @@ a {
     border: none;
     border-radius: 5px;
 }
+
 .modal BUTTON:hover {
     background-color: #ef0000;
     cursor: pointer;
     transition: 0.25s;
 }
-.modal .address-form, .modal .bank-form, .modal .delete-account-form, .modal .password-form{
+
+.modal .address-form, .modal .bank-form, .modal .delete-account-form, .modal .password-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.modal h2{
+
+.modal h2 {
     font-size: 18px;
     text-align: center;
 }
-.modal .address-form label{
+
+.modal .address-form label {
     font-size: 16px;
     width: 31%;
 }
-.modal .form-row{
+
+.modal .form-row {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.modal .form-group{
+
+.modal .form-group {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
-.address-form select, .address-form textarea{
+
+.address-form select, .address-form textarea {
     flex-grow: 1;
 }
-.address-form BUTTON{
+
+.address-form BUTTON {
     margin-top: 20px;
 }
-.modal .btn-group{
+
+.modal .btn-group {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
     margin-top: 40px;
 }
-#delete-account-modal .delete-account-form{
+
+#delete-account-modal .delete-account-form {
     margin-top: 40px;
 }
-.modal .cancle-btn{
+
+.modal .cancle-btn {
     background-color: #c5c5c5 !important;
 }
-.modal .cancle-btn:hover{
+
+.modal .cancle-btn:hover {
     background-color: #b6b6b6 !important;
     transition: 0.25s;
 }
+
 .error-message {
     color: red;
+}
+
+/* ============================
+    MODAL RE-DESIGN
+=============================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000; /* Tăng z-index để luôn trên cùng */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Làm nền tối hơn một chút để nổi bật modal */
+    overflow: hidden; /* Ngăn cuộn trang web khi mở modal */
+}
+
+.modal-content {
+    background-color: #fff;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Căn giữa tuyệt đối màn hình */
+    padding: 30px;
+    border: none;
+    width: 420px;
+    max-width: 90%;
+    border-radius: 15px; /* Bo góc mềm mại hơn */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease-out; /* Hiệu ứng hiện ra mượt mà */
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #999;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close-btn:hover {
+    color: #e00000;
+}
+
+/* Custom cho các thông báo message */
+.message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}
+
+.message-container i {
+    margin-bottom: 10px;
+}
+
+.info-confirm {
+    color: #333;
+    line-height: 1.5;
+}
+
+.btn-group {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Nút bấm đồng bộ */
+.modal button {
+    cursor: pointer;
+    padding: 10px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background-color: #e00000;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+.modal button:hover {
+    background-color: #c00000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(224, 0, 0, 0.3);
+}
+
+/* Tùy chỉnh riêng cho Modal xác nhận đổi Email */
+#confirm-change-email .modal-content {
+    width: 480px; /* Rộng hơn một chút để chứa text không bị quá dày dòng */
+    border-top: 5px solid #ff9800; /* Thanh màu cảnh báo ở phía trên */
+    padding: 40px 30px;
+    text-align: center;
+}
+
+#confirm-change-email .message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    color: #333;
+}
+
+/* Icon cảnh báo lớn */
+#confirm-change-email .message i {
+    font-size: 55px;
+    color: #00ff77;
+    margin-bottom: 10px;
+}
+
+/* Nội dung thông báo chính */
+#confirm-change-email .info-confirm {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #2c3e50;
+}
+
+/* Dòng text phụ (in nghiêng) */
+#confirm-change-email .info-confirm.italic {
+    font-size: 14px;
+    font-weight: normal;
+    font-style: italic;
+    color: #7f8c8d;
+    margin-top: -5px;
+}
+
+/* Hiển thị Email mới nổi bật */
+#confirm-change-email #new-email {
+    color: #e00000;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Nút OK tùy chỉnh */
+#confirm-change-email .confirm-btn {
+    display: block;
+    margin-top: 30px;
+}
+
+#confirm-change-email #confirm-save-info-btn {
+    width: 100%; /* Nút dài toàn bộ để dễ bấm */
+    height: 45px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+}
+
+#confirm-change-email #confirm-save-info-btn:hover {
+    background: linear-gradient(135deg, #f57c00 0%, #ef6c00 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
 }

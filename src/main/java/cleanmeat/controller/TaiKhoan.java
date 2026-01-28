@@ -3,6 +3,7 @@ package cleanmeat.controller;
 import cleanmeat.model.Address;
 import cleanmeat.model.User;
 import cleanmeat.services.AddressService;
+import cleanmeat.services.EmailService;
 import cleanmeat.services.UserService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -15,6 +16,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @WebServlet(name = "tai-khoan", value = "/tai-khoan")
 @MultipartConfig
@@ -133,9 +135,13 @@ public class TaiKhoan extends HttpServlet {
                 }
                 return;
             } else if ("updateProfile".equals(action)) {
+                String oldEmail = user.getEmail();
                 String name = body.get("name").getAsString();
                 String email = body.get("email").getAsString();
                 String phone = body.get("phone").getAsString();
+                String avatar = body.has("avatar") && !body.get("avatar").isJsonNull()
+                        ? body.get("avatar").getAsString()
+                        : user.getAvatar();
                 String gender = body.has("gender") && !body.get("gender").isJsonNull()
                         ? body.get("gender").getAsString()
                         : null;
@@ -160,11 +166,42 @@ public class TaiKhoan extends HttpServlet {
                         birthday = LocalDate.parse(birthdayStr); // yyyy-MM-dd
                     }
                 }
-
-                userService.updateProfile(user.getId(), name, email, phone, gender, birthday);
                 try {
-                    // parse + update
-                    response.getWriter().write("{\"success\":true}");
+                    boolean emailChanged = !oldEmail.equalsIgnoreCase(email);
+
+                    // Cập nhật Profile
+                    userService.updateProfile(user.getId(), name, email, phone, gender, birthday, avatar);
+
+                    if (emailChanged) {
+                        String token = UUID.randomUUID().toString();
+                        // 1. Cập nhật verify_token và đặt email_verified = false (0) trong DB
+                        userService.updateEmailVerificationStatus(user.getId(), token, false);
+
+                        // 2. Gửi email xác thực
+                        String verifyLink = "http://localhost:8080" + request.getContextPath() + "/xac-thuc-email?token=" + token;
+                        EmailService.sendVerifyEmail(email, name, verifyLink);
+
+                        // Cập nhật lại đối tượng user trong session
+                        user.setEmail_verified(false);
+                        user.setVerify_token(token);
+                    }
+
+                    // Cập nhật thông tin mới vào session object
+                    user.setName(name);
+                    user.setEmail(email);
+                    user.setPhone(phone);
+                    user.setGender(gender);
+                    user.setBirthday(birthday);
+                    user.setAvatar(avatar);
+                    session.setAttribute("user", user);
+
+                    // Trả về JSON chính xác cho Client
+                    JsonObject jsonResponse = new JsonObject();
+                    jsonResponse.addProperty("success", true);
+                    jsonResponse.addProperty("emailChanged", emailChanged);
+                    jsonResponse.addProperty("newEmail", email);
+
+                    response.getWriter().write(jsonResponse.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                     response.setStatus(500);

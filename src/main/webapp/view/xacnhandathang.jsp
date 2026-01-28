@@ -52,7 +52,7 @@
                     <tr class="table-detail">
                         <td class="order-table-item product">
                             <div class="product-wrapper">
-                                <img src="${cartItem.item.imageUrl}"
+                                <img src="${pageContext.request.contextPath}/images/${cartItem.item.imageUrl}"
                                      alt="${cartItem.item.name}">
                                 <span class="detail">${cartItem.item.name}</span>
                             </div>

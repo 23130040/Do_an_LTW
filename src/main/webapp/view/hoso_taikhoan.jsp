@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<div id="profile-content" class="tab-content active">--%>
+<script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 <div class="profile-content header">
     <h1 class="txt big">
         HỒ SƠ CỦA TÔI
@@ -65,8 +66,10 @@
     </div>
     <div class="profile-content avatar">
         <div class="avatar-container">
-            <img src="${pageContext.request.contextPath}/images/avatar.jpg" alt="avatar">
-            <button class="choose-button">Chọn Ảnh</button>
+            <img id="avatar-preview"
+                 src="${pageContext.request.contextPath}${not empty user.avatar ? user.avatar : '/images/avatar.jpg'}"
+                 alt="avatar">
+            <button class="choose-button" onclick="selectAvatar()">Chọn Ảnh</button>
         </div>
     </div>
 </div>
@@ -87,12 +90,13 @@
     </div>
 </div>
 <div id="confirm-change-email" class="modal">
-    <div class="confirm-form">
+    <div class="modal-content">
         <div class="message">
-            <i class="fa-solid fa-exclamation"></i>
-            <span class="info-confirm">Email có sự thay đổi. Bạn vui lòng xác thực địa chỉ email mới và đăng nhập lại.</span>
-            <span class="info-confirm italic">Link xác thực đã được gửi đến địa chỉ email <span
-                    id="new-email"></span></span>
+            <div class="info-confirm"><i class="fa-solid fa-exclamation"></i>Email có sự thay đổi. Bạn vui lòng xác thực
+                địa chỉ email mới và đăng nhập lại.
+            </div>
+            <div class="info-confirm italic">Link xác thực đã được gửi đến địa chỉ email <span
+                    id="new-email"></span></div>
         </div>
         <span class="confirm-btn">
             <button type="button" id="confirm-save-info-btn">OK</button>
@@ -152,6 +156,10 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        const closebtn = document.getElementById("close-confirm-save-info-modal");
+        closebtn.addEventListener("click", () => {
+            closeModal("confirm-save-info");
+        });
         //mở modal thay đổi email
         const changeEmailbtn = document.getElementById("open-change-email-modal");
         changeEmailbtn.addEventListener("click", () => {
@@ -198,6 +206,9 @@
             }
             if (e.target === document.getElementById("change-birthday")) {
                 closeModal("change-birthday");
+            }
+            if (e.target === document.getElementById("confirm-save-info")) {
+                closeModal("confirm-save-info");
             }
         });
 
@@ -271,20 +282,31 @@
                 email: emailSpan.textContent.trim(),
                 phone: phoneSpan.textContent.trim(),
                 gender: getSelectedGender(),
-                birthday: newBirthdayInput.value
+                birthday: newBirthdayInput.value,
+                avatar: window.tempAvatarUrl || document.getElementById("avatar-preview").getAttribute("src")
             };
 
             fetch(`${pageContext.request.contextPath}/tai-khoan`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(data)
             })
                 .then(res => res.json())
                 .then(result => {
                     if (result.success) {
+                        const sidebarAvatar = document.querySelector("#sidebar img");
+                        if (sidebarAvatar && window.tempAvatarUrl) {
+                            sidebarAvatar.src = window.tempAvatarUrl;
+                        }
                         openModal("confirm-save-info");
+                        document.getElementById("confirm-save-info-btn").addEventListener("click", () => {
+                            if (result.emailChanged) {
+                                document.getElementById("new-email").textContent = result.newEmail;
+                                openModal("confirm-change-email");
+                            } else {
+                                closeModal("confirm-save-info");
+                            }
+                        });
                     } else {
                         alert(result.message || "Cập nhật thất bại");
                     }
@@ -295,6 +317,9 @@
                 });
         });
 
+        document.querySelector("#confirm-change-email #confirm-save-info-btn").onclick = () => {
+            window.location.href = "${pageContext.request.contextPath}/dang-nhap";
+        };
     });
 
     function getSelectedGender() {
@@ -325,4 +350,25 @@
         return formatDate[2] + "/" + formatDate[1] + "/" + formatDate[0];
     }
 
+    function selectAvatar() {
+        var finder = new CKFinder();
+
+        finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
+
+        finder.selectMultiple = false;
+
+        finder.selectActionFunction = function (fileUrl) {
+            const preview = document.getElementById("avatar-preview");
+            const contextPath = '${pageContext.request.contextPath}';
+            if (!fileUrl.startsWith(contextPath)) {
+                preview.src = contextPath + fileUrl;
+                window.tempAvatarUrl = contextPath + fileUrl;
+            } else {
+                preview.src = fileUrl;
+                window.tempAvatarUrl = fileUrl;
+            }
+        };
+
+        finder.popup();
+    }
 </script>

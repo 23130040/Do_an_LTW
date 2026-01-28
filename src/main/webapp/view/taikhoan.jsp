@@ -4,8 +4,8 @@
 <div class="container">
     <div id="sidebar">
         <div class="sidebar header">
-            <img src="${pageContext.request.contextPath}/images/avatar.jpg" alt="avatar">
-            <h3 class="username">Nguyễn Văn A</h3>
+            <img src="${pageContext.request.contextPath}${empty user.avatar ? "/images/avatar.jpg" : user.avatar}" alt="avatar">
+            <h3 class="username">${user.name}</h3>
         </div>
         <div class="sidebar menu">
             <a href="?tab=ho-so" data-tab="profile" class="default-link">Hồ sơ</a>

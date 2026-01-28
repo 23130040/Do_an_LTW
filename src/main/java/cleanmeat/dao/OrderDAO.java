@@ -375,7 +375,6 @@ public class OrderDAO extends BaseDAO<Order> {
         try {
             conn = getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-
                 ps.setString(1, status);
                 ps.setInt(2, orderId);
                 return ps.executeUpdate() > 0;

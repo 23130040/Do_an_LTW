@@ -24,11 +24,11 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public LocalDateTime getCreates_at() {
+    public LocalDateTime getCreated_at() {
         return creates_at;
     }
 
-    public void setCreates_at(LocalDateTime creates_at) {
+    public void setCreated_at(LocalDateTime creates_at) {
         this.creates_at = creates_at;
     }
 

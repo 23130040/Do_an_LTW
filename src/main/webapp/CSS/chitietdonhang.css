@@ -4,165 +4,9 @@ body {
     margin: 0;
     padding-top: 80px;
 }
-a{
+
+a {
     text-decoration: none;
-}
-/*menu*/
-#menubar{
-    height: 70px;
-    background-color: #343A40;
-    font-size: 18px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-}
-
-#menubar .sixteen.column{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-#menubar .left{
-    width: 10%;
-}
-#menubar .left img{
-    width: 95px;
-    height: auto;
-    margin-left: 30px;
-    transition: transform 0.25s;
-}
-#menubar .center{
-    width: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    transform: translateX(calc(50% + 50px));
-}
-
-#menubar .center ul{
-    display: flex;
-    gap: 22px;
-}
-#menubar .center li{
-    list-style: none;
-}
-#menubar .center li a{
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 22px 10px;
-    transition: 0.25s;
-    font-weight: 500;
-}
-#menubar .center li a:hover{
-    color: #e00000;
-}
-
-/* ===== RIGHT ICON MENU ===== */
-#menubar .menu-right{
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-    width: auto;
-}
-#menubar .menuitem-right{
-    list-style: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    transition: 0.25s;
-    padding: 30px 15px;
-}
-#shopping-cart a{
-    color: white;
-}
-#open-searchBar:hover,#close-searchBar.active:hover,#shopping-cart a:hover, #user-setting:hover .user i {
-    color: #e00000 !important;
-    transition: color 0.25s;
-}
-#searchBar{
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-#input-searchBar,
-#close-searchBar {
-    display: none;
-    transition: all 0.25s;
-}
-#input-searchBar.active {
-    display: block;
-    width: 200px;
-    padding: 5px 10px;
-    border-radius: 15px;
-}
-#close-searchBar.active {
-    display: block;
-    cursor: pointer;
-    font-size: 30px;
-    color: white;
-}
-
-/* ===== USER MENU ===== */
-.user-menu-wrapper{
-    position: relative;
-}
-.user-menu-wrapper .user{
-    font-size: 22px;
-    color: white;
-    cursor: pointer;
-}
-
-.user-menu{
-    position: absolute;
-    top: 80%;
-    right: 0;
-    background-color: #fff;
-    border-radius: 12px;
-    width: 210px;
-    display: none;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-    padding-left: 0;
-    margin-left: 0;
-}
-
-.user-menu li{
-    list-style: none;
-}
-
-.user-menu a{
-    color: #333 !important;
-    text-decoration: none;
-    display: block;
-    transition: 0.25s;
-    font-size: 16px;
-    font-weight: 500;
-    border-bottom: 1px solid #eee;
-    padding: 10px 15px;
-}
-.user-menu li:first-child a{
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-}
-.user-menu li:last-child a{
-    border-bottom: none;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-}
-
-.user-menu a:hover{
-    background-color: #e00000;
-    color: white !important;
-}
-
-.user-menu-wrapper:hover .user-menu{
-    display: block;
 }
 
 /***main*/
@@ -173,11 +17,13 @@ main {
     padding: 20px;
     color: #333;
 }
+
 /* ===== Order Container ===== */
 .order-container {
     background-color: #fff;
     padding: 30px;
 }
+
 .order-title {
     font-size: 20px;
     font-weight: 700;
@@ -186,15 +32,17 @@ main {
     text-align: center;
 }
 
-.back-button{
+.back-button {
     color: #b6b6b6;
     border: none;
     background: none;
     font-size: 17px;
 }
-.back-button:hover{
+
+.back-button:hover {
     color: #979797;
 }
+
 /* ===== Section Titles ===== */
 .section-title {
     font-size: 20px;
@@ -323,14 +171,16 @@ main {
     font-weight: 600;
     color: #04aa6d;
 }
-main .footer{
+
+main .footer {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 15px;
     margin-top: 20px;
 }
-main .footer BUTTON{
+
+main .footer BUTTON {
     font-size: 15px;
     padding: 12px;
     border-radius: 10px;
@@ -339,37 +189,43 @@ main .footer BUTTON{
     flex-grow: 1;
     font-weight: bold;
 }
-.italic-txt{
+
+.italic-txt {
     font-style: italic;
     color: #bbb;
     font-size: 13px;
 }
-main .footer span{
+
+main .footer span {
     display: inline-block;
     width: 50%;
 }
-#return-order-btn, #confirm-order-btn{
+
+#return-order-btn, #confirm-order-btn {
     color: white;
     border: none;
     background: #e00000;
 
 }
-#return-order-btn:hover, #confirm-order-btn:hover{
+
+#return-order-btn:hover, #confirm-order-btn:hover {
     cursor: pointer;
     background-color: #ef0000;
 }
-.modal{
+
+.modal {
     display: none;
     position: fixed;
     z-index: 9999;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
     overflow: auto;
     top: 0;
     left: 0;
 }
-.modal-content{
+
+.modal-content {
     background-color: #fefefe;
     margin: 10% auto;
     padding: 20px 30px;
@@ -379,7 +235,8 @@ main .footer span{
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
-.close-btn{
+
+.close-btn {
     color: #aaa;
     float: right;
     font-size: 30px;
@@ -393,16 +250,20 @@ main .footer span{
     text-decoration: none;
     cursor: pointer;
 }
-#delivery-message h3{
+
+#delivery-message h3 {
     text-align: center;
 }
-#delivery-message span.bold{
+
+#delivery-message span.bold {
     font-weight: bold;
 }
-#delivery-message p{
+
+#delivery-message p {
     line-height: 1.5;
 }
-#confirm-return-order-modal .message{
+
+#confirm-return-order-modal .message {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -411,40 +272,46 @@ main .footer span{
     gap: 15px;
     margin-top: 20px;
 }
-#confirm-return-order-modal .btn{
+
+#confirm-return-order-modal .btn {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
     width: 100%;
 }
-#cancle-btn, #confirm-btn{
+
+#cancle-btn, #confirm-btn {
     width: 100%;
     height: 30px;
     border-radius: 5px;
     border: none;
     font-size: 16px;
 }
-#cancle-btn{
+
+#cancle-btn {
     background-color: #d3d3d3;
     color: #808080;
 }
-#cancle-btn:hover{
+
+#cancle-btn:hover {
     cursor: pointer;
     background-color: #e3e3e3;
     transition: 0.3s;
 }
-#confirm-btn{
+
+#confirm-btn {
     background-color: #e00000;
     color: white;
 }
-#confirm-btn:hover{
+
+#confirm-btn:hover {
     cursor: pointer;
     background-color: #ef0000;
     transition: 0.3s;
 }
 
-#redirect-modal .message{
+#redirect-modal .message {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -454,23 +321,27 @@ main .footer span{
     margin-top: 20px;
     color: #0fb570;
 }
-#redirect-modal p{
+
+#redirect-modal p {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 15px;
 }
-#redirect-modal .message i{
+
+#redirect-modal .message i {
     font-size: 50px;
 }
-#redirect-modal .btn{
+
+#redirect-modal .btn {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     gap: 15px;
 }
-#return-to-home-btn, #view-orders-btn{
+
+#return-to-home-btn, #view-orders-btn {
     width: 100%;
     height: 30px;
     border-radius: 5px;
@@ -479,11 +350,13 @@ main .footer span{
     background-color: #e00000;
     color: white;
 }
-#return-to-home-btn:hover, #view-orders-btn:hover{
+
+#return-to-home-btn:hover, #view-orders-btn:hover {
     cursor: pointer;
     background-color: #ef0000;
     transition: 0.3s;
 }
+
 /*****footer***/
 .main-footer {
     background: #5a0000;
@@ -491,6 +364,7 @@ main .footer span{
     padding-top: 50px;
     font-size: 16px;
 }
+
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -499,10 +373,12 @@ main .footer span{
     flex-wrap: wrap;
     padding: 0 20px 40px 20px;
 }
+
 .footer-col {
     width: 32%;
     margin-bottom: 20px;
 }
+
 .footer-col h4 {
     /*color: #F0E68C;*//* Màu đỏ thương hiệu cho tiêu đề */
     color: #FFD700;
@@ -512,42 +388,51 @@ main .footer span{
     padding-bottom: 10px;
     display: inline-block;
 }
+
 .footer-logo img {
     width: 150px;
     margin-bottom: 15px;
 }
+
 .about-us p {
     line-height: 1.6;
     margin-bottom: 20px;
 }
 
 /* Liên kết Nhanh */
-.quick-links{
+.quick-links {
     width: 250px;
 }
+
 .quick-links ul {
     list-style: none;
     padding: 0;
 }
+
 .quick-links ul li {
     margin-bottom: 10px;
 }
+
 .quick-links ul li a {
     color: #f8f8f8;
     font-size: 16px;
     transition: color 0.3s;
 }
+
 .quick-links ul li a:hover {
     padding-left: 5px; /* Thêm chút dịch chuyển */
 }
+
 .contact-info p {
     margin-bottom: 15px;
 }
+
 .contact-info i {
     margin-right: 10px;
     color: #FFD700;
     font-size: 18px;
 }
+
 .social-icons a {
     display: inline-block;
     width: 40px;
@@ -560,14 +445,22 @@ main .footer span{
     margin-right: 10px;
     transition: background-color 0.3s, transform 0.3s;
 }
+
 .social-icons a:hover {
     background-color: #8d2a3a;
     transform: rotate(10deg) scale(1.1);
 }
+
 .footer-bottom {
     text-align: center;
     padding: 15px 0;
     border-top: 1px solid #444;
     background-color: #222;
     font-size: 14px;
+}
+
+.btn-disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
 }

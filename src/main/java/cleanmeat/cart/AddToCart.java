@@ -28,7 +28,10 @@ public class AddToCart extends HttpServlet {
 
         int itemId = Integer.parseInt(request.getParameter("itemId"));
         Item item = itemService.getItemById(itemId);
-        cart.addCartItem(new CartItem(item.getId(), item, 1));
+        int quantity = 1;
+        String q = request.getParameter("quantity");
+        if (q != null) quantity = Integer.parseInt(q);
+        cart.addCartItem(new CartItem(item.getId(), item, quantity));
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 

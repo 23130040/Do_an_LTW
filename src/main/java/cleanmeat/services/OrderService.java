@@ -9,12 +9,12 @@ import cleanmeat.model.Order;
 import cleanmeat.model.OrderItem;
 import cleanmeat.model.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderService {
     OrderDAO orderDAO = new OrderDAO();
-    OrderItemDAO orderItemDAO = new OrderItemDAO();
 
     public List<Order> getListOrder(int userId) {
         return orderDAO.findByUserId(userId);
@@ -33,18 +33,66 @@ public class OrderService {
         order.setAddress(addr);
 
         order.setTotal_price(cart.getTotal());
-        order.setStatus("PENDING");
+        order.setStatus("Chờ Xác Nhận");
 
         List<OrderItem> items = new ArrayList<>();
         for (CartItem ci : cart.getList()) {
-            items.add(new OrderItem(ci.getItem(), ci.getItem().getPrice(), ci.getQuantity()));
+            items.add(new OrderItem(
+                    ci.getItem(),
+                    ci.getItem().getPrice(),
+                    ci.getQuantity()
+            ));
         }
         order.setListItem(items);
-
         try {
             return orderDAO.insert(order);
-        } catch (Exception e) {
-            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
+
+    public List<Order> getListOrderWaiting(int userId) {
+        List<Order> orders = new ArrayList<>();
+        for (Order o : getListOrder(userId)) {
+            if (o.getStatus().equalsIgnoreCase("Chờ Xác Nhận")) {
+                orders.add(o);
+            }
+        }
+        return orders;
+    }
+
+    public List<Order> getListOrderDelivering(int userId) {
+        List<Order> orders = new ArrayList<>();
+        for (Order o : getListOrder(userId)) {
+            if (o.getStatus().equalsIgnoreCase("Đang Giao")) {
+                orders.add(o);
+            }
+        }
+        return orders;
+    }
+
+    public List<Order> getListOrderDone(int userId) {
+        List<Order> orders = new ArrayList<>();
+        for (Order o : getListOrder(userId)) {
+            if (o.getStatus().equalsIgnoreCase("Đã Giao")) {
+                orders.add(o);
+            }
+        }
+        return orders;
+    }
+
+    public List<Order> getListOrderCancle(int userId) {
+        List<Order> orders = new ArrayList<>();
+        for (Order o : getListOrder(userId)) {
+            if (o.getStatus().equalsIgnoreCase("Đã Hủy")) {
+                orders.add(o);
+            }
+        }
+        return orders;
+    }
+
+    public boolean updateOrderStatus(int orderId, String status) {
+        return orderDAO.updateStatus(orderId, status);
+    }
+
 }

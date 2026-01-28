@@ -53,11 +53,11 @@
 
                     <div class="option-list">
 
-                        <!-- ================= 250g ================= -->
-                        <c:set var="v250" value="${null}" />
+                        <!-- 250g -->
+                        <c:set var="v250" value="${null}"/>
                         <c:forEach items="${variantList}" var="v">
                             <c:if test="${fn:endsWith(v.sku, '01')}">
-                                <c:set var="v250" value="${v}" />
+                                <c:set var="v250" value="${v}"/>
                             </c:if>
                         </c:forEach>
 
@@ -71,11 +71,11 @@
                             250g
                         </button>
 
-                        <!-- ================= 500g ================= -->
-                        <c:set var="v500" value="${null}" />
+                        <!-- 500g -->
+                        <c:set var="v500" value="${null}"/>
                         <c:forEach items="${variantList}" var="v">
                             <c:if test="${fn:endsWith(v.sku, '02')}">
-                                <c:set var="v500" value="${v}" />
+                                <c:set var="v500" value="${v}"/>
                             </c:if>
                         </c:forEach>
 
@@ -89,11 +89,11 @@
                             500g
                         </button>
 
-                        <!-- ================= 1kg ================= -->
-                        <c:set var="v1kg" value="${null}" />
+                        <!-- 1kg -->
+                        <c:set var="v1kg" value="${null}"/>
                         <c:forEach items="${variantList}" var="v">
                             <c:if test="${fn:endsWith(v.sku, '03')}">
-                                <c:set var="v1kg" value="${v}" />
+                                <c:set var="v1kg" value="${v}"/>
                             </c:if>
                         </c:forEach>
 
@@ -106,7 +106,6 @@
                             ${v1kg == null || v1kg.current_stock == 0 ? 'disabled' : ''}>
                             1kg
                         </button>
-
                     </div>
                 </div>
                 <!-- ===== SỐ LƯỢNG ===== -->
@@ -120,17 +119,12 @@
                 </div>
 
                 <!-- ================= GIỎ HÀNG ================= -->
-                <form action="${pageContext.request.contextPath}/chi-tiet-san-pham" method="post">
-                    <input type="hidden" name="action" value="addCart">
+                <form>
                     <input type="hidden" name="itemId" id="cart-item-id" value="${sp.id}">
                     <input type="hidden" name="quantity" id="cart-qty" value="1">
-
-                    <button type="button"
-                            class="btn-cart"
-                            onclick="addToCart(${sp.id})"
-                        ${sp.current_stock == 0 ? "disabled" : ""}>
-                        <i class="fa fa-shopping-cart"></i>
-                        THÊM VÀO GIỎ
+                    <button type="button" class="btn-cart" id="add-to-cart-btn">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Thêm vào giỏ hàng
                     </button>
                 </form>
             </div>
@@ -155,23 +149,23 @@
 
             <!-- Xuất xứ -->
             <c:choose>
-            <c:when test="${origin != null}">
-            <p class="origin">
-                <strong>Xuất xứ:</strong> ${origin.name}
-            </p>
-            </c:when>
-            <c:otherwise>
-            <p class="origin">
-                <strong>Xuất xứ:</strong> Đang cập nhật
-            </p>
-            </c:otherwise>
+                <c:when test="${origin != null}">
+                    <p class="origin">
+                        <strong>Xuất xứ:</strong> ${origin.name}
+                    </p>
+                </c:when>
+                <c:otherwise>
+                    <p class="origin">
+                        <strong>Xuất xứ:</strong> Đang cập nhật
+                    </p>
+                </c:otherwise>
             </c:choose>
             <p><strong>Bảo quản:</strong> 0 – 4°C</p>
             <p><strong>Hạn sử dụng:</strong> 7 ngày kể từ ngày đóng gói</p>
             <p><strong>Đóng gói:</strong> Hút chân không đảm bảo vệ sinh an toàn thực phẩm</p>
         </div>
 
-            <!-- ================= BÌNH LUẬN ================= -->
+        <!-- ================= BÌNH LUẬN ================= -->
         <div class="product-comments">
             <h2>Bình luận</h2>
 
@@ -223,27 +217,64 @@
         </a>
     </div>
 </section>
-    <!-- PHẦN CAM KẾT DỊCH VỤ -->
-    <section class="features-section">
-        <div class="features-container">
-            <div class="feature-item">
-                <i class="fa-solid fa-shield-halved"></i>
-                <p>Sản phẩm an toàn</p>
-            </div>
-            <div class="feature-item">
-                <i class="fa-solid fa-basket-shopping"></i>
-                <p>Chất lượng cam kết</p>
-            </div>
-            <div class="feature-item">
-                <i class="fa-solid fa-hand-holding-heart"></i>
-                <p>Dịch vụ vượt trội</p>
-            </div>
-            <div class="feature-item">
-                <i class="fa-solid fa-truck-fast"></i>
-                <p>Giao hàng nhanh</p>
-            </div>
+<!-- PHẦN CAM KẾT DỊCH VỤ -->
+<section class="features-section">
+    <div class="features-container">
+        <div class="feature-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <p>Sản phẩm an toàn</p>
         </div>
-    </section>
+        <div class="feature-item">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <p>Chất lượng cam kết</p>
+        </div>
+        <div class="feature-item">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+            <p>Dịch vụ vượt trội</p>
+        </div>
+        <div class="feature-item">
+            <i class="fa-solid fa-truck-fast"></i>
+            <p>Giao hàng nhanh</p>
+        </div>
+    </div>
+</section>
+<script>
+    document.getElementById("add-to-cart-btn").addEventListener("click", () => {
+
+        const itemId = document.getElementById("cart-item-id").value;
+        const quantity = document.getElementById("cart-qty").value;
+
+        if (!itemId) {
+            alert("Vui lòng chọn quy cách sản phẩm");
+            return;
+        }
+
+        fetch("${pageContext.request.contextPath}/them-vao-gio", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({
+                itemId: itemId,
+                quantity: quantity
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // 👉 nếu có icon giỏ hàng
+                    const cartCount = document.getElementById("cart-count");
+                    if (cartCount) {
+                        cartCount.innerText = data.totalQuantity;
+                    }
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Lỗi khi thêm vào giỏ");
+            });
+    });
+</script>
 
 
 
