@@ -102,7 +102,10 @@ document.addEventListener("DOMContentLoaded", () => {
         userForm.userIdHidden.value = user.id || "";
         userForm.userName.value = user.name || "";
         userForm.userEmail.value = user.email || "";
-        userForm.userPhone.value = user.phone || "";
+        if(user.phone === null || user.phone === "null") {
+            user.phone = "";
+        }
+        userForm.userPhone.value = user.phone;
         userForm.userRole.value = user.role || "";
         userForm.userPassword.value = "";
         userForm.userConfirmPassword.value = "";

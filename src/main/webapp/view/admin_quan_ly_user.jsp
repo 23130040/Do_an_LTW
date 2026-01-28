@@ -197,17 +197,18 @@
                 <div class="gender-group">
                     <label>
                         <input type="radio" name="gender" value="male"
-                        ${user.gender == 'male' ? 'checked' : ''}> Nam
+                               <c:if test="${user.gender eq 'male'}">checked</c:if>> Nam
+
                     </label>
 
                     <label>
                         <input type="radio" name="gender" value="female"
-                        ${user.gender == 'female' ? 'checked' : ''}> Nữ
+                               <c:if test="${user.gender eq 'female'}">checked</c:if>> Nữ
                     </label>
 
                     <label>
                         <input type="radio" name="gender" value="other"
-                        ${user.gender == 'other' ? 'checked' : ''}> Khác
+                               <c:if test="${user.gender eq 'other'}">checked</c:if>> Khác
                     </label>
 
                 </div>
