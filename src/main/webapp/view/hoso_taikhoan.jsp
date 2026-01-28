@@ -67,7 +67,7 @@
     <div class="profile-content avatar">
         <div class="avatar-container">
             <img id="avatar-preview"
-                 src="${pageContext.request.contextPath}${not empty user.avatar ? user.avatar : '/images/avatar.jpg'}"
+                 src="${pageContext.request.contextPath}/images/${not empty user.avatar ? user.avatar : '/images/avatar.jpg'}"
                  alt="avatar">
             <button class="choose-button" onclick="selectAvatar()">Chọn Ảnh</button>
         </div>
