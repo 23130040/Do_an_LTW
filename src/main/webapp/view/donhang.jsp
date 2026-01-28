@@ -33,7 +33,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.imageUrl}" alt="">
+                                            <img src="${pageContext.request.contextPath}/images/${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -75,7 +75,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.imageUrl}" alt="">
+                                            <img src="${pageContext.request.contextPath}/images/${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -117,7 +117,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.imageUrl}" alt="">
+                                            <img src="${pageContext.request.contextPath}/images/${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -159,7 +159,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.imageUrl}" alt="">
+                                            <img src="${pageContext.request.contextPath}/images/${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>
@@ -201,7 +201,7 @@
                                 <div class="order-products">
                                     <c:forEach var="oi" items="${order.listItem}">
                                         <div class="product">
-                                            <img src="${oi.item.imageUrl}" alt="">
+                                            <img src="${pageContext.request.contextPath}/images/${oi.item.imageUrl}" alt="">
                                             <div class="product-info">
                                                 <span class="name">${oi.item.name}</span>
                                                 <span class="qty">${oi.quantity}</span>

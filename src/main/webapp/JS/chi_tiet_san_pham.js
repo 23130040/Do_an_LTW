@@ -71,4 +71,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    document.querySelectorAll(".option").forEach(btn => {
+        btn.onclick = () => {
+            if (btn.classList.contains("disabled")) return;
+
+            document.querySelectorAll(".option").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            document.getElementById("cart-item-id").value = btn.dataset.itemId;
+            document.getElementById("product-price").innerText =
+                new Intl.NumberFormat('vi-VN').format(btn.dataset.price) + "đ";
+        };
+    });
+
+
 });

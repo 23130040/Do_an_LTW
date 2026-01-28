@@ -1,7 +1,6 @@
 package cleanmeat.controller;
 
 import cleanmeat.cart.Cart;
-import cleanmeat.model.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -13,8 +12,11 @@ public class GioHang extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
+        Object obj = session.getAttribute("cart");
+        Cart cart = null;
+        if (obj instanceof Cart) {
+            cart = (Cart) obj;
+        } else {
             cart = new Cart();
             session.setAttribute("cart", cart);
         }

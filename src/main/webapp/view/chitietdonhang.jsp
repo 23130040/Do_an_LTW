@@ -33,7 +33,7 @@
                 <tr class="product-item">
                     <td class="product-info">
                         <img class="product-image"
-                             src="${oi.item.imageUrl}"
+                             src="${pageContext.request.contextPath}/images/${oi.item.imageUrl}"
                              alt="${oi.item.name}">
                         <span class="product-name-text">${oi.item.name}</span>
                     </td>
