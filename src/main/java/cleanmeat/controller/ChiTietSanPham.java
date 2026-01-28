@@ -73,13 +73,13 @@ public class ChiTietSanPham extends HttpServlet {
         Item baseItem = variantList.isEmpty() ? sp : variantList.get(0);
 
         RatingSummary rating =
-                feedbackDAO.getRatingSummaryByItemId(baseItem.getId());
+                feedbackDAO.getRatingSummaryByItemId(sp.getId());
         if (rating == null) {
             rating = new RatingSummary(0.0, 0);
         }
 
         List<Feedback> feedbackList =
-                feedbackDAO.findByItemId(baseItem.getId());
+                feedbackDAO.findByItemId(sp.getId());
         if (feedbackList == null) {
             feedbackList = new ArrayList<>();
         }
@@ -113,8 +113,26 @@ public class ChiTietSanPham extends HttpServlet {
 
         if ("addCart".equals(action)) {
 
-            int itemId = Integer.parseInt(request.getParameter("itemId"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            String itemIdRaw = request.getParameter("itemId");
+            String qtyRaw = request.getParameter("quantity");
+
+            if (itemIdRaw == null || qtyRaw == null) {
+                response.sendRedirect(request.getContextPath() + "/san-pham");
+                return;
+            }
+
+            int itemId;
+            int quantity;
+
+            try {
+                itemId = Integer.parseInt(itemIdRaw);
+                quantity = Integer.parseInt(qtyRaw);
+            } catch (NumberFormatException e) {
+                response.sendRedirect(request.getContextPath() + "/san-pham");
+                return;
+            }
+
+            if (quantity < 1) quantity = 1;
 
             HttpSession session = request.getSession();
 
@@ -129,9 +147,25 @@ public class ChiTietSanPham extends HttpServlet {
             cart.put(itemId, cart.getOrDefault(itemId, 0) + quantity);
             session.setAttribute("cart", cart);
 
-            response.sendRedirect(
-                    request.getContextPath() + "/product?id=" + itemId
-            );
+            Item addedItem = itemDAO.findById(itemId);
+            if (addedItem != null && addedItem.getSku() != null) {
+
+                String sku = addedItem.getSku();
+                if (sku.length() >= 2) {
+                    String baseSku = sku.substring(0, sku.length() - 2);
+                    List<Item> list = itemDAO.findBySkuBase(baseSku);
+
+                    if (list != null && !list.isEmpty()) {
+                        response.sendRedirect(
+                                request.getContextPath()
+                                        + "/product?id=" + list.get(0).getId()
+                        );
+                        return;
+                    }
+                }
+            }
+
+            response.sendRedirect(request.getContextPath() + "/san-pham");
             return;
         }
 

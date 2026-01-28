@@ -10,9 +10,9 @@ public class ConnectionPool {
     private static final int MAX_CONNECTIONS = 10;
     private static final int TIMEOUT = 2;
     private final Queue<Connection> pool = new LinkedList<Connection>();
-    private static final String URL = "jdbc:mysql://localhost:3306/cleanmeat?zeroDateTimeBehavior=CONVERT_TO_NULL";
+    private static final String URL = "jdbc:mysql://root:uAaUlbmWLhylLoOqNaWiRyArICcyIdCD@switchback.proxy.rlwy.net:28681/railway";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "uAaUlbmWLhylLoOqNaWiRyArICcyIdCD";
     private static class Holder {
         private static final ConnectionPool INSTANCE = new ConnectionPool();
     }
