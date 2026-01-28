@@ -32,9 +32,7 @@
             <c:forEach var="oi" items="${order.listItem}">
                 <tr class="product-item">
                     <td class="product-info">
-                        <img class="product-image"
-                             src="${pageContext.request.contextPath}/images/${oi.item.imageUrl}"
-                             alt="${oi.item.name}">
+                            ${oi.item.sku}
                         <span class="product-name-text">${oi.item.name}</span>
                     </td>
                     <td class="product-unit">${oi.item.unitName}</td>
