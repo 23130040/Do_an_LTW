@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-});
         qtyInput.addEventListener("input", function () {
             updatePriceAndQty();
         });
