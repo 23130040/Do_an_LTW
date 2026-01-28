@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /* ========================= BIẾN CHUNG ========================= */
-    const optionButtons = document.querySelectorAll(".option:not(.disabled)");
+    const optionButtons = document.querySelectorAll(".option");
     const priceEl = document.getElementById("product-price");
     const itemIdInput = document.getElementById("cart-item-id");
 
@@ -17,11 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
         return Number(price).toLocaleString("vi-VN") + "đ";
     }
 
-    /* ========================= UPDATE GIÁ ========================= */
-    function updatePrice() {
-        const qty = parseInt(qtyInput.value) || 1;
-        priceEl.innerText = formatPrice(basePrice * qty);
+    /* ========================= UPDATE GIÁ + QTY ========================= */
+    function updatePriceAndQty() {
+        let qty = parseInt(qtyInput.value);
+        if (isNaN(qty) || qty < 1) qty = 1;
+
+        qtyInput.value = qty;
         hiddenQty.value = qty;
+
+        priceEl.innerText = formatPrice(basePrice * qty);
     }
 
     /* ========================= CHỌN KHỐI LƯỢNG ========================= */
@@ -31,45 +35,51 @@ document.addEventListener("DOMContentLoaded", function () {
         optionButtons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
-        basePrice = parseInt(btn.dataset.price || 0);
-        itemIdInput.value = btn.dataset.itemId;
+        const price = btn.dataset.price;
+        const itemId = btn.dataset.itemId;
+
+        if (price) basePrice = parseInt(price);
+        if (itemId) itemIdInput.value = itemId;
 
         qtyInput.value = 1;
         hiddenQty.value = 1;
 
-        updatePrice();
+        updatePriceAndQty();
     }
 
     optionButtons.forEach(btn => {
-        btn.addEventListener("click", () => applyOption(btn));
+        btn.addEventListener("click", function () {
+            applyOption(this);
+        });
     });
 
-    /* ========================= INIT ========================= */
+    /* ========================= INIT BAN ĐẦU ========================= */
     const activeBtn =
-        document.querySelector(".option.active:not(.disabled)") || optionButtons[0];
+        document.querySelector(".option.active:not(.disabled)") ||
+        document.querySelector(".option:not(.disabled)");
 
     if (activeBtn) {
         basePrice = parseInt(activeBtn.dataset.price || 0);
-        updatePrice();
+        itemIdInput.value = activeBtn.dataset.itemId || itemIdInput.value;
+        updatePriceAndQty();
     }
 
     /* ========================= + / - SỐ LƯỢNG ========================= */
     if (minusBtn && plusBtn && qtyInput && hiddenQty) {
 
-        minusBtn.addEventListener("click", () => {
+        minusBtn.addEventListener("click", function () {
             let val = parseInt(qtyInput.value) || 1;
             if (val > 1) {
                 qtyInput.value = val - 1;
-                updatePrice();
+                updatePriceAndQty();
             }
         });
 
-        plusBtn.addEventListener("click", () => {
+        plusBtn.addEventListener("click", function () {
             let val = parseInt(qtyInput.value) || 1;
             qtyInput.value = val + 1;
-            updatePrice();
+            updatePriceAndQty();
         });
-    }
 
     document.querySelectorAll(".option").forEach(btn => {
         btn.onclick = () => {
@@ -85,4 +95,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+});
+        qtyInput.addEventListener("input", function () {
+            updatePriceAndQty();
+        });
+    }
+    function addToCart(itemId) {
+        document.getElementById("cart-item-id").value = itemId;
+        document.querySelector("form").submit();
+    }
 });

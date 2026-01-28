@@ -1,43 +1,51 @@
 /* ================= RESET CƠ BẢN ================= */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     background: #f7f7f7;
 }
 
+/* ================= WRAPPER TOÀN TRANG ================= */
 .product-detail {
     width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 30px 20px 50px;
-    box-sizing: border-box;
+    padding: 40px 0 60px;
 }
 
 /* ================= KHUNG CHÍNH ================= */
 .product-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px;
     display: flex;
     gap: 40px;
+
     background: #fff;
-    padding: 30px;
     border-radius: 16px;
     box-shadow: 0 0 10px rgba(0,0,0,.08);
 }
 
-/* ================= ẢNH CHÍNH ================= */
+/* ================= ẢNH SẢN PHẨM ================= */
 .product-image {
     flex: 1;
+    max-width: 420px;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
 }
 
 .product-image img {
     width: 100%;
-    max-width: 420px;
-    height: 380px;
+    height: 100%;
     object-fit: contain;
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,.1);
 }
 
 /* ================= THÔNG TIN ================= */
@@ -48,42 +56,17 @@ body {
     gap: 12px;
 }
 
-.product-info h1 {
+.product-title {
     font-size: 26px;
     color: #222;
     margin: 0;
 }
 
-.product-info .meta {
-    font-size: 15px;
-    color: #666;
-    line-height: 1.5;
-}
-
-/* ================= GIÁ ================= */
-.price-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 10px 0;
-}
-
-.price {
-    font-size: 24px;
-    font-weight: bold;
-    color: #e60000;
-}
-
-.discount {
-    font-size: 15px;
-    font-weight: bold;
-    color: #008000;
-}
+/* ================= ĐÁNH GIÁ ================= */
 .product-rating {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 10px 0 15px;
 }
 
 .product-rating .stars i {
@@ -92,12 +75,22 @@ body {
 }
 
 .product-rating .rating-text {
-    color: #555;
     font-size: 14px;
+    color: #555;
+}
+
+/* ================= GIÁ ================= */
+.price-box {
+    margin: 10px 0;
+}
+
+.price {
+    font-size: 26px;
+    font-weight: bold;
+    color: #e60000;
 }
 
 /* ================= KHỐI LƯỢNG & SỐ LƯỢNG ================= */
-
 .option-row {
     display: flex;
     align-items: center;
@@ -111,7 +104,7 @@ body {
     color: #333;
 }
 
-/* ---------- Khối lượng ---------- */
+/* ---- Khối lượng ---- */
 .option-list {
     display: flex;
     gap: 10px;
@@ -124,7 +117,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .option:hover {
@@ -138,7 +131,12 @@ body {
     font-weight: bold;
 }
 
-/* ---------- Số lượng ---------- */
+.option.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ---- Số lượng ---- */
 .quantity-box {
     display: flex;
     align-items: center;
@@ -154,12 +152,6 @@ body {
     cursor: pointer;
     font-size: 18px;
     font-weight: bold;
-    transition: .2s;
-}
-
-.quantity-box button:hover {
-    border-color: #cc0000;
-    color: #cc0000;
 }
 
 .quantity-box input {
@@ -173,16 +165,17 @@ body {
 
 /* ================= NÚT GIỎ HÀNG ================= */
 .btn-cart {
-    margin-top: 15px;
+    margin-top: 20px;
     padding: 12px 20px;
     border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+
     background: #fff;
     color: #cc0000;
     border: 2px solid #cc0000;
-    transition: .2s;
+    transition: 0.25s;
 }
 
 .btn-cart i {
@@ -194,55 +187,33 @@ body {
     color: #fff;
 }
 
-/* ================= MÔ TẢ CHI TIẾT ================= */
+/* ================= MÔ TẢ ================= */
 .product-description {
-    margin-top: 30px;
-    background: #fff;
+    max-width: 1100px;
+    margin: 30px auto 0;
     padding: 25px 30px;
+
+    background: #fff;
     border-radius: 16px;
     box-shadow: 0 0 10px rgba(0,0,0,.06);
 }
 
 .product-description h2 {
-    font-size: 22px;
-    margin-bottom: 12px;
+    margin-top: 0;
 }
 
-.product-description p {
-    font-size: 16px;
+.long-desc {
+    line-height: 1.6;
     color: #333;
-    line-height: 1.7;
-}
-
-/* ================= ẢNH PHỤ ================= */
-.product-gallery {
-    margin-top: 30px;
-    background: #fff;
-    padding: 25px 30px;
-    border-radius: 16px;
-    box-shadow: 0 0 10px rgba(0,0,0,.06);
-}
-
-.gallery-list {
-    display: flex;
-    gap: 12px;
-    margin-top: 15px;
-    flex-wrap: wrap;
-}
-
-.gallery-list img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid #eee;
 }
 
 /* ================= BÌNH LUẬN ================= */
 .product-comments {
-    margin-top: 30px;
-    background: #fff;
+    max-width: 1100px;
+    margin: 30px auto 0;
     padding: 25px 30px;
+
+    background: #fff;
     border-radius: 16px;
     box-shadow: 0 0 10px rgba(0,0,0,.06);
 }
@@ -252,97 +223,97 @@ body {
     margin-bottom: 10px;
 }
 
-.coming-soon {
+.no-comment {
     color: #777;
     font-style: italic;
 }
-.product-image {
-    width: 100%;
-    max-width: 420px;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-}
 
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
+/* ================= QUAY LẠI ================= */
 .back-to-list {
-    margin-top: 40px;
+    max-width: 1100px;
+    margin: 40px auto 0;
     padding-top: 20px;
     border-top: 1px solid #eee;
 }
 
 .back-to-list a {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: #c0392b;
+    font-size: 18px;
     font-weight: 600;
+    color: #c0392b;
     text-decoration: none;
-    font-size: 20px;
-    transition: all 0.25s ease;
 }
 
-.back-to-list a:hover {
-    color: #a93226;
-    transform: translateX(-4px);
-}
-/* ======================= CAM KẾT ======================= */
+/* ================= CAM KẾT ================= */
 .features-section {
     width: 100%;
     padding: 40px 0;
+    background: #fff;
     border-top: 1px solid #eee;
-    background-color: #fff;
-    box-sizing: border-box;
-    margin-top: 0;
+    margin-top: 40px;
 }
 
 .features-container {
-    width: 95%;
     max-width: 1200px;
     margin: 0 auto;
+
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: nowrap;
     text-align: center;
 }
+
 .feature-item {
     flex: 1;
-    min-width: 200px;
-    max-width: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: .3s;
 }
 
-
 .feature-item i {
-    font-size: 50px;
-    margin-bottom: 15px;
+    font-size: 48px;
     color: #cc0000;
-    transition: .3s;
+    margin-bottom: 12px;
 }
 
 .feature-item p {
     font-size: 18px;
     font-weight: bold;
-    color: #222;
-    margin-top: 8px;
+}
+/* ===== COMMENT ===== */
+.comment-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.feature-item:hover {
-    transform: translateY(-5px);
+.comment-header {
+    margin-bottom: 6px; /* tách header với sao */
 }
 
-.feature-item:hover i {
-    transform: scale(1.1);
-    color: #ff4b4b;
+.comment-user-date {
+    font-size: 14px;
+    color: #555;
 }
+
+.comment-user {
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.comment-date {
+    font-size: 13px;
+    color: #999;
+}
+
+.comment-rating {
+    margin-bottom: 6px;
+}
+
+.comment-rating i {
+    color: #ddd;
+    font-size: 15px;
+    margin-right: 4px;
+}
+
+.comment-rating i.active {
+    color: #f5a623;
+}
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 900px) {
     .product-wrapper {
@@ -355,7 +326,12 @@ body {
         align-items: center;
     }
 
-    .product-image img {
-        height: 300px;
+    .option-row {
+        justify-content: center;
+    }
+
+    .features-container {
+        flex-direction: column;
+        gap: 20px;
     }
 }
