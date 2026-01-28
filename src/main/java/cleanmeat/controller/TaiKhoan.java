@@ -121,17 +121,13 @@ public class TaiKhoan extends HttpServlet {
                 return;
             } else if ("delete-account".equals(action)) {
                 String password = body.get("password").getAsString();
-                try {
-                    boolean success = userService.deleteAccount(user.getId(), password);
-                    var writer = response.getWriter();
-                    if (success) {
-                        session.invalidate();
-                        writer.write("{\"success\": true}");
-                    } else {
-                        writer.write("{\"success\": false, \"message\": \"Mật khẩu không đúng\"}");
-                    }
-                } catch (Exception e) {
-                    response.getWriter().write("{\"success\": false, \"message\": \"Lỗi hệ thống\"}");
+                boolean ok = userService.deleteAccount(user.getId(), password);
+
+                if (ok) {
+                    session.invalidate();
+                    response.getWriter().write("{\"success\":true}");
+                } else {
+                    response.getWriter().write("{\"success\":false, \"message\":\"Mật khẩu không đúng\"}");
                 }
                 return;
             } else if ("updateProfile".equals(action)) {
