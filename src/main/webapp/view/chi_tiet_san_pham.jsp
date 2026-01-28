@@ -53,7 +53,7 @@
 
                     <div class="option-list">
 
-                        <!-- 250g -->
+                        <!-- ================= 250g ================= -->
                         <c:set var="v250" value="${null}" />
                         <c:forEach items="${variantList}" var="v">
                             <c:if test="${fn:endsWith(v.sku, '01')}">
@@ -62,13 +62,16 @@
                         </c:forEach>
 
                         <button type="button"
-                                class="option ${v250 == null || v250.current_stock == 0 ? 'disabled' : ''} ${v250 != null && v250.id == sp.id ? 'active' : ''}"
+                                class="option
+                                    ${v250 == null || v250.current_stock == 0 ? 'disabled' : ''}
+                                    ${v250 != null && v250.id == sp.id ? 'active' : ''}"
                                 data-item-id="${v250 != null ? v250.id : ''}"
-                                data-price="${v250 != null ? v250.price : ''}">
+                                data-price="${v250 != null ? v250.price : ''}"
+                            ${v250 == null || v250.current_stock == 0 ? 'disabled' : ''}>
                             250g
                         </button>
 
-                        <!-- 500g -->
+                        <!-- ================= 500g ================= -->
                         <c:set var="v500" value="${null}" />
                         <c:forEach items="${variantList}" var="v">
                             <c:if test="${fn:endsWith(v.sku, '02')}">
@@ -77,13 +80,16 @@
                         </c:forEach>
 
                         <button type="button"
-                                class="option ${v500 == null || v500.current_stock == 0 ? 'disabled' : ''} ${v500 != null && v500.id == sp.id ? 'active' : ''}"
+                                class="option
+                                    ${v500 == null || v500.current_stock == 0 ? 'disabled' : ''}
+                                    ${v500 != null && v500.id == sp.id ? 'active' : ''}"
                                 data-item-id="${v500 != null ? v500.id : ''}"
-                                data-price="${v500 != null ? v500.price : ''}">
+                                data-price="${v500 != null ? v500.price : ''}"
+                            ${v500 == null || v500.current_stock == 0 ? 'disabled' : ''}>
                             500g
                         </button>
 
-                        <!-- 1kg -->
+                        <!-- ================= 1kg ================= -->
                         <c:set var="v1kg" value="${null}" />
                         <c:forEach items="${variantList}" var="v">
                             <c:if test="${fn:endsWith(v.sku, '03')}">
@@ -92,15 +98,17 @@
                         </c:forEach>
 
                         <button type="button"
-                                class="option ${v1kg == null || v1kg.current_stock == 0 ? 'disabled' : ''} ${v1kg != null && v1kg.id == sp.id ? 'active' : ''}"
+                                class="option
+                                    ${v1kg == null || v1kg.current_stock == 0 ? 'disabled' : ''}
+                                    ${v1kg != null && v1kg.id == sp.id ? 'active' : ''}"
                                 data-item-id="${v1kg != null ? v1kg.id : ''}"
-                                data-price="${v1kg != null ? v1kg.price : ''}">
+                                data-price="${v1kg != null ? v1kg.price : ''}"
+                            ${v1kg == null || v1kg.current_stock == 0 ? 'disabled' : ''}>
                             1kg
                         </button>
 
                     </div>
                 </div>
-
                 <!-- ===== SỐ LƯỢNG ===== -->
                 <div class="option-row">
                     <span class="label">Số lượng:</span>
@@ -117,12 +125,14 @@
                     <input type="hidden" name="itemId" id="cart-item-id" value="${sp.id}">
                     <input type="hidden" name="quantity" id="cart-qty" value="1">
 
-                    <button type="submit" class="btn-cart">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Thêm vào giỏ hàng
+                    <button type="button"
+                            class="btn-cart"
+                            onclick="addToCart(${sp.id})"
+                        ${sp.current_stock == 0 ? "disabled" : ""}>
+                        <i class="fa fa-shopping-cart"></i>
+                        THÊM VÀO GIỎ
                     </button>
                 </form>
-
             </div>
         </div>
 
@@ -172,20 +182,25 @@
 
                 <c:otherwise>
                     <c:forEach items="${feedbackList}" var="fb">
+
                         <div class="comment-item">
 
                             <div class="comment-header">
-                                <span class="comment-user">
-                                    Người dùng #${fb.userId}
-                                </span>
-                                <span class="comment-date">
-                                        ${fb.createdAt}
-                                </span>
+                                <div class="comment-user-date">
+                                    <span class="comment-user">
+                                        Người dùng ${fb.user.username}
+                                    </span>
+                                    <span class="comment-date">
+                                            ${fb.created_at}
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="comment-rating">
                                 <c:forEach begin="1" end="5" var="i">
-                                    <i class="fa-solid fa-star ${fb.rating != null && i <= fb.rating ? 'active' : ''}"></i>
+                                    <i class="fa-solid fa-star
+                               ${i <= fb.rating ? 'active' : ''}">
+                                    </i>
                                 </c:forEach>
                             </div>
 
@@ -194,6 +209,7 @@
                             </p>
 
                         </div>
+
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
