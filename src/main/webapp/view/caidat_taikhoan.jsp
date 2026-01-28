@@ -57,87 +57,95 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+
         const openDeleteModalBtn = document.getElementById("delete-btn");
-        openDeleteModalBtn.addEventListener("click", () => {
-            openModal("delete-account-modal");
-        });
-
         const closeDeleteModalBtn = document.getElementById("close-delete-account-modal");
-        closeDeleteModalBtn.addEventListener("click", () => {
-            closeModal("delete-account-modal");
-        });
-
         const cancleDeleteModalBtn = document.getElementById("cancle-delete-account-btn");
-        cancleDeleteModalBtn.addEventListener("click", () => {
-            closeModal("delete-account-modal");
-        });
-
         const confirmDeleteBtn = document.getElementById("confirm-delete-account-btn");
-        confirmDeleteBtn.addEventListener("click", () => {
-            closeModal("delete-account-modal");
-            openModal("input-password-modal");
-        });
 
         const closePasswordModal = document.getElementById("close-input-password-modal");
-        closePasswordModal.addEventListener("click", () => {
-            closeModal("input-password-modal");
-        });
-
         const canclePasswordModal = document.getElementById("cancle-confirm-password-btn");
-        canclePasswordModal.addEventListener("click", () => {
-            closeModal("input-password-modal");
-        });
+        const confirmPasswordBtn = document.getElementById("confirm-delete-btn");
 
-        window.addEventListener("click", (e) => {
-            if (e.target.id === "delete-account-modal") closeModal("delete-account-modal");
-            if (e.target.id === "input-password-modal") closeModal("input-password-modal");
-        });
+        const inputPasswordModal = document.getElementById("input-password-modal");
+        const deleteAccountModal = document.getElementById("delete-account-modal");
 
-        document.getElementById("input-password-modal").addEventListener("submit", (e) => {
-            e.preventDefault();
-            //dùng AJAX để điều hướng các hành động khi chọn xác nhận xóa tài khoản
-            document.getElementById("confirm-delete-btn").addEventListener("click", () => {
-                const password = document.getElementById("password").value;
+        // mở
+        openDeleteModalBtn.onclick = () => openModal("delete-account-modal");
 
-                fetch("${pageContext.request.contextPath}/tai-khoan?action=delete-account", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({password})
-                }).then(res => res.json())
-                    .then(data => {
-                        closeModal("input-password-modal");
+        // đóng
+        closeDeleteModalBtn.onclick = () => closeModal("delete-account-modal");
+        cancleDeleteModalBtn.onclick = () => closeModal("delete-account-modal");
 
-                        const message = document.getElementById("message");
-                        message.innerHTML = "";
-                        const btn = document.getElementById("btn");
-                        btn.innerHTML = "";
+        confirmDeleteBtn.onclick = () => {
+            closeModal("delete-account-modal");
+            openModal("input-password-modal");
+        }
 
-                        if (data.success) {
-                            let countdown = 5;
-                            message.innerHTML = `<p><i class="fa-solid fa-check"></i>Xóa tài khoản thành công! Chuyển về trang chủ sau <span id="countdown">${countdown}</span></p>`;
-                            openModal("confirm-modal");
-                            let interval = setInterval(() => {
-                                countdown--;
-                                document.getElementById("countdown").textContent = countdown;
-                                if (countdown <= 0) {
-                                    clearInterval(interval);
-                                    window.location.href = "${pageContext.request.contextPath}/trang-chu";
-                                }
-                            }, 1000);
-                        } else {
-                            message.innerHTML = `<p>Xóa thất bại: ${data.message}</p>`;
-                            btn.innerHTML = `<button type="button" id="ok-btn" class="confirm-btn">OK</button>`;
-                            openModal("confirm-modal");
-                            document.getElementById("ok-btn").addEventListener("click", () => {
-                                closeModal("confirm-modal");
-                                openModal("input-password-modal");
-                            });
+        closePasswordModal.onclick = () => closeModal("input-password-modal");
+        canclePasswordModal.onclick = () => closeModal("input-password-modal");
+
+        window.onclick = (e) => {
+            if (e.target === deleteAccountModal) closeModal("delete-account-modal");
+            if (e.target === inputPasswordModal) closeModal("input-password-modal");
+        }
+
+        // confirm delete click
+        confirmPasswordBtn.onclick = () => {
+            const pass = document.getElementById("password").value;
+            if (!pass) {
+                alert("Vui lòng nhập mật khẩu!");
+                return;
+            }
+
+            fetch("${pageContext.request.contextPath}/tai-khoan", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    action: "delete-account",
+                    password: pass
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    closeModal("input-password-modal");
+
+                    const msg = document.getElementById("message");
+                    const btn = document.getElementById("btn");
+                    msg.innerHTML = "";
+                    btn.innerHTML = "";
+
+                    if (data.success) {
+                        let countdown = 5;
+                        msg.innerHTML = `<p style="color:green"><i class="fa-solid fa-check"></i> Xóa tài khoản thành công! Quay về trang chủ sau <span id="countdown">${countdown}</span>s</p>`;
+                        openModal("confirm-modal");
+
+                        let interval = setInterval(() => {
+                            countdown--;
+                            document.getElementById("countdown").innerText = countdown;
+                            if (countdown <= 0) {
+                                clearInterval(interval);
+                                window.location.href = "${pageContext.request.contextPath}/trang-chu";
+                            }
+                        }, 1000);
+
+                    } else {
+                        msg.innerHTML = `<p style="color:red">Xóa thất bại: ${data.message}</p>`;
+                        btn.innerHTML = `<button type="button" id="ok-btn" class="confirm-btn">Thử lại</button>`;
+                        openModal("confirm-modal");
+
+                        document.getElementById("ok-btn").onclick = () => {
+                            closeModal("confirm-modal");
+                            openModal("input-password-modal");
                         }
-                    });
-            });
-        });
+                    }
+                })
+                .catch(e => {
+                    alert("Lỗi hệ thống!");
+                    console.log(e);
+                });
+        }
+
     });
 
     function openModal(id) {
